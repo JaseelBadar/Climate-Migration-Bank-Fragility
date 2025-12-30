@@ -5,3 +5,13 @@
 - Formatted Core_Claims.docx to NBER standards (Times New Roman, 12pt, Double Spaced).
 - Installed Research Stack: Zotero 7, Anaconda (Python 3.10), VS Code.
 - Registered for data access: NASA Earthdata and EM-DAT.
+
+2025-12-31: Tech Stack & Data Download Attempt
+- Finalized installation of Zotero 7 + Better BibTeX plugin.
+- Set up Anaconda environment 'research_env' with geospatial libraries (geopandas, rasterio, pystac-client).
+- Connected VS Code to the research environment (verified).
+- Created first Python script '01_download_viirs.py'.
+- Attempted automated download from Microsoft Planetary Computer:
+  - Result: Connection successful, but returned 0 items (Collection name mismatch).
+  - Decision: Paused to pivot to manual download or Google Earth Engine strategy tomorrow.
+

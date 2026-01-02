@@ -15,3 +15,18 @@
   - Result: Connection successful, but returned 0 items (Collection name mismatch).
   - Decision: Paused to pivot to manual download or Google Earth Engine strategy tomorrow.
 
+2026-01-02: Phase 2 Data Acquisition COMPLETE
+- VIIRS: Downloaded Jan 2023 test tile (SVDNB_npp_20230101-20230131_75N060E)
+  - 3 .tif files + .tgz saved locally in 01_Data_Raw/VIIRSNightLights/
+  - Files ignored in Git due to >100MB limit
+- EM-DAT: Downloaded India floods 2015-2024 (70 events)
+  - File: public_emdat_custom_request_2026-01-02_c149ea93.xlsx
+  - Committed to GitHub
+- RBI: Downloaded 3 consolidated district deposit files
+  - RBI_Deposits_2004_2017.xls
+  - RBI_Deposits_2017_2022.xls
+  - RBI_Deposits_2023_2024.xls
+  - All committed to GitHub
+- GitHub: Configured .gitignore to exclude *.tif, *.tgz, *.zip, VIIRS folder
+- Decision: Confirmed India geography, 2015-2024 timeframe optimal
+- Status: Raw data vault populated. Ready for Phase 3 (Processing & Literature).

@@ -6,19 +6,17 @@ Research project examining how climate-induced migration triggers liquidity stre
 
 
 
-\*\*Status\*\*: Phase 2 Complete - Data Acquired
+\*\*Status\*\*: \*\*Status\*\*: Phase 3a Complete – Literature Acquired (15-18 papers)
 
 
 
-\## Data Sources
+\*\*Progress\*\*: 
 
-\- VIIRS Night Lights (NASA EOG)
+\- ✅ Phase 1: Infrastructure
 
-\- EM-DAT Disaster Database (70 India floods)
+\- ✅ Phase 2: Data Acquisition (VIIRS, EM-DAT, RBI)
 
-\- RBI District-Level Deposits (2004-2024)
+\- ✅ Phase 3a: Literature Search (15-18 papers in Zotero)
 
-
-
-\## Next: Data Processing \& Literature Review
+\- 🔄 Phase 3b: Gap Analysis + Data Processing (Next)
 

@@ -30,3 +30,14 @@
 - GitHub: Configured .gitignore to exclude *.tif, *.tgz, *.zip, VIIRS folder
 - Decision: Confirmed India geography, 2015-2024 timeframe optimal
 - Status: Raw data vault populated. Ready for Phase 3 (Processing & Literature).
+
+2026-01-05: Phase 3a Literature Acquisition COMPLETE
+- Searched Google Scholar, SSRN, NBER using targeted keywords
+- Used Harvard HOLLIS to bypass paywalls for locked papers
+- Downloaded 15-18 papers via Zotero Chrome Connector
+- Organized PDFs in 00_Admin/Literature_PDFs/ folder
+- Fixed Zotero metadata (missing authors/dates)
+- Created LiteratureTracker.xlsx with table structure
+- Status: Papers acquired. Gap analysis (reading abstracts) scheduled for Jan 6.
+- Next: Phase 3b - Fill tracker + write data inspection scripts.
+

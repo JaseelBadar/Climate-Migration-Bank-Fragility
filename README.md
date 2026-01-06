@@ -6,17 +6,19 @@ Research project examining how climate-induced migration triggers liquidity stre
 
 
 
-\*\*Status\*\*: \*\*Status\*\*: Phase 3a Complete – Literature Acquired (15-18 papers)
+\*\*Status\*\*: Phase 3b Complete – Gap Analysis Finalized
 
 
 
 \*\*Progress\*\*: 
 
-\- ✅ Phase 1: Infrastructure
+\- ✅ Phase 1: Infrastructure (GitHub, Zotero, Python stack)
 
 \- ✅ Phase 2: Data Acquisition (VIIRS, EM-DAT, RBI)
 
-\- ✅ Phase 3a: Literature Search (15-18 papers in Zotero)
+\- ✅ Phase 3a: Literature Search (16 papers in Zotero)
 
-\- 🔄 Phase 3b: Gap Analysis + Data Processing (Next)
+\- ✅ Phase 3b: Gap Analysis (Novelty confirmed - no paper connects Climate→VIIRS→India Banks)
+
+\- 🔄 Phase 3c: Data Processing Scripts (Next: Jan 7)
 

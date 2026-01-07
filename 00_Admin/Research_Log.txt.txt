@@ -41,3 +41,19 @@
 - Status: Papers acquired. Gap analysis (reading abstracts) scheduled for Jan 6.
 - Next: Phase 3b - Fill tracker + write data inspection scripts.
 
+2026-01-07: Phase 3c Remote Work (Mobile Only)
+- Laptop unavailable—executed mobile research tasks to maintain momentum
+- Created Variables_Codebook_v1.md: Defined 40+ variables across 5 categories
+  * Outcome variables (deposits, withdrawals, branch counts)
+  * Treatment variables (floods, VIIRS lights, migration proxies)
+  * Control variables (rainfall, GDP, agriculture, urbanization)
+  * Network variables (bank connectedness, spatial adjacency)
+  * Panel structure documented (~640 districts × 40 quarters)
+- Created Hypotheses_Formal_v1.md: Specified 4 testable hypotheses
+  * H1: Floods → VIIRS lights decline (migration proxy validation)
+  * H2: Lights decline → Deposit withdrawals (liquidity mechanism)
+  * H3: Immediate timing (shadow run signature, not credit losses)
+  * H4: Network spillovers (contagion beyond flood footprint)
+- Both documents specify measurement decisions (thresholds, time aggregation, geographic matching rules)
+- Status: Codebook guides tomorrow's Python scripts. Hypotheses guide regression specifications in Phase 4.
+- Next: Jan 8 with laptop—write RBI/EMDAT/VIIRS inspection scripts (Phase 3c execution).

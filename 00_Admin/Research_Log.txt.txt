@@ -88,131 +88,39 @@ Next: Phase 3c data inspection (validate file formats and merge feasibility)
 Goal: Validate merge feasibility across 3 datasets (RBI, EM-DAT, VIIRS)
 
 Scripts Created:
-
 1. 02_inspect_rbi.py: RBI deposit structure inspection
-   Purpose: Identify district column, deposit columns, date range
-   Findings:
-   - File inspected: RBI_Deposits_2023_2024.xlsx
-   - Sheet: "Report 1" (single sheet)
-   - Dimensions: 1,877 rows × 38 columns
-   - District column: Column 3 "DISTRICT" (index 3)
-   - Unique districts: 762
-   - District name format: UPPERCASE, hyphenated (e.g., BALOD, GAURELA-PENDRA-MARWAHI)
-   - Population groups: Rural (736 rows), Semi-urban (721), Urban (354), Metro (62)
-   - Deposit columns: Indices 7,10,13,16,19,22,25,28,31,34,37 (11 quarters)
-   - Date coverage: 2023-Q1 (Mar 31) to 2025-Q2 (Sep 30)
-   - Critical: Each district has 2-4 rows (one per population group)
-   - Aggregation required: GROUP BY district, SUM deposits across population groups
-   - Gap identified: Missing 2015-2022 data (need to inspect other 2 RBI files)
+   - 762 unique districts (UPPERCASE, hyphenated names)
+   - 11 quarters (2023Q1-2025Q2), 4 population groups per district
+   - Deposit columns at indices 7,10,13,16,19,22,25,28,31,34,37
+   - Aggregation required: GROUP BY district, SUM across population groups
 
 2. 03_inspect_emdat.py: EM-DAT flood event inspection
-   Purpose: Parse Admin Units JSON, assess geographic precision
-   Findings:
-   - File: public_emdat_custom_request_2026-01-02_[UUID].xlsx
-   - Total events: 69 (not 70 as initially downloaded)
-   - Date range: 2015-2024 (Start Year, Start Month, Start Day columns)
-   - Admin Units column (43): Structured JSON with adm1_name (states), adm2_name (districts)
-   - Events with district-level data: 35 (50.7%) → Yields 147 unique districts
-   - Events with state-level only: 34 (49.3%) → Empty Admin Units JSON
-   - Location text field: Inconsistent format (mixed cities, districts, states)
-   - Severity measures:
-     * Total Deaths: 91.3% coverage (0-2,035 deaths)
-     * No. Affected: 73.9% coverage (5-23M people) ← BEST proxy for H1 severity
-     * Total Damage: 33.3% coverage (too many missing values)
-   - Sample district names: Belgaum, Gadag, Anantapur, Cuddapah, Thrissur, Mumbai
-   - Critical issue: 34 events have Location text with districts but empty Admin Units
-     → Requires manual parsing of Location field to recover these events
-   - Geographic precision heterogeneous (50% district, 50% state-level)
+   - 69 flood events (2015-2024)
+   - 35 events (50.7%) have district-level Admin Units data → 147 districts
+   - 34 events (49.3%) have empty Admin Units (requires Location text parsing)
+   - Severity measure: No. Affected (73.9% coverage)
+   - Date structure: Complete, convertible to quarters
 
 3. 04_inspect_viirs.py: VIIRS nighttime lights validation
-   Purpose: Validate GeoTIFF format, spatial coverage, radiance values
-   Findings:
-   - Test file: SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600.avg_rade9h.tif
-   - File size: 1.93 GB
-   - Format: GeoTIFF, single-band float32, CRS EPSG:4326 (WGS84)
-   - Dimensions: 28,800 columns × 18,000 rows (518.4M pixels)
-   - Resolution: 0.004166° (~15 arc-seconds = 463m at equator)
-   - Geographic extent: 60-180°E, 0-75°N
-   - India coverage: CONFIRMED (8-37°N, 68-97°E fully within tile bounds)
-   - Radiance values:
-     * Range: 0-57.24 nW/cm²/sr
-     * Mean: 0.87 nW/cm²/sr (mostly dark pixels = rural/ocean)
-     * Median: 0.50 nW/cm²/sr (right-skewed distribution)
-     * Sample pixels: 0.38-0.46 (low-radiance rural area tested)
-   - NoData handling: No explicit NoData value declared
-     → Need to check for negative values during full processing
-   - Memory footprint: 1.93 GB per tile (if fully loaded)
-   - Data validity: CONFIRMED (all sample pixels valid, reasonable radiance range)
+   - Test tile (Jan 2023, 75N060E): 1.93 GB GeoTIFF, 28800×18000 pixels
+   - India fully covered (60-180°E, 0-75°N extent)
+   - Radiance range: 0-57.24 nW/cm²/sr (mean 0.87, median 0.50)
+   - Resolution: 15 arc-second (~463m at equator)
+   - Data validity: CONFIRMED
 
-Key Findings - Merge Feasibility:
-1. RBI Districts: 762 unique districts ready for merge
-   - Naming convention: UPPERCASE, hyphenated, standardized
-   - Time coverage: 2023-2025 confirmed, 2015-2022 pending inspection
-   - Panel structure: Quarterly frequency, 4 population groups per district
+Key Findings:
+- RBI: 762 districts ready for merge (standardized naming)
+- EM-DAT: Geographic precision heterogeneous (50% district-level, 50% state-level)
+- VIIRS: Production-ready, H1/H2 testable with district aggregation
+- Expected treatment/control split: ~150 flooded districts, ~600 non-flooded
 
-2. EM-DAT Floods: 69 events, 147 districts identified
-   - Geographic precision: HETEROGENEOUS (50% district-level, 50% state-level)
-   - Treatment/control split: ~150 treated districts, ~600 control districts (good for identification)
-   - Measurement error source: State-level events code ALL districts in state as flood=1
-     → Creates false positives, will attenuate H1 treatment effects
-     → MUST disclose in paper: "Flood exposure measured with heterogeneous geographic precision"
-   - Merge strategy:
-     * District-level events (35): Direct fuzzy match to RBI districts
-     * State-level events (34): Map to all districts in state (requires state-district crosswalk)
-
-3. VIIRS Nighttime Lights: Production-ready
-   - India coverage: 100% (entire country within single tile 75N060E)
-   - Spatial resolution: Sufficient for city-level economic activity detection
-   - Data quality: Valid radiance values, reasonable variance for H2 testing
-   - Phase 3d download scope: 120 tiles × 2 GB = 240 GB (Jan 2015 - Dec 2024)
-
-Merge Gaps Identified:
-1. District Name Harmonization:
-   - EM-DAT: "Belgaum" vs RBI: "BELAGAVI"
-   - EM-DAT: "Cuddapah" vs RBI: "Y.S.R. KADAPA" (likely)
-   - Solution: Fuzzy string matching + manual crosswalk table
-
-2. EM-DAT Location Text Parsing:
-   - 34 events have district names in Location field but empty Admin Units
-   - Example: "Itanagar district (Arunachal Pradesh)" → Extract "Itanagar"
-   - Solution: Regex parsing + manual verification
-
-3. State-to-District Mapping:
-   - State-level EM-DAT events need mapping to all districts in that state
-   - Example: "Maharashtra" flood → Code all ~36 Maharashtra districts as flood=1
-   - Solution: Build state-district crosswalk from RBI data
-
-4. VIIRS NoData Handling:
-   - No explicit NoData value in file metadata
-   - Potential negative values or -999.9 encoding
-   - Solution: Filter out values <0 during aggregation
-
-Research Design Validation:
-✓ H1 (Floods → VIIRS decline): Testable with district-level aggregation
-✓ H2 (VIIRS → Deposit decline): Testable (radiance has sufficient variance)
-✓ H3 (Shadow banking timing): Testable (quarterly RBI data available)
-✓ H4 (Network contagion): Testable (district IDs enable spatial adjacency matrix)
-
-Paper Implications:
-- Geographic measurement error disclosure required (state-level fallback)
-- Expected effect: Attenuation bias in H1 (state-level events dilute signal)
-- Language: "Flood exposure measured at district level where available (51%), 
-   state level otherwise (49%) due to EM-DAT data structure"
-- Robustness check: Separate regressions for district-only vs all events
-
-Commits Today:
-1. 01_download_viirs.py (placeholder with comment documenting Dec 31 failed attempt)
-2. 02_inspect_rbi.py (RBI structure inspection)
-3. 03_inspect_emdat.py (EM-DAT Admin Units parsing)
-4. 04_inspect_viirs.py (VIIRS validation)
-
-Status: Phase 3c Day 1 COMPLETE (21:30 PM)
-Next Session: Phase 3c Day 2 (Jan 9)
-- Parse EM-DAT Location text for 34 missing events
+Next Session (Phase 3c Day 2 - Jan 9):
+- Parse EM-DAT Location text for missing 34 events
 - Build district name harmonization crosswalk (fuzzy matching)
-- Create state-to-district mapping table
-- Test VIIRS spatial subsetting (extract India bounding box only)
-- Decision point: Proceed to Phase 3d batch download or refine merge logic first
+- Test VIIRS spatial subsetting (extract India bounding box)
+
+Commits: 4 scripts (01_download_viirs placeholder, 02-04 inspection scripts)
+Status: Phase 3c Day 1 complete
 
 ======================================================================
 END OF LOG - Last Updated: 2026-01-08 21:33 PM IST

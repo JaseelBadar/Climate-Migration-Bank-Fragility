@@ -1,14 +1,19 @@
+Below is a full rewrite of your Research_Log.txt in the same formatting style (separator lines, headers, “Goal / Status / Next”, and end-of-log line), incorporating the Phase 3a/3b/3c additions and the Phase 3c Day 0 vs Day 1 split.
+​
+​
+
+text
 ======================================================================
 RESEARCH LOG - Climate Change, Migration, and Bank Fragility
 ======================================================================
 Project: Climate-induced migration effects on banking sector stability
 Period: December 2025 - Present
-Author: [Your Name]
+Author: Jaseel Badar
 Location: E:\Climate-Migration-Bank-Fragility\
 ======================================================================
 
 ======================================================================
-2025-12-30 to 2025-12-31: Project Initialization & Environment Setup
+2025-12-30 to 2025-12-31: Phase 1 - Project Initialization & Environment Setup
 ======================================================================
 Goal: Set up computational environment and project structure
 
@@ -21,17 +26,18 @@ Environment Setup:
 Project Structure Created:
 - 00_Admin/ (documentation, logs)
 - 01_Data_Raw/ (original data, never modified)
-- 02_Data_Processed/ (cleaned datasets)
-- 03_Data_Analysis/ (regression outputs, figures)
+- 02_Data_Intermediate/ (intermediate processing outputs)
+- 03_Data_Clean/ (cleaned datasets for analysis)
 - 04_Code/ (all Python scripts)
-- 05_Writing/ (paper drafts, LaTeX)
+- 05_Outputs/ (regression outputs, figures)
+- 06_Drafts/ (paper drafts)
 
 GitHub Repository:
 - Initialized local Git repository
-- Created .gitignore (excludes large data files >100MB)
+- Created .gitignore (excludes large files / prevents repo bloat)
 - First commit: "Initial project structure"
 
-Key Decision:
+Key Decisions:
 - Manual data download approach (API attempts for VIIRS failed)
 - Focus on 2015-2024 period (10-year panel)
 
@@ -39,7 +45,7 @@ Status: Environment ready, awaiting data download
 Next: Download RBI, EM-DAT, VIIRS datasets
 
 ======================================================================
-2026-01-02 (Thu): Phase 3a - Data Download (Day 1)
+2026-01-02 (Thu): Phase 2 - Data Acquisition (Day 1)
 ======================================================================
 Goal: Download all three core datasets
 
@@ -57,7 +63,7 @@ Data Sources Acquired:
 
 2. EM-DAT Disaster Database
    Location: 01_Data_Raw/EMDAT_Disasters/
-   File: public_emdat_custom_request_2026-01-02_[UUID].xlsx
+   File: public_emdat_custom_request_2026-01-02_c149ea93-8fbf-4f6e-a8f6-3b41cc622ed0.xlsx
    Source: Centre for Research on Epidemiology of Disasters (CRED)
    Filters applied: Country=India, Disaster Type=Flood, Period=2015-2024
    Events: 70 flood events (later corrected to 69 after inspection)
@@ -66,7 +72,7 @@ Data Sources Acquired:
 3. VIIRS Nighttime Lights (Test Tile)
    Location: 01_Data_Raw/VIIRS_NightLights/
    Test file: SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600
-   Files extracted: .avg_rade9h.tif (2.07 GB), .cvg.tif, .cf_cvg.tif
+   Files extracted: .avg_rade9h.tif (avg radiance), .cvg.tif, .cf_cvg.tif
    Source: Colorado School of Mines Earth Observation Group
    Tile: 75N060E (covers all of India)
    Period tested: January 2023 (1 month)
@@ -79,8 +85,62 @@ Key Decisions:
 - RBI files span different periods, will require concatenation
 
 Commits: 3 (data folder structure + download documentation)
-Status: Phase 3a complete
-Next: Phase 3c data inspection (validate file formats and merge feasibility)
+Status: Phase 2 complete
+Next: Phase 3a literature acquisition + Phase 3c data inspection (merge feasibility)
+
+======================================================================
+2026-01-05 (Sun): Phase 3a - Literature Acquisition
+======================================================================
+Goal: Build a defensible novelty baseline and assemble the core bibliography
+
+Actions Completed:
+- Searched Google Scholar, SSRN, NBER using targeted keywords
+- Used Harvard HOLLIS to bypass paywalls for locked papers
+- Downloaded ~15-18 papers via Zotero Chrome Connector
+- Organized PDFs in 00_Admin/Literature_PDFs folder
+- Fixed Zotero metadata (missing authors/dates)
+- Created LiteratureTracker.xlsx with table structure
+
+Status: Papers acquired. Ready for gap analysis reading/annotation.
+Next: Phase 3b - Fill LiteratureTracker.xlsx using abstracts/intros/conclusions
+
+======================================================================
+2026-01-06 (Mon): Phase 3b - Gap Analysis
+======================================================================
+Goal: Confirm novelty and define “what the literature missed” in a structured way
+
+Actions Completed:
+- Read abstracts / key intro paragraphs / conclusions for the collected paper set (~15-18 papers)
+- Filled LiteratureTracker.xlsx with multi-dimensional gap analysis:
+  - Geographic gaps (India district-level evidence scarce / inconsistent)
+  - Methodological gaps (satellite lights often used for activity proxies; migration mechanism under-tested)
+  - Temporal gaps (many designs not aligned to disaster timing / dynamic panels)
+  - Mechanistic gaps (banking stability often framed via credit risk; deposit/liquidity channel underemphasized)
+- Confirmed novelty positioning: No paper in the reviewed set establishes the full chain:
+  Climate shock → (migration proxied by VIIRS) → district-level deposit stress in India
+
+Status: Literature phase complete. Novelty defense ready.
+Next: Phase 3c - Formalize hypotheses/codebook and begin data inspection scripts
+
+======================================================================
+2026-01-07 (Tue): Phase 3c Day 0 - Conceptual Work (Mobile Only)
+======================================================================
+Goal: Maintain momentum and lock “definitions + hypotheses” before coding
+
+Actions Completed:
+- Laptop unavailable - executed mobile research tasks to maintain momentum
+- Created Variables_Codebook_v1.md:
+  - Defined variable families (outcomes, treatments, controls, networks, panel structure)
+  - Defined transformations to be used in code (e.g., log changes, quarterly aggregation targets)
+- Created Hypotheses_Formal_v1.md:
+  - H1: Flood events → Decline in nighttime light intensity (VIIRS)
+  - H2: Nighttime light decline → Decline in formal bank deposits
+  - H3: Deposit decline → Increased reliance on shadow banking (timing analysis)
+  - H4: Banking stress exhibits spatial contagion through district networks
+- Both documents specify measurement intentions (time aggregation, geographic unit, sign expectations)
+
+Status: Codebook + hypotheses locked. Ready to implement inspection scripts on laptop.
+Next: Phase 3c Day 1 (Jan 8) - RBI/EM-DAT/VIIRS inspection scripts + merge feasibility validation
 
 ======================================================================
 2026-01-08 (Wed) 19:00-21:30 PM IST: Phase 3c Day 1 - Data Inspection

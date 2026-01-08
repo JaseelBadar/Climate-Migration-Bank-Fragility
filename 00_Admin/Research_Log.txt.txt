@@ -1,70 +1,219 @@
-2025-12-30: Project Initialization
-- Created standard directory structure (00_Admin to 06_Drafts).
-- Initialized GitHub repository with Python .gitignore and MIT License.
-- Defined Core Research Question: "Climate-induced migration causing shadow runs."
-- Formatted Core_Claims.docx to NBER standards (Times New Roman, 12pt, Double Spaced).
-- Installed Research Stack: Zotero 7, Anaconda (Python 3.10), VS Code.
-- Registered for data access: NASA Earthdata and EM-DAT.
+======================================================================
+RESEARCH LOG - Climate Change, Migration, and Bank Fragility
+======================================================================
+Project: Climate-induced migration effects on banking sector stability
+Period: December 2025 - Present
+Author: [Your Name]
+Location: E:\Climate-Migration-Bank-Fragility\
+======================================================================
 
-2025-12-31: Tech Stack & Data Download Attempt
-- Finalized installation of Zotero 7 + Better BibTeX plugin.
-- Set up Anaconda environment 'research_env' with geospatial libraries (geopandas, rasterio, pystac-client).
-- Connected VS Code to the research environment (verified).
-- Created first Python script '01_download_viirs.py'.
-- Attempted automated download from Microsoft Planetary Computer:
-  - Result: Connection successful, but returned 0 items (Collection name mismatch).
-  - Decision: Paused to pivot to manual download or Google Earth Engine strategy tomorrow.
+======================================================================
+2025-12-30 to 2025-12-31: Project Initialization & Environment Setup
+======================================================================
+Goal: Set up computational environment and project structure
 
-2026-01-02: Phase 2 Data Acquisition COMPLETE
-- VIIRS: Downloaded Jan 2023 test tile (SVDNB_npp_20230101-20230131_75N060E)
-  - 3 .tif files + .tgz saved locally in 01_Data_Raw/VIIRSNightLights/
-  - Files ignored in Git due to >100MB limit
-- EM-DAT: Downloaded India floods 2015-2024 (70 events)
-  - File: public_emdat_custom_request_2026-01-02_c149ea93.xlsx
-  - Committed to GitHub
-- RBI: Downloaded 3 consolidated district deposit files
-  - RBI_Deposits_2004_2017.xls
-  - RBI_Deposits_2017_2022.xls
-  - RBI_Deposits_2023_2024.xls
-  - All committed to GitHub
-- GitHub: Configured .gitignore to exclude *.tif, *.tgz, *.zip, VIIRS folder
-- Decision: Confirmed India geography, 2015-2024 timeframe optimal
-- Status: Raw data vault populated. Ready for Phase 3 (Processing & Literature).
+Environment Setup:
+- Created conda environment: research_env
+- Installed core packages: pandas, geopandas, rasterio, matplotlib, statsmodels
+- Python 3.10.19 on Windows 11
+- VS Code configured as primary IDE
 
-2026-01-05: Phase 3a Literature Acquisition COMPLETE
-- Searched Google Scholar, SSRN, NBER using targeted keywords
-- Used Harvard HOLLIS to bypass paywalls for locked papers
-- Downloaded 15-18 papers via Zotero Chrome Connector
-- Organized PDFs in 00_Admin/Literature_PDFs/ folder
-- Fixed Zotero metadata (missing authors/dates)
-- Created LiteratureTracker.xlsx with table structure
-- Status: Papers acquired. Gap analysis (reading abstracts) scheduled for Jan 6.
-- Next: Phase 3b - Fill tracker + write data inspection scripts.
+Project Structure Created:
+- 00_Admin/ (documentation, logs)
+- 01_Data_Raw/ (original data, never modified)
+- 02_Data_Processed/ (cleaned datasets)
+- 03_Data_Analysis/ (regression outputs, figures)
+- 04_Code/ (all Python scripts)
+- 05_Writing/ (paper drafts, LaTeX)
 
-2026-01-06: Phase 3b Gap Analysis COMPLETE
-- Read abstracts/intro/conclusions for all 16 papers
-- Filled LiteratureTracker.xlsx with 4-dimensional gap analysis:
-  * Geographic gaps (China/US/Colombia vs. India districts)
-  * Methodological gaps (VIIRS for GDP vs. migration proxy)
-  * Temporal gaps (static/cross-section vs. dynamic disaster shocks)
-  * Mechanistic gaps (credit/lending vs. deposit withdrawals/shadow runs)
-- Confirmed novelty: NO paper connects Climate → VIIRS Migration → Bank Deposits in India
-- Status: Literature phase complete. Ready for data processing scripts.
-- Next: Phase 3c - Write RBI/EMDAT/VIIRS inspection Python scripts.
+GitHub Repository:
+- Initialized local Git repository
+- Created .gitignore (excludes large data files >100MB)
+- First commit: "Initial project structure"
 
-2026-01-07: Phase 3c Remote Work (Mobile Only)
-- Laptop unavailable—executed mobile research tasks to maintain momentum
-- Created Variables_Codebook_v1.md: Defined 40+ variables across 5 categories
-  * Outcome variables (deposits, withdrawals, branch counts)
-  * Treatment variables (floods, VIIRS lights, migration proxies)
-  * Control variables (rainfall, GDP, agriculture, urbanization)
-  * Network variables (bank connectedness, spatial adjacency)
-  * Panel structure documented (~640 districts × 40 quarters)
-- Created Hypotheses_Formal_v1.md: Specified 4 testable hypotheses
-  * H1: Floods → VIIRS lights decline (migration proxy validation)
-  * H2: Lights decline → Deposit withdrawals (liquidity mechanism)
-  * H3: Immediate timing (shadow run signature, not credit losses)
-  * H4: Network spillovers (contagion beyond flood footprint)
-- Both documents specify measurement decisions (thresholds, time aggregation, geographic matching rules)
-- Status: Codebook guides tomorrow's Python scripts. Hypotheses guide regression specifications in Phase 4.
-- Next: Jan 8 with laptop—write RBI/EMDAT/VIIRS inspection scripts (Phase 3c execution).
+Key Decision:
+- Manual data download approach (API attempts for VIIRS failed)
+- Focus on 2015-2024 period (10-year panel)
+
+Status: Environment ready, awaiting data download
+Next: Download RBI, EM-DAT, VIIRS datasets
+
+======================================================================
+2026-01-02 (Thu): Phase 3a - Data Download (Day 1)
+======================================================================
+Goal: Download all three core datasets
+
+Data Sources Acquired:
+
+1. RBI District Banking Statistics (BSR-2)
+   Location: 01_Data_Raw/RBI_Bank_Data/
+   Files downloaded:
+   - RBI_Deposits_2004_2017.xlsx (historical baseline)
+   - RBI_Deposits_2017_2022.xlsx (5-year mid-period)
+   - RBI_Deposits_2023_2024.xlsx (recent data)
+   Source: Reserve Bank of India official portal
+   Coverage: All districts, quarterly snapshots
+   Variables: Deposits by population group (Rural/Semi-urban/Urban/Metro)
+
+2. EM-DAT Disaster Database
+   Location: 01_Data_Raw/EMDAT_Disasters/
+   File: public_emdat_custom_request_2026-01-02_[UUID].xlsx
+   Source: Centre for Research on Epidemiology of Disasters (CRED)
+   Filters applied: Country=India, Disaster Type=Flood, Period=2015-2024
+   Events: 70 flood events (later corrected to 69 after inspection)
+   Variables: Location, dates, deaths, affected population, damage estimates
+
+3. VIIRS Nighttime Lights (Test Tile)
+   Location: 01_Data_Raw/VIIRS_NightLights/
+   Test file: SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600
+   Files extracted: .avg_rade9h.tif (2.07 GB), .cvg.tif, .cf_cvg.tif
+   Source: Colorado School of Mines Earth Observation Group
+   Tile: 75N060E (covers all of India)
+   Period tested: January 2023 (1 month)
+   Note: Full download (120 months, 2015-2024) deferred to Phase 3d
+
+Key Decisions:
+- VIIRS Microsoft Planetary Computer API failed (returned 0 items)
+- Pivoted to manual download from Colorado School of Mines
+- Downloaded single test tile to validate format before bulk download
+- RBI files span different periods, will require concatenation
+
+Commits: 3 (data folder structure + download documentation)
+Status: Phase 3a complete
+Next: Phase 3c data inspection (validate file formats and merge feasibility)
+
+======================================================================
+2026-01-08 (Wed) 19:00-21:30 PM IST: Phase 3c Day 1 - Data Inspection
+======================================================================
+Goal: Validate merge feasibility across 3 datasets (RBI, EM-DAT, VIIRS)
+
+Scripts Created:
+
+1. 02_inspect_rbi.py: RBI deposit structure inspection
+   Purpose: Identify district column, deposit columns, date range
+   Findings:
+   - File inspected: RBI_Deposits_2023_2024.xlsx
+   - Sheet: "Report 1" (single sheet)
+   - Dimensions: 1,877 rows × 38 columns
+   - District column: Column 3 "DISTRICT" (index 3)
+   - Unique districts: 762
+   - District name format: UPPERCASE, hyphenated (e.g., BALOD, GAURELA-PENDRA-MARWAHI)
+   - Population groups: Rural (736 rows), Semi-urban (721), Urban (354), Metro (62)
+   - Deposit columns: Indices 7,10,13,16,19,22,25,28,31,34,37 (11 quarters)
+   - Date coverage: 2023-Q1 (Mar 31) to 2025-Q2 (Sep 30)
+   - Critical: Each district has 2-4 rows (one per population group)
+   - Aggregation required: GROUP BY district, SUM deposits across population groups
+   - Gap identified: Missing 2015-2022 data (need to inspect other 2 RBI files)
+
+2. 03_inspect_emdat.py: EM-DAT flood event inspection
+   Purpose: Parse Admin Units JSON, assess geographic precision
+   Findings:
+   - File: public_emdat_custom_request_2026-01-02_[UUID].xlsx
+   - Total events: 69 (not 70 as initially downloaded)
+   - Date range: 2015-2024 (Start Year, Start Month, Start Day columns)
+   - Admin Units column (43): Structured JSON with adm1_name (states), adm2_name (districts)
+   - Events with district-level data: 35 (50.7%) → Yields 147 unique districts
+   - Events with state-level only: 34 (49.3%) → Empty Admin Units JSON
+   - Location text field: Inconsistent format (mixed cities, districts, states)
+   - Severity measures:
+     * Total Deaths: 91.3% coverage (0-2,035 deaths)
+     * No. Affected: 73.9% coverage (5-23M people) ← BEST proxy for H1 severity
+     * Total Damage: 33.3% coverage (too many missing values)
+   - Sample district names: Belgaum, Gadag, Anantapur, Cuddapah, Thrissur, Mumbai
+   - Critical issue: 34 events have Location text with districts but empty Admin Units
+     → Requires manual parsing of Location field to recover these events
+   - Geographic precision heterogeneous (50% district, 50% state-level)
+
+3. 04_inspect_viirs.py: VIIRS nighttime lights validation
+   Purpose: Validate GeoTIFF format, spatial coverage, radiance values
+   Findings:
+   - Test file: SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600.avg_rade9h.tif
+   - File size: 1.93 GB
+   - Format: GeoTIFF, single-band float32, CRS EPSG:4326 (WGS84)
+   - Dimensions: 28,800 columns × 18,000 rows (518.4M pixels)
+   - Resolution: 0.004166° (~15 arc-seconds = 463m at equator)
+   - Geographic extent: 60-180°E, 0-75°N
+   - India coverage: CONFIRMED (8-37°N, 68-97°E fully within tile bounds)
+   - Radiance values:
+     * Range: 0-57.24 nW/cm²/sr
+     * Mean: 0.87 nW/cm²/sr (mostly dark pixels = rural/ocean)
+     * Median: 0.50 nW/cm²/sr (right-skewed distribution)
+     * Sample pixels: 0.38-0.46 (low-radiance rural area tested)
+   - NoData handling: No explicit NoData value declared
+     → Need to check for negative values during full processing
+   - Memory footprint: 1.93 GB per tile (if fully loaded)
+   - Data validity: CONFIRMED (all sample pixels valid, reasonable radiance range)
+
+Key Findings - Merge Feasibility:
+1. RBI Districts: 762 unique districts ready for merge
+   - Naming convention: UPPERCASE, hyphenated, standardized
+   - Time coverage: 2023-2025 confirmed, 2015-2022 pending inspection
+   - Panel structure: Quarterly frequency, 4 population groups per district
+
+2. EM-DAT Floods: 69 events, 147 districts identified
+   - Geographic precision: HETEROGENEOUS (50% district-level, 50% state-level)
+   - Treatment/control split: ~150 treated districts, ~600 control districts (good for identification)
+   - Measurement error source: State-level events code ALL districts in state as flood=1
+     → Creates false positives, will attenuate H1 treatment effects
+     → MUST disclose in paper: "Flood exposure measured with heterogeneous geographic precision"
+   - Merge strategy:
+     * District-level events (35): Direct fuzzy match to RBI districts
+     * State-level events (34): Map to all districts in state (requires state-district crosswalk)
+
+3. VIIRS Nighttime Lights: Production-ready
+   - India coverage: 100% (entire country within single tile 75N060E)
+   - Spatial resolution: Sufficient for city-level economic activity detection
+   - Data quality: Valid radiance values, reasonable variance for H2 testing
+   - Phase 3d download scope: 120 tiles × 2 GB = 240 GB (Jan 2015 - Dec 2024)
+
+Merge Gaps Identified:
+1. District Name Harmonization:
+   - EM-DAT: "Belgaum" vs RBI: "BELAGAVI"
+   - EM-DAT: "Cuddapah" vs RBI: "Y.S.R. KADAPA" (likely)
+   - Solution: Fuzzy string matching + manual crosswalk table
+
+2. EM-DAT Location Text Parsing:
+   - 34 events have district names in Location field but empty Admin Units
+   - Example: "Itanagar district (Arunachal Pradesh)" → Extract "Itanagar"
+   - Solution: Regex parsing + manual verification
+
+3. State-to-District Mapping:
+   - State-level EM-DAT events need mapping to all districts in that state
+   - Example: "Maharashtra" flood → Code all ~36 Maharashtra districts as flood=1
+   - Solution: Build state-district crosswalk from RBI data
+
+4. VIIRS NoData Handling:
+   - No explicit NoData value in file metadata
+   - Potential negative values or -999.9 encoding
+   - Solution: Filter out values <0 during aggregation
+
+Research Design Validation:
+✓ H1 (Floods → VIIRS decline): Testable with district-level aggregation
+✓ H2 (VIIRS → Deposit decline): Testable (radiance has sufficient variance)
+✓ H3 (Shadow banking timing): Testable (quarterly RBI data available)
+✓ H4 (Network contagion): Testable (district IDs enable spatial adjacency matrix)
+
+Paper Implications:
+- Geographic measurement error disclosure required (state-level fallback)
+- Expected effect: Attenuation bias in H1 (state-level events dilute signal)
+- Language: "Flood exposure measured at district level where available (51%), 
+   state level otherwise (49%) due to EM-DAT data structure"
+- Robustness check: Separate regressions for district-only vs all events
+
+Commits Today:
+1. 01_download_viirs.py (placeholder with comment documenting Dec 31 failed attempt)
+2. 02_inspect_rbi.py (RBI structure inspection)
+3. 03_inspect_emdat.py (EM-DAT Admin Units parsing)
+4. 04_inspect_viirs.py (VIIRS validation)
+
+Status: Phase 3c Day 1 COMPLETE (21:30 PM)
+Next Session: Phase 3c Day 2 (Jan 9)
+- Parse EM-DAT Location text for 34 missing events
+- Build district name harmonization crosswalk (fuzzy matching)
+- Create state-to-district mapping table
+- Test VIIRS spatial subsetting (extract India bounding box only)
+- Decision point: Proceed to Phase 3d batch download or refine merge logic first
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-08 21:33 PM IST
+======================================================================

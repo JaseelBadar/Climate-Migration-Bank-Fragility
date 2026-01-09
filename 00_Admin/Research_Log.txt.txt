@@ -173,6 +173,7 @@ Key Findings:
 - EM-DAT: Geographic precision heterogeneous (50% district-level, 50% state-level)
 - VIIRS: Production-ready, H1/H2 testable with district aggregation
 - Expected treatment/control split: ~150 flooded districts, ~600 non-flooded
+- Update (Jan 9): Admin Units are present for 57/69 events once parsed correctly (adm2_name districts + adm1_name states); only 12/69 require Location parsing.
 
 Next Session (Phase 3c Day 2 - Jan 9):
 - Parse EM-DAT Location text for missing 34 events
@@ -183,5 +184,42 @@ Commits: 4 scripts (01_download_viirs placeholder, 02-04 inspection scripts)
 Status: Phase 3c Day 1 complete
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-08 21:33 PM IST
+2026-01-09 (Fri) 17:45-18:40 PM IST: Phase 3c Day 2 - District Boundaries + EM-DAT Parsing
+======================================================================
+Goal: Begin district harmonization by locking district boundary polygons and extracting district/state labels from EM-DAT floods.
+
+A) District boundary dataset acquired (GADM)
+- Downloaded: gadm41_IND_shp.zip (GADM v4.1, India)
+- Extracted to: 01_Data_Raw/District_Boundaries/
+- Validated via geopandas load test:
+  - gadm41_IND_2.shp loaded successfully
+  - 676 district polygons
+  - Key columns confirmed: NAME_1 (state), NAME_2 (district), geometry
+
+B) EM-DAT district/state extraction completed
+- Script created: 04_Code/06_parse_emdat_locations.py
+- Outputs:
+  - 02_Data_Intermediate/emdat_districts_parsed.csv
+  - 05_Outputs/Logs/06_parse_emdat_log.txt
+- Results:
+  - Total flood events in file: 69
+  - Events with usable Admin Units (adm2_name districts or fallback adm1_name states): 57 (82.6%)
+  - Events missing Admin Units: 12 (17.4%) → parsed from free-text Location field
+  - Geographic labels produced for all 69 events (districts and/or states)
+
+C) Output verification
+- Script created: 04_Code/07_check_output.py
+- Verified:
+  - emdat_districts_parsed.csv loads
+  - 69/69 events have non-empty districts_final_str
+
+Notes / Known issues
+- Parsed Location text contains typos and non-district tokens in some cases (e.g., “Administrative unit not available”, “Itanagar distrci”, “Meghalaya states”).
+- These will be handled during crosswalk cleaning (manual corrections + fuzzy match).
+
+Status: District boundaries locked; EM-DAT geographic extraction complete.
+Next: Build district name crosswalk (RBI ↔ GADM ↔ EM-DAT) and then generate flood exposure panel (Rule A vs Rule B).
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-09 18:45 PM IST
 ======================================================================

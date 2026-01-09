@@ -1,8 +1,8 @@
 # Climate Change, Migration, and Bank Fragility (India)
 
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024). [file:14]  
-**Status:** Phase 3c Day 1 (data inspection completed; harmonization pending). [file:14]  
-**Last updated:** 2026-01-08. [file:14]
+**Status:** Phase 3c Day 2 (district boundaries locked; EM-DAT district extraction complete; crosswalk pending). [file:14]  
+**Last updated:** 2026-01-09. [file:14]
 
 ---
 
@@ -46,6 +46,11 @@ This repository follows a strict “raw data is never modified” rule; all tran
 - **Current status:** A single test month (Jan 2023) was downloaded to validate processing before any bulk (2015–2024) downloads. [file:14]  
 - **Tile:** `75N060E` (covers India). [file:14]
 
+### 4) District boundaries (GADM v4.1)
+- **What:** India administrative boundaries; district polygons used for VIIRS aggregation and adjacency/spillover construction.
+- **Where stored:** `01_Data_Raw/District_Boundaries/`
+- **Key file (district level):** `gadm41_IND_2.shp` (676 districts validated in geopandas).
+
 ---
 
 ## Repository layout
@@ -64,8 +69,11 @@ Variables_Codebook_v1.md
 RBI_Bank_Data/
 EMDAT_Disasters/
 VIIRS_NightLights/
+District_Boundaries/
 
 02_Data_Intermediate/ # Parsed/reshaped outputs (non-final)
+emdat_districts_parsed.csv
+
 03_Data_Clean/ # Final analysis-ready panels
 
 04_Code/
@@ -73,6 +81,9 @@ VIIRS_NightLights/
 02_inspect_rbi.py
 03_inspect_emdat.py
 04_inspect_viirs.py
+05_test_shapefile.py
+06_parse_emdat_locations.py
+07_check_output.py
 
 05_Outputs/
 Figures/
@@ -127,17 +138,22 @@ Phase 3c Day 1: Data inspection (completed 2026-01-08)
 04_inspect_viirs.py: validated the VIIRS GeoTIFF integrity and India coverage for the test tile. [file:14]
 
 How to reproduce current inspection
-Activate the environment and run the inspection scripts: [file:14]
+Activate the environment and run the inspection scripts:
 
 bash
 conda activate research_env
 python 04_Code/02_inspect_rbi.py
 python 04_Code/03_inspect_emdat.py
 python 04_Code/04_inspect_viirs.py
-Expected outputs are described in Research_Log.txt (Phase 3c Day 1 section). [file:14]
+
+# Phase 3c Day 2 additions (EM-DAT district extraction)
+python 04_Code/06_parse_emdat_locations.py
+python 04_Code/07_check_output.py
+
+Expected outputs are described in Research_Log.txt (Phase 3c Day 1–Day 2 sections). [file:14]
 
 Known constraints (current)
-EM-DAT geographic specificity is heterogeneous: roughly half of events have district-level Admin Units while the rest require parsing from free-text location fields. [file:14]
+EM-DAT geographic specificity is heterogeneous, but after parsing the `Admin Units` JSON correctly (adm2_name districts + adm1_name states), 57/69 events have usable Admin Units data and only 12/69 require Location text parsing; parsed text still needs manual cleaning and crosswalk harmonization. [file:14]
 
 RBI district naming conventions (uppercase, hyphenation, post-renaming) may not match EM-DAT spellings directly, implying a required district-name harmonization layer. [file:14]
 
@@ -160,18 +176,12 @@ Data: Each dataset remains governed by the terms of its original provider; this 
 Contact
 
 Researcher: \Jaseel Badar
-
 Email: \jaseelbadar123@gmail.com
-
 Institution: \Harvard University
-
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 
 
-
 Project Start: December 30, 2025
-
 Last Updated: January 8, 2026, 10:03 PM IST
-
 Phase: 3c (Data Inspection - Day 1 Complete)
 

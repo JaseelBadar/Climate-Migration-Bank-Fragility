@@ -1,0 +1,33 @@
+EM-DAT Location Parsing Log - 2026-01-09 18:36:18
+============================================================
+Input file: 01_Data_Raw/EMDAT_Disasters/public_emdat_custom_request_2026-01-02_c149ea93-8fbf-4f6e-a8f6-3b41cc622ed0.xlsx
+Rows loaded: 69
+
+Admin Units coverage:
+  - Events WITH Admin Units: 57
+  - Events MISSING Admin Units: 12
+
+============================================================
+Events requiring manual review:
+------------------------------------------------------------
+2017-0294-IND | Banaskantha, Valsad, Navsari, Surat, Sabarkantha, Patan (Gujarat), Barmer, Jalore, Udaipur, Sirohi, Pali (Rajasthan), Kolkata (West Bengal) | ['Banaskantha', 'Valsad', 'Navsari', 'Surat', 'Sabarkantha', 'Patan', 'Barmer', 'Jalore', 'Udaipur', 'Sirohi', 'Pali', 'Kolkata']
+2022-0293-IND | Itanagar distrci (Arunchal Pradesh); Dima Hasao, Cachar, Udalguri District (Assam); East Khasi Hills, Ri-Bhoi Districts (Meghalaya); Nagaland; Bihar; Himachal Pradesh; Madhya Pradesh; Gujarat; Maharasthra | ['Itanagar distrci', 'Dima Hasao', 'Cachar', 'Udalguri District', 'East Khasi Hills', 'Ri-Bhoi Districts', 'Nagaland', 'Bihar', 'Himachal Pradesh', 'Madhya Pradesh', 'Gujarat', 'Maharasthra']
+2023-0330-IND | Nalbari, Baksa, Lakhimpur, Bajali, Barpet distrcits (Assam);Sikkim | ['Nalbari', 'Baksa', 'Lakhimpur', 'Bajali', 'Barpet distrcits', 'Sikkim']
+2023-0428-IND | Himachal Pradesh, Uttarakhand, Delhi, Bihar, Madyah Pradesh, Maharashtra, Chhattisgarh, Gujarat, Punjab, Karnataka, Assam | ['Himachal Pradesh', 'Uttarakhand', 'Delhi', 'Bihar', 'Madyah Pradesh', 'Maharashtra', 'Chhattisgarh', 'Gujarat', 'Punjab', 'Karnataka', 'Assam']
+2023-0486-IND | Mulugu District (western Telangana) | ['Mulugu District']
+2023-0846-IND | Thoothukudi, Tirunelveli, Kanniyakumari and Tenkasi Districts (Tamil Nadu state) | ['Thoothukudi', 'Tirunelveli', 'Kanniyakumari', 'Tenkasi Districts']
+2024-0399-IND | Assam and Meghalaya states | ['Assam', 'Meghalaya states']
+2024-0481-IND | Pratapgarh, Sultanpur, Chandauli, Mainpuri, Prayagraj, Auraiya, Deoria, Hathras, Varanasi and Siddharthnagar districts (Uttar Pradesh); Assam | ['Pratapgarh', 'Sultanpur', 'Chandauli', 'Mainpuri', 'Prayagraj', 'Auraiya', 'Deoria', 'Hathras', 'Varanasi', 'Siddharthnagar districts', 'Assam']
+2024-0561-IND | Mandi, Kullu, Shimla districts (Himachal Pradesh) | ['Mandi', 'Kullu', 'Shimla districts']
+2024-0624-IND | Tripura state | ['Tripura state']
+2024-0647-IND | Gujarat, Maharashtra, Tripura States | ['Gujarat', 'Maharashtra', 'Tripura States']
+2024-0719-IND | Meghalaya | ['Meghalaya']
+
+Extraction summary:
+  From Admin Units: 57
+  From Location text: 12
+
+Output file: 02_Data_Intermediate/emdat_districts_parsed.csv
+
+Completed: 2026-01-09 18:36:19
+Duration: 0.4 seconds

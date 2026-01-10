@@ -8,7 +8,7 @@
 
 ## 0. Non-negotiable principles (read first)
 
-1. **Raw data is read-only**: Never modify anything inside `01_Data_Raw/`. All transformations must write to `02_Data_Intermediate/` or `03_Data_Clean/`. [file:17]
+1. **Raw data is read-only**: Never modify anything inside `01_Data_Raw/`. All transformations must write to `02_Data_Intermediate/` or `03_Data_Clean/`. 
 2. **No silent drops**: Any row/observation dropped must be logged with counts and reasons.
 3. **No endogeneity by construction**: Never use VIIRS outcomes to define flood treatment. (No “flood = 1 if lights drop”.)
 4. **One script = one responsibility**: Each script produces one named output dataset and one log file.
@@ -18,16 +18,16 @@
 
 ## I. PANEL STRUCTURE
 
-**Unit of analysis**: Indian District (administrative unit as represented in RBI district strings). [file:17]  
+**Unit of analysis**: Indian District (administrative unit as represented in RBI district strings).   
 
-**Target period**: Quarterly, 2015Q1 to 2024Q4 (40 quarters). [file:17]  
+**Target period**: Quarterly, 2015Q1 to 2024Q4 (40 quarters).   
 
 **Expected N**: TBD. Prior expectation “~640” is obsolete; RBI inspection indicates ~762 district strings in the 2023–2024 workbook, and the final N depends on:  
 - district splits/renames across years,  
 - whether RBI historical files use different district naming conventions,  
-- harmonization success with district boundary shapefiles. [file:14][file:17]
+- harmonization success with district boundary shapefiles. 
 
-**Panel type**: Unbalanced until proven balanced (do not assume complete coverage). [file:17]
+**Panel type**: Unbalanced until proven balanced (do not assume complete coverage). 
 
 **Key index variables (must exist in the final panel)**:
 - `district_name_raw`: district label exactly as in RBI source.
@@ -45,23 +45,23 @@
 ### A. Deposit variables
 
 **Variable**: `total_deposits_qt`  
-**Definition**: Total aggregate deposits in district i, quarter t (all SCBs). [file:17]  
+**Definition**: Total aggregate deposits in district i, quarter t (all SCBs).   
 **Unit**: Nominal INR (as reported by RBI; verify unit scaling once headers are parsed).  
-**Source**: RBI district-level deposit statistics workbook(s). [file:17]  
+**Source**: RBI district-level deposit statistics workbook(s).   
 **Construction**: Extract RBI deposits and (if required) aggregate across population groups.
 
 **Variable**: `log_deposits_qt`  
-**Definition**: Natural log of deposits. [file:17]  
+**Definition**: Natural log of deposits.   
 **Construction**: `log_deposits_qt = ln(total_deposits_qt)`  
 **Rule**: If deposits can be zero/missing, handle using missingness rules (do not add arbitrary constants unless absolutely required and justified).
 
 **Variable**: `deposit_change_qt`  
-**Definition**: Quarter-over-quarter change in log deposits. [file:17]  
+**Definition**: Quarter-over-quarter change in log deposits.   
 **Construction**: `deposit_change_qt = log_deposits_qt - L1(log_deposits_qt)`  
 **Interpretation**: approximately percentage change.
 
 **Variable**: `deposit_withdrawal_binary`  
-**Definition**: “Withdrawal event” indicator (shadow-run proxy). [file:17]  
+**Definition**: “Withdrawal event” indicator (shadow-run proxy).   
 **Construction (data-driven, pre-committed)**:
 - Define threshold \(k\) using a baseline distribution (e.g., non-flood district-quarters) **before** estimating main regressions.
 - Baseline rule: `k = min(-0.10, P10(deposit_change_qt | Flood=0))` (i.e., at least 10% decline OR bottom decile if more extreme).  
@@ -72,7 +72,7 @@ Then: `deposit_withdrawal_binary = 1 if deposit_change_qt < k else 0`.
 These variables are conditional on availability in the RBI tables actually downloaded.
 
 **Variable**: `branch_count_qt`  
-**Definition**: number of reporting offices/branches in district-quarter. [file:17]  
+**Definition**: number of reporting offices/branches in district-quarter.   
 **Status**: uncertain; only include if explicitly present.
 
 **Variable**: `branch_change_qt`  
@@ -81,7 +81,7 @@ These variables are conditional on availability in the RBI tables actually downl
 
 ### C. Per-capita adjustments (optional)
 **Variable**: `deposits_per_capita_qt`  
-**Definition**: deposits divided by population. [file:17]  
+**Definition**: deposits divided by population.   
 **Warning**: district-year population is hard; if only Census 2011 exists, treat as static and disclose limitation.
 
 ---
@@ -91,24 +91,24 @@ These variables are conditional on availability in the RBI tables actually downl
 ### A. Flood exposure (EM-DAT)
 
 **Variable**: `flood_exposure_qt`  
-**Definition**: indicator for flood exposure in district i, quarter t. [file:17]  
-**Source**: EM-DAT floods (India, 2015–2024). [file:17]  
+**Definition**: indicator for flood exposure in district i, quarter t.   
+**Source**: EM-DAT floods (India, 2015–2024).   
 **Date-to-quarter mapping rule**: If flood start date falls in quarter t, code exposure in t (primary). Lags will be used for timing tests.
 
 **Geographic matching problem (must be explicit)**:
-- EM-DAT location precision is heterogeneous (some events list districts, some are state-only or vague regions). [file:17]
+- EM-DAT location precision is heterogeneous (some events list districts, some are state-only or vague regions). 
 - This creates unavoidable measurement error in `flood_exposure_qt` in the “full sample.”
 
 **Pre-committed mapping rule set (NO improvisation during coding)**:
-- **Rule A (Full sample / lower-bound)**: If event location is state-level, code `flood_exposure_qt=1` for **all districts in that state** for that quarter. (Overinclusive → attenuation bias.) [file:17]
-- **Rule B (High-precision sample / credibility spec)**: Only code district exposure when the district is explicitly named (Admin Units JSON OR parseable district in free-text location). [file:17]
+- **Rule A (Full sample / lower-bound)**: If event location is state-level, code `flood_exposure_qt=1` for **all districts in that state** for that quarter. (Overinclusive → attenuation bias.) 
+- **Rule B (High-precision sample / credibility spec)**: Only code district exposure when the district is explicitly named (Admin Units JSON OR parseable district in free-text location). 
 - Report both. Rule B is the identification credibility check; Rule A is the “broad exposure” version.
 
 **FORBIDDEN RULE (explicitly rejected)**:
-- **Never** define flood exposure using VIIRS lights drops. This is mechanical endogeneity (post-treatment conditioning). [file:17]
+- **Never** define flood exposure using VIIRS lights drops. This is mechanical endogeneity (post-treatment conditioning). 
 
 **Variable**: `flood_severity_qt`  
-**Definition**: continuous measure of intensity. [file:17]  
+**Definition**: continuous measure of intensity.   
 **Preferred construction**:  
 - `flood_severity_qt = ln(affected + deaths + 1)` (if both exist)  
 - Alternative: `ln(affected + 1)` only (if deaths missing frequently).
@@ -123,10 +123,10 @@ These variables are conditional on availability in the RBI tables actually downl
 ### A. Monthly district-level radiance
 
 **Variable**: `viirs_brightness_mt`  
-**Definition**: mean VIIRS radiance within district boundary for month m. [file:17]  
+**Definition**: mean VIIRS radiance within district boundary for month m.   
 **Unit**: VIIRS native radiance units.  
-**Input file**: `.avg_rade9h.tif` monthly composite(s). [file:17]  
-**GIS requirement**: district polygons (source TBD; must be recorded once chosen). [file:17]
+**Input file**: `.avg_rade9h.tif` monthly composite(s).   
+**GIS requirement**: district polygons (source TBD; must be recorded once chosen). 
 
 **Quality companion variables (recommended)**:
 - `viirs_cvg_mt`: coverage count/weight from `cvg.tif` (if available for each month).  
@@ -157,30 +157,30 @@ These can be tested later but must not replace the baseline silently.
 ### C. Migration proxy event
 
 **Variable**: `migration_proxy_qt`  
-**Definition**: binary indicator for significant lights decline. [file:17]  
+**Definition**: binary indicator for significant lights decline.   
 **Construction (data-driven, aligned with hypotheses)**:
 - `migration_proxy_qt = 1 if lights_change_qt < -theta else 0`
 - Baseline `theta` must be chosen **from the empirical distribution** (e.g., median or 75th percentile of negative `lights_change_qt` among flood-exposed district-quarters in the high-precision sample), recorded before final H2 estimation.
-- Robustness: `theta ∈ {0.10, 0.15, 0.20}`. [file:17]
+- Robustness: `theta ∈ {0.10, 0.15, 0.20}`. 
 
 ---
 
 ## V. CONTROL VARIABLES (confounds)
 
-Controls are not decorative: they exist to prevent false “migration” signals driven by seasonality/weather/economic cycles. [file:17]
+Controls are not decorative: they exist to prevent false “migration” signals driven by seasonality/weather/economic cycles. 
 
 ### A. Seasonality controls (minimum viable)
 **Variable**: `monsoon_quarter`  
-**Construction**: `1 if quarter overlaps monsoon season else 0` (exact mapping must be defined once and fixed). [file:17]
+**Construction**: `1 if quarter overlaps monsoon season else 0` (exact mapping must be defined once and fixed). 
 
 ### B. Weather controls (preferred; may be missing initially)
 **Variable**: `rainfall_qt`  
-**Source**: IMD gridded rainfall (if obtained). [file:17]  
+**Source**: IMD gridded rainfall (if obtained).   
 **Construction**: spatial aggregation of rainfall grid to district polygons, then quarterly sum/mean.
 
 ### C. Static district characteristics (optional but helpful)
-**Variable**: `agriculture_share_static` (Census 2011) [file:17]  
-**Variable**: `urbanization_rate_static` (Census 2011) [file:17]  
+**Variable**: `agriculture_share_static` (Census 2011)   
+**Variable**: `urbanization_rate_static` (Census 2011)   
 If used, explicitly state they are time-invariant proxies.
 
 ---
@@ -189,7 +189,7 @@ If used, explicitly state they are time-invariant proxies.
 
 ### A. Spatial network (feasible with shapefiles)
 **Variable**: `spatial_adjacency_ij`  
-**Definition**: 1 if districts share a border, else 0. [file:17]
+**Definition**: 1 if districts share a border, else 0. 
 
 **Variable**: `spillover_adjacent_flood_qt`  
 **Construction**:
@@ -198,7 +198,7 @@ If used, explicitly state they are time-invariant proxies.
 
 ### B. Banking network (high risk; only if data exists)
 **Variable**: `shared_banks_ij`  
-**Status**: high risk; requires bank-level presence data not confirmed. [file:17]
+**Status**: high risk; requires bank-level presence data not confirmed. 
 
 ---
 
@@ -223,7 +223,7 @@ These variables exist so the coding matches the causal story and can be audited.
 | RBI deposits | deposits (and maybe offices) | 2004–2024 quarterly | district | Excel | downloaded (3 files) |
 | EM-DAT floods | dates, location text/admin units, affected/deaths | 2015–2024 | event | Excel | downloaded (1 file) |
 | VIIRS lights | monthly radiance composites (+ quality layers) | monthly | pixel → district | GeoTIFF | only 1 month validated so far |
-| District polygons | boundaries for district aggregation | static | district | shapefile | not yet obtained |
+| District polygons | boundaries for district aggregation (GADM v4.1; Level 2) | static | district | shapefile | downloaded + load-tested (676 districts) |
 
 ---
 
@@ -235,9 +235,9 @@ These variables exist so the coding matches the causal story and can be audited.
 3. **Baseline quarterly lights change = quarterly mean log level difference**.
 
 ### Pending (must be decided with explicit log entry)
-1. Which district boundary dataset to use (and which year of boundaries). [file:17]
+1. District boundary dataset chosen: GADM v4.1 (Level 2). Pending: harmonize RBI district strings to GADM district names via crosswalk; document unavoidable splits/renames. 
 2. How to handle district splits/renames across years (crosswalk design).
-3. Whether to deflate deposits (nominal vs real). [file:17]
+3. Whether to deflate deposits (nominal vs real). 
 
 ---
 

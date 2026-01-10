@@ -1,8 +1,3 @@
-Below is a full rewrite of your Research_Log.txt in the same formatting style (separator lines, headers, “Goal / Status / Next”, and end-of-log line), incorporating the Phase 3a/3b/3c additions and the Phase 3c Day 0 vs Day 1 split.
-​
-​
-
-text
 ======================================================================
 RESEARCH LOG - Climate Change, Migration, and Bank Fragility
 ======================================================================
@@ -221,5 +216,43 @@ Status: District boundaries locked; EM-DAT geographic extraction complete.
 Next: Build district name crosswalk (RBI ↔ GADM ↔ EM-DAT) and then generate flood exposure panel (Rule A vs Rule B).
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-09 18:45 PM IST
+2026-01-10 (Sat) 22:45-23:35 PM IST: Phase 3c Day 2.5 - Documentation Hygiene (No Coding)
+======================================================================
+Goal: Lock documentation language to avoid overclaiming and ensure repo docs match the actual folder structure and current phase status.
+
+Actions Completed
+A) Claim discipline updates (documentation-only)
+- Core_Claims.docx: softened “first causal evidence” phrasing to “aims to provide” and made propagation wording explicitly conditional on data feasibility.
+- Literature_Tracker.xlsx: softened top novelty claim from “establishes first causal evidence” to “aims to provide causal evidence consistent with.”
+
+B) Identification / IV discipline wording (documentation-only)
+- Hypotheses_Formal_v1.1.md: rewrote the H2b exclusion restriction paragraph to frame it as an identifying assumption with explicit threats (e.g., direct banking-operations disruption), without changing the empirical plan.
+
+C) Codebook consistency (documentation-only)
+- Variables_Codebook_and_Coding_Protocol_v1.1.md:
+  - Updated the District Polygons status to reflect that GADM v4.1 Level-2 district boundaries are already downloaded and validated (676 districts).
+  - Removed any stray [file:*] artifacts left from prior drafting.
+
+D) README cleanup (documentation-only)
+- README.md:
+  - Removed [file:*] artifacts.
+  - Updated repo layout to reflect current v1.1 filenames and current pipeline state.
+  - Preserved RBI file extensions as .xlsx (local saved format).
+  - Fixed markdown formatting issues (closed code fences) and removed duplicated outdated “Last Updated/Phase” footer lines.
+
+Commits (documentation-only)
+- Commit: “Tighten Core Claims wording”
+- Commit: “Update novelty statement in Literature Tracker”
+- Commit: “Clarify IV assumption language (Hypotheses v1.1)”
+- Commit: “Update codebook: GADM obtained + cleanup”
+- Commit: “README cleanup: consistency + formatting”
+
+Status:
+Documentation is now aligned with the current project state (Phase 3c Day 2 complete; crosswalk pending). No data or code changes were made in this session.
+
+Next:
+Phase 3c Day 3: Build district-name crosswalk (RBI ↔ GADM ↔ EM-DAT), generate district_crosswalk_draft.csv, and produce crosswalk log with match-rate stop condition check.
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-10 23:35 PM IST
 ======================================================================

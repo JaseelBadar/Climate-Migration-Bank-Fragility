@@ -82,10 +82,10 @@ Where \(X_{it}\) includes (at minimum) monsoon/seasonality controls; rainfall co
 **Expected sign**:
 - \(\beta_2 > 0\) (lights fall → deposits fall; both negative changes imply a positive slope).
 
-**Exclusion restriction (stated clearly)**:
-- Floods affect deposits primarily through the channel captured by lights (outflow/disruption affecting local economic activity and liquidity demand).
-- If floods directly destroy bank infrastructure or mechanically prevent deposits independent of migration/economic activity, the exclusion restriction is threatened.
-- This motivates H3: if deposit drops are immediate and not aligned with slow credit deterioration, the liquidity interpretation is more credible (but this does not prove exclusion; it disciplines claims).
+**Exclusion restriction / identifying assumption (stated clearly)**:
+- The IV interpretation requires that floods shift deposits primarily through district-level economic disruption/outflows proxied by lights.
+- Threats: floods may also affect deposits directly via banking operations (e.g., branch disruption, cash logistics interruptions, local payment system outages) in ways not fully captured by lights.
+- Therefore, IV results must be interpreted with discipline: H3 (timing) strengthens the liquidity narrative but does not “prove” exclusion; any evidence of direct operational disruption requires softening causal language.
 
 ### H2c — Event indicator form (migration proxy event)
 Define a migration proxy event:

@@ -18,7 +18,7 @@
 
 ## I. PANEL STRUCTURE
 
-**Unit of analysis**: Indian District (administrative unit as represented in RBI district strings).   
+**Unit of analysis**: Indian District (GADM v4.1 Level-2 district polygons as the canonical unit; RBI districts are mapped to GADM via crosswalk).
 
 **Target period**: Quarterly, 2015Q1 to 2024Q4 (40 quarters).   
 
@@ -103,6 +103,9 @@ These variables are conditional on availability in the RBI tables actually downl
 - **Rule A (Full sample / lower-bound)**: If event location is state-level, code `flood_exposure_qt=1` for **all districts in that state** for that quarter. (Overinclusive → attenuation bias.) 
 - **Rule B (High-precision sample / credibility spec)**: Only code district exposure when the district is explicitly named (Admin Units JSON OR parseable district in free-text location). 
 - Report both. Rule B is the identification credibility check; Rule A is the “broad exposure” version.
+- Implementation note (Phase 3c Day 4): flood_exposure_ruleA_qt and flood_exposure_ruleB_qt are produced in 02_Data_Intermediate/flood_exposure_panel.csv.
+- Realized exposure rates (2015Q1–2024Q4 panel): Rule A = 8.33% (2,220 district-quarters), Rule B = 1.02% (272 district-quarters).
+- Known limitation: 46 unmatched EM-DAT location tokens remain (typos, “Administrative unit not available”, and historical district/state naming).
 
 **FORBIDDEN RULE (explicitly rejected)**:
 - **Never** define flood exposure using VIIRS lights drops. This is mechanical endogeneity (post-treatment conditioning). 
@@ -230,12 +233,12 @@ These variables exist so the coding matches the causal story and can be audited.
 ## IX. CRITICAL MEASUREMENT DECISIONS (locked vs pending)
 
 ### Locked (must not drift)
-1. **Raw data read-only**.  
-2. **Flood coding never depends on VIIRS**.  
+1. **Raw data read-only**.
+2. **Flood coding never depends on VIIRS**.
 3. **Baseline quarterly lights change = quarterly mean log level difference**.
 
 ### Pending (must be decided with explicit log entry)
-1. District boundary dataset chosen: GADM v4.1 (Level 2). Pending: harmonize RBI district strings to GADM district names via crosswalk; document unavoidable splits/renames. 
+1. District boundary dataset: LOCKED to GADM v4.1 Level-2 (gadm41_IND_2.shp); analysis panel uses GADM as canonical geography. 
 2. How to handle district splits/renames across years (crosswalk design).
 3. Whether to deflate deposits (nominal vs real). 
 
@@ -292,26 +295,38 @@ Every script must:
 ### C. Canonical pipeline (planned)
 Names below are placeholders, but the responsibilities are fixed.
 
-1. `05_extract_rbi.py`  
+1. `06_parse_emdat_locations.py`
+   Output: `02_Data_Intermediate/emdat_districts_parsed.csv`
+   Log: `05_Outputs/Logs/06_parse_emdat_log.txt`
+
+2. `08_build_district_crosswalk.py`
+   Output: `02_Data_Intermediate/district_crosswalk_draft.csv`
+   Output: `02_Data_Intermediate/emdat_district_matches.csv`
+   Log: `05_Outputs/Logs/08_build_crosswalk_log.txt`
+
+3. `09_build_quarterly_skeleton.py`
+   Output: `02_Data_Intermediate/district_quarter_skeleton.csv`
+
+4. `10_build_flood_exposure.py`
+   Output: `02_Data_Intermediate/flood_exposure_panel.csv`
+   Must include BOTH:
+   - `flood_exposure_ruleA_qt` (district OR state fallback)
+   - `flood_exposure_ruleB_qt` (district-only)
+
+5. `11_validate_flood_events.py`
+   Output: none (prints validation checks for 3 benchmark events)
+
+6. `12_summarize_flood_exposure.py`
+   Log: `05_Outputs/Logs/12_flood_exposure_summary.txt`
+
+7. `05_extract_rbi.py` (TO BE BUILT)
    Output: `02_Data_Intermediate/rbi_deposits_long.csv`
 
-2. `06_extract_emdat.py`  
-   Output: `02_Data_Intermediate/emdat_flood_events.csv`
+8. `09_aggregate_viirs_to_district.py` (TO BE BUILT)
+   Output: `02_Data_Intermediate/viirs_district_monthly.csv`
+   Then: `02_Data_Intermediate/viirs_district_quarterly.csv`
 
-3. `07_build_district_crosswalk.py`  
-   Output: `02_Data_Intermediate/district_crosswalk.csv`
-
-4. `08_build_flood_panel.py`  
-   Output: `02_Data_Intermediate/flood_exposure_panel.csv`  
-   Must output BOTH:
-   - `flood_exposure_ruleA_qt` (state-wide coding)
-   - `flood_exposure_ruleB_qt` (district-only coding)
-
-5. `09_aggregate_viirs_to_district.py`  
-   Output: `02_Data_Intermediate/viirs_district_monthly.csv`  
-   Then `02_Data_Intermediate/viirs_district_quarterly.csv`
-
-6. `10_merge_panel.py`  
+9. `10_merge_panel.py` (TO BE BUILT)
    Output: `03_Data_Clean/panel_district_quarter_2015_2024.csv`
 
 ### D. Versioning and “stop conditions”

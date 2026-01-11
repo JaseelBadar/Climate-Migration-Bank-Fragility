@@ -254,5 +254,69 @@ Next:
 Phase 3c Day 3: Build district-name crosswalk (RBI ↔ GADM ↔ EM-DAT), generate district_crosswalk_draft.csv, and produce crosswalk log with match-rate stop condition check.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-10 23:35 PM IST
+2026-01-11 (Sun) 20:10-21:00 PM IST: Phase 3c Day 3–Day 4 - Crosswalk + Flood Exposure Panel
+======================================================================
+Goal: Build a reproducible district-quarter flood exposure panel (Rule A/B) on a fixed geography, with logged match rates + validation checks.
+
+Actions Completed
+A) District name crosswalk (RBI ↔ GADM; EM-DAT ↔ GADM)
+- Script executed: 04_Code/08_build_district_crosswalk.py
+- Inputs:
+  - GADM districts: 01_Data_Raw/District_Boundaries/gadm41_IND_2.shp (666 districts)
+  - RBI districts: 01_Data_Raw/RBI_Bank_Data/RBI_Deposits_2023_2024.xlsx (762 districts)
+  - EM-DAT parsed tokens: 02_Data_Intermediate/emdat_districts_parsed.csv (209 districts)
+- Outputs:
+  - 02_Data_Intermediate/district_crosswalk_draft.csv (769 rows)
+  - 02_Data_Intermediate/emdat_district_matches.csv (209 rows)
+  - 05_Outputs/Logs/08_build_crosswalk_log.txt
+- Match rates (stop conditions):
+  - RBI → GADM: 83.2% (threshold: 80%) → PASSED
+  - EM-DAT → GADM: 81.3% (informational; threshold: 75%)
+
+B) Panel skeleton construction (district × quarter)
+- Script executed: 04_Code/09_build_quarterly_skeleton.py
+- Output:
+  - 02_Data_Intermediate/district_quarter_skeleton.csv
+- Target structure: 2015Q1–2024Q4 (40 quarters), intended to be the backbone index for merges.
+
+C) Flood exposure panel construction (Rule A vs Rule B)
+- Script executed: 04_Code/10_build_flood_exposure.py
+- Output:
+  - 02_Data_Intermediate/flood_exposure_panel.csv
+- Panel dimensions (as generated):
+  - Total district-quarters: 26,640
+  - Districts: 659
+  - Quarters: 40
+  - Date range: 2015Q1 to 2024Q4
+- Exposure rates:
+  - Rule A (full sample; state fallback allowed): 2,220 district-quarters (8.33%)
+  - Rule B (high-precision; district-only): 272 district-quarters (1.02%)
+
+D) Validation + summary logging
+- Script executed: 04_Code/11_validate_flood_events.py
+  - ✓ Event 2019-0331-IND: 33 Rule B districts correctly coded
+  - ✓ Event 2023-0428-IND: State fallback triggered for HP, Delhi (Rule A only)
+  - ✓ Event 2015-0504-IND: 9/10 AP/TN districts matched (90% rate)
+- Script executed: 04_Code/12_summarize_flood_exposure.py
+  - Output log: 05_Outputs/Logs/12_flood_exposure_summary.txt (exposure rates, top districts/states, limitations)
+
+E) Design decision logged (geography standard)
+- Logged decision: Use GADM districts as panel skeleton (not RBI districts)
+- Output:
+  - 05_Outputs/Logs/Phase3c_Day4_Design_Decision.txt
+- Consequence recorded: RBI deposit data will be merged into GADM skeleton via district_crosswalk_draft.csv; unmatched RBI districts will be dropped or manually investigated in Phase 3d.
+
+Known Issues / Limitations (as of Day 4)
+- 46 unmatched EM-DAT location tokens remain (typos, J&K gaps, historical names).
+- State-level fallback in Rule A introduces measurement error by construction.
+- Historical district name changes (e.g., “Cuddapah” → “Kadapa”) are not fully resolved.
+
+Status:
+Crosswalk + quarterly skeleton + flood exposure panel are now constructed and logged (Rule A/B), with basic validation checks passed.
+
+Next:
+Phase 3d: Extract RBI deposits to long panel, bulk-download/aggregate VIIRS to districts, then merge RBI + VIIRS + flood exposure into a single district-quarter analysis dataset (03_Data_Clean), with missingness and drop logs.
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-11 21:35 PM IST
 ======================================================================

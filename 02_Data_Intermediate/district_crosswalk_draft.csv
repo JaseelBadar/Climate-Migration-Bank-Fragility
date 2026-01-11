@@ -1,0 +1,770 @@
+district_rbi,district_gadm,match_score_rbi_gadm,matched_rbi_gadm,state_gadm
+ADILABAD,Adilabad,100.0,True,Telangana
+AGAR-MALWA,Agar Malwa,90.0,True,Madhya Pradesh
+AGRA,Agra,100.0,True,Uttar Pradesh
+AHMADNAGAR,Ahmadnagar,100.0,True,Maharashtra
+AHMEDABAD,Ahmadabad,88.88888888888889,True,Gujarat
+AIZAWL,Aizawl,100.0,True,Mizoram
+AJMER,Ajmer,100.0,True,Rajasthan
+AKOLA,Akola,100.0,True,Maharashtra
+ALAPUZHA,Alappuzha,94.11764705882352,True,Kerala
+ALIGARH,Aligarh,100.0,True,Uttar Pradesh
+ALIPURDUAR,Alipurduar,100.0,True,West Bengal
+ALIRAJPUR,Alirajpur,100.0,True,Madhya Pradesh
+ALLURI SITHARAMA RAJU,,50.0,False,
+ALMORA,Almora,100.0,True,Uttarakhand
+ALWAR,Alwar,100.0,True,Rajasthan
+AMBALA,Ambala,100.0,True,Haryana
+AMBEDKAR NAGAR,Ambedkar Nagar,100.0,True,Uttar Pradesh
+AMETHI,Amethi,100.0,True,Uttar Pradesh
+AMRAVATI,Amravati,100.0,True,Maharashtra
+AMRELI,Amreli,100.0,True,Gujarat
+AMRITSAR,Amritsar,100.0,True,Punjab
+AMROHA,Amroha,100.0,True,Uttar Pradesh
+ANAKAPALLI,,66.66666666666667,False,
+ANAND,Anand,100.0,True,Gujarat
+ANANTHAPURAMU,Anantapur,81.81818181818181,True,Andhra Pradesh
+ANANTNAG,Anantnag,100.0,True,Jammu and Kashmir
+ANNAMAYYA,,62.5,False,
+ANUGUL,Anugul,100.0,True,Odisha
+ANUPGARH,,73.6842105263158,False,
+ANUPPUR,Anuppur,100.0,True,Madhya Pradesh
+ARARIA,Araria,100.0,True,Bihar
+ARAVALLI,Aravalli,100.0,True,Gujarat
+ARIYALUR,Ariyalur,100.0,True,Tamil Nadu
+ARWAL,Arwal,100.0,True,Bihar
+ASHOKNAGAR,Ashoknagar,100.0,True,Madhya Pradesh
+AURAIYA,Auraiya,100.0,True,Uttar Pradesh
+AURANGABAD,Aurangabad,100.0,True,Bihar
+AURANGABAD,Aurangabad,100.0,True,Maharashtra
+AYODHYA,,61.53846153846154,False,
+AZAMGARH,Azamgarh,100.0,True,Uttar Pradesh
+BADGAM,Badgam,100.0,True,Jammu and Kashmir
+BAGALKOTE,Bagalkot,94.11764705882352,True,Karnataka
+BAGESHWAR,Bageshwar,100.0,True,Uttarakhand
+BAGHPAT,Baghpat,100.0,True,Uttar Pradesh
+BAHRAICH,Bahraich,100.0,True,Uttar Pradesh
+BAJALI,,66.66666666666667,False,
+BAKSA,Baksa,100.0,True,Assam
+BALAGHAT,Balaghat,100.0,True,Madhya Pradesh
+BALANGIR,Balangir,100.0,True,Odisha
+BALESHWAR,Baleshwar,100.0,True,Odisha
+BALLARI,,76.92307692307692,False,
+BALLIA,Ballia,100.0,True,Uttar Pradesh
+BALOD,Balod,100.0,True,Chhattisgarh
+BALODABAZAR,Baloda Bazar,95.65217391304348,True,Chhattisgarh
+BALOTRA,,76.92307692307692,False,
+BALRAMPUR,Balrampur,100.0,True,Chhattisgarh
+BALRAMPUR,Balrampur,100.0,True,Uttar Pradesh
+BANAS KANTHA,Banas Kantha,100.0,True,Gujarat
+BANDA,Banda,100.0,True,Uttar Pradesh
+BANDIPORA,Bandipore,88.88888888888889,True,Jammu and Kashmir
+BANKA,Banka,100.0,True,Bihar
+BANKURA,Bankura,100.0,True,West Bengal
+BANSWARA,Banswara,100.0,True,Rajasthan
+BAPATLA,,71.42857142857143,False,
+BARA BANKI,Barabanki,94.73684210526316,True,Uttar Pradesh
+BARAMULLA,Baramulla,100.0,True,Jammu and Kashmir
+BARAN,Baran,100.0,True,Rajasthan
+BAREILLY,Bareilly,100.0,True,Uttar Pradesh
+BARGARH,Bargarh,100.0,True,Odisha
+BARMER,Barmer,100.0,True,Rajasthan
+BARNALA,Barnala,100.0,True,Punjab
+BARPETA,Barpeta,100.0,True,Assam
+BARWANI,Barwani,100.0,True,Madhya Pradesh
+BASTAR,Bastar,100.0,True,Chhattisgarh
+BASTI,Basti,100.0,True,Uttar Pradesh
+BATHINDA,Bathinda,100.0,True,Punjab
+BEAWAR,,72.72727272727273,False,
+BEGUSARAI,Begusarai,100.0,True,Bihar
+BELAGAVI,,66.66666666666667,False,
+BEMETARA,Bemetara,100.0,True,Chhattisgarh
+BENGALURU RURAL,Bangalore Rural,80.0,True,Karnataka
+BENGALURU URBAN,,66.66666666666667,False,
+BETUL,Betul,100.0,True,Madhya Pradesh
+BHADRADRI (KOTHAGUDEM),,48.275862068965516,False,
+BHADRAK,Bhadrak,100.0,True,Odisha
+BHAGALPUR,Bhagalpur,100.0,True,Bihar
+BHANDARA,Bhandara,100.0,True,Maharashtra
+BHARATPUR,Bharatpur,100.0,True,Rajasthan
+BHARUCH,Bharuch,100.0,True,Gujarat
+BHAVNAGAR,Bhavnagar,100.0,True,Gujarat
+BHILWARA,Bhilwara,100.0,True,Rajasthan
+BHIND,Bhind,100.0,True,Madhya Pradesh
+BHIWANI,Bhiwani,100.0,True,Haryana
+BHOJPUR,Bhojpur,100.0,True,Bihar
+BHOPAL,Bhopal,100.0,True,Madhya Pradesh
+BID,Bid,100.0,True,Maharashtra
+BIDAR,Bidar,100.0,True,Karnataka
+BIJAPUR,Bijapur,100.0,True,Chhattisgarh
+BIJAPUR,Bijapur,100.0,True,Karnataka
+BIJNOR,Bijnor,100.0,True,Uttar Pradesh
+BIKANER,Bikaner,100.0,True,Rajasthan
+BILASPUR,Bilaspur,100.0,True,Chhattisgarh
+BILASPUR,Bilaspur,100.0,True,Himachal Pradesh
+BIRBHUM,Birbhum,100.0,True,West Bengal
+BISHENPUR,Bishnupur,88.88888888888889,True,Manipur
+BISWANATH,,62.5,False,
+BOKARO,Bokaro,100.0,True,Jharkhand
+BONGAIGAON,Bongaigaon,100.0,True,Assam
+BOTAD,Botad,100.0,True,Gujarat
+BOUDH,,60.0,False,
+BUDAUN,Budaun,100.0,True,Uttar Pradesh
+BULANDSHAHR,Bulandshahr,100.0,True,Uttar Pradesh
+BULDHANA,Buldana,93.33333333333333,True,Maharashtra
+BUNDI,Bundi,100.0,True,Rajasthan
+BURHANPUR,Burhanpur,100.0,True,Madhya Pradesh
+BUXAR,Buxar,100.0,True,Bihar
+CACHAR,Cachar,100.0,True,Assam
+CENTRAL DELHI,,52.17391304347826,False,
+CHAMARAJANAGAR,Chamrajnagar,92.3076923076923,True,Karnataka
+CHAMBA,Chamba,100.0,True,Himachal Pradesh
+CHAMOLI,Chamoli,100.0,True,Uttarakhand
+CHAMPAWAT,Champawat,100.0,True,Uttarakhand
+CHAMPHAI,Champhai,100.0,True,Mizoram
+CHANDAULI,Chandauli,100.0,True,Uttar Pradesh
+CHANDEL,Chandel,100.0,True,Manipur
+CHANDIGARH,Chandigarh,100.0,True,Chandigarh
+CHANDRAPUR,Chandrapur,100.0,True,Maharashtra
+CHARAIDEO,,66.66666666666667,False,
+CHARKI DADRI,,63.1578947368421,False,
+CHATRA,Chatra,100.0,True,Jharkhand
+CHENGALPATTU,,60.0,False,
+CHENNAI,Chennai,100.0,True,Tamil Nadu
+CHHATARPUR,Chhatarpur,100.0,True,Madhya Pradesh
+CHHATRAPATI SAMBHAJINAGAR,,59.45945945945945,False,
+CHHINDWARA,Chhindwara,100.0,True,Madhya Pradesh
+CHHOTAUDEPUR,Chhota Udaipur,84.61538461538461,True,Gujarat
+CHIKKABALLAPURA,Chikballapura,92.85714285714286,True,Karnataka
+CHIKKAMAGALURU,Chikmagalur,88.0,True,Karnataka
+CHIRANG,Chirang,100.0,True,Assam
+CHITRADURGA,Chitradurga,100.0,True,Karnataka
+CHITRAKOOT,Chitrakoot,100.0,True,Uttar Pradesh
+CHITTAURGARH,Chittaurgarh,100.0,True,Rajasthan
+CHITTOOR,Chittoor,100.0,True,Andhra Pradesh
+CHUMOUKEDIMA,,52.63157894736843,False,
+CHUNGLANG,Changlang,88.88888888888889,True,Arunachal Pradesh
+CHURACHANDPUR,Churachandpur,100.0,True,Manipur
+CHURU,Churu,100.0,True,Rajasthan
+COIMBATORE,Coimbatore,100.0,True,Tamil Nadu
+CUDDALORE,Cuddalore,100.0,True,Tamil Nadu
+CUTTACK,Cuttack,100.0,True,Odisha
+DADRA&NAGAR HAVELI,Dadra and Nagar Haveli,85.0,True,Dadra and Nagar Haveli
+DAKSHIN BASTAR DANTEWADA,,70.0,False,
+DAKSHIN DINAJPUR,Dakshin Dinajpur,100.0,True,West Bengal
+DAKSHIN KANNAD,Dakshina Kannada,93.33333333333333,True,Karnataka
+DAMAN,Daman,100.0,True,Daman and Diu
+DAMOH,Damoh,100.0,True,Madhya Pradesh
+DANGS,,71.42857142857143,False,
+DARBHANGA,Darbhanga,100.0,True,Bihar
+DARJILING,Darjiling,100.0,True,West Bengal
+DARRANG,Darrang,100.0,True,Assam
+DATIA,Datia,100.0,True,Madhya Pradesh
+DAUSA,Dausa,100.0,True,Rajasthan
+DAVANGERE,Davanagere,94.73684210526316,True,Karnataka
+DEEG,,54.54545454545454,False,
+DEHRA DUN,Dehradun,94.11764705882352,True,Uttarakhand
+DEOGARH,Deoghar,85.71428571428572,True,Jharkhand
+DEOGHAR,Deoghar,100.0,True,Jharkhand
+DEORIA,Deoria,100.0,True,Uttar Pradesh
+DEVBHUMI DWARKA,Devbhumi Dwarka,100.0,True,Gujarat
+DEWAS,Dewas,100.0,True,Madhya Pradesh
+DHALAI,Dhalai,100.0,True,Tripura
+DHAMTARI,Dhamtari,100.0,True,Chhattisgarh
+DHANBAD,Dhanbad,100.0,True,Jharkhand
+DHAR,Dhar,100.0,True,Madhya Pradesh
+DHARASHIV,,66.66666666666667,False,
+DHARMAPURI,Dharmapuri,100.0,True,Tamil Nadu
+DHARWAD,Dharwad,100.0,True,Karnataka
+DHEMAJI,Dhemaji,100.0,True,Assam
+DHENKANAL,Dhenkanal,100.0,True,Odisha
+DHOLPUR,Dhaulpur,80.0,True,Rajasthan
+DHUBRI,Dhubri,100.0,True,Assam
+DHULE,Dhule,100.0,True,Maharashtra
+DIBRUGARH,Dibrugarh,100.0,True,Assam
+DIDWANA-KUCHAMAN,,53.84615384615385,False,
+DIMA HASAO,Dima Hasao,100.0,True,Assam
+DIMAPUR,Dimapur,100.0,True,Nagaland
+DINDIGUL,Dindigul,100.0,True,Tamil Nadu
+DINDORI,Dindori,100.0,True,Madhya Pradesh
+DIU,Diu,100.0,True,Daman and Diu
+DODA,Doda,100.0,True,Jammu and Kashmir
+DOHAD,,66.66666666666667,False,
+DR. B.R. AMBEDKAR KONASEEMA,,58.53658536585367,False,
+DUDU,,66.66666666666667,False,
+DUMKA,Dumka,100.0,True,Jharkhand
+DUNGARPUR,Dungarpur,100.0,True,Rajasthan
+DURG,Durg,100.0,True,Chhattisgarh
+EAST DELHI,,60.86956521739131,False,
+EAST GARO HILLS,East Garo Hills,100.0,True,Meghalaya
+EAST GODAVARI,East Godavari,100.0,True,Andhra Pradesh
+EAST JAINTIA HILLS,Jaintia Hills,83.87096774193549,True,Meghalaya
+EAST KAMENG,East Kameng,100.0,True,Arunachal Pradesh
+EAST KHASI HILLS,East Khasi Hills,100.0,True,Meghalaya
+EAST NIMAR,East Nimar,100.0,True,Madhya Pradesh
+EAST SIANG,East Siang,100.0,True,Arunachal Pradesh
+EASTERN WEST KHASI HILLS,South West Khasi Hills,82.6086956521739,True,Meghalaya
+ELURU,,60.0,False,
+ERNAKULAM,Ernakulam,100.0,True,Kerala
+ERODE,Erode,100.0,True,Tamil Nadu
+ETAH,Etah,100.0,True,Uttar Pradesh
+ETAWAH,Etawah,100.0,True,Uttar Pradesh
+FARIDABAD,Faridabad,100.0,True,Haryana
+FARIDKOT,Faridkot,100.0,True,Punjab
+FARRUKHABAD,Farrukhabad,100.0,True,Uttar Pradesh
+FATEHABAD,Fatehabad,100.0,True,Haryana
+FATEHGARH SAHIB,Fatehgarh Sahib,100.0,True,Punjab
+FATEHPUR,Fatehpur,100.0,True,Uttar Pradesh
+FAZILKA,Fazilka,100.0,True,Punjab
+FEROZPUR,Firozpur,87.5,True,Punjab
+FIROZABAD,Firozabad,100.0,True,Uttar Pradesh
+GADAG,Gadag,100.0,True,Karnataka
+GADCHIROLI,Garhchiroli,85.71428571428572,True,Maharashtra
+GAJAPATI,Gajapati,100.0,True,Odisha
+GANDERBAL,Ganderbal,100.0,True,Jammu and Kashmir
+GANDHINAGAR,Gandhinagar,100.0,True,Gujarat
+GANGANAGAR,Ganganagar,100.0,True,Rajasthan
+GANGAPURCITY,,61.53846153846154,False,
+GANGTOK,,54.54545454545454,False,
+GANJAM,Ganjam,100.0,True,Odisha
+GARHWA,Garhwa,100.0,True,Jharkhand
+GARHWAL,Garhwal,100.0,True,Uttarakhand
+GARIYABAND,Gariaband,94.73684210526316,True,Chhattisgarh
+GAURELA-PENDRA-MARWAHI,,52.94117647058824,False,
+GAUTAM BUDDHA NAGAR,Gautam Buddha Nagar,100.0,True,Uttar Pradesh
+GAYA,Gaya,100.0,True,Bihar
+GHAZIABAD,Ghaziabad,100.0,True,Uttar Pradesh
+GHAZIPUR,Ghazipur,100.0,True,Uttar Pradesh
+GIR SOMNATH,Gir Somnath,100.0,True,Gujarat
+GIRIDIH,Giridih,100.0,True,Jharkhand
+GOALPARA,Goalpara,100.0,True,Assam
+GODDA,Godda,100.0,True,Jharkhand
+GOLAGHAT,Golaghat,100.0,True,Assam
+GOMATI,Gomati,100.0,True,Tripura
+GONDA,Gonda,100.0,True,Uttar Pradesh
+GONDIA,Gondiya,92.3076923076923,True,Maharashtra
+GOPALGANJ,Gopalganj,100.0,True,Bihar
+GORAKHPUR,Gorakhpur,100.0,True,Uttar Pradesh
+GUMLA,Gumla,100.0,True,Jharkhand
+GUNA,Guna,100.0,True,Madhya Pradesh
+GUNTUR,Guntur,100.0,True,Andhra Pradesh
+GURDASPUR,Gurdaspur,100.0,True,Punjab
+GURUGRAM,,66.66666666666667,False,
+GWALIOR,Gwalior,100.0,True,Madhya Pradesh
+GYALSHING,,60.0,False,
+HAILAKANDI,Hailakandi,100.0,True,Assam
+HAMIRPUR,Hamirpur,100.0,True,Himachal Pradesh
+HAMIRPUR,Hamirpur,100.0,True,Uttar Pradesh
+HANUMAKONDA,,72.72727272727273,False,
+HANUMANGARH,Hanumangarh,100.0,True,Rajasthan
+HAORA,Haora,100.0,True,West Bengal
+HAPUR,Hapur,100.0,True,Uttar Pradesh
+HARDA,Harda,100.0,True,Madhya Pradesh
+HARDOI,Hardoi,100.0,True,Uttar Pradesh
+HARIDWAR,Hardwar,93.33333333333333,True,Uttarakhand
+HASSAN,Hassan,100.0,True,Karnataka
+HATHRAS,Hathras,100.0,True,Uttar Pradesh
+HAVERI,Haveri,100.0,True,Karnataka
+HAZARIBAG,Hazaribagh,94.73684210526316,True,Jharkhand
+HINGOLI,Hingoli,100.0,True,Maharashtra
+HISAR,Hisar,100.0,True,Haryana
+HOJAI,,72.72727272727273,False,
+HOSHIARPUR,Hoshiarpur,100.0,True,Punjab
+HUGLI,Hugli,100.0,True,West Bengal
+HYDERABAD,Hyderabad,100.0,True,Telangana
+IDUKKI,Idukki,100.0,True,Kerala
+IMPHAL EAST,Imphal East,100.0,True,Manipur
+IMPHAL WEST,Imphal West,100.0,True,Manipur
+INDORE,Indore,100.0,True,Madhya Pradesh
+JABALPUR,Jabalpur,100.0,True,Madhya Pradesh
+JAGATSINGHPUR,Jagatsinghapur,96.2962962962963,True,Odisha
+JAGITIAL,,66.66666666666667,False,
+JAIPUR,Jaipur,100.0,True,Rajasthan
+JAIPUR RURAL,,66.66666666666667,False,
+JAISALMER,Jaisalmer,100.0,True,Rajasthan
+JAJPUR,Jajapur,92.3076923076923,True,Odisha
+JALANDHAR,Jalandhar,100.0,True,Punjab
+JALAUN,Jalaun,100.0,True,Uttar Pradesh
+JALGAON,Jalgaon,100.0,True,Maharashtra
+JALNA,Jalna,100.0,True,Maharashtra
+JALOR,Jalor,100.0,True,Rajasthan
+JALPAIGURI,Jalpaiguri,100.0,True,West Bengal
+JAMMU,Jammu,100.0,True,Jammu and Kashmir
+JAMNAGAR,Jamnagar,100.0,True,Gujarat
+JAMTARA,Jamtara,100.0,True,Jharkhand
+JAMUI,Jamui,100.0,True,Bihar
+JANGAON,Jalgaon,85.71428571428572,True,Maharashtra
+JANJGIR-CHAMPA,Janjgir-Champa,100.0,True,Chhattisgarh
+JASHPUR,Jashpur,100.0,True,Chhattisgarh
+JAUNPUR,Jaunpur,100.0,True,Uttar Pradesh
+JAYASHANKAR (BHUPALPALLI),,46.808510638297875,False,
+JEHANABAD,Jehanabad,100.0,True,Bihar
+JHABUA,Jhabua,100.0,True,Madhya Pradesh
+JHAJJAR,Jhajjar,100.0,True,Haryana
+JHALAWAR,Jhalawar,100.0,True,Rajasthan
+JHANSI,Jhansi,100.0,True,Uttar Pradesh
+JHARGRAM,,66.66666666666667,False,
+JHARSUGUDA,Jharsuguda,100.0,True,Odisha
+JHUNJHUNU,Jhunjhunun,94.73684210526316,True,Rajasthan
+JIND,Jind,100.0,True,Haryana
+JIRIBAM,,57.14285714285714,False,
+JODHPUR,Jodhpur,100.0,True,Rajasthan
+JODHPUR RURAL,,70.0,False,
+JOGULAMBA (GADWAL),,53.84615384615385,False,
+JORHAT,Jorhat,100.0,True,Assam
+JUNAGADH,Junagadh,100.0,True,Gujarat
+KABEERDHAM,Kabeerdham,100.0,True,Chhattisgarh
+KACHCHH,Kachchh,100.0,True,Gujarat
+KAIMUR,Kaimur,100.0,True,Bihar
+KAITHAL,Kaithal,100.0,True,Haryana
+KAKCHING,,66.66666666666667,False,
+KAKINADA,,66.66666666666667,False,
+KALABURAGI,,63.1578947368421,False,
+KALAHANDI,Kalahandi,100.0,True,Odisha
+KALIMPONG,,63.1578947368421,False,
+KALLAKURICHI,,57.14285714285714,False,
+KAMAREDDY,,70.0,False,
+KAMRUP,Kamrup,100.0,True,Assam
+KAMRUP METROPOLITAN,Kamrup Metropolitan,100.0,True,Assam
+KANAUJ,Kannauj,92.3076923076923,True,Uttar Pradesh
+KANCHEEPURAM,Kancheepuram,100.0,True,Tamil Nadu
+KANDHAMAL,Kandhamal,100.0,True,Odisha
+KANGPOKPI,,57.14285714285714,False,
+KANGRA,Kangra,100.0,True,Himachal Pradesh
+KANNUR,Kannur,100.0,True,Kerala
+KANPUR DEHAT,Kanpur Dehat,100.0,True,Uttar Pradesh
+KANPUR NAGAR,Kanpur Nagar,100.0,True,Uttar Pradesh
+KANYAKUMARI,Kanniyakumari,91.66666666666666,True,Tamil Nadu
+KAPURTHALA,Kapurthala,100.0,True,Punjab
+KARAIKAL,Karaikal,100.0,True,Puducherry
+KARAULI,Karauli,100.0,True,Rajasthan
+KARBI ANGLONG,Karbi Anglong,100.0,True,Assam
+KARGIL,Kargil,100.0,True,Jammu and Kashmir
+KARIMGANJ,Karimganj,100.0,True,Assam
+KARIMNAGAR,Karimnagar,100.0,True,Telangana
+KARNAL,Karnal,100.0,True,Haryana
+KARUR,Karur,100.0,True,Tamil Nadu
+KASARAGOD,Kasaragod,100.0,True,Kerala
+KASGANJ,Kasganj,100.0,True,Uttar Pradesh
+KATHUA,Kathua,100.0,True,Jammu and Kashmir
+KATIHAR,Katihar,100.0,True,Bihar
+KATNI,Katni,100.0,True,Madhya Pradesh
+KAUSHAMBI,Kaushambi,100.0,True,Uttar Pradesh
+KEKRI,,54.54545454545454,False,
+KENDRAPARA,Kendrapara,100.0,True,Odisha
+KEONJHAR,Kendujhar,82.35294117647058,True,Odisha
+KHAGARIA,Khagaria,100.0,True,Bihar
+KHAIRAGARH-CHHUIKHADAN-GANDAI,,46.15384615384615,False,
+KHAIRTHAL-TIJARA,,61.53846153846154,False,
+KHAMMAM,Khammam,100.0,True,Telangana
+KHEDA,Kheda,100.0,True,Gujarat
+KHERI,,72.72727272727273,False,
+KHOWAI,Khowai,100.0,True,Tripura
+KHUNTI,Khunti,100.0,True,Jharkhand
+KHURDA,,76.92307692307692,False,
+KINNAUR,Kinnaur,100.0,True,Himachal Pradesh
+KISHANGANJ,Kishanganj,100.0,True,Bihar
+KISHTWAR,Kishtwar,100.0,True,Jammu and Kashmir
+KOCH BIHAR,Koch Bihar,100.0,True,West Bengal
+KODAGU,Kodagu,100.0,True,Karnataka
+KODERMA,Kodarma,85.71428571428572,True,Jharkhand
+KOHIMA,Kohima,100.0,True,Nagaland
+KOKRAJHAR,Kokrajhar,100.0,True,Assam
+KOLAR,Kolar,100.0,True,Karnataka
+KOLASIB,Kolasib,100.0,True,Mizoram
+KOLHAPUR,Kolhapur,100.0,True,Maharashtra
+KOLKATA,Kolkata,100.0,True,West Bengal
+KOLLAM,Kollam,100.0,True,Kerala
+KOMRAM BHEEM (ASIFABAD),,50.0,False,
+KONASEEMA,,62.5,False,
+KONDAGAON,Kondagaon,100.0,True,Chhattisgarh
+KOPPAL,Koppal,100.0,True,Karnataka
+KORAPUT,Koraput,100.0,True,Odisha
+KORBA,Korba,100.0,True,Chhattisgarh
+KORIYA,Koriya,100.0,True,Chhattisgarh
+KOTA,Kota,100.0,True,Rajasthan
+KOTPUTLI-BEHROR,,45.45454545454546,False,
+KOTTAYAM,Kottayam,100.0,True,Kerala
+KOZHIKODE,Kozhikode,100.0,True,Kerala
+KRISHNA,Krishna,100.0,True,Andhra Pradesh
+KRISHNAGIRI,Krishnagiri,100.0,True,Tamil Nadu
+KULGAM,Kulgam,100.0,True,Jammu and Kashmir
+KULU,Kullu,88.88888888888889,True,Himachal Pradesh
+KUPWARA,Kupwara,100.0,True,Jammu and Kashmir
+KURNOOL,Kurnool,100.0,True,Andhra Pradesh
+KURUKSHETRA,Kurukshetra,100.0,True,Haryana
+KUSHI NAGAR,Kushinagar,95.23809523809523,True,Uttar Pradesh
+LAHUL & SPITI,Lahul & Spiti,100.0,True,Himachal Pradesh
+LAKHIMPUR,Lakhimpur,100.0,True,Assam
+LAKHISARAI,Lakhisarai,100.0,True,Bihar
+LAKSHADWEEP,Lakshadweep,100.0,True,Lakshadweep
+LALITPUR,Lalitpur,100.0,True,Uttar Pradesh
+LATEHAR,Latehar,100.0,True,Jharkhand
+LATUR,Latur,100.0,True,Maharashtra
+LAWNGTLAI,Lawangtlai,94.73684210526316,True,Mizoram
+LEH LADAKH,Leh (Ladakh),90.9090909090909,True,Jammu and Kashmir
+LEPARADA,,66.66666666666667,False,
+LOHARDAGGA,Lohardaga,94.73684210526316,True,Jharkhand
+LOHIT,Lohit,100.0,True,Arunachal Pradesh
+LONGDING,Longding,100.0,True,Arunachal Pradesh
+LOWER DIBANG VALLEY,Lower Dibang Valley,100.0,True,Arunachal Pradesh
+LOWER SUBANSIRI,Lower Subansiri,100.0,True,Arunachal Pradesh
+LUCKNOW,Lucknow,100.0,True,Uttar Pradesh
+LUDHIANA,Ludhiana,100.0,True,Punjab
+LUNGLEI,Lunglei,100.0,True,Mizoram
+MADHEPURA,Madhepura,100.0,True,Bihar
+MADHUBANI,Madhubani,100.0,True,Bihar
+MADURAI,Madurai,100.0,True,Tamil Nadu
+MAHABUBABAD,,72.72727272727273,False,
+MAHARAJGANJ,Maharajganj,100.0,True,Uttar Pradesh
+MAHASAMUND,Mahasamund,100.0,True,Chhattisgarh
+MAHBUBNAGAR,Mahbubnagar,100.0,True,Telangana
+MAHE,Mahe,100.0,True,Puducherry
+MAHENDRAGARH,Mahendragarh,100.0,True,Haryana
+MAHESANA,Mahesana,100.0,True,Gujarat
+MAHISAGAR,Mahisagar,100.0,True,Gujarat
+MAHOBA,Mahoba,100.0,True,Uttar Pradesh
+MAIHAR,,76.92307692307692,False,
+MAINPURI,Mainpuri,100.0,True,Uttar Pradesh
+MAJULI,,66.66666666666667,False,
+MALAPPURAM,Malappuram,100.0,True,Kerala
+MALDAH,Maldah,100.0,True,West Bengal
+MALERKOTLA,,66.66666666666667,False,
+MALKANGIRI,Malkangiri,100.0,True,Odisha
+MAMIT,Mamit,100.0,True,Mizoram
+MANCHERIAL,,63.63636363636363,False,
+MANDI,Mandi,100.0,True,Himachal Pradesh
+MANDLA,Mandla,100.0,True,Madhya Pradesh
+MANDSAUR,Mandsaur,100.0,True,Madhya Pradesh
+MANDYA,Mandya,100.0,True,Karnataka
+MANENDRAGARH-CHIRMIRI-BHARATPUR,,51.162790697674424,False,
+MANGAN,,72.72727272727273,False,
+MANSA,Mansa,100.0,True,Punjab
+MATHURA,Mathura,100.0,True,Uttar Pradesh
+MAU,Mau,100.0,True,Uttar Pradesh
+MAUGANJ,,71.42857142857143,False,
+MAYILADUTHURAI,,66.66666666666667,False,
+MAYURBHANJ,Mayurbhanj,100.0,True,Odisha
+MEDAK,Medak,100.0,True,Telangana
+MEDCHAL-MALKAJGIRI,,64.28571428571428,False,
+MEERUT,Meerut,100.0,True,Uttar Pradesh
+MEWAT,Mewat,100.0,True,Haryana
+MIRZAPUR,Mirzapur,100.0,True,Uttar Pradesh
+MOGA,Moga,100.0,True,Punjab
+MOHLA-MANPUR-AMBAGARH CHOUKI,,51.28205128205128,False,
+MOKOKCHUNG,Mokokchung,100.0,True,Nagaland
+MON,Mon,100.0,True,Nagaland
+MORADABAD,Moradabad,100.0,True,Uttar Pradesh
+MORBI,Morbi,100.0,True,Gujarat
+MORENA,Morena,100.0,True,Madhya Pradesh
+MORIGAON,Morigaon,100.0,True,Assam
+MUKTSAR,Muktsar,100.0,True,Punjab
+MULUGU,,57.14285714285714,False,
+MUMBAI,,70.58823529411764,False,
+MUMBAI SUBURBAN,Mumbai Suburban,100.0,True,Maharashtra
+MUNGELI,Mungeli,100.0,True,Chhattisgarh
+MUNGER,Munger,100.0,True,Bihar
+MURSHIDABAD,Murshidabad,100.0,True,West Bengal
+MUZAFFARNAGAR,Muzaffarnagar,100.0,True,Uttar Pradesh
+MUZAFFARPUR,Muzaffarpur,100.0,True,Bihar
+MYSURU,,66.66666666666667,False,
+NADIA,Nadia,100.0,True,West Bengal
+NAGAON,Nagaon,100.0,True,Assam
+NAGAPATTINAM,Nagappattinam,96.0,True,Tamil Nadu
+NAGARKURNOOL,,73.6842105263158,False,
+NAGAUR,Nagaur,100.0,True,Rajasthan
+NAGPUR,Nagpur,100.0,True,Maharashtra
+NAINITAL,Nainital,100.0,True,Uttarakhand
+NALANDA,Nalanda,100.0,True,Bihar
+NALBARI,Nalbari,100.0,True,Assam
+NALGONDA,Nalgonda,100.0,True,Telangana
+NAMAKKAL,Namakkal,100.0,True,Tamil Nadu
+NAMCHI,,66.66666666666667,False,
+NAMSAI,Namsai,100.0,True,Arunachal Pradesh
+NANDED,Nanded,100.0,True,Maharashtra
+NANDURBAR,Nandurbar,100.0,True,Maharashtra
+NANDYAL,,76.92307692307692,False,
+NARAYANPET,Narayanpur,80.0,True,Chhattisgarh
+NARAYANPUR,Narayanpur,100.0,True,Chhattisgarh
+NARMADA,Narmada,100.0,True,Gujarat
+NARMADAPURAM,,73.6842105263158,False,
+NARSIMHAPUR,Narsimhapur,100.0,True,Madhya Pradesh
+NASIK,Nashik,90.9090909090909,True,Maharashtra
+NAVSARI,Navsari,100.0,True,Gujarat
+NAWADA,Nawada,100.0,True,Bihar
+NAWAPARA,,71.42857142857143,False,
+NAWRANGPUR,Nabarangapur,81.81818181818181,True,Odisha
+NAYAGARH,Nayagarh,100.0,True,Odisha
+NEEM KA THANA,,57.14285714285714,False,
+NEEMUCH,Neemuch,100.0,True,Madhya Pradesh
+NEW DELHI,,52.63157894736843,False,
+NICOBAR,,63.63636363636363,False,
+NILGIRIS,The Nilgiris,80.0,True,Tamil Nadu
+NIRMAL,,61.53846153846154,False,
+NIWARI,,66.66666666666667,False,
+NIZAMABAD,Nizamabad,100.0,True,Telangana
+NONEY,,54.54545454545454,False,
+NORTH 24 PARGANAS,North 24 Parganas,100.0,True,West Bengal
+NORTH AND MIDDLE ANDAMAN,North and Middle Andaman,100.0,True,Andaman and Nicobar
+NORTH DELHI,,60.86956521739131,False,
+NORTH GARO HILLS,North Garo Hills,100.0,True,Meghalaya
+NORTH GOA,North Goa,100.0,True,Goa
+NORTH TRIPURA,North Tripura,100.0,True,Tripura
+NORTH-EAST DELHI,,56.25,False,
+NORTH-WEST DELHI,,54.054054054054056,False,
+NTR,,66.66666666666667,False,
+NUH,,60.0,False,
+OSMANABAD,Osmanabad,100.0,True,Maharashtra
+PAKUR,Pakur,100.0,True,Jharkhand
+PAKYONG,,50.0,False,
+PALAKKAD,Palakkad,100.0,True,Kerala
+PALAMAU,Palamu,92.3076923076923,True,Jharkhand
+PALGHAR,Palghar,100.0,True,Maharashtra
+PALI,Pali,100.0,True,Rajasthan
+PALNADU,,76.92307692307692,False,
+PALWAL,Palwal,100.0,True,Haryana
+PANCH MAHALS,Panch Mahals,100.0,True,Gujarat
+PANCHKULA,Panchkula,100.0,True,Haryana
+PANDHURNA,,71.42857142857143,False,
+PANIPAT,Panipat,100.0,True,Haryana
+PANNA,Panna,100.0,True,Madhya Pradesh
+PAPUMPARE,Papum Pare,94.73684210526316,True,Arunachal Pradesh
+PARBHANI,Parbhani,100.0,True,Maharashtra
+PARVATHIPURAM MANYAM,,52.94117647058824,False,
+PASCHIM BARDHAMAN,,74.28571428571429,False,
+PASCHIM MEDINIPUR,Pashchim Medinipur,97.14285714285714,True,West Bengal
+PASCHIMI CHAMPARAN,Pashchim Champaran,94.44444444444444,True,Bihar
+PASCHIMI SINGHBHUM,Pashchimi Singhbhum,97.2972972972973,True,Jharkhand
+PATAN,Patan,100.0,True,Gujarat
+PATHANAMTHITTA,Pathanamthitta,100.0,True,Kerala
+PATHANKOT,Pathankot,100.0,True,Punjab
+PATIALA,Patiala,100.0,True,Punjab
+PATNA,Patna,100.0,True,Bihar
+PEDDAPALLI,,57.14285714285714,False,
+PERAMBALUR,Perambalur,100.0,True,Tamil Nadu
+PEREN,Peren,100.0,True,Nagaland
+PHALODI,,72.72727272727273,False,
+PHEK,Phek,100.0,True,Nagaland
+PILIBHIT,Pilibhit,100.0,True,Uttar Pradesh
+PITHORAGARH,Pithoragarh,100.0,True,Uttarakhand
+POONCH,Poonch,100.0,True,Jammu and Kashmir
+PORBANDAR,Porbandar,100.0,True,Gujarat
+PRAKASAM,Prakasam,100.0,True,Andhra Pradesh
+PRATAPGARH,Pratapgarh,100.0,True,Rajasthan
+PRATAPGARH,Pratapgarh,100.0,True,Uttar Pradesh
+PRAYAGRAJ,,70.58823529411764,False,
+PUDUCHERRY,Puducherry,100.0,True,Puducherry
+PUDUKKOTTAI,Pudukkottai,100.0,True,Tamil Nadu
+PULWAMA,Pulwama,100.0,True,Jammu and Kashmir
+PUNE,Pune,100.0,True,Maharashtra
+PURBA BARDHAMAN,,73.33333333333334,False,
+PURBA MEDINIPUR,Purba Medinipur,100.0,True,West Bengal
+PURBI CHAMPARAN,Purba Champaran,93.33333333333333,True,Bihar
+PURBI SINGHBHUM,Purbi Singhbhum,100.0,True,Jharkhand
+PURI,Puri,100.0,True,Odisha
+PURNIA,Purnia,100.0,True,Bihar
+PURULIYA,Puruliya,100.0,True,West Bengal
+RAI BARELI,Rae Bareli,90.0,True,Uttar Pradesh
+RAICHUR,Raichur,100.0,True,Karnataka
+RAIGAD,,76.92307692307692,False,
+RAIGARH,Raigarh,100.0,True,Chhattisgarh
+RAIGARH,Raigarh,100.0,True,Maharashtra
+RAIPUR,Raipur,100.0,True,Chhattisgarh
+RAISEN,Raisen,100.0,True,Madhya Pradesh
+RAJANNA(SIRCILLA),,53.84615384615385,False,
+RAJGARH,Rajgarh,100.0,True,Madhya Pradesh
+RAJKOT,Rajkot,100.0,True,Gujarat
+RAJNANDGAON,Rajnandgaon,100.0,True,Chhattisgarh
+RAJOURI,Rajouri,100.0,True,Jammu and Kashmir
+RAJSAMAND,Rajsamand,100.0,True,Rajasthan
+RAMANAGARA,Ramanagara,100.0,True,Karnataka
+RAMANATHAPURAM,Ramanathapuram,100.0,True,Tamil Nadu
+RAMBAN,Ramban,100.0,True,Jammu and Kashmir
+RAMGARH,Ramgarh,100.0,True,Jharkhand
+RAMPUR,Rampur,100.0,True,Uttar Pradesh
+RANCHI,Ranchi,100.0,True,Jharkhand
+RANGAREDDI,Ranga Reddy,85.71428571428572,True,Telangana
+RANIPET,,71.42857142857143,False,
+RATLAM,Ratlam,100.0,True,Madhya Pradesh
+RATNAGIRI,Ratnagiri,100.0,True,Maharashtra
+RAYAGADA,Rayagada,100.0,True,Odisha
+REASI,Reasi,100.0,True,Jammu and Kashmir
+REWA,Rewa,100.0,True,Madhya Pradesh
+REWARI,Rewari,100.0,True,Haryana
+RI BHOI,Ri Bhoi,100.0,True,Meghalaya
+ROHTAK,Rohtak,100.0,True,Haryana
+ROHTAS,Rohtas,100.0,True,Bihar
+RUDRAPRAYAG,Rudraprayag,100.0,True,Uttarakhand
+RUPNAGAR,Rupnagar,100.0,True,Punjab
+SABAR KANTHA,Sabar Kantha,100.0,True,Gujarat
+SAGAR,Sagar,100.0,True,Madhya Pradesh
+SAHARANPUR,Saharanpur,100.0,True,Uttar Pradesh
+SAHARSA,Saharsa,100.0,True,Bihar
+SAHEBGANJ,Sahibganj,88.88888888888889,True,Jharkhand
+SAHIBZADA AJIT SINGH NAGAR,Sahibzada Ajit Singh Nagar,100.0,True,Punjab
+SAIHA,Saiha,100.0,True,Mizoram
+SAKTI,,61.53846153846154,False,
+SALEM,Salem,100.0,True,Tamil Nadu
+SALUMBER,,70.58823529411764,False,
+SAMASTIPUR,Samastipur,100.0,True,Bihar
+SAMBA,Samba,100.0,True,Jammu and Kashmir
+SAMBALPUR,Sambalpur,100.0,True,Odisha
+SAMBHAL,Sambhal,100.0,True,Uttar Pradesh
+SANCHORE,,71.42857142857143,False,
+SANGAREDDY,Ranga Reddy,85.71428571428572,True,Telangana
+SANGLI,Sangli,100.0,True,Maharashtra
+SANGRUR,Sangrur,100.0,True,Punjab
+SANT KABIR NAGAR,Sant Kabir Nagar,100.0,True,Uttar Pradesh
+SANT RAVIDAS NAGAR,Sant Ravi Das Nagar,97.2972972972973,True,Uttar Pradesh
+SARAN,Saran,100.0,True,Bihar
+SARANGARH-BILAIGARH,,57.14285714285714,False,
+SATARA,Satara,100.0,True,Maharashtra
+SATNA,Satna,100.0,True,Madhya Pradesh
+SAWAI MADHOPUR,Sawai Madhopur,100.0,True,Rajasthan
+SEHORE,Sehore,100.0,True,Madhya Pradesh
+SENAPATI,Senapati,100.0,True,Manipur
+SEONI,Seoni,100.0,True,Madhya Pradesh
+SEPAHIJALA,Sipahijala,90.0,True,Tripura
+SERAIKELA-KHARSAWAN,Saraikela-kharsawan,94.73684210526316,True,Jharkhand
+SERCHHIP,Serchhip,100.0,True,Mizoram
+SHAHDARA,Saharsa,80.0,True,Bihar
+SHAHDOL,Shahdol,100.0,True,Madhya Pradesh
+SHAHID BHAGAT SINGH NAGAR,Shahid Bhagat Singh Nagar,100.0,True,Punjab
+SHAHJAHANPUR,Shahjahanpur,100.0,True,Uttar Pradesh
+SHAHPURA,,77.77777777777779,False,
+SHAJAPUR,Shajapur,100.0,True,Madhya Pradesh
+SHAMLI,Shamli,100.0,True,Uttar Pradesh
+SHEIKHPURA,Sheikhpura,100.0,True,Bihar
+SHEOHAR,Sheohar,100.0,True,Bihar
+SHEOPUR,Sheopur,100.0,True,Madhya Pradesh
+SHIMLA,Shimla,100.0,True,Himachal Pradesh
+SHIVAMOGGA,Shimoga,82.35294117647058,True,Karnataka
+SHIVPURI,Shivpuri,100.0,True,Madhya Pradesh
+SHOPIAN,Shupiyan,80.0,True,Jammu and Kashmir
+SHRAVASTI,Shravasti,100.0,True,Uttar Pradesh
+SIAHA,Saiha,80.0,True,Mizoram
+SIBSAGAR,Sivasagar,82.35294117647058,True,Assam
+SIDDIPET,,61.53846153846154,False,
+SIDHARTHANAGAR,Siddharth Nagar,89.65517241379311,True,Uttar Pradesh
+SIDHI,Sidhi,100.0,True,Madhya Pradesh
+SIKAR,Sikar,100.0,True,Rajasthan
+SIMDEGA,Simdega,100.0,True,Jharkhand
+SINDHUDURG,Sindhudurg,100.0,True,Maharashtra
+SINGRAULI,Singrauli,100.0,True,Madhya Pradesh
+SIRMAUR,Sirmaur,100.0,True,Himachal Pradesh
+SIROHI,Sirohi,100.0,True,Rajasthan
+SIRSA,Sirsa,100.0,True,Haryana
+SITAMARHI,Sitamarhi,100.0,True,Bihar
+SITAPUR,Sitapur,100.0,True,Uttar Pradesh
+SIVAGANGA,Sivaganga,100.0,True,Tamil Nadu
+SIWAN,Siwan,100.0,True,Bihar
+SOLAN,Solan,100.0,True,Himachal Pradesh
+SOLAPUR,Solapur,100.0,True,Maharashtra
+SONBHADRA,Sonbhadra,100.0,True,Uttar Pradesh
+SONEPUR,Sonitpur,80.0,True,Assam
+SONIPAT,Sonipat,100.0,True,Haryana
+SONITPUR,Sonitpur,100.0,True,Assam
+SORENG,,66.66666666666667,False,
+SOUTH 24 PARGANAS,South 24 Parganas,100.0,True,West Bengal
+SOUTH ANDAMAN,South Andaman,100.0,True,Andaman and Nicobar
+SOUTH DELHI,,60.86956521739131,False,
+SOUTH GARO HILLS,South Garo Hills,100.0,True,Meghalaya
+SOUTH GOA,South Goa,100.0,True,Goa
+SOUTH SALMARA-MANKACHAR,,61.111111111111114,False,
+SOUTH TRIPURA,South Tripura,100.0,True,Tripura
+SOUTH WEST GARO HILLS,South West Garo Hills,100.0,True,Meghalaya
+SOUTH WEST KHASI HILLS,South West Khasi Hills,100.0,True,Meghalaya
+SOUTH-EAST DELHI,,59.45945945945945,False,
+SOUTH-WEST DELHI,,64.86486486486487,False,
+SRI POTTI SRIRAMULU NELLORE,,42.10526315789473,False,
+SRI SATHYA SAI,,57.14285714285714,False,
+SRIKAKULAM,Srikakulam,100.0,True,Andhra Pradesh
+SRINAGAR,Srinagar,100.0,True,Jammu and Kashmir
+SUKMA,Sukma,100.0,True,Chhattisgarh
+SULTANPUR,Sultanpur,100.0,True,Uttar Pradesh
+SUNDARGARH,Sundargarh,100.0,True,Odisha
+SUPAUL,Supaul,100.0,True,Bihar
+SURAJPUR,Surajpur,100.0,True,Chhattisgarh
+SURAT,Surat,100.0,True,Gujarat
+SURENDRANAGAR,Surendranagar,100.0,True,Gujarat
+SURGUJA,Surguja,100.0,True,Chhattisgarh
+SURYAPET,,76.92307692307692,False,
+TAMENGLONG,Tamenglong,100.0,True,Manipur
+TAMULPUR,,75.0,False,
+TAPI,Tapi,100.0,True,Gujarat
+TARN TARAN,Tarn Taran,100.0,True,Punjab
+TAWANG,Tawang,100.0,True,Arunachal Pradesh
+TEHRI GARHWAL,Tehri Garhwal,100.0,True,Uttarakhand
+TENGNOUPAL,,58.82352941176471,False,
+TENKASI,,66.66666666666667,False,
+THANE,Thane,100.0,True,Maharashtra
+THANJAVUR,Thanjavur,100.0,True,Tamil Nadu
+THENI,Theni,100.0,True,Tamil Nadu
+THIRUVALLUR,Thiruvallur,100.0,True,Tamil Nadu
+THIRUVANANTHAPURAM,Thiruvananthapuram,100.0,True,Kerala
+THIRUVARUR,Thiruvarur,100.0,True,Tamil Nadu
+THOUBAL,Thoubal,100.0,True,Manipur
+THRISSUR,Thrissur,100.0,True,Kerala
+TIKAMGARH,Tikamgarh,100.0,True,Madhya Pradesh
+TINSUKIA,Tinsukia,100.0,True,Assam
+TIRUCHIRAPALLI,Tiruchirappalli,96.55172413793103,True,Tamil Nadu
+TIRUNELVALI,Tirunelveli,90.9090909090909,True,Tamil Nadu
+TIRUPATHUR,,77.77777777777779,False,
+TIRUPATI,,62.5,False,
+TIRUPPUR,Tiruppur,100.0,True,Tamil Nadu
+TIRUVANNAMALAI,Tiruvannamalai,100.0,True,Tamil Nadu
+TONK,Tonk,100.0,True,Rajasthan
+TOOTHUKUDI,Thoothukkudi,90.9090909090909,True,Tamil Nadu
+TUENSANG,Tuensang,100.0,True,Nagaland
+TUMAKURU,Tumkur,85.71428571428572,True,Karnataka
+UDAIPUR,Udaipur,100.0,True,Rajasthan
+UDALGURI,Udalguri,100.0,True,Assam
+UDHAM SINGH NAGAR,Udham Singh Nagar,100.0,True,Uttarakhand
+UDHAMPUR,Udhampur,100.0,True,Jammu and Kashmir
+UDIPI,Udupi,80.0,True,Karnataka
+UJJAIN,Ujjain,100.0,True,Madhya Pradesh
+UKHRUL,Ukhrul,100.0,True,Manipur
+UMARIA,Umaria,100.0,True,Madhya Pradesh
+UNA,Una,100.0,True,Himachal Pradesh
+UNAKOTI,Unokoti,85.71428571428572,True,Tripura
+UNNAO,Unnao,100.0,True,Uttar Pradesh
+UTTAR BASTAR KANKER,Uttar Bastar Kanker,100.0,True,Chhattisgarh
+UTTAR DINAJPUR,Uttar Dinajpur,100.0,True,West Bengal
+UTTAR KANNAD,Uttara Kannada,92.3076923076923,True,Karnataka
+UTTAR KASHI,Uttarkashi,95.23809523809523,True,Uttarakhand
+VADODARA,Vadodara,100.0,True,Gujarat
+VAISHALI,Vaishali,100.0,True,Bihar
+VALSAD,Valsad,100.0,True,Gujarat
+VARANASI,Varanasi,100.0,True,Uttar Pradesh
+VELLORE,Vellore,100.0,True,Tamil Nadu
+VIDISHA,Vidisha,100.0,True,Madhya Pradesh
+VIJAYANAGARA,,75.0,False,
+VIJAYAPURA,,70.58823529411764,False,
+VIKARABAD,,66.66666666666667,False,
+VILLUPURAM,Viluppuram,90.0,True,Tamil Nadu
+VIRUDHUNAGAR,Virudunagar,95.65217391304348,True,Tamil Nadu
+VISAKHAPATNAM,Visakhapatnam,100.0,True,Andhra Pradesh
+VIZIANAGARAM,Vizianagaram,100.0,True,Andhra Pradesh
+WANAPARTHY,,60.0,False,
+WARANGAL,Warangal,100.0,True,Telangana
+WARDHA,Wardha,100.0,True,Maharashtra
+WASHIM,Washim,100.0,True,Maharashtra
+WAYANAD,Wayanad,100.0,True,Kerala
+WEST DELHI,,60.86956521739131,False,
+WEST GARO HILLS,West Garo Hills,100.0,True,Meghalaya
+WEST GODAVARI,West Godavari,100.0,True,Andhra Pradesh
+WEST JAINTIA HILLS,Jaintia Hills,83.87096774193549,True,Meghalaya
+WEST KAMENG,West Kameng,100.0,True,Arunachal Pradesh
+WEST KARBI ANGLONG,Karbi Anglong,83.87096774193549,True,Assam
+WEST KHASI HILLS,West Khasi Hills,100.0,True,Meghalaya
+WEST NIMAR,West Nimar,100.0,True,Madhya Pradesh
+WEST SIANG,West Siang,100.0,True,Arunachal Pradesh
+WEST TRIPURA,West Tripura,100.0,True,Tripura
+WOKHA,Wokha,100.0,True,Nagaland
+Y.S.R.,Y.S.R.,100.0,True,Andhra Pradesh
+YADADRI BHUVANAGIRI,,60.0,False,
+YADGIR,Yadgir,100.0,True,Karnataka
+YAMUNANAGAR,Yamunanagar,100.0,True,Haryana
+YANAM,Yanam,100.0,True,Puducherry
+YAVATMAL,Yavatmal,100.0,True,Maharashtra
+ZUNHEBOTO,Zunheboto,100.0,True,Nagaland

@@ -1,8 +1,8 @@
 # Climate Change, Migration, and Bank Fragility (India)
 
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).   
-**Status:** Phase 3c Day 2 (district boundaries locked; EM-DAT district extraction complete; crosswalk pending).   
-**Last updated:** 2026-01-10. 
+**Status:** Phase 3c Day 4 complete (district crosswalk + flood exposure panel built; validated; summary logged).   
+**Last updated:** 2026-01-11. 
 
 ---
 
@@ -73,6 +73,10 @@ District_Boundaries/
 
 02_Data_Intermediate/ # Parsed/reshaped outputs (non-final)
 emdat_districts_parsed.csv
+district_crosswalk_draft.csv
+emdat_district_matches.csv
+district_quarter_skeleton.csv
+flood_exposure_panel.csv
 
 03_Data_Clean/ # Final analysis-ready panels
 
@@ -84,6 +88,11 @@ emdat_districts_parsed.csv
 05_test_shapefile.py
 06_parse_emdat_locations.py
 07_check_output.py
+08_build_district_crosswalk.py
+09_build_quarterly_skeleton.py
+10_build_flood_exposure.py
+11_validate_flood_events.py
+12_summarize_flood_exposure.py
 
 05_Outputs/
 Figures/
@@ -148,6 +157,11 @@ python 04_Code/04_inspect_viirs.py
 # Phase 3c Day 2 additions (EM-DAT district extraction)
 python 04_Code/06_parse_emdat_locations.py
 python 04_Code/07_check_output.py
+python 04_Code/08_build_district_crosswalk.py
+python 04_Code/09_build_quarterly_skeleton.py
+python 04_Code/10_build_flood_exposure.py
+python 04_Code/11_validate_flood_events.py
+python 04_Code/12_summarize_flood_exposure.py
 
 Expected outputs are described in Research_Log.txt (Phase 3c Day 1–Day 2 sections). 
 

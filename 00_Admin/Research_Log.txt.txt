@@ -318,5 +318,49 @@ Next:
 Phase 3d: Extract RBI deposits to long panel, bulk-download/aggregate VIIRS to districts, then merge RBI + VIIRS + flood exposure into a single district-quarter analysis dataset (03_Data_Clean), with missingness and drop logs.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-11 21:35 PM IST
+2026-01-12 (Mon) 18:45-19:05 PM IST: Phase 3d - RBI Deposits Panel + Master Merge
+======================================================================
+Goal: Convert RBI deposits to a GADM district-quarter panel and merge deposits + floods into a single analysis-ready dataset.
+
+Actions Completed
+A) RBI deposits extraction (quarterly panel)
+- Script executed: 04_Code/13_extract_rbi_deposits.py
+- Outputs:
+  - 02_Data_Intermediate/rbi_deposits_panel.csv
+- Key fix: Aggregated to unique (district_gadm, state_gadm, quarter) to eliminate duplicate merge keys caused by ambiguous district-name crosswalk matches.
+
+B) Master panel merge (skeleton + floods + deposits)
+- Script executed: 04_Code/14_merge_master_panel.py
+- Output:
+  - 02_Data_Intermediate/master_panel_raw.csv
+- Merge keys standardized to: (district_gadm, state_gadm, quarter)
+
+C) Validation + missingness diagnostics
+- Scripts executed:
+  - 04_Code/15_validate_master_panel.py
+  - 04_Code/16_diagnose_missing_data.py
+- Output:
+  - 02_Data_Intermediate/master_panel_validation_log.txt
+- Findings:
+  - Panel structure is balanced at 666 districts × 40 quarters = 26,640 rows.
+  - Deposits blackout identified for 2016Q3–2017Q1 (2016Q3/Q4 and 2017Q1 fully missing).
+  - 35 districts have 0% deposit coverage across the entire window (likely crosswalk/name-change issues).
+
+D) Analysis sample construction (restricted sample)
+- Script executed: 04_Code/17_prepare_analysis_sample.py
+- Output:
+  - 02_Data_Intermediate/master_panel_analysis.csv
+- Restrictions applied:
+  - Dropped quarters: 2016Q3, 2016Q4, 2017Q1
+  - Dropped districts: 35 districts with zero deposit coverage
+- Final analysis sample:
+  - 631 districts × 37 quarters = 23,347 observations
+  - Deposit coverage: 99.1%
+  - Flood events (Rule A): 1,984 (all with deposits present in the restricted sample)
+
+Status: Phase 3d master panel construction completed through analysis-sample output; VIIRS integration remains.
+Next: Begin VIIRS monthly download/aggregation to district-quarter, then engineer regression variables (growth rates, lags) and generate descriptive tables.
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-12 19:37 PM IST
 ======================================================================

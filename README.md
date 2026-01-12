@@ -1,8 +1,8 @@
 # Climate Change, Migration, and Bank Fragility (India)
 
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).   
-**Status:** Phase 3c Day 4 complete (district crosswalk + flood exposure panel built; validated; summary logged).   
-**Last updated:** 2026-01-11. 
+**Status:** Phase 3d complete through master panel + analysis sample (RBI deposits extracted; master merge validated; sample restrictions logged).   
+**Last updated:** 2026-01-12.
 
 ---
 
@@ -77,6 +77,10 @@ district_crosswalk_draft.csv
 emdat_district_matches.csv
 district_quarter_skeleton.csv
 flood_exposure_panel.csv
+rbi_deposits_panel.csv
+master_panel_raw.csv
+master_panel_validation_log.txt
+master_panel_analysis.csv
 
 03_Data_Clean/ # Final analysis-ready panels
 
@@ -93,6 +97,11 @@ flood_exposure_panel.csv
 10_build_flood_exposure.py
 11_validate_flood_events.py
 12_summarize_flood_exposure.py
+13_extract_rbi_deposits.py
+14_merge_master_panel.py
+15_validate_master_panel.py
+16_diagnose_missing_data.py
+17_prepare_analysis_sample.py
 
 05_Outputs/
 Figures/
@@ -163,23 +172,34 @@ python 04_Code/10_build_flood_exposure.py
 python 04_Code/11_validate_flood_events.py
 python 04_Code/12_summarize_flood_exposure.py
 
-Expected outputs are described in Research_Log.txt (Phase 3c Day 1–Day 2 sections). 
+# Phase 3d additions (RBI deposits + master panel)
+python 04_Code/13_extract_rbi_deposits.py
+python 04_Code/14_merge_master_panel.py
+python 04_Code/15_validate_master_panel.py
+python 04_Code/16_diagnose_missing_data.py
+python 04_Code/17_prepare_analysis_sample.py
+
+Expected outputs are described in Research_Log.txt.txt (Phase 3c–Phase 3d sections), and should include:
+
+02_Data_Intermediate/rbi_deposits_panel.csv
+02_Data_Intermediate/master_panel_raw.csv
+02_Data_Intermediate/master_panel_validation_log.txt
+02_Data_Intermediate/master_panel_analysis.csv
 
 Known constraints (current)
-EM-DAT geographic specificity is heterogeneous, but after parsing the `Admin Units` JSON correctly (adm2_name districts + adm1_name states), 57/69 events have usable Admin Units data and only 12/69 require Location text parsing; parsed text still needs manual cleaning and crosswalk harmonization. 
+EM-DAT geographic specificity is heterogeneous, but after parsing the `Admin Units` JSON correctly (adm2_name districts + adm1_name states), 57/69 events have usable Admin Units data and only 12/69 require Location text parsing; parsed text still needs manual cleaning and crosswalk harmonization.
 
-RBI district naming conventions (uppercase, hyphenation, post-renaming) may not match EM-DAT spellings directly, implying a required district-name harmonization layer. 
+RBI district naming conventions (uppercase, hyphenation, post-renaming) may not match EM-DAT spellings directly, implying a required district-name harmonization layer.
 
-VIIRS full-period data (2015–2024 monthly) has not been bulk-downloaded yet; only a test month is currently validated. 
+RBI deposits coverage has known gaps in parts of the time series; the master panel validation log documents these issues and recommended handling choices.
+
+VIIRS full-period data (2015–2024 monthly) has not been bulk-downloaded yet; only a test month is currently validated.
 
 Documentation
-00_Admin/Research_Log.txt: authoritative chronological log of decisions, downloads, scripts, and validation results. 
-
-00_Admin/LiteratureTracker.xlsx: novelty defense + gap structure (what prior work does not test). 
-
-00_Admin/Variables_Codebook_v1.md: definitions for variables that will be constructed in code. 
-
-00_Admin/Hypotheses_Formal_v1.md: testable hypotheses that guide script outputs and regression specs. 
+00_Admin/Research_Log.txt.txt: authoritative chronological log of decisions, downloads, scripts, and validation results.
+00_Admin/Literature_Tracker.xlsx: novelty defense + gap structure (what prior work does not test).
+00_Admin/Variables_Codebook_and_Coding_Protocol_v1.1.md: definitions for variables that will be constructed in code.
+00_Admin/Hypotheses_Formal_v1.1.md: testable hypotheses that guide script outputs and regression specs.
 
 License & data terms
 Code: MIT license (repository-level). 

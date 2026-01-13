@@ -1,8 +1,8 @@
 # Climate Change, Migration, and Bank Fragility (India)
 
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).   
-**Status:** Phase 3d complete through master panel + analysis sample (RBI deposits extracted; master merge validated; sample restrictions logged).   
-**Last updated:** 2026-01-12.
+**Status:** Phase 3d in progress: VIIRS test extraction/merge validated; bulk monthly download (2015–2024) underway.   
+**Last updated:** 2026-01-13.
 
 ---
 
@@ -43,7 +43,8 @@ This repository follows a strict “raw data is never modified” rule; all tran
 ### 3) VIIRS nighttime lights (EOG monthly composites)
 - **What:** Monthly nighttime lights composites used as an economic-activity / migration proxy.   
 - **Where stored:** `01_Data_Raw/VIIRS_NightLights/`   
-- **Current status:** A single test month (Jan 2023) was downloaded to validate processing before any bulk (2015–2024) downloads.   
+- **Current status:** Test extraction + merge pipeline validated using Jan 2023; bulk monthly archives (2015–2024) are now being downloaded manually to external storage.
+- **Note:** Scripts currently reference 01_Data_Raw/VIIRS_NightLights/ paths; if the bulk files remain outside the repo, scripts must be pointed to the external base path or a symlink must be used.   
 - **Tile:** `75N060E` (covers India). 
 
 ### 4) District boundaries (GADM v4.1)
@@ -102,6 +103,9 @@ master_panel_analysis.csv
 15_validate_master_panel.py
 16_diagnose_missing_data.py
 17_prepare_analysis_sample.py
+18_extract_viirs_district_means.py
+19_validate_viirs_extraction.py
+20_aggregate_viirs_to_quarterly.py
 
 05_Outputs/
 Figures/
@@ -126,8 +130,8 @@ Folder naming and purpose reflect the current project standardization recorded i
 conda create -n research_env python=3.10
 conda activate research_env
 
-# install core stack (adjust as needed if conda solves differ on your machine)
-conda install pandas geopandas rasterio matplotlib statsmodels```
+# install core stack
+conda install pandas geopandas rasterio matplotlib statsmodels
 Environment details match the project initialization log. 
 
 What is completed (as of 2026-01-08)

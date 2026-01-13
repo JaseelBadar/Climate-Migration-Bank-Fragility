@@ -362,5 +362,38 @@ Status: Phase 3d master panel construction completed through analysis-sample out
 Next: Begin VIIRS monthly download/aggregation to district-quarter, then engineer regression variables (growth rates, lags) and generate descriptive tables.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-12 19:37 PM IST
+2026-01-13 (Tue) 18:25-19:05 PM IST: Phase 3d - VIIRS Integration (Test Validation)
+======================================================================
+Goal: Validate VIIRS district extraction + quarterly aggregation + merge feasibility with master_panel_analysis.csv before bulk (2015–2024) processing.
+
+A) VIIRS district extraction (Jan 2023 test)
+- Script executed: 04_Code/18_extract_viirs_district_means.py
+- Intended input (as coded): 01_Data_Raw/VIIRS_NightLights/SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600.avg_rade9h.tif
+- Log: 05_Outputs/Logs/18_viirs_extraction.log
+- Note: First run failed due to path mismatch ("No such file or directory"), then corrected and re-run succeeded.
+- Result: GADM districts loaded: 676; extraction complete: 676 districts, 676 with data.
+
+B) Validation checks (district overlap + coverage)
+- Script executed: 04_Code/19_validate_viirs_extraction.py
+- Log: 05_Outputs/Logs/19_viirs_validation.log
+- Logged result: Validation complete: 624/624 districts covered (100.0%).
+- Note: This denominator depends on the master panel districts loaded at runtime; treat as a computed check, not a fixed project constant.
+
+C) Quarterly aggregation + master panel test merge (Jan 2023 only)
+- Script executed: 04_Code/20_aggregate_viirs_to_quarterly.py
+- Log: 05_Outputs/Logs/20_viirs_quarterly_test.log
+- Logged result: Test merge complete: 2.70% coverage; Total obs: 23347, VIIRS obs: 631
+- Output: 02_Data_Intermediate/master_panel_viirs_test.csv
+
+Status:
+- VIIRS test pipeline is functioning end-to-end (extract → validate → aggregate → merge test).
+- Bulk monthly downloads (2015–2024) are in progress outside the repo on external storage (see local setup notes).
+
+Next:
+- Complete bulk VIIRS monthly downloads for 2015–2024.
+- Generalize Script 18 to loop over all months and write a single district-month panel (02_Data_Intermediate).
+- Aggregate district-month → district-quarter and merge into the master analysis sample for Phase 4 regressions.
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-13 23:07 PM IST
 ======================================================================

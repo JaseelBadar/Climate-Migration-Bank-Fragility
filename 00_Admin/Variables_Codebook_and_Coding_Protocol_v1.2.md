@@ -1,4 +1,4 @@
-# VARIABLES CODEBOOK + CODING PROTOCOL (v1.1)
+# VARIABLES CODEBOOK + CODING PROTOCOL (v1.2)
 **Project**: Climate Migration, Night Lights, and Bank Fragility in India (2015–2024)  
 **Document Type**: Variables codebook + enforceable coding protocol  
 **Version**: 1.1 (post Phase 3c Day 1 inspection)  
@@ -128,7 +128,11 @@ These variables are conditional on availability in the RBI tables actually downl
 **Variable**: `viirs_brightness_mt`  
 **Definition**: mean VIIRS radiance within district boundary for month m.   
 **Unit**: VIIRS native radiance units.  
-**Input file**: `.avg_rade9h.tif` monthly composite(s).   
+**Input file**: `.avg_rade9h.tif` monthly composite(s).
+**Implementation note (Phase 3d scripts)**:
+- Script 18 currently writes the monthly district mean to `02_Data_Intermediate/viirs_jan2023_test.csv` using column name `mean_radiance`.
+- This is the same conceptual object as `viirs_brightness_mt`; naming will be standardized when we generate the full district-month panel (2015–2024).
+- Script 18 also outputs `pixel_count` = number of valid raster pixels used in the district mean computation (quality/coverage diagnostic; this is not the same as the VIIRS `cvg.tif` product).
 **GIS requirement**: district polygons (source TBD; must be recorded once chosen). 
 
 **Quality companion variables (recommended)**:
@@ -322,11 +326,18 @@ Names below are placeholders, but the responsibilities are fixed.
 7. `05_extract_rbi.py` (TO BE BUILT)
    Output: `02_Data_Intermediate/rbi_deposits_long.csv`
 
-8. `09_aggregate_viirs_to_district.py` (TO BE BUILT)
-   Output: `02_Data_Intermediate/viirs_district_monthly.csv`
-   Then: `02_Data_Intermediate/viirs_district_quarterly.csv`
+8. `18_extract_viirs_district_means.py` (implemented; currently test-month)
+   Output (test): `02_Data_Intermediate/viirs_jan2023_test.csv`
+   Log: `05_Outputs/Logs/18_viirs_extraction.log`
 
-9. `10_merge_panel.py` (TO BE BUILT)
+9. `19_validate_viirs_extraction.py` (implemented; test validation)
+   Log: `05_Outputs/Logs/19_viirs_validation.log`
+
+10. `20_aggregate_viirs_to_quarterly.py` (implemented; quarterly agg + merge test)
+   Output (test): `02_Data_Intermediate/master_panel_viirs_test.csv`
+   Log: `05_Outputs/Logs/20_viirs_quarterly_test.log`
+
+11. `10_merge_panel.py` (TO BE BUILT)
    Output: `03_Data_Clean/panel_district_quarter_2015_2024.csv`
 
 ### D. Versioning and “stop conditions”

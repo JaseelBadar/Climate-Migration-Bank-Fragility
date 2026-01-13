@@ -1,4 +1,4 @@
-## FORMAL RESEARCH HYPOTHESES (v1.1 — Edited)  
+## FORMAL RESEARCH HYPOTHESES (v1.2 — Edited)  
 **Project**: Climate Migration, Night Lights, and Bank Fragility in India (2015–2024)  
 **Purpose**: Convert the “Shadow Run” narrative into testable, falsifiable statements that map cleanly to the Variables Codebook and the Python pipeline.
 

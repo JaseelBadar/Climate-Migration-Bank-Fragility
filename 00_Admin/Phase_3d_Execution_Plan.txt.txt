@@ -1,0 +1,127 @@
+EXACT STEPS (Copy-Paste Ready)
+STEP 1: Create Phase_3d_Execution_Plan.txt
+Action 1.1: Create the file
+Navigate to: E:\Climate-Migration-Bank-Fragility\00_Admin\
+
+Right-click → New → Text Document
+
+Name it: Phase_3d_Execution_Plan.txt
+
+Action 1.2: Copy-paste this content into the file
+text
+======================================================================
+PHASE 3d EXECUTION PLAN
+======================================================================
+Project: Climate Shocks, Displacement, and Bank Liquidity Risk
+Phase: 3d - VIIRS Integration (Final)
+Date: 2026-01-14
+Status: Downloads complete; ready for execution
+
+======================================================================
+OBJECTIVE
+======================================================================
+Transform 120 raw VIIRS monthly tiles (2015-2024) into analysis-ready 
+district-quarter panel merged with deposits + floods.
+
+======================================================================
+INPUT DATA (Current Status)
+======================================================================
+✓ VIIRS: 120 monthly tiles (E:\VIIRS_Raw_Data_75N060E\)
+✓ Master panel: 23,347 district-quarters (deposits + floods)
+✓ GADM districts: 676 districts (gadm41_IND_2.shp)
+✓ Test pipeline: Validated with Jan 2023 (Scripts 18-20)
+
+======================================================================
+PIPELINE (Scripts 21-25)
+======================================================================
+
+Script 21: Extract VIIRS Monthly Panel
+----------------------------------------------------------------------
+Task: Loop through 120 tiles; extract mean radiance per district
+Input: 120 .avg_rade9h.tif files + GADM shapefile
+Output: viirs_monthly_panel.csv (81,120 rows)
+Runtime: 6-8 hours (overnight)
+Execution: Jan 15 22:30 PM → Jan 16 07:00 AM
+Progress tracking: Print updates every 5 minutes (month completion)
+
+Script 22: Aggregate to Quarterly
+----------------------------------------------------------------------
+Task: Average 3 months per quarter (align with RBI deposit quarters)
+Input: viirs_monthly_panel.csv
+Output: viirs_quarterly_panel.csv (27,040 rows)
+Runtime: 1-2 minutes
+Execution: Jan 16 07:05 AM
+
+Script 23: Merge with Master Panel
+----------------------------------------------------------------------
+Task: Left join master_panel_analysis.csv + viirs_quarterly_panel.csv
+Input: Both quarterly panels
+Output: analysis_panel_final.csv (23,347 rows; ~90%+ VIIRS coverage)
+Runtime: < 1 minute
+Execution: Jan 16 07:10 AM
+
+Script 24: Engineer Regression Variables
+----------------------------------------------------------------------
+Task: Create log changes, lags per Variables_Codebook_v1.1.md
+Variables: log_lights_qt, lights_change_qt, deposit_change_qt, lags
+Output: regression_ready_panel.csv
+Runtime: 2-3 minutes
+Execution: Jan 16 07:15 AM
+
+Script 25: Descriptive Statistics
+----------------------------------------------------------------------
+Task: Generate Table 1 (summary stats for paper)
+Output: 05_Outputs/Tables/01_descriptive_stats.csv
+Runtime: 3-5 minutes
+Execution: Jan 16 07:20 AM
+
+======================================================================
+EXPECTED DELIVERABLES (End of Phase 3d)
+======================================================================
+✓ viirs_monthly_panel.csv: 81,120 rows (676 × 120)
+✓ viirs_quarterly_panel.csv: 27,040 rows (676 × 40)
+✓ analysis_panel_final.csv: 23,347 rows (master + VIIRS merged)
+✓ regression_ready_panel.csv: same, with engineered variables
+✓ 01_descriptive_stats.csv: Table 1 for paper
+
+======================================================================
+SUCCESS CRITERIA
+======================================================================
+1. Script 21 completes without errors (all 120 months processed)
+2. VIIRS coverage ≥ 85% in final merged panel (vs 2.70% test)
+3. No districts with 100% missing VIIRS data
+4. Log changes and lags correctly calculated (spot-check 5 districts)
+
+======================================================================
+PHASE 4 READINESS CHECK
+======================================================================
+Before starting regressions (H1-H4 tests), verify:
+□ regression_ready_panel.csv loads without errors
+□ Key variables exist: log_lights_qt, lights_change_qt, deposit_change_qt
+□ Panel structure: 23,347 obs (631 districts × 37 quarters after restrictions)
+□ Flood exposure: Rule A (1,984 obs), Rule B (subset)
+□ Descriptive stats table generated (Table 1)
+
+======================================================================
+RISK MITIGATION
+======================================================================
+Risk: Script 21 crashes midway (e.g., memory error, disk I/O failure)
+Mitigation: Save intermediate CSVs every 12 months; can resume from checkpoint
+
+Risk: VIIRS coverage < 85% after merge
+Mitigation: Investigate which districts/quarters missing; check for corrupt tiles
+
+Risk: Engineered variables have NaN/Inf values
+Mitigation: Script 24 includes validation checks before saving
+
+======================================================================
+TIMELINE
+======================================================================
+Jan 14 22:00 PM: Downloads complete; scripts documented
+Jan 15 22:30 PM: Start Script 21 (overnight run)
+Jan 16 07:00 AM: Verify Script 21 complete; run Scripts 22-25 (30 min)
+Jan 16 08:00 AM: Phase 3d complete; begin Phase 4 prep
+
+======================================================================
+END OF PLAN - Approved: 2026-01-14
+======================================================================

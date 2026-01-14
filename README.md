@@ -1,8 +1,8 @@
 # Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India
+Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).
 
-Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).   
-**Status:** Phase 3d in progress: VIIRS test extraction/merge validated; bulk monthly download (2015–2024) underway.   
-**Last updated:** 2026-01-13.
+**Status:** Phase 3d ready for final execution: VIIRS bulk downloads complete (120 months); extraction pipeline documented (Scripts 21–25); overnight run scheduled.   
+**Last updated:** 2026-01-14.
 
 ---
 
@@ -41,11 +41,11 @@ This repository follows a strict “raw data is never modified” rule; all tran
 - **Notes:** The raw export initially appears as 70 rows including header, and inspection identifies 69 flood events. 
 
 ### 3) VIIRS nighttime lights (EOG monthly composites)
-- **What:** Monthly nighttime lights composites used as an economic-activity / migration proxy.   
-- **Where stored:** `01_Data_Raw/VIIRS_NightLights/`   
-- **Current status:** Test extraction + merge pipeline validated using Jan 2023; bulk monthly archives (2015–2024) are now being downloaded manually to external storage.
-- **Note:** Scripts currently reference 01_Data_Raw/VIIRS_NightLights/ paths; if the bulk files remain outside the repo, scripts must be pointed to the external base path or a symlink must be used.   
-- **Tile:** `75N060E` (covers India). 
+- **What:** Monthly nighttime lights composites used as an economic-activity / displacement proxy.   
+- **Where stored (test tile):** `01_Data_Raw/VIIRS_NightLights/` (Jan 2023 only).   
+- **Where stored (bulk):** `E:\VIIRS_Raw_Data_75N060E\` (~60-70 GB; external storage outside repo).   
+- **Current status:** All 120 monthly tiles downloaded (2015–2024); test extraction validated (Scripts 18–20); bulk extraction ready (Script 21).   
+- **Tile:** `75N060E` (covers 100% of India; 0°N-75°N, 60°E-180°E). 
 
 ### 4) District boundaries (GADM v4.1)
 - **What:** India administrative boundaries; district polygons used for VIIRS aggregation and adjacency/spillover construction.
@@ -106,6 +106,11 @@ master_panel_analysis.csv
 18_extract_viirs_district_means.py
 19_validate_viirs_extraction.py
 20_aggregate_viirs_to_quarterly.py
+21_extract_viirs_full_panel.py
+22_aggregate_viirs_quarterly.py
+23_merge_viirs_master.py
+24_engineer_regression_variables.py
+25_descriptive_statistics.py
 
 05_Outputs/
 Figures/
@@ -189,6 +194,11 @@ Expected outputs are described in Research_Log.txt.txt (Phase 3c–Phase 3d sect
 02_Data_Intermediate/master_panel_raw.csv
 02_Data_Intermediate/master_panel_validation_log.txt
 02_Data_Intermediate/master_panel_analysis.csv
+02_Data_Intermediate/viirs_monthly_panel.csv
+02_Data_Intermediate/viirs_quarterly_panel.csv
+03_Data_Clean/analysis_panel_final.csv
+03_Data_Clean/regression_ready_panel.csv
+05_Outputs/Tables/01_descriptive_stats.csv
 
 Known constraints (current)
 EM-DAT geographic specificity is heterogeneous, but after parsing the `Admin Units` JSON correctly (adm2_name districts + adm1_name states), 57/69 events have usable Admin Units data and only 12/69 require Location text parsing; parsed text still needs manual cleaning and crosswalk harmonization.

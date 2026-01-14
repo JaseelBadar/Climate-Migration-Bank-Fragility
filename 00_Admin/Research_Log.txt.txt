@@ -395,5 +395,49 @@ Next:
 - Aggregate district-month → district-quarter and merge into the master analysis sample for Phase 4 regressions.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-13 23:07 PM IST
+2026-01-14 (Wed) 22:00-23:50 PM IST: Phase 3d Day 3 - VIIRS Bulk Downloads Complete
+======================================================================
+Goal: Complete bulk VIIRS monthly tile downloads (2015–2024) to external storage; document Phase 3d final execution pipeline.
+
+A) Bulk VIIRS downloads finalized
+- 120 monthly tiles downloaded manually from EOG Colorado School of Mines server
+- Tile: 75N060E (covers India; 0°N-75°N, 60°E-180°E)
+- Save location: E:\VIIRS_Raw_Data_75N060E\ (external storage, outside repo)
+- Folder structure: Year subfolders (2015–2024) → Month subfolders (January–December) → .tgz archives
+- Total compressed size: ~60–70 GB
+- Download completion: Jan 13 22:00 – Jan 14 22:00 (24-hour manual download session)
+
+B) Phase 3d script pipeline documented
+- Created script skeletons (21–25) with headers, inputs/outputs, runtime estimates
+- Script 21: Extract VIIRS monthly panel (81,120 rows; 6-8 hour runtime)
+- Script 22: Aggregate monthly → quarterly (27,040 rows; 1-2 minutes)
+- Script 23: Merge VIIRS + master panel (23,347 rows; ~90%+ coverage expected)
+- Script 24: Engineer regression variables (logs, changes, lags per codebook)
+- Script 25: Generate descriptive statistics (Table 1 for paper)
+- Scripts documented with clear dependencies: 21 → 22 → 23 → 24 → 25
+
+C) Project infrastructure updates
+- Created Phase 3d execution plan document (00_Admin/Phase_3d_Execution_Plan.txt)
+- Prepared output folder structure (03_Data_Clean/, 05_Outputs/Tables/, 05_Outputs/Figures/)
+- Locked final paper title across all documentation: "Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India"
+- Title changes: Migration → Displacement (more precise); Banking Stability → Bank Liquidity Risk (mechanism-specific)
+
+D) Expected outputs (Phase 3d final)
+- viirs_monthly_panel.csv: 81,120 rows (676 districts × 120 months)
+- viirs_quarterly_panel.csv: 27,040 rows (676 districts × 40 quarters)
+- analysis_panel_final.csv: 23,347 rows (master panel + VIIRS merged)
+- regression_ready_panel.csv: same, with engineered variables
+- 01_descriptive_stats.csv: Summary statistics table for paper
+
+Status:
+- Bulk downloads complete (120 months validated)
+- Scripts 21–25 documented and ready for implementation
+- Overnight execution planned for Script 21 (Jan 15 evening → Jan 16 morning)
+
+Next:
+- Phase 3d Day 4 (Jan 15): Implement Scripts 21–25; execute overnight extraction; produce final analysis-ready panel
+- Phase 4 (Jan 16 onward): Begin regressions (H1–H4 tests)
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-14 23:52 PM IST
 ======================================================================

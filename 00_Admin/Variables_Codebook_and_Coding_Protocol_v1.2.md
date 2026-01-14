@@ -1,5 +1,5 @@
 # VARIABLES CODEBOOK + CODING PROTOCOL (v1.2)
-**Project**: Climate Migration, Night Lights, and Bank Fragility in India (2015–2024)  
+**Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)
 **Document Type**: Variables codebook + enforceable coding protocol  
 **Version**: 1.1 (post Phase 3c Day 1 inspection)  
 **Date**: January 8, 2026

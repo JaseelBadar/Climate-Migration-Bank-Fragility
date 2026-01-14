@@ -1,4 +1,4 @@
-# Climate Change, Migration, and Bank Fragility (India)
+# Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India
 
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).   
 **Status:** Phase 3d in progress: VIIRS test extraction/merge validated; bulk monthly download (2015–2024) underway.   

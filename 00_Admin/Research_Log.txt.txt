@@ -439,5 +439,65 @@ Next:
 - Phase 4 (Jan 16 onward): Begin regressions (H1–H4 tests)
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-14 23:52 PM IST
+2026-01-15 (Thu) 2030-2200 PM IST: Phase 3d Day 4 - Full Pipeline Implementation + Validation
+======================================================================
+Goal: Implement and execute Phase 3d pipeline (Scripts 21–25), validate data quality before regressions.
+
+A) Script 21: Full VIIRS extraction (COMPLETED)
+- Executed 04_Code/21_extract_viirs_full_panel.py
+- Runtime: ~60 minutes (much faster than 6-8hr estimate)
+- Input: 120 monthly VIIRS tiles from F:\Jaseel\VIIRS_Raw_Data_75N060E\
+- Output: 02_Data_Intermediate/viirs_monthly_panel.csv (81,120 rows)
+- Status: Extraction complete, but contains duplicates (see validation below)
+
+B) Scripts 22-25: Data pipeline (IMPLEMENTED, execution deferred)
+- 22_aggregate_viirs_quarterly.py: Monthly → quarterly aggregation
+- 23_merge_viirs_master.py: VIIRS + deposits + floods merge
+- 24_engineer_regression_variables.py: Logs, changes, lags
+- 25_descriptive_statistics.py: Table 1 summary stats
+- Status: Code complete, awaiting validated input data
+
+C) Scripts 27-29: Phase 4 regression scripts (IMPLEMENTED, execution deferred)
+- 27_regression_H1_first_stage.py: Floods → Lights (first stage)
+- 28_regression_H2_iv2sls.py: Lights → Deposits (IV 2SLS)
+- 29_regression_H3_timing.py: Distributed lags, timing analysis
+- Status: Code complete, awaiting analysis-ready panel
+
+D) Script 26: VIIRS monthly validation (EXECUTED - FAILED)
+- Created 04_Code/26_validate_viirs_monthly.py
+- Comprehensive 8-check validation of viirs_monthly_panel.csv
+- Result: VALIDATION FAILED (3 checks failed, 5 passed)
+  - ✓ PASS: Dimensions (81,120 rows)
+  - ✓ PASS: Required columns present
+  - ✗ FAIL: District coverage (expected 676, got 659 unique)
+  - ✓ PASS: Temporal coverage (120 months, 2015-2024)
+  - ✓ PASS: No NaN values
+  - ✓ PASS: No Inf values
+  - ✓ PASS: Valid radiance range (0-41.33)
+  - ✗ FAIL: Unbalanced panel (16 districts with ≠ 120 obs)
+- Diagnostic finding: One district (Kinnaur) has 360 obs (3× expected)
+- Output: 05_Outputs/Logs/26_viirs_monthly_validation.txt
+
+E) Script 21b: Diagnostic for duplicate extractions (EXECUTED)
+- Created 04_Code/21b_diagnose_viirs_duplicates.py (temporary debug script)
+- Compared GADM districts (expected) vs VIIRS panel (actual)
+- Key findings:
+  - GADM shapefile has 676 rows but only 659 unique district names
+  - 16 districts have multipolygon geometries (2-3 geometries per district)
+  - Script 21 iterated over rows (676) instead of unique districts (659)
+  - Result: Duplicate extractions for multipolygon districts
+  - Kinnaur: 3 geometries → 360 obs (120 months × 3)
+  - Bilaspur, Aurangabad, etc.: 2 geometries → 240 obs (120 months × 2)
+- Root cause identified: Missing dissolve step before extraction loop
+- Output: Console diagnostic report
+
+F) Fix documentation: Script_21_Fix_Notes.txt
+- Created 00_Admin/Script_21_Fix_Notes.txt
+- Documents multipolygon duplicate extraction issue
+- Provides exact code fix:
+  ```python
+  districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-15 21:55 PM IST
 ======================================================================

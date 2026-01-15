@@ -1,0 +1,22 @@
+SCRIPT 21 FIX - VIIRS DUPLICATE EXTRACTIONS
+============================================
+Date: 2026-01-15
+Issue: Multipolygon districts extracted multiple times
+
+DIAGNOSIS:
+- GADM shapefile has 676 rows but only 659 unique districts
+- 16 districts have 2-3 geometries (multipolygon features)
+- Script 21 iterated over rows, not unique districts
+- Result: Kinnaur extracted 3×, Bilaspur 2×, etc.
+
+FIX REQUIRED:
+Add dissolve step before extraction loop:
+
+```python
+# Line ~45 in Script 21, after loading GADM:
+districts_gdf = gpd.read_file(gadm_path)
+print(f"  ✓ Loaded: {len(districts_gdf)} rows")
+
+# ADD THIS:
+districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
+print(f"  ✓ After dissolve: {len(districts_gdf)} unique districts")

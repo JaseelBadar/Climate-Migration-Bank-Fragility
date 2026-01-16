@@ -1,8 +1,8 @@
 # Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).
 
-**Status:** Phase 3d ready for final execution: VIIRS bulk downloads complete (120 months); extraction pipeline documented (Scripts 21–25); overnight run scheduled.   
-**Last updated:** 2026-01-14.
+**Status:** Phase 4 complete — All regressions run (H1-H4). Two significant findings: Floods reduce nighttime lights (β=-0.011***); Urban districts more vulnerable to flood shocks (β=-1.21**).   
+**Last updated:** 2026-01-16.
 
 ---
 
@@ -82,8 +82,12 @@ rbi_deposits_panel.csv
 master_panel_raw.csv
 master_panel_validation_log.txt
 master_panel_analysis.csv
+viirs_monthly_panel.csv
+viirs_quarterly_panel.csv
 
 03_Data_Clean/ # Final analysis-ready panels
+analysis_panel_final.csv
+regression_panel_final.csv
 
 04_Code/
 01_download_viirs.py # Placeholder/script area
@@ -111,6 +115,11 @@ master_panel_analysis.csv
 23_merge_viirs_master.py
 24_engineer_regression_variables.py
 25_descriptive_statistics.py
+26_validate_viirs_monthly.py
+27_regression_H1_first_stage.py
+28_regression_H2_iv2sls.py
+29_regression_H3_timing.py
+30_regression_H4_heterogeneity.py
 
 05_Outputs/
 Figures/
@@ -139,29 +148,35 @@ conda activate research_env
 conda install pandas geopandas rasterio matplotlib statsmodels
 Environment details match the project initialization log. 
 
-What is completed (as of 2026-01-08)
-Phase 2: Data acquisition (completed 2026-01-02)
-RBI deposits: 3 consolidated Excel files saved under raw data. 
+## What is completed (as of 2026-01-16)
 
-EM-DAT floods export downloaded and saved under raw data. 
+### Phase 1: Project Initialization (Dec 2025)
+- Computational environment configured (Python 3.10, conda, geopandas stack)
+- Repository structure established with strict raw/intermediate/clean separation
+- GitHub version control initialized
 
-VIIRS: 1-month test tile downloaded and extracted for validation. 
+### Phase 2: Data Acquisition (Jan 2026)
+- **RBI deposits:** 3 Excel files covering 2004-2024, 762 districts, quarterly snapshots
+- **EM-DAT floods:** 69 flood events (2015-2024) with parsed district-level Admin Units
+- **VIIRS nighttime lights:** 120 monthly tiles downloaded (2015-2024, tile 75N060E, ~65 GB)
+- **GADM boundaries:** India district polygons (v4.1, 676 districts)
 
-Phase 3a: Literature acquisition (completed 2026-01-05)
-Built an initial corpus (~15–18 papers) using Zotero + Harvard HOLLIS access. 
+### Phase 3: Data Integration & Panel Construction (Jan 2026)
+- **Literature review:** 15-18 papers acquired; novelty gaps documented in `LiteratureTracker.xlsx`
+- **Hypotheses formalized:** H1-H4 specified in `Hypotheses_Formal_v1.1.md` with IV strategy
+- **District crosswalk:** Built RBI-GADM-EM-DAT harmonization (83.2% match rate, passed threshold)
+- **Flood exposure panel:** Constructed Rule A (8.3% exposure) and Rule B (1.0% high-precision) indicators
+- **RBI deposits panel:** Extracted to district-quarter format; identified 2016Q3-2017Q1 data blackout
+- **VIIRS integration:** Extracted district-level nighttime lights; aggregated to quarterly panel
+- **Master panel:** Merged deposits + floods + VIIRS → 23,347 observations (631 districts × 37 quarters)
 
-Phase 3b: Gap analysis (completed 2026-01-06)
-LiteratureTracker.xlsx populated with a structured novelty/gap map. 
+### Phase 4: Hypothesis Testing (Jan 16, 2026) COMPLETE
+- **H1 (Floods → Lights):** β = -0.011*** (p < 0.001) — Floods reduce nighttime lights significantly
+- **H2 (Lights → Deposits via IV):** Weak instrument (F = 11.9); 2SLS estimates imprecise
+- **H3 (Timing analysis):** 1-quarter lag significant (p = 0.013); 2-quarter lag marginal (p = 0.068)
+- **H4 (Heterogeneity):** Urban districts MORE vulnerable to floods (β = -1.21**, p = 0.005) — KEY FINDING
 
-Phase 3c Day 0: Conceptual locking (completed 2026-01-07, mobile-only)
-Variables_Codebook_v1.md and Hypotheses_Formal_v1.md created. 
-
-Phase 3c Day 1: Data inspection (completed 2026-01-08)
-02_inspect_rbi.py: validated district structure and quarterly columns in the RBI file inspected. 
-
-03_inspect_emdat.py: validated flood event counts and identified mixed geographic precision (district-level vs missing Admin Units). 
-
-04_inspect_viirs.py: validated the VIIRS GeoTIFF integrity and India coverage for the test tile. 
+**Status:** Regressions complete. Two significant findings ready for paper: H1 (climate shock → migration proxy) and H4a (urban vulnerability). Null results for H2 (weak IV) and H4b/c (no adaptation or seasonality effects). 
 
 How to reproduce current inspection
 Activate the environment and run the inspection scripts:
@@ -199,6 +214,10 @@ Expected outputs are described in Research_Log.txt.txt (Phase 3c–Phase 3d sect
 03_Data_Clean/analysis_panel_final.csv
 03_Data_Clean/regression_ready_panel.csv
 05_Outputs/Tables/01_descriptive_stats.csv
+05_Outputs/Tables/02_H1_first_stage.csv
+05_Outputs/Tables/03_H2_iv2sls.csv
+05_Outputs/Tables/04_H3_timing.csv
+05_Outputs/Tables/05_H4_heterogeneity.csv
 
 Known constraints (current)
 EM-DAT geographic specificity is heterogeneous, but after parsing the `Admin Units` JSON correctly (adm2_name districts + adm1_name states), 57/69 events have usable Admin Units data and only 12/69 require Location text parsing; parsed text still needs manual cleaning and crosswalk harmonization.
@@ -224,6 +243,7 @@ Contact
 
 Researcher: \Jaseel Badar
 Email: \jaseelbadar123@gmail.com
+University Email: \jab9733@g.harvard.edu
 Institution: \Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 

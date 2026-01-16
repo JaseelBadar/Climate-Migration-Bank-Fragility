@@ -49,6 +49,11 @@ print(f"  ✓ Loaded: {len(districts_gdf)} districts")
 print(f"  ✓ CRS: {districts_gdf.crs}")
 log.info(f"GADM districts loaded: {len(districts_gdf)}")
 
+# Dissolve multipolygon geometries to ensure one row per unique district
+districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
+print(f"  ✓ After dissolve: {len(districts_gdf)} unique districts")
+log.info(f"After dissolve: {len(districts_gdf)} unique districts")
+
 # === BUILD LIST OF ALL 120 VIIRS FILES ===
 print(f"\n[Step 2/3] Scanning for VIIRS tiles...")
 years = range(2015, 2025)  # 2015-2024

@@ -499,5 +499,98 @@ F) Fix documentation: Script_21_Fix_Notes.txt
   districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-15 21:55 PM IST
+2026-01-16 (Fri) 18:40-20:45 PM IST: Phase 4 - Full Pipeline Execution + H1–H4 Regressions
+======================================================================
+Goal: Resolve VIIRS duplicate/multipolygon issue, run the full post-VIIRS pipeline (Scripts 22–26), and execute Phase 4 regressions (H1–H4) with saved tables + logs.
+
+Actions Completed
+
+A) VIIRS duplicate fix + rerun extraction (Script 21)
+- Implemented the multipolygon fix documented on Day 4 (dissolve districts before looping).
+- Re-ran: 04_Code/21_extract_viirs_full_panel.py
+- Output regenerated:
+  - 02_Data_Intermediate/viirs_monthly_panel.csv
+
+B) VIIRS quarterly aggregation (Script 22)
+- Executed: 04_Code/22_aggregate_viirs_quarterly.py
+- Input: 02_Data_Intermediate/viirs_monthly_panel.csv
+- Output:
+  - 02_Data_Intermediate/viirs_quarterly_panel.csv
+- Log:
+  - 05_Outputs/Logs/22_viirs_quarterly
+
+C) Merge VIIRS into master analysis panel (Script 23)
+- Executed: 04_Code/23_merge_viirs_master.py
+- Inputs:
+  - 02_Data_Intermediate/master_panel_analysis.csv
+  - 02_Data_Intermediate/viirs_quarterly_panel.csv
+- Output:
+  - 03_Data_Clean/analysis_panel_final.csv
+- Log:
+  - 05_Outputs/Logs/23_viirs_master_merge
+
+D) Regression variable engineering (Script 24)
+- Executed: 04_Code/24_engineer_regression_variables.py
+- Input:
+  - 03_Data_Clean/analysis_panel_final.csv
+- Output:
+  - 03_Data_Clean/regression_panel_final.csv
+- Key constructions (as per codebook intent):
+  - Quarterly changes (deposits + lights), logs, and lagged flood indicators.
+- Log:
+  - 05_Outputs/Logs/24_variable_engineering
+
+E) Descriptive statistics table generated (Script 25)
+- Executed: 04_Code/25_descriptive_statistics.py
+- Output:
+  - 05_Outputs/Tables/01_descriptive_stats.csv
+- Log:
+  - 05_Outputs/Logs/25_descriptive_summary
+
+F) Post-fix VIIRS validation (Script 26)
+- Executed: 04_Code/26_validate_viirs_monthly.py
+- Purpose: confirm panel balance + district coverage after the multipolygon fix.
+- Log:
+  - 05_Outputs/Logs/26_viirs_monthly_validation
+
+G) Phase 4 regressions executed (H1–H4)
+H1) Floods → Nighttime lights (first stage)
+- Executed: 04_Code/27_regression_H1_first_stage.py
+- Outputs:
+  - 05_Outputs/Tables/02_H1_first_stage.csv
+  - 05_Outputs/Logs/27_H1_regression.txt
+  - 05_Outputs/Logs/27_H1_regression_full.txt
+
+H2) IV 2SLS: Lights → Deposits, instrumented by floods
+- Executed: 04_Code/28_regression_H2_iv2sls.py
+- Outputs:
+  - 05_Outputs/Tables/03_H2_iv2sls.csv
+  - 05_Outputs/Logs/28_H2_iv_results
+
+H3) Timing / distributed lag effects
+- Executed: 04_Code/29_regression_H3_timing.py
+- Outputs:
+  - 05_Outputs/Tables/04_H3_timing.csv
+  - 05_Outputs/Logs/29_H3_timing
+
+H4) Heterogeneity analysis
+- Executed: 04_Code/30_regression_H4_heterogeneity.py
+- Outputs:
+  - 05_Outputs/Tables/05_H4_heterogeneity.csv
+  - 05_Outputs/Logs/30_H4_heterogeneity
+
+Known Limitations / Warnings (do not overclaim)
+- H2 IV credibility depends on first-stage strength; weak-instrument risk must be reported directly (F-stat + p-values) rather than interpreted away.
+- All inference statements must clarify whether SEs are clustered by district; if not clustered, treat p-values as potentially optimistic.
+- Flood exposure Rule A includes state-level fallback, which mechanically introduces false positives and attenuates coefficients toward zero.
+
+Status:
+- Phase 4 execution complete: final cleaned panels produced + all H1–H4 scripts executed with saved CSV tables and text logs.
+
+Next:
+- Robustness: re-run key specs with district-clustered SEs; run “Rule B only” (district-precision floods) as a credibility check.
+- Begin Phase 5 writing: Results section anchored on Tables 02–05, with explicit identification/limitations language.
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-16 21:55 PM IST
 ======================================================================

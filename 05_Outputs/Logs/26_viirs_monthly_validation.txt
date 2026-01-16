@@ -1,15 +1,15 @@
 ======================================================================
 VIIRS MONTHLY PANEL VALIDATION REPORT
-Generated: 2026-01-15 21:38:39
+Generated: 2026-01-16 18:55:08
 ======================================================================
 
-File loaded successfully: 81,120 rows
+File loaded successfully: 79,080 rows
 
 ======================================================================
 CHECK 1: EXPECTED DIMENSIONS
 ======================================================================
-Expected: 81,120 rows (676 districts × 120 months)
-Actual:   81,120 rows
+Expected: 79,080 rows (659 districts × 120 months)
+Actual:   79,080 rows
 RESULT: PASS
 
 ======================================================================
@@ -20,9 +20,9 @@ RESULT: PASS - All required columns present
 ======================================================================
 CHECK 3: DISTRICT COVERAGE
 ======================================================================
-Expected: 676 districts
+Expected: 659 districts
 Actual:   659 districts
-RESULT: FAIL - Missing 17 districts
+RESULT: PASS
 
 ======================================================================
 CHECK 4: TEMPORAL COVERAGE
@@ -49,8 +49,8 @@ RESULT: PASS
 CHECK 7: RADIANCE VALUE RANGE
 ======================================================================
 Min:    0.0000
-Mean:   0.7247
-Median: 0.4088
+Mean:   0.7327
+Median: 0.4113
 Max:    41.3334
 RESULT: PASS - No negative values
 
@@ -58,27 +58,14 @@ RESULT: PASS - No negative values
 CHECK 8: DISTRICT-MONTH BALANCE
 ======================================================================
 Expected: 120 obs per district
-Actual: Min=120, Max=360, Mean=123.1
-RESULT: FAIL - 16 districts unbalanced
-Unbalanced districts:
-gadm_district
-Anjaw            240
-Aurangabad       240
-Balrampur        240
-Bijapur          240
-Bilaspur         240
-Chamoli          240
-East Siang       240
-Hamirpur         240
-Kinnaur          360
-Lahul & Spiti    240
-dtype: int64
+Actual: Min=120, Max=120, Mean=120.0
+RESULT: PASS - Balanced panel
 
 ======================================================================
 FINAL VALIDATION SUMMARY
 ======================================================================
-STATUS: \u26a0\u26a0\u26a0 VALIDATION FAILED \u26a0\u26a0\u26a0
-Review issues before running Script 22
+STATUS: \u2713\u2713\u2713 ALL CHECKS PASSED \u2713\u2713\u2713
+Data ready for quarterly aggregation (Script 22)
 ======================================================================
 END OF VALIDATION REPORT
 ======================================================================

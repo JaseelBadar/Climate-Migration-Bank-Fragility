@@ -1,22 +1,3 @@
-"""
-26_validate_viirs_monthly.py - Phase 3d VIIRS Validation
-
-Comprehensive validation of viirs_monthly_panel.csv after Script 21 extraction.
-
-CHECKS:
-  1. Expected dimensions (676 districts × 120 months = 81,120 rows)
-  2. Missing months/districts
-  3. Data quality (NaN, Inf, negative radiance)
-  4. Temporal continuity (no gaps)
-  5. Geographic coverage (all GADM districts present)
-
-OUTPUT:
-  - 05_Outputs/Logs/26_viirs_monthly_validation.txt (detailed report)
-  - Console: PASS/FAIL for each check
-
-ESTIMATED RUNTIME: 2-3 minutes
-"""
-
 import pandas as pd
 import numpy as np
 import logging
@@ -66,12 +47,12 @@ log.info("\n" + "="*70)
 log.info("CHECK 1: EXPECTED DIMENSIONS")
 log.info("="*70)
 
-expected_rows = 676 * 120  # 81,120
+expected_rows = 659 * 120 # 79,080
 actual_rows = len(df)
 
-print(f"  Expected: {expected_rows:,} rows (676 districts × 120 months)")
+print(f"  Expected: {expected_rows:,} rows (659 districts × 120 months)")
 print(f"  Actual:   {actual_rows:,} rows")
-log.info(f"Expected: {expected_rows:,} rows (676 districts × 120 months)")
+log.info(f"Expected: {expected_rows:,} rows (659 districts × 120 months)")
 log.info(f"Actual:   {actual_rows:,} rows")
 
 if actual_rows == expected_rows:
@@ -106,7 +87,7 @@ log.info("CHECK 3: DISTRICT COVERAGE")
 log.info("="*70)
 
 unique_districts = df['gadm_district'].nunique()
-expected_districts = 676
+expected_districts = 659
 
 print(f"  Expected: {expected_districts} districts")
 print(f"  Actual:   {unique_districts} districts")

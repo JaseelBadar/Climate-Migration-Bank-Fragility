@@ -1,0 +1,2 @@
+variable,coefficient,std_error,t_statistic,p_value,significance
+flood_exposure_ruleA_qt,-0.0126362771396513,0.0020027473735208844,-6.309471332590681,2.7999022079688e-10,***

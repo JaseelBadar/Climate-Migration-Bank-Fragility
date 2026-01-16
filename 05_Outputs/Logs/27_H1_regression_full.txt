@@ -1,0 +1,683 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:       lights_change_qt   R-squared:                       0.544
+Model:                            OLS   Adj. R-squared:                  0.530
+Method:                 Least Squares   F-statistic:                     30.28
+Date:                Fri, 16 Jan 2026   Prob (F-statistic):               0.00
+Time:                        19:55:10   Log-Likelihood:                 26762.
+No. Observations:               22716   AIC:                        -5.220e+04
+Df Residuals:                   22056   BIC:                        -4.690e+04
+Df Model:                         659                                         
+Covariance Type:                  HC1                                         
+================================================================================================================
+                                                   coef    std err          z      P>|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------------------------------
+Intercept                                       -0.0468      0.007     -6.989      0.000      -0.060      -0.034
+C(district_fe)[T.Agar Malwa]                     0.0012      0.009      0.135      0.893      -0.016       0.019
+C(district_fe)[T.Agra]                          -0.0008      0.013     -0.061      0.951      -0.027       0.025
+C(district_fe)[T.Ahmadabad]                      0.0082      0.014      0.587      0.557      -0.019       0.035
+C(district_fe)[T.Ahmadnagar]                     0.0049      0.011      0.457      0.647      -0.016       0.026
+C(district_fe)[T.Aizawl]                        -0.0011      0.012     -0.098      0.922      -0.024       0.022
+C(district_fe)[T.Ajmer]                          0.0013      0.008      0.156      0.876      -0.015       0.018
+C(district_fe)[T.Akola]                          0.0033      0.012      0.285      0.775      -0.019       0.026
+C(district_fe)[T.Alappuzha]                      0.0045      0.015      0.293      0.770      -0.026       0.035
+C(district_fe)[T.Aligarh]                        0.0053      0.013      0.396      0.692      -0.021       0.031
+C(district_fe)[T.Alipurduar]                     0.0025      0.010      0.247      0.805      -0.017       0.022
+C(district_fe)[T.Alirajpur]                     -0.0006      0.014     -0.045      0.964      -0.029       0.027
+C(district_fe)[T.Almora]                        -0.0003      0.012     -0.028      0.977      -0.024       0.023
+C(district_fe)[T.Alwar]                         -0.0015      0.011     -0.145      0.884      -0.022       0.019
+C(district_fe)[T.Ambala]                         0.0066      0.013      0.500      0.617      -0.019       0.032
+C(district_fe)[T.Ambedkar Nagar]                 0.0048      0.010      0.457      0.648      -0.016       0.025
+C(district_fe)[T.Amethi]                         0.0060      0.010      0.624      0.532      -0.013       0.025
+C(district_fe)[T.Amravati]                       0.0020      0.009      0.217      0.828      -0.016       0.020
+C(district_fe)[T.Amreli]                         0.0017      0.009      0.184      0.854      -0.016       0.020
+C(district_fe)[T.Amritsar]                       0.0034      0.013      0.260      0.795      -0.022       0.029
+C(district_fe)[T.Amroha]                         0.0047      0.011      0.436      0.663      -0.016       0.026
+C(district_fe)[T.Anand]                          0.0065      0.013      0.500      0.617      -0.019       0.032
+C(district_fe)[T.Anantapur]                  -4.693e-05      0.012     -0.004      0.997      -0.023       0.023
+C(district_fe)[T.Anantnag]                    2.595e-06      0.014      0.000      1.000      -0.027       0.027
+C(district_fe)[T.Anugul]                        -0.0018      0.009     -0.203      0.839      -0.020       0.016
+C(district_fe)[T.Anuppur]                       -0.0003      0.009     -0.029      0.977      -0.019       0.018
+C(district_fe)[T.Araria]                         0.0046      0.013      0.355      0.723      -0.021       0.030
+C(district_fe)[T.Aravalli]                       0.0021      0.008      0.249      0.803      -0.014       0.019
+C(district_fe)[T.Ariyalur]                       0.0036      0.017      0.215      0.830      -0.029       0.037
+C(district_fe)[T.Arwal]                          0.0039      0.016      0.252      0.801      -0.027       0.035
+C(district_fe)[T.Ashoknagar]                     0.0032      0.014      0.233      0.816      -0.024       0.030
+C(district_fe)[T.Auraiya]                        0.0021      0.015      0.144      0.885      -0.026       0.031
+C(district_fe)[T.Aurangabad]                    -0.0019      0.011     -0.175      0.861      -0.023       0.020
+C(district_fe)[T.Azamgarh]                       0.0068      0.014      0.495      0.621      -0.020       0.034
+C(district_fe)[T.Badgam]                         0.0033      0.018      0.185      0.853      -0.032       0.039
+C(district_fe)[T.Bagalkot]                       0.0008      0.010      0.085      0.932      -0.018       0.020
+C(district_fe)[T.Bageshwar]                     -0.0005      0.011     -0.051      0.959      -0.021       0.020
+C(district_fe)[T.Baghpat]                        0.0086      0.014      0.602      0.547      -0.019       0.037
+C(district_fe)[T.Bahraich]                       0.0026      0.009      0.282      0.778      -0.016       0.021
+C(district_fe)[T.Baksa]                          0.0016      0.008      0.195      0.846      -0.015       0.018
+C(district_fe)[T.Balaghat]                       0.0006      0.009      0.065      0.948      -0.017       0.018
+C(district_fe)[T.Balangir]                       0.0008      0.009      0.087      0.931      -0.016       0.018
+C(district_fe)[T.Baleshwar]                      0.0002      0.008      0.024      0.981      -0.016       0.017
+C(district_fe)[T.Ballia]                         0.0059      0.014      0.428      0.668      -0.021       0.033
+C(district_fe)[T.Balod]                          0.0011      0.008      0.138      0.890      -0.015       0.017
+C(district_fe)[T.Baloda Bazar]                   0.0004      0.013      0.029      0.977      -0.026       0.027
+C(district_fe)[T.Balrampur]                     -0.0008      0.010     -0.078      0.938      -0.021       0.020
+C(district_fe)[T.Banas Kantha]                   0.0029      0.008      0.363      0.716      -0.013       0.019
+C(district_fe)[T.Banda]                          0.0033      0.008      0.420      0.675      -0.012       0.019
+C(district_fe)[T.Bandipore]                     -0.0019      0.015     -0.124      0.902      -0.032       0.028
+C(district_fe)[T.Bangalore Rural]                0.0100      0.017      0.571      0.568      -0.024       0.044
+C(district_fe)[T.Banka]                          0.0039      0.011      0.339      0.734      -0.018       0.026
+C(district_fe)[T.Bankura]                       -0.0010      0.009     -0.113      0.910      -0.018       0.016
+C(district_fe)[T.Banswara]                   -7.403e-05      0.010     -0.007      0.994      -0.020       0.019
+C(district_fe)[T.Barabanki]                      0.0068      0.009      0.784      0.433      -0.010       0.024
+C(district_fe)[T.Baramulla]                  -3.459e-05      0.018     -0.002      0.998      -0.035       0.035
+C(district_fe)[T.Baran]                         -0.0025      0.010     -0.246      0.806      -0.023       0.018
+C(district_fe)[T.Bareilly]                       0.0063      0.014      0.437      0.662      -0.022       0.035
+C(district_fe)[T.Bargarh]                       -0.0007      0.008     -0.087      0.931      -0.017       0.016
+C(district_fe)[T.Barmer]                         0.0009      0.011      0.082      0.934      -0.020       0.022
+C(district_fe)[T.Barnala]                        0.0054      0.012      0.458      0.647      -0.018       0.029
+C(district_fe)[T.Barpeta]                        0.0042      0.007      0.566      0.572      -0.010       0.019
+C(district_fe)[T.Barwani]                        0.0007      0.009      0.081      0.936      -0.017       0.019
+C(district_fe)[T.Bastar]                        -0.0003      0.009     -0.031      0.975      -0.017       0.016
+C(district_fe)[T.Basti]                          0.0046      0.017      0.275      0.783      -0.028       0.037
+C(district_fe)[T.Bathinda]                       0.0040      0.033      0.122      0.903      -0.061       0.069
+C(district_fe)[T.Begusarai]                      0.0065      0.014      0.459      0.646      -0.021       0.034
+C(district_fe)[T.Bemetara]                      -0.0003      0.013     -0.025      0.980      -0.025       0.025
+C(district_fe)[T.Betul]                          0.0005      0.010      0.045      0.964      -0.019       0.020
+C(district_fe)[T.Bhadrak]                        0.0026      0.008      0.303      0.762      -0.014       0.019
+C(district_fe)[T.Bhagalpur]                      0.0031      0.017      0.189      0.850      -0.029       0.036
+C(district_fe)[T.Bhandara]                       0.0014      0.009      0.154      0.877      -0.016       0.019
+C(district_fe)[T.Bharatpur]                     -0.0031      0.009     -0.349      0.727      -0.021       0.014
+C(district_fe)[T.Bharuch]                        0.0039      0.020      0.198      0.843      -0.034       0.042
+C(district_fe)[T.Bhavnagar]                      0.0017      0.009      0.192      0.848      -0.016       0.020
+C(district_fe)[T.Bhilwara]                       0.0019      0.009      0.218      0.828      -0.016       0.019
+C(district_fe)[T.Bhind]                          0.0012      0.010      0.118      0.906      -0.019       0.021
+C(district_fe)[T.Bhiwani]                        0.0030      0.008      0.377      0.706      -0.013       0.019
+C(district_fe)[T.Bhojpur]                        0.0081      0.017      0.482      0.630      -0.025       0.041
+C(district_fe)[T.Bhopal]                         0.0074      0.029      0.253      0.800      -0.050       0.065
+C(district_fe)[T.Bid]                            0.0039      0.010      0.397      0.691      -0.015       0.023
+C(district_fe)[T.Bidar]                          0.0010      0.012      0.082      0.935      -0.023       0.025
+C(district_fe)[T.Bijapur]                       -0.0027      0.011     -0.252      0.801      -0.024       0.018
+C(district_fe)[T.Bijnor]                         0.0053      0.012      0.426      0.670      -0.019       0.030
+C(district_fe)[T.Bikaner]                        0.0010      0.010      0.095      0.924      -0.019       0.021
+C(district_fe)[T.Bilaspur]                      -0.0019      0.011     -0.172      0.863      -0.024       0.020
+C(district_fe)[T.Birbhum]                        0.0003      0.009      0.034      0.973      -0.018       0.018
+C(district_fe)[T.Bishnupur]                      0.0022      0.010      0.213      0.831      -0.018       0.022
+C(district_fe)[T.Bokaro]                        -0.0006      0.020     -0.031      0.975      -0.041       0.039
+C(district_fe)[T.Bongaigaon]                     0.0025      0.008      0.325      0.745      -0.013       0.018
+C(district_fe)[T.Botad]                          0.0019      0.008      0.233      0.816      -0.014       0.018
+C(district_fe)[T.Budaun]                         0.0044      0.010      0.455      0.649      -0.015       0.024
+C(district_fe)[T.Bulandshahr]                    0.0063      0.015      0.425      0.671      -0.023       0.036
+C(district_fe)[T.Buldana]                        0.0042      0.011      0.379      0.705      -0.017       0.026
+C(district_fe)[T.Bundi]                      -7.978e-05      0.009     -0.009      0.993      -0.017       0.017
+C(district_fe)[T.Burhanpur]                      0.0019      0.010      0.184      0.854      -0.018       0.022
+C(district_fe)[T.Buxar]                          0.0049      0.014      0.343      0.732      -0.023       0.033
+C(district_fe)[T.Cachar]                         0.0036      0.009      0.386      0.699      -0.015       0.022
+C(district_fe)[T.Chamba]                        -0.0003      0.011     -0.026      0.979      -0.023       0.022
+C(district_fe)[T.Chamoli]                       -0.0006      0.010     -0.056      0.955      -0.020       0.019
+C(district_fe)[T.Champawat]                   3.473e-05      0.015      0.002      0.998      -0.029       0.029
+C(district_fe)[T.Champhai]                      -0.0002      0.014     -0.012      0.991      -0.028       0.027
+C(district_fe)[T.Chamrajnagar]                  -0.0010      0.011     -0.089      0.929      -0.022       0.020
+C(district_fe)[T.Chandauli]                      0.0064      0.015      0.422      0.673      -0.023       0.036
+C(district_fe)[T.Chandel]                       -0.0006      0.012     -0.044      0.965      -0.025       0.024
+C(district_fe)[T.Chandigarh]                     0.0049      0.028      0.175      0.861      -0.050       0.059
+C(district_fe)[T.Chandrapur]                     0.0028      0.011      0.264      0.791      -0.018       0.024
+C(district_fe)[T.Changlang]                     -0.0013      0.010     -0.128      0.898      -0.021       0.019
+C(district_fe)[T.Chatra]                         0.0020      0.010      0.197      0.844      -0.018       0.022
+C(district_fe)[T.Chennai]                        0.0010      0.027      0.035      0.972      -0.053       0.055
+C(district_fe)[T.Chhatarpur]                     0.0006      0.008      0.080      0.936      -0.014       0.015
+C(district_fe)[T.Chhindwara]                     0.0017      0.010      0.169      0.866      -0.018       0.021
+C(district_fe)[T.Chhota Udaipur]                 0.0009      0.012      0.075      0.940      -0.022       0.024
+C(district_fe)[T.Chikballapura]                  0.0038      0.014      0.268      0.789      -0.024       0.031
+C(district_fe)[T.Chikmagalur]                    0.0002      0.010      0.022      0.983      -0.020       0.020
+C(district_fe)[T.Chirang]                        0.0004      0.011      0.037      0.971      -0.021       0.022
+C(district_fe)[T.Chitradurga]                    0.0019      0.011      0.164      0.870      -0.020       0.024
+C(district_fe)[T.Chitrakoot]                     0.0032      0.009      0.357      0.721      -0.014       0.021
+C(district_fe)[T.Chittaurgarh]                  -0.0011      0.009     -0.122      0.903      -0.018       0.016
+C(district_fe)[T.Chittoor]                      -0.0004      0.013     -0.030      0.976      -0.027       0.026
+C(district_fe)[T.Churachandpur]                 -0.0009      0.013     -0.073      0.942      -0.026       0.024
+C(district_fe)[T.Churu]                         -0.0006      0.010     -0.058      0.954      -0.020       0.019
+C(district_fe)[T.Coimbatore]                     0.0014      0.021      0.067      0.947      -0.040       0.043
+C(district_fe)[T.Cuddalore]                     -0.0021      0.014     -0.147      0.883      -0.030       0.026
+C(district_fe)[T.Cuttack]                        0.0017      0.010      0.174      0.862      -0.017       0.020
+C(district_fe)[T.Dadra and Nagar Haveli]        -0.0065      0.027     -0.243      0.808      -0.058       0.046
+C(district_fe)[T.Dakshin Dinajpur]               0.0033      0.009      0.362      0.717      -0.015       0.021
+C(district_fe)[T.Dakshina Kannada]            3.075e-05      0.015      0.002      0.998      -0.028       0.028
+C(district_fe)[T.Daman]                         -0.0036      0.041     -0.087      0.931      -0.085       0.077
+C(district_fe)[T.Damoh]                          0.0003      0.010      0.033      0.974      -0.018       0.019
+C(district_fe)[T.Darbhanga]                      0.0069      0.015      0.471      0.638      -0.022       0.036
+C(district_fe)[T.Darjiling]                      0.0022      0.009      0.237      0.813      -0.016       0.021
+C(district_fe)[T.Darrang]                        0.0027      0.008      0.341      0.733      -0.013       0.018
+C(district_fe)[T.Datia]                          0.0003      0.012      0.028      0.978      -0.023       0.023
+C(district_fe)[T.Dausa]                         -0.0025      0.011     -0.223      0.824      -0.025       0.020
+C(district_fe)[T.Davanagere]                     0.0008      0.010      0.077      0.939      -0.019       0.021
+C(district_fe)[T.Dehradun]                       0.0039      0.015      0.253      0.800      -0.026       0.034
+C(district_fe)[T.Deoghar]                        0.0039      0.014      0.275      0.783      -0.024       0.031
+C(district_fe)[T.Deoria]                         0.0070      0.017      0.414      0.679      -0.026       0.040
+C(district_fe)[T.Devbhumi Dwarka]                0.0011      0.009      0.130      0.897      -0.016       0.018
+C(district_fe)[T.Dewas]                          0.0017      0.008      0.208      0.835      -0.014       0.018
+C(district_fe)[T.Dhalai]                        -0.0007      0.009     -0.077      0.938      -0.019       0.017
+C(district_fe)[T.Dhamtari]                       0.0016      0.008      0.190      0.849      -0.015       0.018
+C(district_fe)[T.Dhanbad]                       -0.0023      0.029     -0.077      0.938      -0.059       0.055
+C(district_fe)[T.Dhar]                           0.0028      0.011      0.254      0.800      -0.019       0.025
+C(district_fe)[T.Dharmapuri]                     0.0010      0.013      0.080      0.936      -0.024       0.026
+C(district_fe)[T.Dharwad]                        0.0048      0.011      0.439      0.661      -0.017       0.026
+C(district_fe)[T.Dhaulpur]                      -0.0019      0.009     -0.213      0.831      -0.020       0.016
+C(district_fe)[T.Dhemaji]                        0.0020      0.012      0.171      0.864      -0.021       0.026
+C(district_fe)[T.Dhenkanal]                     -0.0010      0.014     -0.072      0.943      -0.028       0.026
+C(district_fe)[T.Dhubri]                         0.0031      0.008      0.382      0.702      -0.013       0.019
+C(district_fe)[T.Dhule]                          0.0027      0.010      0.271      0.786      -0.017       0.022
+C(district_fe)[T.Dibrugarh]                     -0.0020      0.019     -0.106      0.915      -0.039       0.035
+C(district_fe)[T.Dima Hasao]                     0.0002      0.013      0.012      0.991      -0.026       0.026
+C(district_fe)[T.Dimapur]                        0.0022      0.015      0.147      0.883      -0.027       0.032
+C(district_fe)[T.Dindigul]                       0.0006      0.017      0.036      0.972      -0.032       0.033
+C(district_fe)[T.Dindori]                        0.0003      0.011      0.031      0.975      -0.021       0.022
+C(district_fe)[T.Diu]                         5.332e-05      0.025      0.002      0.998      -0.049       0.049
+C(district_fe)[T.Doda]                          -0.0014      0.012     -0.114      0.909      -0.025       0.022
+C(district_fe)[T.Dumka]                          0.0032      0.009      0.376      0.707      -0.014       0.020
+C(district_fe)[T.Dungarpur]                      0.0006      0.008      0.073      0.942      -0.015       0.017
+C(district_fe)[T.Durg]                           0.0019      0.030      0.063      0.950      -0.056       0.060
+C(district_fe)[T.East Garo Hills]               -0.0010      0.011     -0.097      0.923      -0.022       0.020
+C(district_fe)[T.East Godavari]                 -0.0024      0.009     -0.257      0.797      -0.021       0.016
+C(district_fe)[T.East Kameng]                    0.0002      0.014      0.011      0.991      -0.027       0.028
+C(district_fe)[T.East Khasi Hills]               0.0003      0.010      0.030      0.976      -0.020       0.020
+C(district_fe)[T.East Nimar]                     0.0019      0.009      0.208      0.836      -0.016       0.020
+C(district_fe)[T.East Siang]                    -0.0001      0.012     -0.010      0.992      -0.024       0.024
+C(district_fe)[T.Ernakulam]                      0.0084      0.036      0.235      0.814      -0.062       0.079
+C(district_fe)[T.Erode]                         -0.0004      0.014     -0.028      0.978      -0.028       0.027
+C(district_fe)[T.Etah]                           0.0044      0.008      0.523      0.601      -0.012       0.021
+C(district_fe)[T.Etawah]                        -0.0035      0.019     -0.179      0.858      -0.042       0.035
+C(district_fe)[T.Faridabad]                      0.0042      0.018      0.241      0.810      -0.030       0.039
+C(district_fe)[T.Faridkot]                       0.0036      0.013      0.271      0.786      -0.022       0.030
+C(district_fe)[T.Farrukhabad]                    0.0061      0.008      0.743      0.458      -0.010       0.022
+C(district_fe)[T.Fatehabad]                      0.0055      0.011      0.498      0.619      -0.016       0.027
+C(district_fe)[T.Fatehgarh Sahib]                0.0070      0.010      0.720      0.472      -0.012       0.026
+C(district_fe)[T.Fatehpur]                       0.0032      0.008      0.403      0.687      -0.012       0.019
+C(district_fe)[T.Fazilka]                        0.0023      0.011      0.204      0.838      -0.019       0.024
+C(district_fe)[T.Firozabad]                     -0.0005      0.016     -0.031      0.976      -0.031       0.030
+C(district_fe)[T.Firozpur]                       0.0027      0.011      0.243      0.808      -0.019       0.025
+C(district_fe)[T.Gadag]                          0.0015      0.011      0.139      0.890      -0.020       0.023
+C(district_fe)[T.Gajapati]                       0.0003      0.012      0.028      0.978      -0.023       0.024
+C(district_fe)[T.Ganderbal]                      0.0005      0.017      0.029      0.977      -0.033       0.034
+C(district_fe)[T.Gandhinagar]                    0.0139      0.023      0.614      0.540      -0.030       0.058
+C(district_fe)[T.Ganganagar]                     0.0009      0.011      0.083      0.934      -0.021       0.023
+C(district_fe)[T.Ganjam]                         0.0008      0.009      0.083      0.934      -0.017       0.018
+C(district_fe)[T.Garhchiroli]                    0.0006      0.010      0.063      0.950      -0.019       0.021
+C(district_fe)[T.Garhwa]                         0.0027      0.011      0.255      0.799      -0.018       0.024
+C(district_fe)[T.Garhwal]                        0.0011      0.011      0.097      0.923      -0.020       0.022
+C(district_fe)[T.Gariaband]                     -0.0013      0.010     -0.130      0.897      -0.022       0.019
+C(district_fe)[T.Gautam Buddha Nagar]            0.0072      0.017      0.433      0.665      -0.025       0.040
+C(district_fe)[T.Gaya]                           0.0042      0.018      0.236      0.814      -0.031       0.039
+C(district_fe)[T.Ghaziabad]                      0.0085      0.021      0.407      0.684      -0.032       0.049
+C(district_fe)[T.Ghazipur]                       0.0080      0.016      0.498      0.619      -0.023       0.039
+C(district_fe)[T.Gir Somnath]                    0.0008      0.013      0.062      0.950      -0.026       0.027
+C(district_fe)[T.Giridih]                        0.0018      0.009      0.211      0.833      -0.015       0.019
+C(district_fe)[T.Goalpara]                       0.0005      0.009      0.055      0.956      -0.018       0.019
+C(district_fe)[T.Godda]                          0.0051      0.009      0.542      0.588      -0.013       0.024
+C(district_fe)[T.Golaghat]                       0.0033      0.009      0.373      0.709      -0.014       0.021
+C(district_fe)[T.Gomati]                        -0.0023      0.010     -0.244      0.807      -0.021       0.016
+C(district_fe)[T.Gonda]                          0.0056      0.010      0.556      0.578      -0.014       0.025
+C(district_fe)[T.Gondiya]                        0.0023      0.008      0.275      0.783      -0.014       0.019
+C(district_fe)[T.Gopalganj]                      0.0045      0.011      0.409      0.683      -0.017       0.026
+C(district_fe)[T.Gorakhpur]                      0.0114      0.025      0.456      0.649      -0.038       0.060
+C(district_fe)[T.Gumla]                          0.0004      0.013      0.032      0.975      -0.025       0.026
+C(district_fe)[T.Guna]                           0.0006      0.011      0.057      0.954      -0.021       0.022
+C(district_fe)[T.Guntur]                         0.0003      0.010      0.031      0.975      -0.019       0.020
+C(district_fe)[T.Gurdaspur]                      0.0037      0.011      0.345      0.730      -0.017       0.025
+C(district_fe)[T.Gwalior]                        0.0034      0.016      0.209      0.835      -0.029       0.035
+C(district_fe)[T.Hailakandi]                    -0.0024      0.011     -0.217      0.828      -0.024       0.019
+C(district_fe)[T.Hamirpur]                      -0.0015      0.011     -0.132      0.895      -0.024       0.021
+C(district_fe)[T.Hanumangarh]                    0.0015      0.013      0.120      0.905      -0.023       0.026
+C(district_fe)[T.Haora]                          0.0062      0.027      0.228      0.819      -0.047       0.059
+C(district_fe)[T.Hapur]                          0.0074      0.016      0.472      0.637      -0.023       0.038
+C(district_fe)[T.Harda]                          0.0018      0.018      0.101      0.919      -0.034       0.037
+C(district_fe)[T.Hardoi]                         0.0054      0.007      0.716      0.474      -0.009       0.020
+C(district_fe)[T.Hardwar]                        0.0016      0.014      0.116      0.908      -0.025       0.029
+C(district_fe)[T.Hassan]                         0.0045      0.013      0.349      0.727      -0.021       0.030
+C(district_fe)[T.Hathras]                        0.0007      0.012      0.059      0.953      -0.023       0.024
+C(district_fe)[T.Haveri]                         0.0027      0.010      0.258      0.797      -0.018       0.023
+C(district_fe)[T.Hazaribagh]                     0.0023      0.010      0.220      0.826      -0.018       0.023
+C(district_fe)[T.Hingoli]                        0.0027      0.011      0.237      0.812      -0.019       0.025
+C(district_fe)[T.Hisar]                          0.0056      0.010      0.569      0.569      -0.014       0.025
+C(district_fe)[T.Hoshiarpur]                     0.0027      0.009      0.300      0.764      -0.015       0.021
+C(district_fe)[T.Hugli]                          0.0048      0.015      0.316      0.752      -0.025       0.034
+C(district_fe)[T.Hyderabad]                     -0.0154      0.066     -0.235      0.814      -0.144       0.113
+C(district_fe)[T.Idukki]                         0.0004      0.012      0.032      0.974      -0.023       0.024
+C(district_fe)[T.Imphal East]                   -0.0018      0.012     -0.150      0.881      -0.025       0.021
+C(district_fe)[T.Imphal West]                    0.0048      0.013      0.369      0.712      -0.021       0.030
+C(district_fe)[T.Indore]                         0.0100      0.031      0.321      0.748      -0.051       0.071
+C(district_fe)[T.Jabalpur]                       0.0040      0.017      0.240      0.810      -0.029       0.037
+C(district_fe)[T.Jagatsinghapur]                 0.0053      0.017      0.321      0.748      -0.027       0.038
+C(district_fe)[T.Jaintia Hills]                 -0.0009      0.011     -0.087      0.931      -0.022       0.020
+C(district_fe)[T.Jaipur]                         0.0022      0.015      0.148      0.882      -0.027       0.031
+C(district_fe)[T.Jaisalmer]                   6.475e-05      0.013      0.005      0.996      -0.026       0.026
+C(district_fe)[T.Jajapur]                       -0.0005      0.013     -0.041      0.967      -0.027       0.026
+C(district_fe)[T.Jalandhar]                      0.0048      0.012      0.389      0.697      -0.019       0.029
+C(district_fe)[T.Jalaun]                         0.0039      0.008      0.464      0.643      -0.013       0.020
+C(district_fe)[T.Jalgaon]                        0.0035      0.010      0.339      0.735      -0.017       0.024
+C(district_fe)[T.Jalna]                          0.0043      0.010      0.412      0.681      -0.016       0.024
+C(district_fe)[T.Jalor]                         -0.0004      0.010     -0.041      0.967      -0.021       0.020
+C(district_fe)[T.Jalpaiguri]                     0.0047      0.013      0.370      0.711      -0.020       0.030
+C(district_fe)[T.Jammu]                         -0.0018      0.023     -0.077      0.939      -0.047       0.044
+C(district_fe)[T.Jamnagar]                   -7.417e-05      0.011     -0.007      0.995      -0.022       0.022
+C(district_fe)[T.Jamtara]                        0.0013      0.008      0.155      0.877      -0.015       0.018
+C(district_fe)[T.Jamui]                          0.0021      0.008      0.254      0.800      -0.014       0.019
+C(district_fe)[T.Janjgir-Champa]                -0.0032      0.019     -0.167      0.868      -0.041       0.035
+C(district_fe)[T.Jashpur]                        0.0012      0.010      0.129      0.897      -0.017       0.020
+C(district_fe)[T.Jaunpur]                        0.0079      0.013      0.583      0.560      -0.019       0.034
+C(district_fe)[T.Jehanabad]                      0.0075      0.029      0.256      0.798      -0.050       0.065
+C(district_fe)[T.Jhabua]                         0.0005      0.014      0.037      0.970      -0.027       0.028
+C(district_fe)[T.Jhajjar]                        0.0042      0.009      0.490      0.624      -0.013       0.021
+C(district_fe)[T.Jhalawar]                      -0.0024      0.009     -0.277      0.782      -0.019       0.015
+C(district_fe)[T.Jhansi]                         0.0029      0.010      0.291      0.771      -0.017       0.022
+C(district_fe)[T.Jharsuguda]                     0.0013      0.015      0.087      0.931      -0.028       0.030
+C(district_fe)[T.Jhunjhunun]                    -0.0010      0.010     -0.105      0.916      -0.020       0.018
+C(district_fe)[T.Jind]                           0.0030      0.010      0.296      0.767      -0.017       0.023
+C(district_fe)[T.Jodhpur]                        0.0002      0.008      0.030      0.976      -0.016       0.017
+C(district_fe)[T.Jorhat]                         0.0025      0.009      0.288      0.774      -0.014       0.019
+C(district_fe)[T.Junagadh]                       0.0015      0.009      0.171      0.864      -0.016       0.019
+C(district_fe)[T.Kabeerdham]                    -0.0021      0.012     -0.178      0.859      -0.026       0.021
+C(district_fe)[T.Kachchh]                        0.0036      0.011      0.325      0.745      -0.018       0.026
+C(district_fe)[T.Kaimur]                         0.0019      0.015      0.124      0.902      -0.028       0.031
+C(district_fe)[T.Kaithal]                        0.0037      0.011      0.334      0.739      -0.018       0.026
+C(district_fe)[T.Kalahandi]                     -0.0003      0.009     -0.037      0.971      -0.018       0.018
+C(district_fe)[T.Kamrup]                         0.0030      0.008      0.386      0.700      -0.012       0.018
+C(district_fe)[T.Kamrup Metropolitan]            0.0118      0.018      0.641      0.522      -0.024       0.048
+C(district_fe)[T.Kancheepuram]                   0.0039      0.017      0.234      0.815      -0.029       0.037
+C(district_fe)[T.Kandhamal]                      0.0003      0.013      0.025      0.980      -0.026       0.026
+C(district_fe)[T.Kangra]                         0.0010      0.010      0.094      0.925      -0.019       0.021
+C(district_fe)[T.Kannauj]                        0.0026      0.011      0.232      0.816      -0.020       0.025
+C(district_fe)[T.Kanniyakumari]                  0.0022      0.016      0.136      0.892      -0.030       0.034
+C(district_fe)[T.Kannur]                         0.0033      0.012      0.286      0.775      -0.020       0.026
+C(district_fe)[T.Kanpur Dehat]                   0.0047      0.008      0.575      0.565      -0.011       0.021
+C(district_fe)[T.Kanpur Nagar]                   0.0027      0.015      0.180      0.857      -0.027       0.033
+C(district_fe)[T.Kapurthala]                     0.0029      0.009      0.320      0.749      -0.015       0.021
+C(district_fe)[T.Karaikal]                      -0.0077      0.019     -0.408      0.683      -0.045       0.029
+C(district_fe)[T.Karauli]                       -0.0053      0.009     -0.585      0.559      -0.023       0.012
+C(district_fe)[T.Karbi Anglong]                  0.0011      0.011      0.099      0.922      -0.020       0.022
+C(district_fe)[T.Kargil]                        -0.0031      0.013     -0.250      0.803      -0.028       0.021
+C(district_fe)[T.Karimganj]                      0.0024      0.010      0.237      0.813      -0.018       0.022
+C(district_fe)[T.Karimnagar]                     0.0026      0.013      0.193      0.847      -0.024       0.029
+C(district_fe)[T.Karnal]                         0.0063      0.012      0.548      0.584      -0.016       0.029
+C(district_fe)[T.Karur]                          0.0004      0.017      0.025      0.980      -0.033       0.034
+C(district_fe)[T.Kasaragod]                      0.0026      0.010      0.253      0.800      -0.018       0.023
+C(district_fe)[T.Kasganj]                        0.0023      0.008      0.274      0.784      -0.014       0.019
+C(district_fe)[T.Kathua]                        -0.0015      0.009     -0.167      0.867      -0.019       0.016
+C(district_fe)[T.Katihar]                        0.0035      0.011      0.314      0.753      -0.019       0.026
+C(district_fe)[T.Katni]                          0.0027      0.010      0.266      0.790      -0.017       0.023
+C(district_fe)[T.Kaushambi]                      0.0037      0.018      0.200      0.842      -0.032       0.040
+C(district_fe)[T.Kendrapara]                     0.0019      0.009      0.200      0.841      -0.016       0.020
+C(district_fe)[T.Kendujhar]                      0.0018      0.009      0.196      0.845      -0.016       0.020
+C(district_fe)[T.Khagaria]                       0.0040      0.010      0.420      0.674      -0.015       0.023
+C(district_fe)[T.Khammam]                       -0.0014      0.009     -0.163      0.870      -0.019       0.016
+C(district_fe)[T.Kheda]                          0.0051      0.011      0.473      0.636      -0.016       0.026
+C(district_fe)[T.Khowai]                        -0.0012      0.013     -0.090      0.929      -0.026       0.024
+C(district_fe)[T.Khunti]                         0.0010      0.011      0.092      0.927      -0.021       0.023
+C(district_fe)[T.Kinnaur]                       -0.0005      0.013     -0.040      0.968      -0.025       0.024
+C(district_fe)[T.Kishanganj]                     0.0024      0.008      0.310      0.756      -0.013       0.017
+C(district_fe)[T.Kishtwar]                      -0.0022      0.011     -0.190      0.849      -0.025       0.020
+C(district_fe)[T.Koch Bihar]                     0.0008      0.009      0.093      0.926      -0.017       0.019
+C(district_fe)[T.Kodagu]                        -0.0005      0.010     -0.051      0.959      -0.020       0.019
+C(district_fe)[T.Kodarma]                        0.0004      0.010      0.038      0.970      -0.019       0.019
+C(district_fe)[T.Kohima]                         0.0021      0.010      0.222      0.824      -0.017       0.021
+C(district_fe)[T.Kokrajhar]                      0.0019      0.008      0.228      0.820      -0.014       0.018
+C(district_fe)[T.Kolar]                          0.0041      0.018      0.235      0.814      -0.030       0.038
+C(district_fe)[T.Kolasib]                       -0.0019      0.012     -0.168      0.867      -0.025       0.021
+C(district_fe)[T.Kolhapur]                       0.0017      0.009      0.183      0.855      -0.016       0.019
+C(district_fe)[T.Kolkata]                        0.0050      0.042      0.120      0.905      -0.077       0.087
+C(district_fe)[T.Kollam]                         0.0063      0.016      0.386      0.700      -0.026       0.038
+C(district_fe)[T.Kondagaon]                      0.0002      0.011      0.019      0.985      -0.022       0.022
+C(district_fe)[T.Koppal]                         0.0011      0.011      0.105      0.917      -0.020       0.023
+C(district_fe)[T.Koraput]                        0.0004      0.009      0.048      0.962      -0.018       0.019
+C(district_fe)[T.Korba]                          0.0002      0.015      0.015      0.988      -0.030       0.030
+C(district_fe)[T.Koriya]                         0.0005      0.010      0.047      0.963      -0.019       0.020
+C(district_fe)[T.Kota]                          -0.0011      0.011     -0.101      0.919      -0.023       0.021
+C(district_fe)[T.Kottayam]                       0.0064      0.015      0.431      0.666      -0.023       0.035
+C(district_fe)[T.Kozhikode]                      0.0044      0.013      0.326      0.745      -0.022       0.031
+C(district_fe)[T.Krishna]                        0.0008      0.009      0.096      0.924      -0.017       0.018
+C(district_fe)[T.Krishnagiri]                    0.0064      0.015      0.441      0.659      -0.022       0.035
+C(district_fe)[T.Kulgam]                        -0.0002      0.013     -0.018      0.986      -0.026       0.026
+C(district_fe)[T.Kullu]                          0.0004      0.012      0.031      0.975      -0.023       0.023
+C(district_fe)[T.Kupwara]                       -0.0007      0.018     -0.036      0.971      -0.036       0.035
+C(district_fe)[T.Kurnool]                       -0.0008      0.011     -0.072      0.943      -0.022       0.021
+C(district_fe)[T.Kurukshetra]                    0.0068      0.012      0.582      0.561      -0.016       0.030
+C(district_fe)[T.Kushinagar]                     0.0085      0.010      0.859      0.390      -0.011       0.028
+C(district_fe)[T.Lahul & Spiti]                 -0.0012      0.013     -0.098      0.922      -0.026       0.023
+C(district_fe)[T.Lakhimpur]                      0.0024      0.010      0.239      0.811      -0.017       0.022
+C(district_fe)[T.Lakhisarai]                     0.0050      0.011      0.463      0.643      -0.016       0.026
+C(district_fe)[T.Lakshadweep]                   -0.0045      0.015     -0.301      0.763      -0.034       0.025
+C(district_fe)[T.Lalitpur]                       0.0014      0.009      0.148      0.882      -0.017       0.020
+C(district_fe)[T.Latehar]                        0.0011      0.011      0.094      0.925      -0.021       0.023
+C(district_fe)[T.Latur]                          0.0053      0.011      0.502      0.616      -0.015       0.026
+C(district_fe)[T.Lawangtlai]                    -0.0046      0.014     -0.341      0.733      -0.031       0.022
+C(district_fe)[T.Leh (Ladakh)]                  -0.0023      0.013     -0.174      0.862      -0.028       0.023
+C(district_fe)[T.Lohardaga]                      0.0008      0.011      0.070      0.944      -0.021       0.022
+C(district_fe)[T.Lohit]                         -0.0005      0.012     -0.042      0.966      -0.023       0.022
+C(district_fe)[T.Longding]                      -0.0008      0.012     -0.067      0.946      -0.025       0.023
+C(district_fe)[T.Lower Dibang Valley]            0.0003      0.013      0.027      0.978      -0.024       0.025
+C(district_fe)[T.Lower Subansiri]             2.902e-05      0.013      0.002      0.998      -0.025       0.026
+C(district_fe)[T.Lucknow]                        0.0015      0.027      0.055      0.956      -0.051       0.054
+C(district_fe)[T.Ludhiana]                       0.0092      0.016      0.566      0.572      -0.023       0.041
+C(district_fe)[T.Lunglei]                       -0.0019      0.014     -0.141      0.888      -0.028       0.025
+C(district_fe)[T.Madhepura]                      0.0031      0.013      0.233      0.816      -0.023       0.030
+C(district_fe)[T.Madhubani]                      0.0063      0.015      0.434      0.664      -0.022       0.035
+C(district_fe)[T.Madurai]                       -0.0018      0.015     -0.123      0.902      -0.031       0.027
+C(district_fe)[T.Maharajganj]                    0.0072      0.018      0.403      0.687      -0.028       0.042
+C(district_fe)[T.Mahasamund]                     0.0013      0.010      0.131      0.896      -0.018       0.021
+C(district_fe)[T.Mahbubnagar]                    0.0005      0.012      0.042      0.966      -0.023       0.024
+C(district_fe)[T.Mahe]                           0.0018      0.011      0.159      0.874      -0.020       0.024
+C(district_fe)[T.Mahendragarh]                   0.0024      0.009      0.258      0.796      -0.016       0.021
+C(district_fe)[T.Mahesana]                       0.0066      0.010      0.644      0.520      -0.013       0.027
+C(district_fe)[T.Mahisagar]                      0.0014      0.009      0.158      0.874      -0.016       0.019
+C(district_fe)[T.Mahoba]                         0.0023      0.008      0.280      0.779      -0.014       0.018
+C(district_fe)[T.Mainpuri]                      -0.0013      0.014     -0.090      0.928      -0.029       0.026
+C(district_fe)[T.Malappuram]                     0.0047      0.012      0.393      0.694      -0.019       0.028
+C(district_fe)[T.Maldah]                         0.0015      0.011      0.128      0.898      -0.021       0.024
+C(district_fe)[T.Malkangiri]                    -0.0012      0.011     -0.109      0.913      -0.023       0.020
+C(district_fe)[T.Mamit]                         -0.0010      0.013     -0.078      0.938      -0.026       0.024
+C(district_fe)[T.Mandi]                          0.0020      0.010      0.189      0.850      -0.018       0.022
+C(district_fe)[T.Mandla]                         0.0018      0.009      0.198      0.843      -0.016       0.020
+C(district_fe)[T.Mandsaur]                       0.0024      0.009      0.264      0.792      -0.015       0.020
+C(district_fe)[T.Mandya]                         0.0022      0.014      0.150      0.880      -0.026       0.030
+C(district_fe)[T.Mansa]                          0.0034      0.014      0.246      0.806      -0.024       0.031
+C(district_fe)[T.Mathura]                        0.0046      0.013      0.366      0.714      -0.020       0.029
+C(district_fe)[T.Mau]                            0.0099      0.020      0.505      0.613      -0.029       0.048
+C(district_fe)[T.Mayurbhanj]                    -0.0011      0.011     -0.100      0.920      -0.022       0.020
+C(district_fe)[T.Medak]                          0.0032      0.021      0.155      0.877      -0.037       0.043
+C(district_fe)[T.Meerut]                         0.0048      0.019      0.252      0.801      -0.032       0.042
+C(district_fe)[T.Mewat]                          0.0077      0.008      0.918      0.359      -0.009       0.024
+C(district_fe)[T.Mirzapur]                       0.0076      0.012      0.654      0.513      -0.015       0.030
+C(district_fe)[T.Moga]                           0.0051      0.011      0.462      0.644      -0.017       0.027
+C(district_fe)[T.Mokokchung]                    -0.0011      0.011     -0.102      0.919      -0.022       0.020
+C(district_fe)[T.Mon]                           -0.0006      0.011     -0.057      0.954      -0.022       0.021
+C(district_fe)[T.Moradabad]                      0.0050      0.016      0.319      0.750      -0.026       0.036
+C(district_fe)[T.Morbi]                          0.0086      0.010      0.856      0.392      -0.011       0.028
+C(district_fe)[T.Morena]                        -0.0004      0.007     -0.058      0.954      -0.015       0.014
+C(district_fe)[T.Morigaon]                       0.0027      0.008      0.357      0.721      -0.012       0.018
+C(district_fe)[T.Muktsar]                        0.0022      0.014      0.154      0.878      -0.026       0.030
+C(district_fe)[T.Mumbai Suburban]                0.0048      0.055      0.088      0.930      -0.102       0.112
+C(district_fe)[T.Mungeli]                       -0.0018      0.016     -0.114      0.909      -0.033       0.030
+C(district_fe)[T.Munger]                         0.0037      0.013      0.290      0.772      -0.021       0.028
+C(district_fe)[T.Murshidabad]                    0.0006      0.011      0.052      0.959      -0.021       0.022
+C(district_fe)[T.Muzaffarnagar]                  0.0034      0.012      0.278      0.781      -0.020       0.027
+C(district_fe)[T.Muzaffarpur]                    0.0099      0.023      0.435      0.663      -0.035       0.054
+C(district_fe)[T.Nabarangapur]                   0.0013      0.009      0.144      0.885      -0.016       0.019
+C(district_fe)[T.Nadia]                          0.0025      0.013      0.197      0.843      -0.023       0.028
+C(district_fe)[T.Nagaon]                         0.0019      0.008      0.233      0.816      -0.014       0.018
+C(district_fe)[T.Nagappattinam]                 -0.0024      0.014     -0.175      0.861      -0.030       0.025
+C(district_fe)[T.Nagaur]                         0.0003      0.008      0.032      0.974      -0.016       0.017
+C(district_fe)[T.Nagpur]                         0.0041      0.023      0.181      0.856      -0.040       0.049
+C(district_fe)[T.Nainital]                       0.0028      0.011      0.261      0.794      -0.018       0.023
+C(district_fe)[T.Nalanda]                        0.0053      0.019      0.283      0.777      -0.032       0.042
+C(district_fe)[T.Nalbari]                        0.0038      0.008      0.493      0.622      -0.011       0.019
+C(district_fe)[T.Nalgonda]                       0.0023      0.014      0.167      0.868      -0.025       0.030
+C(district_fe)[T.Namakkal]                    7.138e-05      0.015      0.005      0.996      -0.030       0.030
+C(district_fe)[T.Namsai]                         0.0028      0.011      0.269      0.788      -0.018       0.024
+C(district_fe)[T.Nanded]                         0.0019      0.009      0.201      0.841      -0.017       0.020
+C(district_fe)[T.Nandurbar]                      0.0008      0.009      0.086      0.932      -0.017       0.019
+C(district_fe)[T.Narayanpur]                    -0.0007      0.015     -0.050      0.960      -0.029       0.028
+C(district_fe)[T.Narmada]                        0.0021      0.010      0.215      0.830      -0.017       0.022
+C(district_fe)[T.Narsimhapur]                    0.0016      0.010      0.153      0.879      -0.019       0.022
+C(district_fe)[T.Nashik]                         0.0056      0.015      0.363      0.717      -0.025       0.036
+C(district_fe)[T.Navsari]                        0.0050      0.012      0.402      0.687      -0.019       0.029
+C(district_fe)[T.Nawada]                         0.0048      0.013      0.360      0.719      -0.021       0.031
+C(district_fe)[T.Nayagarh]                      -0.0008      0.011     -0.068      0.946      -0.022       0.021
+C(district_fe)[T.Neemuch]                        0.0022      0.009      0.248      0.804      -0.015       0.019
+C(district_fe)[T.Nizamabad]                      0.0022      0.016      0.141      0.888      -0.029       0.033
+C(district_fe)[T.North 24 Parganas]              0.0035      0.017      0.207      0.836      -0.030       0.037
+C(district_fe)[T.North Garo Hills]              -0.0013      0.012     -0.110      0.912      -0.025       0.022
+C(district_fe)[T.North Goa]                      0.0030      0.017      0.178      0.859      -0.030       0.037
+C(district_fe)[T.North Tripura]                 -0.0010      0.009     -0.118      0.906      -0.018       0.016
+C(district_fe)[T.North and Middle Andaman]      -0.0042      0.014     -0.294      0.769      -0.033       0.024
+C(district_fe)[T.Osmanabad]                      0.0025      0.009      0.269      0.788      -0.016       0.021
+C(district_fe)[T.Pakur]                          0.0026      0.009      0.290      0.772      -0.015       0.020
+C(district_fe)[T.Palakkad]                       0.0029      0.012      0.248      0.804      -0.020       0.026
+C(district_fe)[T.Palamu]                         0.0040      0.010      0.391      0.696      -0.016       0.024
+C(district_fe)[T.Palghar]                        0.0021      0.016      0.136      0.892      -0.029       0.033
+C(district_fe)[T.Pali]                           0.0004      0.010      0.045      0.964      -0.018       0.019
+C(district_fe)[T.Palwal]                         0.0093      0.013      0.689      0.491      -0.017       0.036
+C(district_fe)[T.Panch Mahals]                   0.0039      0.011      0.347      0.729      -0.018       0.026
+C(district_fe)[T.Panchkula]                      0.0083      0.016      0.521      0.603      -0.023       0.040
+C(district_fe)[T.Panipat]                        0.0027      0.020      0.132      0.895      -0.037       0.043
+C(district_fe)[T.Panna]                          0.0016      0.009      0.176      0.861      -0.016       0.019
+C(district_fe)[T.Papum Pare]                     0.0003      0.011      0.027      0.978      -0.021       0.022
+C(district_fe)[T.Parbhani]                       0.0016      0.012      0.131      0.895      -0.022       0.025
+C(district_fe)[T.Pashchim Champaran]             0.0026      0.010      0.248      0.804      -0.018       0.023
+C(district_fe)[T.Pashchim Medinipur]             0.0014      0.009      0.163      0.871      -0.016       0.019
+C(district_fe)[T.Pashchimi Singhbhum]         1.049e-06      0.009      0.000      1.000      -0.018       0.018
+C(district_fe)[T.Patan]                          0.0031      0.009      0.349      0.727      -0.014       0.021
+C(district_fe)[T.Pathanamthitta]                 0.0051      0.013      0.389      0.697      -0.021       0.031
+C(district_fe)[T.Pathankot]                      0.0008      0.008      0.095      0.925      -0.016       0.017
+C(district_fe)[T.Patiala]                        0.0058      0.010      0.586      0.558      -0.014       0.025
+C(district_fe)[T.Patna]                          0.0068      0.021      0.316      0.752      -0.035       0.049
+C(district_fe)[T.Perambalur]                     0.0005      0.016      0.033      0.974      -0.031       0.032
+C(district_fe)[T.Peren]                         -0.0029      0.013     -0.229      0.819      -0.028       0.022
+C(district_fe)[T.Phek]                          -0.0005      0.012     -0.045      0.964      -0.023       0.022
+C(district_fe)[T.Pilibhit]                       0.0048      0.009      0.508      0.611      -0.014       0.023
+C(district_fe)[T.Pithoragarh]                   -0.0019      0.011     -0.168      0.866      -0.023       0.020
+C(district_fe)[T.Poonch]                         0.0002      0.009      0.017      0.987      -0.018       0.018
+C(district_fe)[T.Porbandar]                      0.0026      0.008      0.310      0.757      -0.014       0.019
+C(district_fe)[T.Prakasam]                      -0.0014      0.011     -0.126      0.900      -0.024       0.021
+C(district_fe)[T.Pratapgarh]                    -0.0019      0.011     -0.172      0.863      -0.023       0.020
+C(district_fe)[T.Puducherry]                    -0.0036      0.022     -0.167      0.868      -0.046       0.039
+C(district_fe)[T.Pudukkottai]                   -0.0011      0.016     -0.066      0.947      -0.033       0.031
+C(district_fe)[T.Pulwama]                        0.0030      0.019      0.159      0.873      -0.034       0.040
+C(district_fe)[T.Pune]                           0.0082      0.018      0.464      0.643      -0.026       0.043
+C(district_fe)[T.Purba Champaran]                0.0093      0.015      0.616      0.538      -0.020       0.039
+C(district_fe)[T.Purba Medinipur]                0.0006      0.016      0.038      0.970      -0.031       0.033
+C(district_fe)[T.Purbi Singhbhum]               -0.0015      0.016     -0.095      0.924      -0.032       0.029
+C(district_fe)[T.Puri]                          -0.0003      0.010     -0.028      0.977      -0.019       0.019
+C(district_fe)[T.Purnia]                         0.0042      0.013      0.326      0.744      -0.021       0.030
+C(district_fe)[T.Puruliya]                      -0.0010      0.009     -0.115      0.909      -0.019       0.017
+C(district_fe)[T.Rae Bareli]                     0.0045      0.010      0.447      0.655      -0.015       0.024
+C(district_fe)[T.Raichur]                       -0.0002      0.011     -0.021      0.983      -0.021       0.021
+C(district_fe)[T.Raigarh]                       -0.0022      0.011     -0.203      0.839      -0.023       0.019
+C(district_fe)[T.Raipur]                         0.0059      0.033      0.175      0.861      -0.060       0.071
+C(district_fe)[T.Raisen]                         0.0026      0.017      0.155      0.877      -0.031       0.036
+C(district_fe)[T.Rajgarh]                        0.0027      0.010      0.257      0.797      -0.018       0.023
+C(district_fe)[T.Rajkot]                         0.0052      0.009      0.587      0.557      -0.012       0.023
+C(district_fe)[T.Rajnandgaon]                   -0.0006      0.008     -0.073      0.942      -0.016       0.015
+C(district_fe)[T.Rajouri]                       -0.0004      0.009     -0.043      0.966      -0.017       0.016
+C(district_fe)[T.Rajsamand]                      0.0005      0.008      0.065      0.948      -0.016       0.017
+C(district_fe)[T.Ramanagara]                     0.0021      0.017      0.121      0.904      -0.032       0.036
+C(district_fe)[T.Ramanathapuram]                -0.0027      0.016     -0.171      0.864      -0.033       0.028
+C(district_fe)[T.Ramban]                     -4.258e-05      0.012     -0.004      0.997      -0.023       0.023
+C(district_fe)[T.Ramgarh]                        0.0001      0.015      0.010      0.992      -0.029       0.030
+C(district_fe)[T.Rampur]                         0.0044      0.012      0.361      0.718      -0.020       0.029
+C(district_fe)[T.Ranchi]                         0.0025      0.018      0.138      0.891      -0.033       0.038
+C(district_fe)[T.Ranga Reddy]                    0.0014      0.035      0.041      0.968      -0.068       0.070
+C(district_fe)[T.Ratlam]                         0.0023      0.009      0.245      0.806      -0.016       0.021
+C(district_fe)[T.Ratnagiri]                      0.0014      0.011      0.120      0.905      -0.021       0.024
+C(district_fe)[T.Rayagada]                    7.731e-06      0.011      0.001      0.999      -0.022       0.022
+C(district_fe)[T.Reasi]                         -0.0010      0.009     -0.120      0.904      -0.018       0.016
+C(district_fe)[T.Rewa]                           0.0028      0.010      0.281      0.778      -0.017       0.023
+C(district_fe)[T.Rewari]                         0.0045      0.010      0.466      0.641      -0.015       0.024
+C(district_fe)[T.Ri Bhoi]                       -0.0031      0.011     -0.296      0.767      -0.024       0.018
+C(district_fe)[T.Rohtak]                         0.0048      0.010      0.457      0.648      -0.016       0.025
+C(district_fe)[T.Rohtas]                         0.0023      0.015      0.152      0.879      -0.028       0.032
+C(district_fe)[T.Rudraprayag]                   -0.0015      0.010     -0.150      0.881      -0.021       0.018
+C(district_fe)[T.Rupnagar]                       0.0039      0.009      0.457      0.648      -0.013       0.021
+C(district_fe)[T.Sabar Kantha]                   0.0032      0.008      0.397      0.691      -0.013       0.019
+C(district_fe)[T.Sagar]                          0.0011      0.011      0.102      0.919      -0.020       0.023
+C(district_fe)[T.Saharanpur]                     0.0037      0.012      0.322      0.748      -0.019       0.026
+C(district_fe)[T.Saharsa]                        0.0034      0.014      0.242      0.809      -0.024       0.031
+C(district_fe)[T.Sahibganj]                      0.0025      0.009      0.271      0.787      -0.016       0.021
+C(district_fe)[T.Sahibzada Ajit Singh Nagar]     0.0137      0.018      0.766      0.444      -0.021       0.049
+C(district_fe)[T.Saiha]                         -0.0017      0.014     -0.121      0.904      -0.029       0.026
+C(district_fe)[T.Salem]                         -0.0018      0.017     -0.106      0.916      -0.035       0.031
+C(district_fe)[T.Samastipur]                     0.0061      0.014      0.439      0.660      -0.021       0.033
+C(district_fe)[T.Samba]                          0.0002      0.019      0.011      0.992      -0.037       0.037
+C(district_fe)[T.Sambalpur]                     -0.0009      0.008     -0.114      0.909      -0.017       0.015
+C(district_fe)[T.Sambhal]                        0.0018      0.010      0.182      0.856      -0.018       0.021
+C(district_fe)[T.Sangli]                         0.0029      0.010      0.301      0.763      -0.016       0.022
+C(district_fe)[T.Sangrur]                        0.0056      0.010      0.556      0.578      -0.014       0.025
+C(district_fe)[T.Sant Kabir Nagar]               0.0046      0.015      0.305      0.761      -0.025       0.034
+C(district_fe)[T.Sant Ravi Das Nagar]            0.0108      0.020      0.530      0.596      -0.029       0.051
+C(district_fe)[T.Saraikela-kharsawan]            0.0007      0.012      0.056      0.956      -0.022       0.024
+C(district_fe)[T.Saran]                          0.0066      0.017      0.395      0.693      -0.026       0.039
+C(district_fe)[T.Satara]                         0.0038      0.010      0.361      0.718      -0.017       0.024
+C(district_fe)[T.Satna]                          0.0034      0.010      0.329      0.742      -0.017       0.024
+C(district_fe)[T.Sawai Madhopur]                -0.0029      0.008     -0.360      0.719      -0.018       0.013
+C(district_fe)[T.Sehore]                        -0.0003      0.008     -0.036      0.971      -0.017       0.016
+C(district_fe)[T.Senapati]                      -0.0011      0.012     -0.090      0.928      -0.025       0.023
+C(district_fe)[T.Seoni]                          0.0009      0.011      0.088      0.930      -0.020       0.022
+C(district_fe)[T.Serchhip]                      -0.0016      0.013     -0.122      0.903      -0.028       0.025
+C(district_fe)[T.Shahdol]                        0.0010      0.010      0.109      0.913      -0.018       0.020
+C(district_fe)[T.Shahid Bhagat Singh Nagar]      0.0075      0.009      0.796      0.426      -0.011       0.026
+C(district_fe)[T.Shahjahanpur]                   0.0036      0.008      0.467      0.640      -0.012       0.019
+C(district_fe)[T.Shajapur]                       0.0010      0.009      0.113      0.910      -0.017       0.019
+C(district_fe)[T.Shamli]                         0.0080      0.013      0.618      0.536      -0.017       0.033
+C(district_fe)[T.Sheikhpura]                     0.0055      0.014      0.393      0.695      -0.022       0.033
+C(district_fe)[T.Sheohar]                        0.0077      0.020      0.391      0.696      -0.031       0.046
+C(district_fe)[T.Sheopur]                        0.0004      0.009      0.042      0.966      -0.018       0.019
+C(district_fe)[T.Shimla]                         0.0007      0.012      0.059      0.953      -0.022       0.024
+C(district_fe)[T.Shimoga]                       -0.0002      0.011     -0.018      0.986      -0.022       0.022
+C(district_fe)[T.Shivpuri]                       0.0021      0.008      0.266      0.791      -0.014       0.018
+C(district_fe)[T.Shravasti]                      0.0042      0.010      0.434      0.664      -0.015       0.023
+C(district_fe)[T.Shupiyan]                       0.0015      0.015      0.105      0.916      -0.027       0.030
+C(district_fe)[T.Siddharth Nagar]                0.0056      0.029      0.198      0.843      -0.050       0.062
+C(district_fe)[T.Sidhi]                          0.0019      0.009      0.217      0.828      -0.015       0.019
+C(district_fe)[T.Sikar]                         -0.0005      0.009     -0.059      0.953      -0.018       0.017
+C(district_fe)[T.Simdega]                        0.0008      0.012      0.068      0.946      -0.023       0.024
+C(district_fe)[T.Sindhudurg]                     0.0009      0.012      0.075      0.941      -0.023       0.024
+C(district_fe)[T.Singrauli]                      0.0019      0.012      0.163      0.871      -0.021       0.025
+C(district_fe)[T.Sipahijala]                    -0.0022      0.012     -0.181      0.857      -0.026       0.022
+C(district_fe)[T.Sirmaur]                        0.0023      0.010      0.232      0.816      -0.017       0.022
+C(district_fe)[T.Sirohi]                         0.0017      0.009      0.202      0.840      -0.015       0.019
+C(district_fe)[T.Sirsa]                          0.0035      0.015      0.230      0.818      -0.026       0.033
+C(district_fe)[T.Sitamarhi]                     -0.0023      0.012     -0.184      0.854      -0.026       0.022
+C(district_fe)[T.Sitapur]                        0.0060      0.008      0.722      0.470      -0.010       0.022
+C(district_fe)[T.Sivaganga]                     -0.0022      0.015     -0.146      0.884      -0.032       0.028
+C(district_fe)[T.Sivasagar]                     -0.0010      0.014     -0.072      0.943      -0.028       0.026
+C(district_fe)[T.Siwan]                          0.0068      0.014      0.479      0.632      -0.021       0.035
+C(district_fe)[T.Solan]                          0.0051      0.008      0.624      0.532      -0.011       0.021
+C(district_fe)[T.Solapur]                        0.0028      0.010      0.291      0.771      -0.016       0.022
+C(district_fe)[T.Sonbhadra]                      0.0029      0.011      0.261      0.794      -0.019       0.025
+C(district_fe)[T.Sonipat]                        0.0071      0.010      0.711      0.477      -0.012       0.027
+C(district_fe)[T.Sonitpur]                       0.0036      0.008      0.436      0.663      -0.013       0.020
+C(district_fe)[T.South 24 Parganas]              0.0010      0.020      0.050      0.960      -0.039       0.041
+C(district_fe)[T.South Andaman]                 -0.0043      0.014     -0.313      0.754      -0.031       0.023
+C(district_fe)[T.South Garo Hills]              -0.0002      0.010     -0.022      0.982      -0.021       0.020
+C(district_fe)[T.South Goa]                      0.0012      0.013      0.089      0.929      -0.025       0.027
+C(district_fe)[T.South Tripura]                  0.0004      0.011      0.038      0.970      -0.020       0.021
+C(district_fe)[T.South West Garo Hills]          0.0033      0.015      0.218      0.827      -0.026       0.033
+C(district_fe)[T.South West Khasi Hills]        -0.0014      0.010     -0.139      0.890      -0.021       0.018
+C(district_fe)[T.Srikakulam]                    -0.0010      0.010     -0.097      0.922      -0.021       0.019
+C(district_fe)[T.Srinagar]                       0.0075      0.026      0.283      0.777      -0.044       0.059
+C(district_fe)[T.Sukma]                         -0.0015      0.012     -0.119      0.905      -0.025       0.022
+C(district_fe)[T.Sultanpur]                      0.0059      0.011      0.536      0.592      -0.016       0.028
+C(district_fe)[T.Sundargarh]                     0.0019      0.009      0.219      0.826      -0.015       0.019
+C(district_fe)[T.Supaul]                         0.0036      0.013      0.272      0.785      -0.023       0.030
+C(district_fe)[T.Surajpur]                       0.0002      0.010      0.022      0.983      -0.019       0.019
+C(district_fe)[T.Surat]                          0.0077      0.025      0.310      0.756      -0.041       0.056
+C(district_fe)[T.Surendranagar]                  0.0029      0.009      0.339      0.734      -0.014       0.020
+C(district_fe)[T.Surguja]                        0.0020      0.010      0.198      0.843      -0.018       0.022
+C(district_fe)[T.Tamenglong]                    -0.0025      0.013     -0.197      0.844      -0.028       0.023
+C(district_fe)[T.Tapi]                           0.0009      0.009      0.104      0.917      -0.017       0.018
+C(district_fe)[T.Tarn Taran]                     0.0017      0.013      0.129      0.897      -0.024       0.028
+C(district_fe)[T.Tawang]                         0.0009      0.014      0.070      0.944      -0.026       0.027
+C(district_fe)[T.Tehri Garhwal]                 -0.0016      0.010     -0.168      0.866      -0.021       0.017
+C(district_fe)[T.Thane]                          0.0031      0.031      0.100      0.920      -0.058       0.064
+C(district_fe)[T.Thanjavur]                     -0.0018      0.014     -0.131      0.896      -0.029       0.026
+C(district_fe)[T.The Nilgiris]                  -0.0018      0.011     -0.164      0.870      -0.024       0.020
+C(district_fe)[T.Theni]                          0.0006      0.014      0.041      0.967      -0.027       0.028
+C(district_fe)[T.Thiruvallur]                    0.0023      0.019      0.117      0.907      -0.036       0.040
+C(district_fe)[T.Thiruvananthapuram]             0.0081      0.020      0.396      0.692      -0.032       0.048
+C(district_fe)[T.Thiruvarur]                    -0.0039      0.015     -0.266      0.790      -0.033       0.025
+C(district_fe)[T.Thoothukkudi]                   0.0012      0.020      0.059      0.953      -0.038       0.040
+C(district_fe)[T.Thoubal]                        0.0050      0.010      0.481      0.630      -0.015       0.025
+C(district_fe)[T.Thrissur]                       0.0055      0.014      0.400      0.689      -0.021       0.032
+C(district_fe)[T.Tikamgarh]                      0.0006      0.010      0.059      0.953      -0.019       0.020
+C(district_fe)[T.Tinsukia]                      -0.0119      0.041     -0.292      0.770      -0.092       0.068
+C(district_fe)[T.Tiruchirappalli]               -0.0006      0.018     -0.036      0.971      -0.035       0.034
+C(district_fe)[T.Tirunelveli]                    0.0005      0.019      0.027      0.979      -0.037       0.038
+C(district_fe)[T.Tiruppur]                       0.0025      0.017      0.147      0.883      -0.031       0.036
+C(district_fe)[T.Tiruvannamalai]                -0.0021      0.013     -0.154      0.877      -0.028       0.024
+C(district_fe)[T.Tonk]                           0.0001      0.008      0.016      0.987      -0.016       0.017
+C(district_fe)[T.Tuensang]                      -0.0005      0.012     -0.041      0.967      -0.025       0.024
+C(district_fe)[T.Tumkur]                         0.0008      0.011      0.069      0.945      -0.021       0.022
+C(district_fe)[T.Udaipur]                        0.0018      0.008      0.230      0.818      -0.014       0.018
+C(district_fe)[T.Udalguri]                    2.551e-05      0.010      0.003      0.998      -0.019       0.019
+C(district_fe)[T.Udham Singh Nagar]              0.0003      0.011      0.030      0.976      -0.020       0.021
+C(district_fe)[T.Udhampur]                      -0.0016      0.008     -0.198      0.843      -0.018       0.014
+C(district_fe)[T.Udupi]                          0.0010      0.011      0.095      0.924      -0.020       0.022
+C(district_fe)[T.Ujjain]                         0.0034      0.014      0.235      0.814      -0.025       0.032
+C(district_fe)[T.Ukhrul]                        -0.0006      0.012     -0.047      0.962      -0.025       0.023
+C(district_fe)[T.Umaria]                         0.0006      0.010      0.064      0.949      -0.019       0.020
+C(district_fe)[T.Una]                            0.0028      0.009      0.300      0.765      -0.015       0.021
+C(district_fe)[T.Unnao]                          0.0051      0.007      0.681      0.496      -0.010       0.020
+C(district_fe)[T.Unokoti]                       -0.0006      0.011     -0.056      0.956      -0.022       0.021
+C(district_fe)[T.Uttar Bastar Kanker]        -7.846e-05      0.010     -0.008      0.994      -0.019       0.019
+C(district_fe)[T.Uttar Dinajpur]                 0.0009      0.009      0.104      0.917      -0.016       0.018
+C(district_fe)[T.Uttara Kannada]                 0.0002      0.011      0.021      0.984      -0.022       0.022
+C(district_fe)[T.Uttarkashi]                    -0.0019      0.012     -0.161      0.872      -0.025       0.021
+C(district_fe)[T.Vadodara]                       0.0077      0.020      0.383      0.701      -0.032       0.047
+C(district_fe)[T.Vaishali]                       0.0074      0.022      0.337      0.736      -0.036       0.050
+C(district_fe)[T.Valsad]                         0.0071      0.015      0.481      0.631      -0.022       0.036
+C(district_fe)[T.Varanasi]                       0.0108      0.028      0.380      0.704      -0.045       0.066
+C(district_fe)[T.Vellore]                       -0.0015      0.013     -0.115      0.909      -0.027       0.024
+C(district_fe)[T.Vidisha]                        0.0024      0.024      0.101      0.920      -0.045       0.050
+C(district_fe)[T.Viluppuram]                    -0.0010      0.014     -0.076      0.939      -0.028       0.026
+C(district_fe)[T.Virudunagar]                    0.0003      0.016      0.018      0.986      -0.031       0.031
+C(district_fe)[T.Visakhapatnam]                 -0.0012      0.011     -0.107      0.915      -0.023       0.021
+C(district_fe)[T.Vizianagaram]                  -0.0006      0.011     -0.059      0.953      -0.021       0.020
+C(district_fe)[T.Warangal]                    5.885e-05      0.010      0.006      0.995      -0.020       0.020
+C(district_fe)[T.Wardha]                         0.0028      0.010      0.279      0.780      -0.017       0.023
+C(district_fe)[T.Washim]                         0.0018      0.009      0.208      0.835      -0.015       0.019
+C(district_fe)[T.Wayanad]                        0.0019      0.011      0.177      0.859      -0.020       0.023
+C(district_fe)[T.West Garo Hills]                0.0005      0.010      0.048      0.962      -0.019       0.020
+C(district_fe)[T.West Godavari]                  0.0011      0.010      0.104      0.917      -0.019       0.021
+C(district_fe)[T.West Kameng]                -3.338e-05      0.013     -0.002      0.998      -0.026       0.026
+C(district_fe)[T.West Khasi Hills]              -0.0015      0.011     -0.129      0.897      -0.024       0.021
+C(district_fe)[T.West Nimar]                     0.0023      0.009      0.240      0.810      -0.016       0.021
+C(district_fe)[T.West Siang]                    -0.0005      0.013     -0.040      0.968      -0.027       0.025
+C(district_fe)[T.West Tripura]                   0.0016      0.030      0.051      0.959      -0.058       0.061
+C(district_fe)[T.Wokha]                         -0.0011      0.011     -0.093      0.926      -0.024       0.021
+C(district_fe)[T.Y.S.R.]                        -0.0011      0.013     -0.087      0.930      -0.026       0.024
+C(district_fe)[T.Yadgir]                        -0.0012      0.010     -0.126      0.899      -0.020       0.017
+C(district_fe)[T.Yamunanagar]                    0.0076      0.014      0.561      0.575      -0.019       0.034
+C(district_fe)[T.Yanam]                         -0.0041      0.020     -0.205      0.838      -0.043       0.035
+C(district_fe)[T.Yavatmal]                       0.0021      0.009      0.250      0.803      -0.015       0.019
+C(district_fe)[T.Zunheboto]                      0.0005      0.011      0.040      0.968      -0.022       0.023
+C(quarter_fe)[T.2015Q3]                          0.0013      0.003      0.402      0.688      -0.005       0.007
+C(quarter_fe)[T.2015Q4]                          0.1441      0.005     29.007      0.000       0.134       0.154
+C(quarter_fe)[T.2016Q1]                          0.0063      0.003      2.111      0.035       0.000       0.012
+C(quarter_fe)[T.2016Q2]                          0.0426      0.003     13.067      0.000       0.036       0.049
+C(quarter_fe)[T.2017Q2]                          0.1192      0.003     39.895      0.000       0.113       0.125
+C(quarter_fe)[T.2017Q3]                         -0.0016      0.003     -0.462      0.644      -0.008       0.005
+C(quarter_fe)[T.2017Q4]                          0.1256      0.004     31.358      0.000       0.118       0.133
+C(quarter_fe)[T.2018Q1]                          0.0300      0.003     11.440      0.000       0.025       0.035
+C(quarter_fe)[T.2018Q2]                          0.0384      0.003     11.623      0.000       0.032       0.045
+C(quarter_fe)[T.2018Q3]                         -0.0417      0.004     -9.415      0.000      -0.050      -0.033
+C(quarter_fe)[T.2018Q4]                          0.1575      0.005     32.330      0.000       0.148       0.167
+C(quarter_fe)[T.2019Q1]                          0.0346      0.003     12.519      0.000       0.029       0.040
+C(quarter_fe)[T.2019Q2]                          0.0529      0.003     17.050      0.000       0.047       0.059
+C(quarter_fe)[T.2019Q3]                         -0.0684      0.005    -15.127      0.000      -0.077      -0.060
+C(quarter_fe)[T.2019Q4]                          0.1533      0.005     33.085      0.000       0.144       0.162
+C(quarter_fe)[T.2020Q1]                          0.0493      0.003     17.251      0.000       0.044       0.055
+C(quarter_fe)[T.2020Q2]                          0.0407      0.004     11.446      0.000       0.034       0.048
+C(quarter_fe)[T.2020Q3]                         -0.0476      0.004    -11.462      0.000      -0.056      -0.039
+C(quarter_fe)[T.2020Q4]                          0.1801      0.005     39.678      0.000       0.171       0.189
+C(quarter_fe)[T.2021Q1]                          0.0266      0.003      9.109      0.000       0.021       0.032
+C(quarter_fe)[T.2021Q2]                          0.0607      0.003     21.021      0.000       0.055       0.066
+C(quarter_fe)[T.2021Q3]                         -0.0528      0.004    -13.098      0.000      -0.061      -0.045
+C(quarter_fe)[T.2021Q4]                          0.1671      0.005     34.539      0.000       0.158       0.177
+C(quarter_fe)[T.2022Q1]                          0.0530      0.003     17.446      0.000       0.047       0.059
+C(quarter_fe)[T.2022Q2]                          0.0538      0.003     19.360      0.000       0.048       0.059
+C(quarter_fe)[T.2022Q3]                         -0.1095      0.004    -25.064      0.000      -0.118      -0.101
+C(quarter_fe)[T.2022Q4]                          0.2093      0.005     43.369      0.000       0.200       0.219
+C(quarter_fe)[T.2023Q1]                          0.0495      0.003     17.689      0.000       0.044       0.055
+C(quarter_fe)[T.2023Q2]                          0.0717      0.003     23.222      0.000       0.066       0.078
+C(quarter_fe)[T.2023Q3]                         -0.0469      0.004    -10.843      0.000      -0.055      -0.038
+C(quarter_fe)[T.2023Q4]                          0.1507      0.004     35.477      0.000       0.142       0.159
+C(quarter_fe)[T.2024Q1]                          0.0309      0.003     10.462      0.000       0.025       0.037
+C(quarter_fe)[T.2024Q2]                          0.0662      0.003     21.259      0.000       0.060       0.072
+C(quarter_fe)[T.2024Q3]                         -0.0861      0.004    -19.387      0.000      -0.095      -0.077
+C(quarter_fe)[T.2024Q4]                          0.1877      0.004     42.082      0.000       0.179       0.196
+flood_exposure_ruleA_qt                         -0.0126      0.002     -6.309      0.000      -0.017      -0.009
+==============================================================================
+Omnibus:                     5059.589   Durbin-Watson:                   2.762
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):           195400.607
+Skew:                           0.281   Prob(JB):                         0.00
+Kurtosis:                      17.357   Cond. No.                         640.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity robust (HC1)

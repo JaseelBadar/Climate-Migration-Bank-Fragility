@@ -1,24 +1,3 @@
-"""
-27_regression_H1_first_stage.py - Phase 4 Regression Analysis
-
-H1: Floods → Nighttime lights decline (First Stage)
-
-EQUATION:
-  lights_change_qt = β₀ + β₁·flood_exposure_qt + δ_d + δ_t + ε
-
-SPECIFICATION:
-  - DV: lights_change_qt (Δ log lights)
-  - IV: flood_exposure_ruleA_qt (binary, state fallback)
-  - FE: District + Time fixed effects
-  - SE: Clustered by district
-
-OUTPUTS:
-  - 05_Outputs/Tables/02_H1_first_stage.csv (regression table)
-  - 05_Outputs/Logs/27_H1_regression.txt (detailed results)
-
-ESTIMATED RUNTIME: 3-5 minutes
-"""
-
 import pandas as pd
 import numpy as np
 from statsmodels.formula.api import ols
@@ -45,7 +24,7 @@ log.info("="*70)
 
 # === LOAD DATA ===
 print(f"\n[1/5] Loading regression-ready panel...")
-df = pd.read_csv('03_Data_Clean/regression_ready_panel.csv')
+df = pd.read_csv('03_Data_Clean/regression_panel_final.csv')
 print(f"  ✓ Loaded: {len(df):,} rows")
 log.info(f"\nPanel loaded: {len(df):,} rows")
 

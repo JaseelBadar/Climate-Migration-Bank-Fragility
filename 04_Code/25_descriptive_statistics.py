@@ -1,15 +1,3 @@
-"""
-25_descriptive_statistics.py - Phase 3d Descriptive Analysis
-
-Generate summary statistics and coverage diagnostics for paper Table 1.
-
-OUTPUTS:
-  - 05_Outputs/Tables/01_descriptive_stats.csv (district-level summaries)
-  - 05_Outputs/Logs/25_descriptive_summary.txt
-
-ESTIMATED RUNTIME: 3-5 minutes
-"""
-
 import pandas as pd
 import numpy as np
 import logging
@@ -33,7 +21,7 @@ log.info("="*70)
 
 # === LOAD REGRESSION-READY PANEL ===
 print(f"\n[1/5] Loading regression-ready panel...")
-df = pd.read_csv('03_Data_Clean/regression_ready_panel.csv')
+df = pd.read_csv('03_Data_Clean/regression_panel_final.csv')
 print(f"  ✓ Loaded: {len(df):,} rows")
 print(f"  ✓ Districts: {df['district_gadm'].nunique()}")
 print(f"  ✓ Quarters: {df['quarter'].nunique()}")

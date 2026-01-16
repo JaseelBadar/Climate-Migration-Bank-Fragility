@@ -1,179 +1,239 @@
 """
-29_regression_H3_timing.py - Phase 4 Regression Analysis
-
-H3: Timing of deposit responses (distributed lag model)
-
-TESTS:
-  1. Immediate effect (t=0): Same-quarter flood → deposit change
-  2. Delayed effect (t-1): Previous-quarter flood → current deposit change
-  3. Shadow banking signature: Deposits decline immediately, recover slowly
-
-SPECIFICATION:
-  deposit_change_qt = β₀ + β₁·flood_qt + β₂·flood_lag1_qt + δ_d + δ_t + ε
-
-OUTPUTS:
-  - 05_Outputs/Tables/04_H3_timing.csv
-  - 05_Outputs/Logs/29_H3_timing_results.txt
-
-ESTIMATED RUNTIME: 3-5 minutes
+Script 29: H3 Timing Analysis (Distributed Lags)
+Phase 4 - Test timing of flood effects on deposits
 """
 
 import pandas as pd
 import numpy as np
-from statsmodels.formula.api import ols
-import logging
-import os
+from scipy.stats import t as t_dist
 
-# === SETUP LOGGING ===
-os.makedirs('05_Outputs/Logs', exist_ok=True)
-logging.basicConfig(
-    filename='05_Outputs/Logs/29_H3_timing_results.txt',
-    level=logging.INFO,
-    format='%(message)s'
-)
-log = logging.getLogger(__name__)
-
-print("="*70)
+print("=" * 70)
 print("PHASE 4: H3 TIMING ANALYSIS (Distributed Lags)")
-print("="*70)
-log.info("="*70)
-log.info("H3: TIMING OF DEPOSIT RESPONSES")
-log.info("Distributed lag model: Floods (t, t-1) → Deposit change")
-log.info("="*70)
+print("=" * 70)
+print()
 
-# === LOAD DATA ===
-print(f"\n[1/5] Loading regression-ready panel...")
-df = pd.read_csv('03_Data_Clean/regression_ready_panel.csv')
+# ============================================================================
+# STEP 1: Load data
+# ============================================================================
+print("[1/6] Loading regression-ready panel...")
+df = pd.read_csv('03_Data_Clean/regression_panel_final.csv')
 print(f"  ✓ Loaded: {len(df):,} rows")
-log.info(f"\nPanel loaded: {len(df):,} rows")
+print()
 
-# === RESTRICT TO NON-MISSING ===
-print(f"\n[2/5] Restricting to complete cases...")
-initial_n = len(df)
+# ============================================================================
+# STEP 2: Create lag variables
+# ============================================================================
+print("[2/6] Creating lag variables...")
 
-df_reg = df[
-    df['deposit_change_qt'].notna() & 
-    df['flood_exposure_ruleA_qt'].notna() &
-    df['flood_lag1_qt'].notna()
-].copy()
+# Sort by district and quarter to ensure proper lagging
+df = df.sort_values(['district_gadm', 'quarter']).reset_index(drop=True)
 
-print(f"  Initial: {initial_n:,} obs")
+# Create lags of flood exposure within each district
+df['flood_lag1_qt'] = df.groupby('district_gadm')['flood_exposure_ruleA_qt'].shift(1)
+df['flood_lag2_qt'] = df.groupby('district_gadm')['flood_exposure_ruleA_qt'].shift(2)
+
+print(f"  ✓ Created flood_lag1_qt (1 quarter lag)")
+print(f"  ✓ Created flood_lag2_qt (2 quarters lag)")
+print()
+
+# ============================================================================
+# STEP 3: Restrict to complete cases
+# ============================================================================
+print("[3/6] Restricting to complete cases...")
+print(f"  Initial: {len(df):,} obs")
+
+# Keep only obs with all variables non-missing
+df_reg = df[[
+    'deposit_change_qt',
+    'flood_exposure_ruleA_qt',  # t=0 (contemporaneous)
+    'flood_lag1_qt',             # t-1 (1 quarter lag)
+    'flood_lag2_qt',             # t-2 (2 quarters lag)
+    'district_gadm',
+    'quarter'
+]].dropna()
+
 print(f"  After restrictions: {len(df_reg):,} obs")
-print(f"  Dropped: {initial_n - len(df_reg):,} obs")
-log.info(f"Initial: {initial_n:,} obs")
-log.info(f"After restrictions: {len(df_reg):,} obs")
+print(f"  Dropped: {len(df) - len(df_reg):,} obs ({100*(len(df) - len(df_reg))/len(df):.1f}%)")
+print()
 
-# === ENCODE FIXED EFFECTS ===
-print(f"\n[3/5] Encoding fixed effects...")
-df_reg['district_fe'] = pd.Categorical(df_reg['district_gadm'])
-df_reg['quarter_fe'] = pd.Categorical(df_reg['quarter'])
+# ============================================================================
+# STEP 4: Encode fixed effects
+# ============================================================================
+print("[4/6] Encoding fixed effects...")
 
-print(f"  ✓ District FE: {df_reg['district_fe'].nunique()} categories")
-print(f"  ✓ Quarter FE: {df_reg['quarter_fe'].nunique()} categories")
+# Convert to categorical and get dummies
+district_dummies = pd.get_dummies(df_reg['district_gadm'], prefix='district', drop_first=True)
+quarter_dummies = pd.get_dummies(df_reg['quarter'], prefix='quarter', drop_first=True)
 
-# === REGRESSION: DISTRIBUTED LAG MODEL ===
-print(f"\n[4/5] Running distributed lag regression...")
-log.info("\n" + "="*70)
-log.info("REGRESSION SPECIFICATION")
-log.info("="*70)
-log.info("DV: deposit_change_qt (Δ log deposits)")
-log.info("IVs: flood_exposure_ruleA_qt (contemporaneous)")
-log.info("     flood_lag1_qt (lagged one quarter)")
-log.info("FE: District + Quarter")
+print(f"  ✓ District FE: {district_dummies.shape[1]} dummies")
+print(f"  ✓ Quarter FE: {quarter_dummies.shape[1]} dummies")
+print()
 
-formula = 'deposit_change_qt ~ flood_exposure_ruleA_qt + flood_lag1_qt + C(district_fe) + C(quarter_fe)'
+# ============================================================================
+# STEP 5: Run distributed lag regression
+# ============================================================================
+print("[5/6] Running distributed lag regression...")
 
-try:
-    model = ols(formula, data=df_reg).fit(cov_type='HC1')
-    print(f"  ✓ Model fitted")
-    print(f"  ✓ N obs: {model.nobs:,.0f}")
-    print(f"  ✓ R²: {model.rsquared:.4f}")
-    log.info(f"\nModel fitted successfully")
-    log.info(f"N obs: {model.nobs:,.0f}")
-    log.info(f"R²: {model.rsquared:.4f}")
-except Exception as e:
-    print(f"  ✗ ERROR: {e}")
-    log.error(f"Model fitting failed: {e}")
-    exit(1)
+# Construct design matrix (contemporaneous + 2 lags + FE)
+X = np.column_stack([
+    df_reg['flood_exposure_ruleA_qt'].values,  # t=0
+    df_reg['flood_lag1_qt'].values,            # t-1
+    df_reg['flood_lag2_qt'].values,            # t-2
+    district_dummies.values,
+    quarter_dummies.values
+])
 
-# === EXTRACT RESULTS ===
-print(f"\n[5/5] Extracting timing coefficients...")
+# Ensure float64 dtype
+X = X.astype(np.float64)
 
-# Contemporaneous effect (t=0)
-flood_t0_coef = model.params.get('flood_exposure_ruleA_qt', np.nan)
-flood_t0_se = model.bse.get('flood_exposure_ruleA_qt', np.nan)
-flood_t0_pval = model.pvalues.get('flood_exposure_ruleA_qt', np.nan)
+y = df_reg['deposit_change_qt'].values.astype(np.float64)
 
-# Lagged effect (t-1)
-flood_t1_coef = model.params.get('flood_lag1_qt', np.nan)
-flood_t1_se = model.bse.get('flood_lag1_qt', np.nan)
-flood_t1_pval = model.pvalues.get('flood_lag1_qt', np.nan)
+# Estimate via OLS
+from numpy.linalg import lstsq
+beta = lstsq(X, y, rcond=None)[0]
 
-print(f"\n  CONTEMPORANEOUS (t=0): flood_exposure_ruleA_qt")
-print(f"    β̂  = {flood_t0_coef:.6f}")
-print(f"    SE = {flood_t0_se:.6f}")
-print(f"    p  = {flood_t0_pval:.4f}")
+# Calculate residuals for SE
+residuals = y - (X @ beta)
+sigma2 = np.sum(residuals**2) / (len(y) - X.shape[1])
 
-print(f"\n  LAGGED (t-1): flood_lag1_qt")
-print(f"    β̂  = {flood_t1_coef:.6f}")
-print(f"    SE = {flood_t1_se:.6f}")
-print(f"    p  = {flood_t1_pval:.4f}")
+# Variance-covariance matrix
+XtX_inv = np.linalg.inv(X.T @ X)
+var_beta = sigma2 * np.diag(XtX_inv)
+se_beta = np.sqrt(var_beta)
 
-log.info("\n" + "="*70)
-log.info("TIMING RESULTS")
-log.info("="*70)
-log.info(f"Contemporaneous (t=0):")
-log.info(f"  Coefficient: {flood_t0_coef:.6f}")
-log.info(f"  Std Error:   {flood_t0_se:.6f}")
-log.info(f"  p-value:     {flood_t0_pval:.4f}")
-log.info(f"\nLagged (t-1):")
-log.info(f"  Coefficient: {flood_t1_coef:.6f}")
-log.info(f"  Std Error:   {flood_t1_se:.6f}")
-log.info(f"  p-value:     {flood_t1_pval:.4f}")
+# Extract coefficients for the 3 flood timing variables
+coef_t0 = beta[0]
+coef_t1 = beta[1]
+coef_t2 = beta[2]
 
-# Interpretation: Shadow banking signature
-print(f"\n[Interpretation] Shadow Banking Signature:")
-if flood_t0_coef < 0 and flood_t0_pval < 0.05:
-    print(f"  ✓ Immediate decline (t=0): Significant negative effect")
-    log.info("Immediate effect: SIGNIFICANT negative (supports shadow-run hypothesis)")
+se_t0 = se_beta[0]
+se_t1 = se_beta[1]
+se_t2 = se_beta[2]
+
+# Calculate t-stats and p-values
+df_resid = len(y) - X.shape[1]
+t_t0 = coef_t0 / se_t0
+t_t1 = coef_t1 / se_t1
+t_t2 = coef_t2 / se_t2
+
+p_t0 = 2 * (1 - t_dist.cdf(abs(t_t0), df=df_resid))
+p_t1 = 2 * (1 - t_dist.cdf(abs(t_t1), df=df_resid))
+p_t2 = 2 * (1 - t_dist.cdf(abs(t_t2), df=df_resid))
+
+print(f"  ✓ Regression complete")
+print()
+
+# ============================================================================
+# STEP 6: Output results
+# ============================================================================
+print("[6/6] Extracting results...")
+print()
+print("  TIMING EFFECTS (Floods -> Deposits):")
+print()
+print(f"  [t=0] Contemporaneous:")
+print(f"    β̂  = {coef_t0:.6f}")
+print(f"    SE = {se_t0:.6f}")
+print(f"    t  = {t_t0:.3f}")
+print(f"    p  = {p_t0:.4f}")
+
+if p_t0 < 0.001:
+    sig_t0 = '***'
+elif p_t0 < 0.01:
+    sig_t0 = '**'
+elif p_t0 < 0.05:
+    sig_t0 = '*'
 else:
-    print(f"  ⚠ Immediate decline (t=0): Not significant or wrong sign")
-    log.info("Immediate effect: Not significant")
+    sig_t0 = ''
 
-if abs(flood_t1_coef) < abs(flood_t0_coef):
-    print(f"  ✓ Attenuation: |β_t-1| < |β_t0| (recovery signal)")
-    log.info("Lagged effect smaller: Consistent with temporary shock")
+print(f"    Significance: {sig_t0 if sig_t0 else 'NOT SIGNIFICANT'}")
+print()
+
+print(f"  [t-1] 1 Quarter Lag:")
+print(f"    β̂  = {coef_t1:.6f}")
+print(f"    SE = {se_t1:.6f}")
+print(f"    t  = {t_t1:.3f}")
+print(f"    p  = {p_t1:.4f}")
+
+if p_t1 < 0.001:
+    sig_t1 = '***'
+elif p_t1 < 0.01:
+    sig_t1 = '**'
+elif p_t1 < 0.05:
+    sig_t1 = '*'
 else:
-    print(f"  ⚠ No attenuation: Persistent or amplifying effect")
-    log.info("Lagged effect not smaller: Persistent shock")
+    sig_t1 = ''
 
-# === SAVE RESULTS ===
-print(f"\n[Output] Saving timing analysis table...")
-os.makedirs('05_Outputs/Tables', exist_ok=True)
+print(f"    Significance: {sig_t1 if sig_t1 else 'NOT SIGNIFICANT'}")
+print()
 
-results_df = pd.DataFrame({
-    'lag': ['t=0 (contemporaneous)', 't-1 (lagged 1Q)'],
-    'coefficient': [flood_t0_coef, flood_t1_coef],
-    'std_error': [flood_t0_se, flood_t1_se],
-    'p_value': [flood_t0_pval, flood_t1_pval]
+print(f"  [t-2] 2 Quarter Lag:")
+print(f"    β̂  = {coef_t2:.6f}")
+print(f"    SE = {se_t2:.6f}")
+print(f"    t  = {t_t2:.3f}")
+print(f"    p  = {p_t2:.4f}")
+
+if p_t2 < 0.001:
+    sig_t2 = '***'
+elif p_t2 < 0.01:
+    sig_t2 = '**'
+elif p_t2 < 0.05:
+    sig_t2 = '*'
+else:
+    sig_t2 = ''
+
+print(f"    Significance: {sig_t2 if sig_t2 else 'NOT SIGNIFICANT'}")
+print()
+
+# Calculate cumulative effect
+cumulative = coef_t0 + coef_t1 + coef_t2
+print(f"  [CUMULATIVE] Sum of coefficients: {cumulative:.6f}")
+print()
+
+# Save results table
+results = pd.DataFrame({
+    'Variable': ['flood_t0', 'flood_t1_lag', 'flood_t2_lag'],
+    'Coefficient': [coef_t0, coef_t1, coef_t2],
+    'Std_Error': [se_t0, se_t1, se_t2],
+    't_statistic': [t_t0, t_t1, t_t2],
+    'p_value': [p_t0, p_t1, p_t2],
+    'N_obs': [len(y), len(y), len(y)]
 })
 
-results_df.to_csv('05_Outputs/Tables/04_H3_timing.csv', index=False)
+results.to_csv('05_Outputs/Tables/04_H3_timing.csv', index=False)
 
-# Save full model summary
-with open('05_Outputs/Logs/29_H3_timing_full.txt', 'w') as f:
-    f.write(str(model.summary()))
+# Save log
+with open('05_Outputs/Logs/29_H3_timing.txt', 'w', encoding='utf-8') as f:
+    f.write("=" * 70 + "\n")
+    f.write("H3: TIMING ANALYSIS (Distributed Lags)\n")
+    f.write("=" * 70 + "\n\n")
+    f.write(f"N observations: {len(y):,}\n")
+    f.write(f"District FE: {district_dummies.shape[1]}\n")
+    f.write(f"Quarter FE: {quarter_dummies.shape[1]}\n\n")
+    f.write("TIMING EFFECTS:\n\n")
+    f.write(f"[t=0] Contemporaneous flood:\n")
+    f.write(f"  Coefficient: {coef_t0:.6f} {sig_t0}\n")
+    f.write(f"  Std Error: {se_t0:.6f}\n")
+    f.write(f"  t-statistic: {t_t0:.3f}\n")
+    f.write(f"  p-value: {p_t0:.4f}\n\n")
+    f.write(f"[t-1] 1 Quarter Lag:\n")
+    f.write(f"  Coefficient: {coef_t1:.6f} {sig_t1}\n")
+    f.write(f"  Std Error: {se_t1:.6f}\n")
+    f.write(f"  t-statistic: {t_t1:.3f}\n")
+    f.write(f"  p-value: {p_t1:.4f}\n\n")
+    f.write(f"[t-2] 2 Quarter Lag:\n")
+    f.write(f"  Coefficient: {coef_t2:.6f} {sig_t2}\n")
+    f.write(f"  Std Error: {se_t2:.6f}\n")
+    f.write(f"  t-statistic: {t_t2:.3f}\n")
+    f.write(f"  p-value: {p_t2:.4f}\n\n")
+    f.write(f"Cumulative effect: {cumulative:.6f}\n")
 
-# === SUMMARY ===
-print("="*70)
+print("[Output] Saving regression table...")
+print("=" * 70)
 print("H3 TIMING ANALYSIS COMPLETE")
-print("="*70)
+print("=" * 70)
 print(f"Table: 05_Outputs/Tables/04_H3_timing.csv")
-print(f"Log:   05_Outputs/Logs/29_H3_timing_results.txt")
-log.info("\n" + "="*70)
-log.info("TIMING ANALYSIS COMPLETE")
-log.info("="*70)
-print("="*70)
-print("\nPHASE 4 REGRESSION PIPELINE COMPLETE")
-print("Ready for robustness checks and paper drafting")
-print("="*70)
+print(f"Log:   05_Outputs/Logs/29_H3_timing.txt")
+print("=" * 70)
+print()
+print("NEXT STEP: Run Script 30 (H4: Heterogeneity analysis)")
+print("=" * 70)

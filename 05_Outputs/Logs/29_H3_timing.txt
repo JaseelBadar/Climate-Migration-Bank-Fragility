@@ -1,0 +1,29 @@
+======================================================================
+H3: TIMING ANALYSIS (Distributed Lags)
+======================================================================
+
+N observations: 21,912
+District FE: 623
+Quarter FE: 35
+
+TIMING EFFECTS:
+
+[t=0] Contemporaneous flood:
+  Coefficient: 0.000593 
+  Std Error: 0.003135
+  t-statistic: 0.189
+  p-value: 0.8500
+
+[t-1] 1 Quarter Lag:
+  Coefficient: -0.006163 *
+  Std Error: 0.003110
+  t-statistic: -1.982
+  p-value: 0.0475
+
+[t-2] 2 Quarter Lag:
+  Coefficient: -0.005310 
+  Std Error: 0.003177
+  t-statistic: -1.672
+  p-value: 0.0946
+
+Cumulative effect: -0.010880

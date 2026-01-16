@@ -1,0 +1,10 @@
+======================================================================
+H3: TIMING OF DEPOSIT RESPONSES
+Distributed lag model: Floods (t, t-1) \u2192 Deposit change
+======================================================================
+======================================================================
+H3: TIMING OF DEPOSIT RESPONSES
+Distributed lag model: Floods (t, t-1) \u2192 Deposit change
+======================================================================
+
+Panel loaded: 23,347 rows

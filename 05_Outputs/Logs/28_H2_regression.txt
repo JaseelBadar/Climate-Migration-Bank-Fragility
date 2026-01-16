@@ -1,0 +1,17 @@
+======================================================================
+H2: IV 2SLS REGRESSION (Migration -> Deposits)
+======================================================================
+
+N observations: 22,503
+District FE: 623
+Quarter FE: 35
+
+[FIRST STAGE]
+flood_exposure_ruleA_qt -> lights_change_qt: -0.012756
+
+[SECOND STAGE]
+lights_change_qt_hat -> deposit_change_qt:
+  Coefficient: -0.118931 
+  Std Error: 0.240441
+  t-statistic: -0.495
+  p-value: 0.6209

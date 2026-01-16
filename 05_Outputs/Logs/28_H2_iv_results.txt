@@ -1,0 +1,22 @@
+======================================================================
+H2: INSTRUMENTAL VARIABLE 2SLS
+Nighttime Lights \u2192 Bank Deposits (Instrumented by Floods)
+======================================================================
+======================================================================
+H2: INSTRUMENTAL VARIABLE 2SLS
+Nighttime Lights \u2192 Bank Deposits (Instrumented by Floods)
+======================================================================
+======================================================================
+H2: INSTRUMENTAL VARIABLE 2SLS
+Nighttime Lights \u2192 Bank Deposits (Instrumented by Floods)
+======================================================================
+
+Panel loaded: 23,347 rows
+Initial: 23,347 obs
+After restrictions: 22,503 obs
+District FE: 623 dummies
+Quarter FE: 35 dummies
+
+======================================================================
+FIRST STAGE: flood_exposure \u2192 lights_change
+======================================================================

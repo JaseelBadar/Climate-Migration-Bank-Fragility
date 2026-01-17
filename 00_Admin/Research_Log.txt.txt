@@ -592,5 +592,60 @@ Next:
 - Begin Phase 5 writing: Results section anchored on Tables 02–05, with explicit identification/limitations language.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-16 21:55 PM IST
+2026-01-17 (Sat) 20:00-23:50 PM IST: Phase 3 - Literature Review Expansion
+======================================================================
+Goal: Extend literature tracker from 16 to 20 papers to cover all mechanism components (climate shocks → migration → banking fragility) with top-tier foundational papers.
+
+Actions Completed
+
+A) Deep literature search (targeted gap-filling)
+- Conducted systematic search across top-5 economics journals (AER, QJE, RestudS, Econometrica, JPE) and field journals (JDE, JEEM, AEJ:Applied)
+- Focus areas: (1) labor reallocation mechanisms, (2) spatial equilibrium migration models, (3) temperature-migration elasticity, (4) adaptation cost heterogeneity
+- Verification: All publication dates cross-checked against official journal metadata and screenshots
+
+B) Four foundational papers identified and documented
+1. Colmer (2021, AEJ:Applied Economics, Vol 13(4), Oct 2021)
+   - Title: "Temperature, Labor Reallocation, and Industrial Production: Evidence from India"
+   - Contribution: Identifies sectoral labor reallocation mechanism triggered by temperature shocks; shows migration can offset 31-69% of productivity losses
+   - Citations: 266+
+   - Gap filled: Provides micro-mechanism for how climate shocks disrupt household income streams before affecting bank deposits
+
+2. Cruz & Rossi-Hansberg (2024, Review of Economic Studies, Vol 91(2), March 2024)
+   - Title: "The Economic Geography of Global Warming"
+   - Contribution: High-resolution (17,000+ grid cells) spatial equilibrium model with endogenous migration, trade, and adaptation; shows heterogeneous regional collapse patterns
+   - Citations: 334+
+   - Gap filled: Theoretical framework for why some districts face deposit flight while others attract inflows post-disaster
+
+3. Cattaneo & Peri (2016, Journal of Development Economics, Vol 122, May 2016)
+   - Title: "The migration response to increasing temperatures"
+   - Contribution: Cross-country evidence (115 countries, 1960-2000) showing 1°C increase → 20% rise in emigration in middle-income economies; demonstrates liquidity constraints prevent migration in poor countries
+   - Citations: 734+
+   - Gap filled: Establishes temperature-migration link relevant to India's income level; justifies VIIRS nighttime lights as migration proxy
+
+4. Carleton et al. (2022, Quarterly Journal of Economics, Vol 137(4), Nov 2022)
+   - Title: "Valuing the Global Mortality Consequences of Climate Change Accounting for Adaptation Costs and Benefits"
+   - Contribution: Subnational mortality-temperature analysis (40 countries including India) with explicit adaptation cost accounting; shows poor regions cannot afford adaptation → larger welfare losses
+   - Citations: 781+
+   - Gap filled: Demonstrates heterogeneous adaptation capacity driving differential banking stress across districts
+
+C) Literature tracker expansion
+- Created Literature_Tracker_4_New_Rows.csv with standardized format
+- Updated LiteratureTracker.xlsx: 16 papers → 20 papers
+- Maintained consistent "What They Missed" column structure (focus on district-level banking outcomes, VIIRS migration proxy, causal chain gaps)
+
+Status:
+Literature review complete with 20 papers covering all mechanism components:
+- VIIRS methodology: 5 papers (Beyer, Hu-Yao, Bhandari, Chen-Nordhaus, K et al.)
+- Climate impacts: 4 papers (Hsiang, Zhu, Zhao, Colmer)
+- Banking responses: 3 papers (Gandhi, Peters, Benmelech, Cortés review)
+- Migration mechanisms: 4 papers (Colmer, Cattaneo-Peri, Cruz-Rossi, Zhu)
+- Spatial/adaptation heterogeneity: 4 papers (Cruz-Rossi, Carleton, Cattaneo-Peri, Colmer)
+
+Next:
+- Add 4 PDFs to 00_Admin/Literature_PDFs/ (commit separately or combined)
+- Update README.md: change "16 papers" → "20 papers" in literature section
+- Begin Phase 4 robustness checks (district-clustered SEs, Rule B specification)
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-17 23:55 PM IST
 ======================================================================

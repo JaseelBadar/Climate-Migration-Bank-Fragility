@@ -2,7 +2,7 @@
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).
 
 **Status:** Phase 4 complete — All regressions run (H1-H4). Two significant findings: Floods reduce nighttime lights (β=-0.011***); Urban districts more vulnerable to flood shocks (β=-1.21**).   
-**Last updated:** 2026-01-16.
+**Last updated:** 2026-01-17.
 
 ---
 
@@ -148,7 +148,7 @@ conda activate research_env
 conda install pandas geopandas rasterio matplotlib statsmodels
 Environment details match the project initialization log. 
 
-## What is completed (as of 2026-01-16)
+## What is completed (as of 2026-01-17)
 
 ### Phase 1: Project Initialization (Dec 2025)
 - Computational environment configured (Python 3.10, conda, geopandas stack)
@@ -162,7 +162,7 @@ Environment details match the project initialization log.
 - **GADM boundaries:** India district polygons (v4.1, 676 districts)
 
 ### Phase 3: Data Integration & Panel Construction (Jan 2026)
-- **Literature review:** 15-18 papers acquired; novelty gaps documented in `LiteratureTracker.xlsx`
+- **Literature review:** 20 papers acquired (expanded Jan 17); novelty gaps documented in `LiteratureTracker.xlsx`
 - **Hypotheses formalized:** H1-H4 specified in `Hypotheses_Formal_v1.1.md` with IV strategy
 - **District crosswalk:** Built RBI-GADM-EM-DAT harmonization (83.2% match rate, passed threshold)
 - **Flood exposure panel:** Constructed Rule A (8.3% exposure) and Rule B (1.0% high-precision) indicators

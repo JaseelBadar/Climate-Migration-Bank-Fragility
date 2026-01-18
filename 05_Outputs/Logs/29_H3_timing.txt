@@ -10,20 +10,20 @@ TIMING EFFECTS:
 
 [t=0] Contemporaneous flood:
   Coefficient: 0.000593 
-  Std Error: 0.003135
-  t-statistic: 0.189
-  p-value: 0.8500
+  Std Error: 0.001435
+  t-statistic: 0.413
+  p-value: 0.6794
 
 [t-1] 1 Quarter Lag:
-  Coefficient: -0.006163 *
-  Std Error: 0.003110
-  t-statistic: -1.982
-  p-value: 0.0475
+  Coefficient: -0.006163 ***
+  Std Error: 0.001344
+  t-statistic: -4.586
+  p-value: 0.0000
 
 [t-2] 2 Quarter Lag:
   Coefficient: -0.005310 
-  Std Error: 0.003177
-  t-statistic: -1.672
-  p-value: 0.0946
+  Std Error: 0.004857
+  t-statistic: -1.093
+  p-value: 0.2743
 
 Cumulative effect: -0.010880

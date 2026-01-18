@@ -86,6 +86,8 @@ print(f"  Dropped: {len(df) - len(df_reg):,} obs ({100*(len(df) - len(df_reg))/l
 # [6/7] ENCODE FIXED EFFECTS
 # ============================================================================
 print("\n[6/7] Encoding fixed effects...")
+# Save district IDs for clustering BEFORE converting to dummies
+district_ids = df_reg['district_gadm'].copy()
 df_reg = pd.get_dummies(df_reg, columns=['district_gadm', 'quarter'], drop_first=True, dtype=float)
 print(f"  ✓ District FE: {df_reg.filter(regex='^district_gadm_').shape[1]:,} dummies")
 print(f"  ✓ Quarter FE: {df_reg.filter(regex='^quarter_').shape[1]:,} dummies")
@@ -104,7 +106,7 @@ y = df_reg['deposits_change_qt']
 # H4a: Urban vs Rural
 print("\n  [H4a] Urban vs Rural Heterogeneity...")
 X_urban = df_reg[X_cols_base + ['is_urban', 'flood_x_urban']]
-model_urban = sm.OLS(y, X_urban).fit()
+model_urban = sm.OLS(y, X_urban).fit(cov_type='cluster', cov_kwds={'groups': district_ids})
 results['urban'] = {
     'flood_coef': model_urban.params.get('flood_exposure_ruleA_qt', np.nan),
     'interaction_coef': model_urban.params.get('flood_x_urban', np.nan),
@@ -117,7 +119,7 @@ print("  ✓ Urban model complete")
 # H4b: High vs Low Exposure
 print("\n  [H4b] High vs Low Flood Exposure...")
 X_exp = df_reg[X_cols_base + ['high_flood_exposure', 'flood_x_highexp']]
-model_exp = sm.OLS(y, X_exp).fit()
+model_exp = sm.OLS(y, X_exp).fit(cov_type='cluster', cov_kwds={'groups': district_ids})
 results['exposure'] = {
     'flood_coef': model_exp.params.get('flood_exposure_ruleA_qt', np.nan),
     'interaction_coef': model_exp.params.get('flood_x_highexp', np.nan),
@@ -130,7 +132,7 @@ print("  ✓ Exposure model complete")
 # H4c: Monsoon vs Non-monsoon
 print("\n  [H4c] Monsoon vs Non-Monsoon Quarters...")
 X_mon = df_reg[X_cols_base + ['monsoon_quarter', 'flood_x_monsoon']]
-model_mon = sm.OLS(y, X_mon).fit()
+model_mon = sm.OLS(y, X_mon).fit(cov_type='cluster', cov_kwds={'groups': district_ids})
 results['monsoon'] = {
     'flood_coef': model_mon.params.get('flood_exposure_ruleA_qt', np.nan),
     'interaction_coef': model_mon.params.get('flood_x_monsoon', np.nan),

@@ -1,8 +1,8 @@
 # Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).
 
-**Status:** Phase 4 complete — All regressions run (H1-H4). Two significant findings: Floods reduce nighttime lights (β=-0.011***); Urban districts more vulnerable to flood shocks (β=-1.21**).   
-**Last updated:** 2026-01-17.
+**Status:** Phase 4 complete — All regressions run (H1-H4). Data quality issues identified. H1 significant (floods→lights β=-0.0126***); H4a significant (urban×flood β=-0.0404**); H2-H3 null. Re-run pending after data corrections.   
+**Last updated:** 2026-01-18.
 
 ---
 
@@ -170,13 +170,15 @@ Environment details match the project initialization log.
 - **VIIRS integration:** Extracted district-level nighttime lights; aggregated to quarterly panel
 - **Master panel:** Merged deposits + floods + VIIRS → 23,347 observations (631 districts × 37 quarters)
 
-### Phase 4: Hypothesis Testing (Jan 16, 2026) COMPLETE
-- **H1 (Floods → Lights):** β = -0.011*** (p < 0.001) — Floods reduce nighttime lights significantly
-- **H2 (Lights → Deposits via IV):** Weak instrument (F = 11.9); 2SLS estimates imprecise
-- **H3 (Timing analysis):** 1-quarter lag significant (p = 0.013); 2-quarter lag marginal (p = 0.068)
-- **H4 (Heterogeneity):** Urban districts MORE vulnerable to floods (β = -1.21**, p = 0.005) — KEY FINDING
+### Phase 4: Hypothesis Testing (Jan 17-18, 2026) — PRELIMINARY RESULTS
+- **H1 (Floods → Lights):** β = -0.0126*** (p < 0.001, t = -6.31, N = 22,716) — Floods reduce nighttime lights by 1.26 log points
+- **H2 (Lights → Deposits, IV 2SLS):** First stage β = -0.0129*** (strong); Second stage β = 0.120 (p = 0.538, N = 22,503) — Null result, no deposit response detected
+- **H3 (Timing / Distributed Lags):** All lags insignificant (t=0: p=0.668; t-1: p=0.372; t-2: p=0.496, N = 21,912) — No evidence of delayed shadow-run effects
+- **H4 (Heterogeneity):** Urban×Flood interaction β = -0.0404** (p = 0.005, N = 22,503) — Urban districts show 4% larger deposit declines during floods; H4b/H4c insignificant
 
-**Status:** Regressions complete. Two significant findings ready for paper: H1 (climate shock → migration proxy) and H4a (urban vulnerability). Null results for H2 (weak IV) and H4b/c (no adaptation or seasonality effects). 
+**CRITICAL DATA QUALITY ISSUES IDENTIFIED:** (1) Extreme outliers in deposits (-273%, +656%); (2) Nominal growth confound (no CPI deflation, 47.6% annualized); (3) Zero-inflation (25% of obs have Δ=0); (4) Weak VIIRS signal (high noise); (5) Extra 213 missing deposit observations. **Next:** Data audit, winsorization, re-run all regressions with corrected data (scheduled 2026-01-19).
+
+**Status:** Regressions executed with preliminary results. H1 validates migration channel; H4a shows urban vulnerability. H2-H3 null results likely due to data quality issues. Final results pending corrections. 
 
 How to reproduce current inspection
 Activate the environment and run the inspection scripts:

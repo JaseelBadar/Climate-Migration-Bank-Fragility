@@ -67,13 +67,13 @@ log.info("="*70)
 log.info("DV: lights_change_qt (Δ log nighttime lights)")
 log.info("IV: flood_exposure_ruleA_qt (binary)")
 log.info("FE: District + Quarter")
-log.info("SE: Robust (note: clustering by district requires linearmodels package)")
+log.info("SE: Clustered by district (using statsmodels cluster functionality)")
 
 # OLS with FE (district + quarter absorbed via C() categorical)
 formula = 'lights_change_qt ~ flood_exposure_ruleA_qt + C(district_fe) + C(quarter_fe)'
 
 try:
-    model = ols(formula, data=df_reg).fit(cov_type='HC1')  # Robust SE
+    model = ols(formula, data=df_reg).fit(cov_type='cluster', cov_kwds={'groups': df_reg['district_gadm']})
     print(f"  ✓ Model fitted")
     print(f"  ✓ N obs: {model.nobs:,.0f}")
     print(f"  ✓ R²: {model.rsquared:.4f}")

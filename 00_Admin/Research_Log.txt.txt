@@ -647,5 +647,149 @@ Next:
 - Begin Phase 4 robustness checks (district-clustered SEs, Rule B specification)
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-17 23:55 PM IST
+2026-01-18 (Sun) 14:30-22:26 PM IST: Phase 4 - Regression Execution & Data Quality Review
+======================================================================
+Goal: Execute all hypothesis tests (H1-H4), generate regression outputs, and conduct comprehensive data quality assessment of descriptive statistics.
+
+Actions Completed
+
+A) H1 First-Stage Regression: Flood → Nighttime Lights
+- Executed: 04_Code/27_regression_H1_first_stage.py
+- Specification: lights_change_qt ~ flood_exposure_ruleA_qt + district FE + quarter FE
+- Results:
+  • Coefficient: β = -0.0126*** (p < 0.001)
+  • t-statistic: -6.31
+  • N = 22,716 district-quarters
+  • Interpretation: Floods reduce nighttime lights by 1.26 log points (≈1.25% decline)
+- Outputs:
+  • 05_Outputs/Tables/02_H1_first_stage.csv
+  • 05_Outputs/Logs/27_H1_regression.txt
+  • 05_Outputs/Logs/27_H1_regression_full.txt (complete statsmodels summary)
+- First-stage strength: Confirmed statistically significant, validates IV strategy for H2
+
+B) H2 IV 2SLS Regression: Lights → Deposits (Instrumented by Floods)
+- Executed: 04_Code/28_regression_H2_iv2sls.py (revised 3x for correct IV implementation)
+- First Stage: lights_change_qt ~ flood_exposure_ruleA_qt + controls
+  • β = -0.0129*** (p = 0.000012)
+  • Strong instrument confirmed
+- Second Stage: deposit_change_qt ~ lights_change_qt_hat + controls
+  • Coefficient: β = 0.120 (p = 0.538)
+  • t-statistic: 0.616
+  • N = 22,503
+  • Interpretation: Null result—no detectable deposit response to instrumented lights changes
+- Outputs:
+  • 05_Outputs/Tables/03_H2_iv2sls.csv
+  • 05_Outputs/Logs/28_H2_regression.txt
+  • 05_Outputs/Logs/28_H2_iv_results.txt
+- Critical finding: Migration channel (Floods → Lights) exists, but transmission to deposits is NOT detected
+- Possible explanations: (1) deposit insurance dampens withdrawals, (2) remittances offset outflows, (3) measurement error in lights proxy, (4) insufficient statistical power
+
+C) H3 Timing / Distributed Lag Analysis
+- Executed: 04_Code/29_regression_H3_timing.py
+- Specification: deposit_change_qt ~ flood_t0 + flood_t1_lag + flood_t2_lag + controls
+- Results:
+  • Contemporaneous (t=0): β = -0.0052 (p = 0.668)
+  • 1-quarter lag (t-1): β = 0.0110 (p = 0.372)
+  • 2-quarter lag (t-2): β = -0.0086 (p = 0.496)
+  • N = 21,912
+  • All coefficients insignificant—no clear temporal pattern
+- Outputs:
+  • 05_Outputs/Tables/04_H3_timing.csv
+  • 05_Outputs/Logs/29_H3_timing.txt
+- Interpretation: No evidence of delayed "shadow run" effects; deposit responses do not lag floods by 1-2 quarters
+
+D) H4 Heterogeneity Analysis: Urban × Flood Interactions
+- Executed: 04_Code/30_regression_H4_heterogeneity.py
+- Specifications:
+  1. H4a: deposit_change ~ flood × urban_dummy + controls
+     • Interaction coefficient: β = -0.0404** (p = 0.005)
+     • Main flood effect: β = 0.0059 (p = 0.632)
+     • Interpretation: Urban districts show 4% larger deposit declines during floods
+  2. H4b: deposit_change ~ flood × high_flood_exposure_district + controls
+     • Interaction: β = -0.0124 (p = 0.309, insignificant)
+  3. H4c: deposit_change ~ flood × monsoon_quarter + controls
+     • Interaction: β = -0.0067 (p = 0.561, insignificant)
+- Outputs:
+  • 05_Outputs/Tables/05_H4_heterogeneity.csv
+  • 05_Outputs/Logs/30_H4_heterogeneity.txt
+- Key finding: Urban heterogeneity significant, but high-exposure and seasonal effects not detected
+- N = 22,503 for all specifications
+
+E) Descriptive Statistics - Data Quality Assessment (Critical Review)
+- Analyzed: 05_Outputs/Tables/01_descriptive_stats.csv (4 variables, N=23,347)
+- Variables reviewed:
+  1. mean_radiance: Mean=0.686, σ=1.69, max=35.02 (urban districts)
+  2. log_lights_qt: Mean=0.420, σ=0.337
+  3. lights_change_qt: Mean=0.005, σ=0.110 (high noise-to-signal ratio)
+  4. deposit_change_qt: Mean=0.119, σ=0.659
+
+**CRITICAL DATA QUALITY ISSUES IDENTIFIED:**
+
+Issue 1: Extreme Outliers in Deposit Changes
+- Min: -2.73 (93% quarterly decline) — impossible under normal banking
+- Max: +6.56 (656% quarterly increase) — impossible under normal banking
+- Likely causes: District boundary changes, bank branch reclassifications, RBI data entry errors
+- Impact: Outliers bias OLS coefficients and inflate standard errors
+- **DECISION REQUIRED: Winsorize at 1st/99th percentile before final regressions**
+
+Issue 2: Nominal Growth Confound (No Deflation Applied)
+- Mean deposit growth: 11.9% quarterly = 47.6% annualized (compounded)
+- Problem: Deposits measured in nominal rupees without CPI deflation
+- Impact: Inflation trends confound flood treatment effects; cannot distinguish real shock from price growth
+- **DECISION REQUIRED: Either (1) deflate by CPI, or (2) disclose limitation explicitly in paper**
+
+Issue 3: Zero-Inflation in Deposit Changes
+- 25th percentile = 0.00 → 25% of district-quarters have exactly zero deposit change
+- Possible causes: Rounding in RBI source data, static rural districts, copy-forward errors
+- Impact: Potential measurement error, though may reflect true absence of banking activity in rural areas
+- **DECISION: Investigate zero-change quarters tomorrow (which districts? which periods?)**
+
+Issue 4: Weak Migration Signal (High Noise)
+- lights_change_qt: Coefficient of variation = 20.7 (mean ≈ 0, high volatility)
+- Interpretation: VIIRS nighttime lights are a noisy proxy for migration
+- Impact: Attenuates H1/H2 coefficients toward zero (expected from proxy variable measurement error)
+- This is inherent to VIIRS data—not a fixable issue, but must be acknowledged in paper
+
+Issue 5: Missing Data in Change Variables
+- lights_change_qt: 631 missing (2.70%)
+- deposit_change_qt: 844 missing (3.62%)
+- Expected: 631 districts × 1 first period = 631 missing (confirmed)
+- Unexpected: Extra 213 missing deposit changes → suggests additional data gaps beyond lag construction
+- **DECISION: Diagnose source of extra 213 missing observations tomorrow**
+
+Regression Readiness Checklist:
+✓ Sample size adequate (N > 20,000)
+✓ Variables have sufficient variation (all σ > 0)
+✗ **Outliers NOT handled** (deposit_change has extreme values)
+✗ **Not deflated to real terms** (nominal growth confounds trends)
+✓ Missing data documented (expected from lag construction)
+✓ Distributions checked (all right-skewed, expected for economic data)
+
+**STATUS: Regressions executed, but data quality issues require correction before final results**
+
+F) Tomorrow's Plan: Comprehensive Data Audit & Corrections
+Scheduled tasks (2026-01-19):
+1. Microscopic file audit: Verify all CSV columns, row counts, variable names, merge keys across all 31 files
+2. Apply winsorization to deposit_change_qt (trim at 1st/99th percentile)
+3. Investigate zero-change quarters: Identify which districts/periods, assess if genuine or data error
+4. Diagnose 213 extra missing deposit observations
+5. Decision on deflation: Implement CPI adjustment OR document nominal-growth limitation
+6. Re-run all regressions (Scripts 27-30) with corrected data
+7. Generate consolidated results reference file: "Regression_Results_Summary.txt" with all coefficients, p-values, N for quick reference
+8. Create similar reference files for: (a) data decisions log, (b) variable transformations applied, (c) sample restrictions summary
+
+Status:
+- Phase 4 regression scripts complete (H1-H4 executed)
+- Descriptive statistics generated and critically reviewed
+- **Data quality issues identified and documented**
+- Regressions need re-execution after corrections applied tomorrow
+- All hypothesis tests show preliminary results (H1 significant, H2-H3 null, H4a significant)
+
+Next:
+- Tomorrow (2026-01-19): Full repository audit, data corrections, re-run regressions with cleaned data
+- Create consolidated reference files for all results and decisions
+- Prepare for Phase 5 (writing) with finalized, publication-ready regression outputs
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-18 22:30 PM IST
 ======================================================================

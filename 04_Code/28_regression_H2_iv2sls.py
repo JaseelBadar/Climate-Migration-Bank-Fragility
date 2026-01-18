@@ -7,6 +7,42 @@ import pandas as pd
 import numpy as np
 from scipy.stats import t as t_dist
 
+# === CLUSTER-ROBUST SE HELPER FUNCTION ===
+def cluster_robust_vcov(X, residuals, cluster_ids):
+    """
+    Calculate cluster-robust variance-covariance matrix.
+    
+    Parameters:
+    - X: Design matrix (n x k)
+    - residuals: Residual vector (n x 1)
+    - cluster_ids: Cluster identifiers (n x 1)
+    
+    Returns:
+    - vcov: Cluster-robust variance-covariance matrix (k x k)
+    """
+    n, k = X.shape
+    
+    # (X'X)^-1
+    XtX_inv = np.linalg.inv(X.T @ X)
+    
+    # Calculate meat matrix: sum over clusters of X_g' * u_g * u_g' * X_g
+    unique_clusters = np.unique(cluster_ids)
+    meat = np.zeros((k, k))
+    
+    for cluster in unique_clusters:
+        # Get observations in this cluster
+        cluster_mask = (cluster_ids == cluster)
+        X_g = X[cluster_mask, :]
+        u_g = residuals[cluster_mask].reshape(-1, 1)
+        
+        # Add this cluster's contribution
+        meat += X_g.T @ (u_g @ u_g.T) @ X_g
+    
+    # Cluster-robust vcov = (X'X)^-1 * meat * (X'X)^-1
+    vcov = XtX_inv @ meat @ XtX_inv
+    
+    return vcov
+
 print("=" * 70)
 print("PHASE 4: H2 IV 2SLS REGRESSION (Lights -> Deposits)")
 print("=" * 70)
@@ -29,6 +65,9 @@ print(f"  Initial: {len(df):,} obs")
 # Keep only obs with all variables non-missing
 df_reg = df[['deposit_change_qt', 'lights_change_qt', 'flood_exposure_ruleA_qt', 
               'district_gadm', 'quarter']].dropna()
+
+# SAVE DISTRICT IDs FOR CLUSTERING (before creating dummies)
+district_ids = df_reg['district_gadm'].values.copy()
 
 print(f"  After restrictions: {len(df_reg):,} obs")
 print(f"  Dropped: {len(df) - len(df_reg):,} obs ({100*(len(df) - len(df_reg))/len(df):.1f}%)")
@@ -95,14 +134,12 @@ y_second = df_reg['deposit_change_qt'].values.astype(np.float64)
 # Estimate via OLS
 beta_second = lstsq(X_second, y_second, rcond=None)[0]
 
-# Calculate residuals for SE
+# Calculate residuals
 residuals = y_second - (X_second @ beta_second)
-sigma2 = np.sum(residuals**2) / (len(y_second) - X_second.shape[1])
 
-# Variance-covariance matrix
-XtX_inv = np.linalg.inv(X_second.T @ X_second)
-var_beta = sigma2 * np.diag(XtX_inv)
-se_beta = np.sqrt(var_beta)
+# Cluster-robust variance-covariance matrix (second stage only)
+vcov_cluster = cluster_robust_vcov(X_second, residuals, district_ids)
+se_beta = np.sqrt(np.diag(vcov_cluster))
 
 # Extract coefficient on lights_hat
 coef = beta_second[0]

@@ -1,29 +1,27 @@
 ======================================================================
-H3: TIMING ANALYSIS (Distributed Lags)
+H3: TIMING EFFECTS (District-Clustered SEs)
 ======================================================================
 
-N observations: 21,912
-District FE: 623
-Quarter FE: 35
-
-TIMING EFFECTS:
-
-[t=0] Contemporaneous flood:
-  Coefficient: 0.000593 
-  Std Error: 0.001435
-  t-statistic: 0.413
-  p-value: 0.6794
+[t0] Current Quarter:
+  β̂  = 0.000567
+  SE = 0.001464 (clustered)
+  t  = 0.387
+  p  = 0.698783
+  Sig: NOT SIGNIFICANT
 
 [t-1] 1 Quarter Lag:
-  Coefficient: -0.006163 ***
-  Std Error: 0.001344
-  t-statistic: -4.586
-  p-value: 0.0000
+  β̂  = -0.006188
+  SE = 0.001368 (clustered)
+  t  = -4.522
+  p  = 0.000006
+  Sig: ***
 
 [t-2] 2 Quarter Lag:
-  Coefficient: -0.005310 
-  Std Error: 0.004857
-  t-statistic: -1.093
-  p-value: 0.2743
+  β̂  = -0.005337
+  SE = 0.004938 (clustered)
+  t  = -1.081
+  p  = 0.279762
+  Sig: NOT SIGNIFICANT
 
-Cumulative effect: -0.010880
+N = 21,912
+Districts: 624 clusters

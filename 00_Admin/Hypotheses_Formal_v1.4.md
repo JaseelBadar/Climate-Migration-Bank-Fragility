@@ -1,10 +1,11 @@
-## FORMAL RESEARCH HYPOTHESES (v1.3 — Feasibility-aligned)
+## FORMAL RESEARCH HYPOTHESES (v1.4 — Post Phase 4 preliminary results)
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)  
 **Purpose**: Convert the “Shadow Run” narrative into testable, falsifiable statements that map cleanly to the Variables Codebook and the Python pipeline.
 
 **Version note (discipline)**:
-- v1.3 updates wording for internal consistency and feasibility alignment (timing language, flood exposure definitions, and what is “core” vs “extension”).  
-- This document is not allowed to “chase results.” If any hypothesis is modified due to data infeasibility, the modification must be explicitly labeled as such (and dated) rather than silently rewriting the theory.
+- v1.3 updates wording for internal consistency and feasibility alignment (timing language, flood exposure definitions, and what is "core" vs "extension").  
+- v1.4 (2026-01-18): Documents Phase 4 preliminary regression results (H1-H4). All results pending data quality corrections. No hypotheses have been modified to chase results.
+- This document is not allowed to "chase results." If any hypothesis is modified due to data infeasibility, the modification must be explicitly labeled as such (and dated) rather than silently rewriting the theory.
 
 ---
 
@@ -185,7 +186,24 @@ Then:
 
 ---
 
-## Joint mechanism claim (what “success” looks like)
+Complete Phase 4 results section documenting all hypothesis tests (saved in PHASE4_HYPOTHESES_SECTION.txt)
+
+Section includes:
+H1 Results: β=-0.0126*** (p<0.001, t=-6.31, N=22,716) — SUPPORTED
+H2 Results: First stage strong (β=-0.0129***), Second stage null (β=0.120, p=0.538, N=22,503) — NOT SUPPORTED
+
+Lists 5 possible explanations (data quality, deposit insurance, remittances, measurement error, statistical power)
+H3 Results: All lags insignificant (t=0: p=0.668; t-1: p=0.372; t-2: p=0.496, N=21,912) — NOT SUPPORTED
+H4 Results: H4a significant (β=-0.0404**, p=0.005), H4b/H4c insignificant — PARTIAL SUPPORT
+H5 Results: Not tested (network data unavailable)
+
+Critical Data Quality Issues: All 5 issues documented (outliers, nominal growth, zero-inflation, weak signal, extra missing)
+
+---
+
+## Joint mechanism claim (what "success" looks like)
+
+### Original Pre-Commitment
 The Shadow Run mechanism is supported if:
 1. **H1 holds** (floods reduce lights in the short-run, robustly across precision regimes),
 2. **H2 holds** (lights declines predict deposit declines; IV preferred only when credible),
@@ -193,8 +211,20 @@ The Shadow Run mechanism is supported if:
 4. **H4 holds** (heterogeneity is directionally consistent with vulnerability patterns),
 5. **H5 holds** when network data are available (spillovers beyond direct exposure).
 
-If H1 holds but H2 fails, the project becomes “disasters reduce activity (lights) without measurable deposit effects,” and the liquidity narrative must be softened.
+If H1 holds but H2 fails, the project becomes "disasters reduce activity (lights) without measurable deposit effects," and the liquidity narrative must be softened.
 If H1 fails, the displacement proxy fails and the chain cannot be claimed.
+
+### Phase 4 Assessment (Preliminary)
+**Current status based on preliminary results**:
+- ✓ **H1 holds**: Floods reduce lights (β=-0.0126***, p<0.001, first-stage strong)
+- ✗ **H2 fails**: No detectable deposit response to instrumented lights (β=0.120, p=0.538)
+- ✗ **H3 fails**: No clear timing pattern (all lags insignificant)
+- ⚠ **H4 partial**: Urban vulnerability confirmed (H4a), but no adaptation/seasonality effects (H4b/H4c)
+- — **H5 untested**: Network data unavailable
+
+**Interpretation per pre-commitment**: The project has become "disasters reduce activity (lights) without measurable deposit effects." The full Shadow Run liquidity narrative CANNOT be claimed with current results. The displacement/disruption channel (H1) is robust, but transmission to deposits (H2) is not detected.
+
+**Critical caveat**: All results are preliminary. Data quality issues (outliers, nominal growth, zero-inflation) may obscure true effects. Final assessment pending corrections (2026-01-19).
 
 ---
 

@@ -1,219 +1,284 @@
 """
-======================================================================
-PHASE 4: H4 HETEROGENEITY ANALYSIS
-======================================================================
-Purpose: Test if flood effects on deposits vary by:
-  - Rural vs urban districts
-  - High vs low flood exposure
-  - Monsoon (Q3) vs non-monsoon quarters
-
-Model: deposits_change_qt ~ flood_qt × heterogeneity_dummy + FEs
-Date: 2026-01-16
-Author: Climate-Migration-Bank-Fragility Research Project
-======================================================================
+Script 30: H4 Heterogeneity Tests (Interaction Effects) WITH CLUSTERING
+Phase 4 - Test differential effects by urban/rural, exposure level, season
 """
 
 import pandas as pd
 import numpy as np
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
-import os
+from scipy.stats import t as t_dist
 
-print("="*70)
-print("PHASE 4: H4 HETEROGENEITY ANALYSIS")
-print("="*70)
+print("=" * 70)
+print("PHASE 4: H4 HETEROGENEITY (Interaction Effects)")
+print("=" * 70)
+print()
 
 # ============================================================================
-# [1/7] LOAD REGRESSION-READY PANEL
+# CLUSTERING FUNCTION
 # ============================================================================
-print("\n[1/7] Loading regression-ready panel...")
-panel_path = "02_Data_Intermediate/master_panel_analysis.csv"
-df = pd.read_csv(panel_path)
+def cluster_robust_vcov(X, residuals, cluster_ids):
+    """
+    Calculate cluster-robust variance-covariance matrix.
+    
+    Parameters:
+    -----------
+    X : np.array (n x k)
+        Design matrix including intercept
+    residuals : np.array (n x 1)
+        Regression residuals
+    cluster_ids : np.array (n x 1)
+        Cluster identifiers (e.g., district codes)
+    
+    Returns:
+    --------
+    vcov : np.array (k x k)
+        Cluster-robust variance-covariance matrix
+    """
+    n, k = X.shape
+    XtX_inv = np.linalg.inv(X.T @ X)
+    
+    unique_clusters = np.unique(cluster_ids)
+    n_clusters = len(unique_clusters)
+    
+    meat = np.zeros((k, k))
+    for cluster in unique_clusters:
+        cluster_mask = (cluster_ids == cluster)
+        X_c = X[cluster_mask]
+        e_c = residuals[cluster_mask].reshape(-1, 1)
+        meat += (X_c.T @ e_c) @ (e_c.T @ X_c)
+    
+    dof_correction = (n_clusters / (n_clusters - 1)) * ((n - 1) / (n - k))
+    vcov = XtX_inv @ meat @ XtX_inv * dof_correction
+    
+    return vcov
+
+# ============================================================================
+# STEP 1: Load data
+# ============================================================================
+print("[1/7] Loading regression-ready panel...")
+df = pd.read_csv('03_Data_Clean/regression_panel_final.csv')
 print(f"  ✓ Loaded: {len(df):,} rows")
+print()
 
 # ============================================================================
-# [2/7] ENGINEER DEPOSIT CHANGE VARIABLE
+# STEP 2: Engineer heterogeneity variables
 # ============================================================================
-print("\n[2/7] Engineering deposit change variable...")
-df = df.sort_values(['district_gadm', 'state_gadm', 'quarter'])
-df['deposits_change_qt'] = df.groupby(['district_gadm', 'state_gadm'])['deposits'].pct_change()
-print(f"  ✓ Created deposits_change_qt (quarterly % change)")
-print(f"  ✓ Non-missing: {df['deposits_change_qt'].notna().sum():,} ({100*df['deposits_change_qt'].notna().mean():.1f}%)")
+print("[2/7] Engineering heterogeneity variables...")
+
+# H4a: Urban indicator (if district is in top 50% by log_lights)
+df_district_lights = df.groupby('district_gadm')['log_lights_qt'].mean().reset_index()
+df_district_lights['urban'] = (df_district_lights['log_lights_qt'] > 
+                                df_district_lights['log_lights_qt'].median()).astype(int)
+df = df.merge(df_district_lights[['district_gadm', 'urban']], on='district_gadm', how='left')
+
+# H4b: High exposure indicator (if district is in top 50% by cumulative flood exposure)
+df_district_exposure = df.groupby('district_gadm')['flood_exposure_ruleA_qt'].sum().reset_index()
+df_district_exposure.columns = ['district_gadm', 'cum_exposure']
+df_district_exposure['high_exposure'] = (df_district_exposure['cum_exposure'] > 
+                                         df_district_exposure['cum_exposure'].median()).astype(int)
+df = df.merge(df_district_exposure[['district_gadm', 'high_exposure']], on='district_gadm', how='left')
+
+# H4c: Monsoon season indicator (Q3 = Jul-Sep)
+# Quarter is stored as "2015Q1", "2015Q2", etc.
+# Extract the quarter number (last character) and check if it's 3
+df['q_num'] = df['quarter'].str[-1].astype(int)  # Extract "3" from "2015Q3"
+df['monsoon'] = (df['q_num'] == 3).astype(int)   # Q3 = monsoon season
+
+print(f"  ✓ Created urban indicator (based on median nighttime lights)")
+print(f"  ✓ Created high_exposure indicator (based on median cumulative floods)")
+print(f"  ✓ Created monsoon indicator (Q3 = Jul-Sep monsoon season)")
+print()
 
 # ============================================================================
-# [3/7] CREATE HETEROGENEITY DUMMIES
+# STEP 3: Restrict to complete cases AND preserve district_ids
 # ============================================================================
-print("\n[3/7] Creating heterogeneity dummies...")
-
-# H4a: Rural vs Urban (using median deposits as proxy)
-median_deposits = df.groupby('district_gadm')['deposits'].median()
-df['is_urban'] = df['district_gadm'].map(lambda x: 1 if median_deposits.get(x, 0) > median_deposits.median() else 0)
-print(f"  ✓ Urban districts (proxy): {df.groupby('district_gadm')['is_urban'].first().sum()}")
-
-# H4b: High vs Low Flood Exposure (≥3 floods in sample)
-flood_count = df.groupby('district_gadm')['flood_exposure_ruleA_qt'].sum()
-df['high_flood_exposure'] = df['district_gadm'].map(lambda x: 1 if flood_count.get(x, 0) >= 3 else 0)
-print(f"  ✓ High-exposure districts: {df.groupby('district_gadm')['high_flood_exposure'].first().sum()}")
-
-# H4c: Monsoon Season (Q3 = Jul-Sep)
-df['monsoon_quarter'] = (df['q'] == 3).astype(int)
-print(f"  ✓ Monsoon quarters: {df['monsoon_quarter'].sum():,} obs ({df['monsoon_quarter'].mean()*100:.1f}%)")
-
-# ============================================================================
-# [4/7] CREATE INTERACTION TERMS
-# ============================================================================
-print("\n[4/7] Creating interaction terms...")
-df['flood_x_urban'] = df['flood_exposure_ruleA_qt'] * df['is_urban']
-df['flood_x_highexp'] = df['flood_exposure_ruleA_qt'] * df['high_flood_exposure']
-df['flood_x_monsoon'] = df['flood_exposure_ruleA_qt'] * df['monsoon_quarter']
-print("  ✓ Interactions created")
-
-# ============================================================================
-# [5/7] RESTRICT TO COMPLETE CASES
-# ============================================================================
-print("\n[5/7] Restricting to complete cases...")
+print("[3/7] Restricting to complete cases...")
 print(f"  Initial: {len(df):,} obs")
 
-df_reg = df[['deposits_change_qt', 'flood_exposure_ruleA_qt', 
-             'is_urban', 'high_flood_exposure', 'monsoon_quarter',
-             'flood_x_urban', 'flood_x_highexp', 'flood_x_monsoon',
-             'district_gadm', 'quarter']].dropna()
+required_cols = ['deposit_change_qt', 'flood_exposure_ruleA_qt', 'urban', 
+                 'high_exposure', 'monsoon', 'district_gadm', 'quarter']
+df_reg = df[required_cols].dropna().copy()
+
+# Store district_ids BEFORE creating dummies
+district_ids = df_reg['district_gadm'].values
 
 print(f"  After restrictions: {len(df_reg):,} obs")
+print(f"  Districts: {len(np.unique(district_ids))} unique")
 print(f"  Dropped: {len(df) - len(df_reg):,} obs ({100*(len(df) - len(df_reg))/len(df):.1f}%)")
+print()
 
 # ============================================================================
-# [6/7] ENCODE FIXED EFFECTS
+# STEP 4: Encode fixed effects
 # ============================================================================
-print("\n[6/7] Encoding fixed effects...")
-# Save district IDs for clustering BEFORE converting to dummies
-district_ids = df_reg['district_gadm'].copy()
-df_reg = pd.get_dummies(df_reg, columns=['district_gadm', 'quarter'], drop_first=True, dtype=float)
-print(f"  ✓ District FE: {df_reg.filter(regex='^district_gadm_').shape[1]:,} dummies")
-print(f"  ✓ Quarter FE: {df_reg.filter(regex='^quarter_').shape[1]:,} dummies")
+print("[4/7] Encoding fixed effects...")
 
-# ============================================================================
-# [7/7] RUN HETEROGENEITY REGRESSIONS
-# ============================================================================
-print("\n[7/7] Running heterogeneity regressions...")
+district_dummies = pd.get_dummies(df_reg['district_gadm'], prefix='district', drop_first=True)
+quarter_dummies = pd.get_dummies(df_reg['quarter'], prefix='quarter', drop_first=True)
 
-# Prepare regressors
-X_cols_base = ['flood_exposure_ruleA_qt'] + [c for c in df_reg.columns if c.startswith(('district_', 'quarter_'))]
-
-results = {}
-y = df_reg['deposits_change_qt']
-
-# H4a: Urban vs Rural
-print("\n  [H4a] Urban vs Rural Heterogeneity...")
-X_urban = df_reg[X_cols_base + ['is_urban', 'flood_x_urban']]
-model_urban = sm.OLS(y, X_urban).fit(cov_type='cluster', cov_kwds={'groups': district_ids})
-results['urban'] = {
-    'flood_coef': model_urban.params.get('flood_exposure_ruleA_qt', np.nan),
-    'interaction_coef': model_urban.params.get('flood_x_urban', np.nan),
-    'interaction_se': model_urban.bse.get('flood_x_urban', np.nan),
-    'interaction_t': model_urban.tvalues.get('flood_x_urban', np.nan),
-    'interaction_p': model_urban.pvalues.get('flood_x_urban', np.nan),
-}
-print("  ✓ Urban model complete")
-
-# H4b: High vs Low Exposure
-print("\n  [H4b] High vs Low Flood Exposure...")
-X_exp = df_reg[X_cols_base + ['high_flood_exposure', 'flood_x_highexp']]
-model_exp = sm.OLS(y, X_exp).fit(cov_type='cluster', cov_kwds={'groups': district_ids})
-results['exposure'] = {
-    'flood_coef': model_exp.params.get('flood_exposure_ruleA_qt', np.nan),
-    'interaction_coef': model_exp.params.get('flood_x_highexp', np.nan),
-    'interaction_se': model_exp.bse.get('flood_x_highexp', np.nan),
-    'interaction_t': model_exp.tvalues.get('flood_x_highexp', np.nan),
-    'interaction_p': model_exp.pvalues.get('flood_x_highexp', np.nan),
-}
-print("  ✓ Exposure model complete")
-
-# H4c: Monsoon vs Non-monsoon
-print("\n  [H4c] Monsoon vs Non-Monsoon Quarters...")
-X_mon = df_reg[X_cols_base + ['monsoon_quarter', 'flood_x_monsoon']]
-model_mon = sm.OLS(y, X_mon).fit(cov_type='cluster', cov_kwds={'groups': district_ids})
-results['monsoon'] = {
-    'flood_coef': model_mon.params.get('flood_exposure_ruleA_qt', np.nan),
-    'interaction_coef': model_mon.params.get('flood_x_monsoon', np.nan),
-    'interaction_se': model_mon.bse.get('flood_x_monsoon', np.nan),
-    'interaction_t': model_mon.tvalues.get('flood_x_monsoon', np.nan),
-    'interaction_p': model_mon.pvalues.get('flood_x_monsoon', np.nan),
-}
-print("  ✓ Monsoon model complete")
+print(f"  ✓ District FE: {district_dummies.shape[1]} dummies")
+print(f"  ✓ Quarter FE: {quarter_dummies.shape[1]} dummies")
+print()
 
 # ============================================================================
-# [8/7] DISPLAY RESULTS
+# STEP 5: Run H4a (Urban × Flood)
 # ============================================================================
-print("\n[8/7] Extracting results...")
-print("\n")
-print("  HETEROGENEITY EFFECTS (Floods → Deposits):")
-print("\n")
+print("[5/7] H4a: Urban × Flood Interaction")
 
-# H4a: Urban
-print("  [H4a] URBAN vs RURAL:")
-print(f"    Main effect (rural baseline):  β̂  = {results['urban']['flood_coef']:.6f}")
-print(f"    Interaction (urban × flood):   β̂  = {results['urban']['interaction_coef']:.6f}")
-print(f"                                   SE = {results['urban']['interaction_se']:.6f}")
-print(f"                                   t  = {results['urban']['interaction_t']:.3f}")
-print(f"                                   p  = {results['urban']['interaction_p']:.4f}")
-sig = "*" if results['urban']['interaction_p'] < 0.05 else ("†" if results['urban']['interaction_p'] < 0.10 else "NOT SIGNIFICANT")
-print(f"    Significance: {sig}\n")
+y = df_reg['deposit_change_qt'].values
+X_h4a = np.column_stack([
+    np.ones(len(y)),
+    df_reg['flood_exposure_ruleA_qt'].values,
+    df_reg['urban'].values * df_reg['flood_exposure_ruleA_qt'].values,  # Interaction
+    district_dummies.values,
+    quarter_dummies.values
+])
 
-# H4b: Exposure
-print("  [H4b] HIGH vs LOW FLOOD EXPOSURE:")
-print(f"    Main effect (low-exp baseline): β̂  = {results['exposure']['flood_coef']:.6f}")
-print(f"    Interaction (high-exp × flood): β̂  = {results['exposure']['interaction_coef']:.6f}")
-print(f"                                    SE = {results['exposure']['interaction_se']:.6f}")
-print(f"                                    t  = {results['exposure']['interaction_t']:.3f}")
-print(f"                                    p  = {results['exposure']['interaction_p']:.4f}")
-sig = "*" if results['exposure']['interaction_p'] < 0.05 else ("†" if results['exposure']['interaction_p'] < 0.10 else "NOT SIGNIFICANT")
-print(f"    Significance: {sig}\n")
+beta_h4a = np.linalg.lstsq(X_h4a, y, rcond=None)[0]
+residuals_h4a = y - (X_h4a @ beta_h4a)
+vcov_h4a = cluster_robust_vcov(X_h4a, residuals_h4a, district_ids)
+se_h4a = np.sqrt(np.diag(vcov_h4a))
 
-# H4c: Monsoon
-print("  [H4c] MONSOON vs NON-MONSOON:")
-print(f"    Main effect (non-monsoon):     β̂  = {results['monsoon']['flood_coef']:.6f}")
-print(f"    Interaction (monsoon × flood): β̂  = {results['monsoon']['interaction_coef']:.6f}")
-print(f"                                   SE = {results['monsoon']['interaction_se']:.6f}")
-print(f"                                   t  = {results['monsoon']['interaction_t']:.3f}")
-print(f"                                   p  = {results['monsoon']['interaction_p']:.4f}")
-sig = "*" if results['monsoon']['interaction_p'] < 0.05 else ("†" if results['monsoon']['interaction_p'] < 0.10 else "NOT SIGNIFICANT")
-print(f"    Significance: {sig}\n")
+baseline_h4a = beta_h4a[1]
+interaction_h4a = beta_h4a[2]
+se_baseline_h4a = se_h4a[1]
+se_interaction_h4a = se_h4a[2]
+t_h4a = interaction_h4a / se_interaction_h4a
+p_h4a = 2 * (1 - t_dist.cdf(abs(t_h4a), df=len(y) - X_h4a.shape[1]))
+
+sig_h4a = '***' if p_h4a < 0.01 else ('**' if p_h4a < 0.05 else ('*' if p_h4a < 0.10 else ''))
+
+print(f"  Baseline (rural): {baseline_h4a:.6f} (SE: {se_baseline_h4a:.6f})")
+print(f"  Interaction coef: {interaction_h4a:.6f}")
+print(f"  Clustered SE: {se_interaction_h4a:.6f}")
+print(f"  t-stat: {t_h4a:.3f}")
+print(f"  p-value: {p_h4a:.6f}")
+print(f"  Significance: {sig_h4a if sig_h4a else 'NOT SIGNIFICANT'}")
+print()
 
 # ============================================================================
-# [OUTPUT] SAVE RESULTS
+# STEP 6: Run H4b (HighExp × Flood)
 # ============================================================================
-print("\n[Output] Saving results table...")
-output_dir = "05_Outputs/Tables"
-os.makedirs(output_dir, exist_ok=True)
+print("[6/7] H4b: HighExp × Flood Interaction")
 
-results_df = pd.DataFrame({
+X_h4b = np.column_stack([
+    np.ones(len(y)),
+    df_reg['flood_exposure_ruleA_qt'].values,
+    df_reg['high_exposure'].values * df_reg['flood_exposure_ruleA_qt'].values,
+    district_dummies.values,
+    quarter_dummies.values
+])
+
+beta_h4b = np.linalg.lstsq(X_h4b, y, rcond=None)[0]
+residuals_h4b = y - (X_h4b @ beta_h4b)
+vcov_h4b = cluster_robust_vcov(X_h4b, residuals_h4b, district_ids)
+se_h4b = np.sqrt(np.diag(vcov_h4b))
+
+baseline_h4b = beta_h4b[1]
+interaction_h4b = beta_h4b[2]
+se_baseline_h4b = se_h4b[1]
+se_interaction_h4b = se_h4b[2]
+t_h4b = interaction_h4b / se_interaction_h4b
+p_h4b = 2 * (1 - t_dist.cdf(abs(t_h4b), df=len(y) - X_h4b.shape[1]))
+
+sig_h4b = '***' if p_h4b < 0.01 else ('**' if p_h4b < 0.05 else ('*' if p_h4b < 0.10 else ''))
+
+print(f"  Baseline (low exp): {baseline_h4b:.6f} (SE: {se_baseline_h4b:.6f})")
+print(f"  Interaction coef: {interaction_h4b:.6f}")
+print(f"  Clustered SE: {se_interaction_h4b:.6f}")
+print(f"  t-stat: {t_h4b:.3f}")
+print(f"  p-value: {p_h4b:.6f}")
+print(f"  Significance: {sig_h4b if sig_h4b else 'NOT SIGNIFICANT'}")
+print()
+
+# ============================================================================
+# STEP 7: Run H4c (Monsoon × Flood)
+# ============================================================================
+print("[7/7] H4c: Monsoon × Flood Interaction")
+
+X_h4c = np.column_stack([
+    np.ones(len(y)),
+    df_reg['flood_exposure_ruleA_qt'].values,
+    df_reg['monsoon'].values * df_reg['flood_exposure_ruleA_qt'].values,
+    district_dummies.values,
+    quarter_dummies.values
+])
+
+beta_h4c = np.linalg.lstsq(X_h4c, y, rcond=None)[0]
+residuals_h4c = y - (X_h4c @ beta_h4c)
+vcov_h4c = cluster_robust_vcov(X_h4c, residuals_h4c, district_ids)
+se_h4c = np.sqrt(np.diag(vcov_h4c))
+
+baseline_h4c = beta_h4c[1]
+interaction_h4c = beta_h4c[2]
+se_baseline_h4c = se_h4c[1]
+se_interaction_h4c = se_h4c[2]
+t_h4c = interaction_h4c / se_interaction_h4c
+p_h4c = 2 * (1 - t_dist.cdf(abs(t_h4c), df=len(y) - X_h4c.shape[1]))
+
+sig_h4c = '***' if p_h4c < 0.01 else ('**' if p_h4c < 0.05 else ('*' if p_h4c < 0.10 else ''))
+
+print(f"  Baseline (non-monsoon): {baseline_h4c:.6f} (SE: {se_baseline_h4c:.6f})")
+print(f"  Interaction coef: {interaction_h4c:.6f}")
+print(f"  Clustered SE: {se_interaction_h4c:.6f}")
+print(f"  t-stat: {t_h4c:.3f}")
+print(f"  p-value: {p_h4c:.6f}")
+print(f"  Significance: {sig_h4c if sig_h4c else 'NOT SIGNIFICANT'}")
+print()
+
+# ============================================================================
+# STEP 8: Output results (CSV with CLUSTERED SEs)
+# ============================================================================
+print("[Output] Saving outputs...")
+
+results = pd.DataFrame({
     'Test': ['H4a: Urban×Flood', 'H4b: HighExp×Flood', 'H4c: Monsoon×Flood'],
-    'Baseline_Effect': [results['urban']['flood_coef'], 
-                        results['exposure']['flood_coef'],
-                        results['monsoon']['flood_coef']],
-    'Interaction_Coef': [results['urban']['interaction_coef'],
-                         results['exposure']['interaction_coef'],
-                         results['monsoon']['interaction_coef']],
-    'Interaction_SE': [results['urban']['interaction_se'],
-                       results['exposure']['interaction_se'],
-                       results['monsoon']['interaction_se']],
-    'Interaction_t': [results['urban']['interaction_t'],
-                      results['exposure']['interaction_t'],
-                      results['monsoon']['interaction_t']],
-    'Interaction_p': [results['urban']['interaction_p'],
-                      results['exposure']['interaction_p'],
-                      results['monsoon']['interaction_p']],
+    'Baseline_Effect': [baseline_h4a, baseline_h4b, baseline_h4c],
+    'Baseline_SE': [se_baseline_h4a, se_baseline_h4b, se_baseline_h4c],
+    'Interaction_Coef': [interaction_h4a, interaction_h4b, interaction_h4c],
+    'Interaction_SE': [se_interaction_h4a, se_interaction_h4b, se_interaction_h4c],
+    'Interaction_t': [t_h4a, t_h4b, t_h4c],
+    'Interaction_p': [p_h4a, p_h4b, p_h4c],
+    'N_obs': [len(y), len(y), len(y)]
 })
 
-output_path = os.path.join(output_dir, "05_H4_heterogeneity.csv")
-results_df.to_csv(output_path, index=False)
+results.to_csv('05_Outputs/Tables/05_H4_heterogeneity.csv', index=False)
 
-print(f"  ✓ Saved: {output_path}")
+# Save detailed log
+with open('05_Outputs/Logs/30_H4_heterogeneity.txt', 'w', encoding='utf-8') as f:
+    f.write("=" * 70 + "\n")
+    f.write("H4: HETEROGENEITY TESTS (District-Clustered SEs)\n")
+    f.write("=" * 70 + "\n\n")
+    
+    f.write("[H4a: Urban × Flood]\n")
+    f.write(f"  Baseline (rural): {baseline_h4a:.6f} (SE: {se_baseline_h4a:.6f})\n")
+    f.write(f"  Interaction: {interaction_h4a:.6f}\n")
+    f.write(f"  SE: {se_interaction_h4a:.6f} (clustered)\n")
+    f.write(f"  t: {t_h4a:.3f}\n")
+    f.write(f"  p: {p_h4a:.6f}\n")
+    f.write(f"  Sig: {sig_h4a if sig_h4a else 'NOT SIGNIFICANT'}\n\n")
+    
+    f.write("[H4b: HighExp × Flood]\n")
+    f.write(f"  Baseline (low exp): {baseline_h4b:.6f} (SE: {se_baseline_h4b:.6f})\n")
+    f.write(f"  Interaction: {interaction_h4b:.6f}\n")
+    f.write(f"  SE: {se_interaction_h4b:.6f} (clustered)\n")
+    f.write(f"  t: {t_h4b:.3f}\n")
+    f.write(f"  p: {p_h4b:.6f}\n")
+    f.write(f"  Sig: {sig_h4b if sig_h4b else 'NOT SIGNIFICANT'}\n\n")
+    
+    f.write("[H4c: Monsoon × Flood]\n")
+    f.write(f"  Baseline (non-monsoon): {baseline_h4c:.6f} (SE: {se_baseline_h4c:.6f})\n")
+    f.write(f"  Interaction: {interaction_h4c:.6f}\n")
+    f.write(f"  SE: {se_interaction_h4c:.6f} (clustered)\n")
+    f.write(f"  t: {t_h4c:.3f}\n")
+    f.write(f"  p: {p_h4c:.6f}\n")
+    f.write(f"  Sig: {sig_h4c if sig_h4c else 'NOT SIGNIFICANT'}\n\n")
+    
+    f.write(f"N = {len(y):,}\n")
+    f.write(f"Districts: {len(np.unique(district_ids))} clusters\n")
 
-print("\n" + "="*70)
-print("H4 HETEROGENEITY ANALYSIS COMPLETE")
-print("="*70)
-print(f"Table: {output_path}")
-print("\nNEXT STEP: Review results → Stop coding for the day!")
-print("="*70)
+print(f"  Districts: {len(np.unique(district_ids))} clusters")
+print(f"  Observations: {len(y):,}")
+print()
+print(f"Table: 05_Outputs/Tables/05_H4_heterogeneity.csv")
+print(f"Log:   05_Outputs/Logs/30_H4_heterogeneity.txt")
+print()
+print("✓ Script 30 complete (with district-clustered SEs)")

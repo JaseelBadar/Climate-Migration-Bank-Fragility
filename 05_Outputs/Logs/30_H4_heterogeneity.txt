@@ -1,0 +1,30 @@
+======================================================================
+H4: HETEROGENEITY TESTS (District-Clustered SEs)
+======================================================================
+
+[H4a: Urban × Flood]
+  Baseline (rural): 0.007534 (SE: 0.001976)
+  Interaction: -0.012637
+  SE: 0.002220 (clustered)
+  t: -5.693
+  p: 0.000000
+  Sig: ***
+
+[H4b: HighExp × Flood]
+  Baseline (low exp): 0.000156 (SE: 0.001685)
+  Interaction: 0.002067
+  SE: 0.002258 (clustered)
+  t: 0.915
+  p: 0.359977
+  Sig: NOT SIGNIFICANT
+
+[H4c: Monsoon × Flood]
+  Baseline (non-monsoon): 0.002205 (SE: 0.002011)
+  Interaction: -0.001785
+  SE: 0.002716 (clustered)
+  t: -0.657
+  p: 0.510891
+  Sig: NOT SIGNIFICANT
+
+N = 22,503
+Districts: 624 clusters

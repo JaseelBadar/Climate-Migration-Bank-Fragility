@@ -1,8 +1,8 @@
-# VARIABLES CODEBOOK + CODING PROTOCOL (v1.3)
+# VARIABLES CODEBOOK + CODING PROTOCOL (v1.4)
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)  
 **Document Type**: Variables codebook + enforceable coding protocol  
-**Version**: 1.3 (post Phase 3d/Phase 4 pipeline implementation; naming aligned to current scripts)  
-**Date**: January 16, 2026  
+**Version**: 1.4 (post Phase 4 preliminary results; data quality issues documented; corrections pending)
+**Date**: January 18, 2026  
 
 ---
 
@@ -200,6 +200,82 @@ Every script must:
 
 ---
 
+## XI) Data quality issues identified (2026-01-18 audit)
+
+**Context**: Phase 4 regressions (H1-H4) executed with preliminary results. Critical data quality issues discovered during descriptive statistics review. **All regressions require re-execution after corrections applied.**
+
+### Issue 1: Extreme outliers in deposit changes
+**Variable affected**: `depositchangeqt`  
+**Problem**: Min = -2.73 (93% decline), Max = +6.56 (656% increase) in single quarters  
+**Likely causes**:
+- District boundary changes or mergers (administrative)
+- Bank branch reclassification between districts (RBI reporting)
+- Data entry errors in RBI source Excel files
+
+**Impact**: Outliers bias OLS coefficients and inflate standard errors  
+**Correction required**: Winsorize at 1st/99th percentile before final regressions  
+**Status**: Pending (scheduled 2026-01-19)
+
+### Issue 2: Nominal growth confound (no deflation applied)
+**Variable affected**: `depositscrores`, `depositchangeqt`  
+**Problem**: Mean deposit growth = 11.9% quarterly (47.6% annualized, compounded)  
+**Root cause**: RBI deposits measured in nominal rupees; no CPI deflation applied  
+**Impact**: Inflation trends confound flood treatment effects; cannot distinguish real shock from price growth  
+**Correction options**:
+1. Deflate deposits by CPI (preferred if district-level deflator available)
+2. Disclose limitation explicitly in paper and interpret coefficients as nominal effects
+
+**Status**: Decision pending (scheduled 2026-01-19)
+
+### Issue 3: Zero-inflation in deposit changes
+**Variable affected**: `depositchangeqt`  
+**Problem**: 25th percentile = 0.00 → 25% of district-quarters have exactly zero deposit change  
+**Possible causes**:
+- Rounding in RBI source data (deposits reported in crores)
+- Static rural districts with no actual banking activity
+- Copy-forward errors (same value repeated across quarters)
+
+**Impact**: Potential measurement error; may reflect true absence of activity OR data quality issue  
+**Investigation required**: Identify which districts, which periods, whether systematic pattern exists  
+**Status**: Pending (scheduled 2026-01-19)
+
+### Issue 4: Weak migration signal (high noise in VIIRS)
+**Variable affected**: `lightschangeqt`  
+**Problem**: Mean ≈ 0.005, σ = 0.110 → Coefficient of variation = 20.7  
+**Interpretation**: VIIRS nighttime lights are a noisy proxy for migration/displacement  
+**Impact**: Attenuates H1/H2 coefficients toward zero (expected from proxy measurement error)  
+**Note**: This is inherent to VIIRS data—not a fixable issue, but must be acknowledged in paper as limitation  
+**Status**: Documented; no correction possible
+
+### Issue 5: Extra missing deposit observations
+**Variable affected**: `depositchangeqt`  
+**Problem**: 844 missing (3.62%) vs. expected 631 missing (2.70%) from lag construction  
+**Extra missing**: 213 observations beyond first-period lag losses  
+**Investigation required**: Diagnose source of additional gaps (2016-2017 blackout periods? specific districts?)  
+**Status**: Pending (scheduled 2026-01-19)
+
+### Audit checklist (all regressions affected)
+**Before re-running Scripts 27-30**:
+- [ ] Apply winsorization to `depositchangeqt` (1%/99%)
+- [ ] Decide on CPI deflation vs. disclosure strategy
+- [ ] Investigate zero-change quarters (run diagnostic script)
+- [ ] Diagnose 213 extra missing observations
+- [ ] Update all descriptive statistics tables
+- [ ] Re-run H1-H4 with corrected data
+- [ ] Update regression output CSVs and log files
+- [ ] Document all corrections in ResearchLog.txt
+
+**Preliminary results (prior to corrections)**:
+- H1 (Flood → Lights): β = -0.0126*** (p < 0.001) — Significant
+- H2 (Lights → Deposits, IV): β = 0.120 (p = 0.538) — Null result
+- H3 (Timing): All lags insignificant
+- H4a (Urban × Flood): β = -0.0404** (p = 0.005) — Significant
+
+**Interpretation caveat**: All coefficients and p-values are preliminary. Outliers and nominal growth confounds may bias estimates. Final results pending data corrections.
+
+---
+
 ## END OF DOCUMENT
-**Status**: v1.3 aligns variable names to the implemented regression pipeline (Script 24 conventions) and to the two-precision flood exposure design.  
-**Next review trigger**: any change to (a) flood exposure rules, (b) lights log offset constant, or (c) analysis-sample drops requires a new version bump and a logged justification.
+**Status**: v1.4 documents data quality issues identified during Phase 4 execution (2026-01-18). Preliminary regression results obtained; re-run required after corrections (winsorization, deflation decision, missing data diagnosis).  
+**Changelog (v1.3 → v1.4)**: Added Section XI documenting 5 critical data quality issues (outliers, nominal growth, zero-inflation, weak signal, extra missingness). All issues require resolution before final results.  
+**Next review trigger**: Post-corrections (scheduled 2026-01-19), when cleaned data and final regression results are ready. Then bump to v1.5 with "Final" status.

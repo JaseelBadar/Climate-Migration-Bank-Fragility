@@ -5,6 +5,7 @@
 **Version note (discipline)**:
 - v1.3 updates wording for internal consistency and feasibility alignment (timing language, flood exposure definitions, and what is "core" vs "extension").  
 - v1.4 (2026-01-18): Documents Phase 4 preliminary regression results (H1-H4). All results pending data quality corrections. No hypotheses have been modified to chase results.
+- v1.5 (2026-01-19): Critical data integrity update — discovered Script 21 VIIRS dissolve bug (homonymous district merging). Therefore, all Phase 4 regression results (H1-H4) are treated as contaminated until VIIRS panels are regenerated and tests re-run. Hypotheses are unchanged; only the evidence status is suspended pending correction.
 - This document is not allowed to "chase results." If any hypothesis is modified due to data infeasibility, the modification must be explicitly labeled as such (and dated) rather than silently rewriting the theory.
 
 ---

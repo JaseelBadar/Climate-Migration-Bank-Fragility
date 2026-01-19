@@ -1,8 +1,8 @@
 # Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).
 
-**Status:** Phase 4 complete — All regressions run (H1-H4). Data quality issues identified. H1 significant (floods→lights β=-0.0126***); H4a significant (urban×flood β=-0.0404**); H2-H3 null. Re-run pending after data corrections.   
-**Last updated:** 2026-01-18.
+**Status:** Phase 4 audit complete. Critical VIIRS bug discovered (Script 21 dissolve merges homonymous districts, contaminates H1-H4). Fix documented; re-run of Scripts 21-30 pending (2026-01-20). Current results unreliable.  
+**Last updated:** 2026-01-19.
 
 ---
 

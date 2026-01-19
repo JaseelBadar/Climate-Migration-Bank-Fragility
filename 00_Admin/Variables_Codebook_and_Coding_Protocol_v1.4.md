@@ -1,8 +1,8 @@
 # VARIABLES CODEBOOK + CODING PROTOCOL (v1.4)
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)  
 **Document Type**: Variables codebook + enforceable coding protocol  
-**Version**: 1.4 (post Phase 4 preliminary results; data quality issues documented; corrections pending)
-**Date**: January 18, 2026  
+**Version**: 1.5 (post Phase 4 audit; VIIRS extraction bug discovered; results pending regeneration)
+**Date**: January 19, 2026
 
 ---
 
@@ -14,6 +14,8 @@
 4. **One script = one responsibility**: Each script produces one named output dataset and one log file.  
 5. **Reproducibility beats cleverness**: Prefer simple, auditable transformations over complex heuristics.  
 6. **Do not overclaim**: If a variable is a proxy (urban, migration, exposure), label it as such in outputs + paper.
+7. **No district-name dissolve: Never dissolve GADM districts using NAME_2 alone (homonymous districts across states will merge). If dissolve is needed, it must include state (NAME_1) or a stable unique ID; otherwise, do not dissolve.
+
 
 ---
 
@@ -278,4 +280,4 @@ Every script must:
 ## END OF DOCUMENT
 **Status**: v1.4 documents data quality issues identified during Phase 4 execution (2026-01-18). Preliminary regression results obtained; re-run required after corrections (winsorization, deflation decision, missing data diagnosis).  
 **Changelog (v1.3 → v1.4)**: Added Section XI documenting 5 critical data quality issues (outliers, nominal growth, zero-inflation, weak signal, extra missingness). All issues require resolution before final results.  
-**Next review trigger**: Post-corrections (scheduled 2026-01-19), when cleaned data and final regression results are ready. Then bump to v1.5 with "Final" status.
+**Next review trigger**: Post-VIIRS regeneration + rerun (scheduled 2026-01-20 onward). After Script 21 fix and full re-run of Scripts 21–30, bump to v1.6 with updated (clean) descriptive stats and regression outputs.

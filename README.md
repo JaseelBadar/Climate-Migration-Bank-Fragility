@@ -2,7 +2,7 @@
 Causal analysis of climate-induced migration effects on district-level banking stability in India (2015–2024).
 
 **Status:** Phase 4 audit complete. Critical VIIRS bug discovered (Script 21 dissolve merges homonymous districts, contaminates H1-H4). Fix documented; re-run of Scripts 21-30 pending (2026-01-20). Current results unreliable.  
-**Last updated:** 2026-01-19.
+**Last updated:** 2026-01-20.
 
 ---
 
@@ -178,7 +178,45 @@ Environment details match the project initialization log.
 
 **CRITICAL DATA QUALITY ISSUES IDENTIFIED:** (1) Extreme outliers in deposits (-273%, +656%); (2) Nominal growth confound (no CPI deflation, 47.6% annualized); (3) Zero-inflation (25% of obs have Δ=0); (4) Weak VIIRS signal (high noise); (5) Extra 213 missing deposit observations. **Next:** Data audit, winsorization, re-run all regressions with corrected data (scheduled 2026-01-19).
 
-**Status:** Regressions executed with preliminary results. H1 validates migration channel; H4a shows urban vulnerability. H2-H3 null results likely due to data quality issues. Final results pending corrections. 
+**Status:** Regressions executed with preliminary results. H1 validates migration channel; H4a shows urban vulnerability. H2-H3 null results likely due to data quality issues. Final results pending corrections.
+
+### Phase 5: Critical Bug Fix & Data Regeneration (Jan 20-21, 2026) — IN PROGRESS
+
+**BUG DISCOVERED (2026-01-20 audit):**  
+Script 21 (`21_extract_viirs_full_panel.py`) contained a `dissolve(by='NAME_2')` operation that merged homonymous districts across states (e.g., Aurangabad Bihar + Aurangabad Maharashtra → single entity). This caused:
+- **17 districts lost** (676 expected → 659 actual)
+- **2,040 monthly observations missing** (17 districts × 120 months)
+- **Measurement error** in VIIRS nighttime lights for 7 district-pairs sharing identical values
+- **All H1-H4 regression results contaminated** by attenuation bias (classical measurement error)
+
+**ROOT CAUSE:**  
+Line 53 of Script 21 used district name alone as grouping key, ignoring state boundaries. Homonymous districts (same name, different states) were incorrectly merged into single observations.
+
+**FIX IMPLEMENTED (2026-01-20 23:00 IST):**  
+- **Deleted** Lines 52-55 (dissolve block) from Script 21
+- **Added** validation assertion to verify 676 districts loaded before extraction
+- **Backed up** all contaminated files to `*_CONTAMINATED_BACKUP/` folders
+- **Deleted** contaminated VIIRS panels, analysis files, and regression outputs
+- **Regeneration status:** Script 21 running overnight (6-8 hours expected); Scripts 22-30 pending
+
+**EXPECTED CHANGES after regeneration:**  
+- `viirs_monthly_panel.csv`: 79,080 rows → **81,120 rows** (+2,040, correct 676 districts)
+- H1 coefficient: β = -0.0126 (attenuated) → **β ≈ -0.025 to -0.030** (true effect, larger magnitude)
+- H2 first-stage F-stat: Will **increase** (stronger instrument, less noise)
+- H4 heterogeneity: Standard errors may change (correct clustering by 676 districts)
+
+**FILES PRESERVED for comparison:**  
+- `02_Data_Intermediate_CONTAMINATED_BACKUP/` (old VIIRS panels)
+- `05_Outputs_CONTAMINATED_BACKUP/` (old regression tables & logs)
+
+**NEXT STEPS (2026-01-21 morning):**  
+1. Verify Script 21 output: 81,120 rows, 676 districts
+2. Run Scripts 22-30 sequentially
+3. Compare old vs new H1-H4 coefficients
+4. Update documentation with corrected results
+5. Document measurement error impact quantitatively
+
+**Current status:** Overnight VIIRS extraction in progress. All subsequent analyses on hold pending clean data generation.
 
 How to reproduce current inspection
 Activate the environment and run the inspection scripts:

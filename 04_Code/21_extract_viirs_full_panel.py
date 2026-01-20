@@ -49,10 +49,12 @@ print(f"  ✓ Loaded: {len(districts_gdf)} districts")
 print(f"  ✓ CRS: {districts_gdf.crs}")
 log.info(f"GADM districts loaded: {len(districts_gdf)}")
 
-# Dissolve multipolygon geometries to ensure one row per unique district
-districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
-print(f"  ✓ After dissolve: {len(districts_gdf)} unique districts")
-log.info(f"After dissolve: {len(districts_gdf)} unique districts")
+expected_districts = 676
+actual_districts = len(districts_gdf)
+assert actual_districts == expected_districts, \
+    f"District count mismatch: expected {expected_districts}, got {actual_districts}"
+print(f"  ✓ Loaded {actual_districts} districts (verified)")
+log.info(f"Loaded {actual_districts} districts (state-district pairs)")
 
 # === BUILD LIST OF ALL 120 VIIRS FILES ===
 print(f"\n[Step 2/3] Scanning for VIIRS tiles...")

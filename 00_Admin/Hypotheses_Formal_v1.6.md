@@ -1,12 +1,12 @@
-## FORMAL RESEARCH HYPOTHESES (v1.4 — Post Phase 4 preliminary results)
+## FORMAL RESEARCH HYPOTHESES (v1.6 — Post Script 21 bug fix; results regenerating)
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)  
 **Purpose**: Convert the “Shadow Run” narrative into testable, falsifiable statements that map cleanly to the Variables Codebook and the Python pipeline.
 
 **Version note (discipline)**:
 - v1.3 updates wording for internal consistency and feasibility alignment (timing language, flood exposure definitions, and what is "core" vs "extension").  
 - v1.4 (2026-01-18): Documents Phase 4 preliminary regression results (H1-H4). All results pending data quality corrections. No hypotheses have been modified to chase results.
-- v1.5 (2026-01-19): Critical data integrity update — discovered Script 21 VIIRS dissolve bug (homonymous district merging). Therefore, all Phase 4 regression results (H1-H4) are treated as contaminated until VIIRS panels are regenerated and tests re-run. Hypotheses are unchanged; only the evidence status is suspended pending correction.
-- This document is not allowed to "chase results." If any hypothesis is modified due to data infeasibility, the modification must be explicitly labeled as such (and dated) rather than silently rewriting the theory.
+- v1.5 (2026-01-20 17:00 IST): Critical data integrity update — discovered Script 21 VIIRS dissolve bug (homonymous district merging) during Phase 4 code audit. Bug affected 17 homonymous districts (e.g., Aurangabad Bihar vs Maharashtra), causing 2,040 missing monthly observations and measurement error contamination in all H1-H4 regression results. This document is not allowed to "chase results." If any hypothesis is modified due to data infeasibility, the modification must be explicitly labeled as such (and dated) rather than silently rewriting the theory.
+- v1.6 (2026-01-20 23:30 IST): Script 21 fix implemented and overnight regeneration initiated. Deleted Lines 52-55 (dissolve block) from Script 21; added validation assertion for 676 districts. All contaminated files backed up to *_CONTAMINATED_BACKUP/ folders. VIIRS extraction running overnight (6-8 hours); Scripts 22-30 will execute morning of 2026-01-21. Current H1-H4 results suspended; expect coefficient changes (H1 β likely to increase from -0.0126 to ~-0.025 due to reduced attenuation). Hypotheses remain unchanged; only evidence status is "regenerating."
 
 ---
 
@@ -216,16 +216,16 @@ If H1 holds but H2 fails, the project becomes "disasters reduce activity (lights
 If H1 fails, the displacement proxy fails and the chain cannot be claimed.
 
 ### Phase 4 Assessment (Preliminary)
-**Current status based on preliminary results**:
-- ✓ **H1 holds**: Floods reduce lights (β=-0.0126***, p<0.001, first-stage strong)
-- ✗ **H2 fails**: No detectable deposit response to instrumented lights (β=0.120, p=0.538)
-- ✗ **H3 fails**: No clear timing pattern (all lags insignificant)
-- ⚠ **H4 partial**: Urban vulnerability confirmed (H4a), but no adaptation/seasonality effects (H4b/H4c)
+**Current status — CONTAMINATED RESULTS (2026-01-20 overnight regeneration in progress)**:
+- ⚠ **H1 contaminated**: β=-0.0126*** (attenuated by 17 missing districts; expect β ≈ -0.025 after fix)
+- ⚠ **H2 contaminated**: β=0.120 (p=0.538) based on contaminated first stage; direction unknown after fix
+- ⚠ **H3 contaminated**: All lags insignificant; timing pattern may change with corrected data
+- ⚠ **H4 contaminated**: H4a β=-0.0404** (p=0.005) based on 659 districts; clustering will change to 676
 - — **H5 untested**: Network data unavailable
 
-**Interpretation per pre-commitment**: The project has become "disasters reduce activity (lights) without measurable deposit effects." The full Shadow Run liquidity narrative CANNOT be claimed with current results. The displacement/disruption channel (H1) is robust, but transmission to deposits (H2) is not detected.
+**Interpretation per pre-commitment — SUSPENDED PENDING REGENERATION**: All Phase 4 results (2026-01-18) were generated from contaminated VIIRS data. The original interpretation ("disasters reduce activity without measurable deposit effects") is invalid. No mechanistic claims can be made until clean data regeneration completes (expected 2026-01-21 morning).
 
-**Critical caveat**: All results are preliminary. Data quality issues (outliers, nominal growth, zero-inflation) may obscure true effects. Final assessment pending corrections (2026-01-19).
+**Critical caveat**: All Phase 4 results are contaminated by Script 21 dissolve bug. Measurement error introduced by homonymous district merging has biased ALL coefficients (H1-H4) in unknown directions. Original data quality issues (outliers, nominal growth, zero-inflation) remain unaddressed and will be handled after VIIRS regeneration. Final assessment pending: (1) Clean VIIRS extraction (2026-01-21 morning), (2) Scripts 22-30 re-execution, (3) Coefficient comparison (contaminated vs clean).
 
 ---
 

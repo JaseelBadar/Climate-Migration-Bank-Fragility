@@ -1,0 +1,89 @@
+======================================================================
+FLOOD EXPOSURE PANEL SUMMARY
+Script: 10_build_flood_exposure.py
+Generated: 2026-01-11
+======================================================================
+
+[1] PANEL DIMENSIONS
+   Total district-quarters: 26,640
+   Districts: 659
+   Quarters: 40
+   Date range: 2015Q1 to 2024Q4
+
+[2] EXPOSURE RATES
+   Rule A (full sample): 2,220 district-quarters (8.33%)
+   Rule B (high-precision): 272 district-quarters (1.02%)
+
+[3] TEMPORAL DISTRIBUTION
+   Exposure by year (Rule A):
+      2015: 230 district-quarters
+      2016: 178 district-quarters
+      2017: 128 district-quarters
+      2018: 293 district-quarters
+      2019: 145 district-quarters
+      2020: 374 district-quarters
+      2021: 302 district-quarters
+      2022: 218 district-quarters
+      2023: 198 district-quarters
+      2024: 154 district-quarters
+
+[4] TOP 15 EXPOSED DISTRICTS (Rule A)
+   Barpeta              (Assam               ): 11 quarters
+   Dhemaji              (Assam               ): 11 quarters
+   Darrang              (Assam               ): 11 quarters
+   Bongaigaon           (Assam               ): 11 quarters
+   Lakhimpur            (Assam               ): 11 quarters
+   Golaghat             (Assam               ): 11 quarters
+   Dhubri               (Assam               ): 10 quarters
+   Morigaon             (Assam               ): 10 quarters
+   Cachar               (Assam               ): 10 quarters
+   Nalbari              (Assam               ): 10 quarters
+   Jorhat               (Assam               ): 10 quarters
+   Dibrugarh            (Assam               ): 10 quarters
+   Goalpara             (Assam               ): 10 quarters
+   Sivasagar            (Assam               ): 10 quarters
+   Sonitpur             (Assam               ): 10 quarters
+
+[5] TOP 15 EXPOSED DISTRICTS (Rule B)
+   Lakhimpur            (Assam               ):  7 quarters
+   Darrang              (Assam               ):  6 quarters
+   Barpeta              (Assam               ):  5 quarters
+   Bidar                (Karnataka           ):  5 quarters
+   Dhemaji              (Assam               ):  5 quarters
+   Nalbari              (Assam               ):  5 quarters
+   Goalpara             (Assam               ):  5 quarters
+   Bongaigaon           (Assam               ):  5 quarters
+   Sonitpur             (Assam               ):  5 quarters
+   Cachar               (Assam               ):  4 quarters
+   Dhubri               (Assam               ):  4 quarters
+   Dibrugarh            (Assam               ):  4 quarters
+   Golaghat             (Assam               ):  4 quarters
+   Sivasagar            (Assam               ):  4 quarters
+   Morigaon             (Assam               ):  4 quarters
+
+[6] EXPOSURE BY STATE (Rule A, top 10)
+   Uttar Pradesh            :  489 district-quarters
+   Assam                    :  259 district-quarters
+   Gujarat                  :  246 district-quarters
+   Maharashtra              :  229 district-quarters
+   Madhya Pradesh           :  120 district-quarters
+   Karnataka                :   99 district-quarters
+   Odisha                   :   99 district-quarters
+   Chhattisgarh             :   95 district-quarters
+   Rajasthan                :   76 district-quarters
+   Himachal Pradesh         :   68 district-quarters
+
+[7] KNOWN LIMITATIONS
+   - 46 unmatched EM-DAT location tokens (typos, J&K data gaps, historical names)
+   - State-level fallback (Rule A) may introduce measurement error
+   - Historical district names (e.g., 'Cuddapah' → 'Kadapa') not fully resolved
+   - Rule B exposure rate (1.02%) reflects EM-DAT district precision limit
+
+[8] VALIDATION CHECKS (11_validate_flood_events.py)
+   ✓ Event 2019-0331-IND: 33 Rule B districts correctly coded
+   ✓ Event 2023-0428-IND: State fallback triggered for HP, Delhi (Rule A only)
+   ✓ Event 2015-0504-IND: 9/10 AP/TN districts matched (90% rate)
+
+======================================================================
+SUMMARY COMPLETE
+======================================================================

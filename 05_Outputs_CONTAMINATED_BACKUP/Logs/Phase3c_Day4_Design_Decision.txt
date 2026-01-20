@@ -1,0 +1,31 @@
+======================================================================
+PHASE 3c DAY 4: DESIGN DECISION LOG
+Date: 2026-01-11
+======================================================================
+
+DECISION: Use GADM districts as panel skeleton (not RBI districts)
+
+RATIONALE:
+1. GADM is internationally standardized, version-controlled (v4.1), 
+   and publicly reproducible
+2. EM-DAT flood events reference geographic locations that map 
+   naturally to GADM administrative boundaries
+3. RBI district names can be matched TO GADM via crosswalk 
+   (83.2% match rate achieved)
+4. GADM provides spatial geometry for future GIS analysis
+
+CONSEQUENCES:
+- Panel has 666 GADM districts × 40 quarters = 26,640 rows
+- RBI deposit data will be merged INTO this panel using 
+  district_crosswalk_draft.csv
+- 128 RBI districts (16.8%) will not match → will be dropped 
+  or manually investigated in Phase 3d
+- All exposure coding (Rule A/B) uses GADM district names as 
+  the standard
+
+ALTERNATIVE REJECTED:
+Using RBI districts as skeleton would require reverse-mapping 
+EM-DAT floods to RBI naming conventions, which is less 
+reproducible and harder to validate.
+
+======================================================================

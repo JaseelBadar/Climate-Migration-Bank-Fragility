@@ -795,7 +795,7 @@ Next:
 ======================================================================
 Goal:  Conduct  forensic  audit  of  entire  codebase  (Scripts  01-30)  to  identify  data  quality  issues,  validate  pipeline  integrity,  and  diagnose  regression  anomalies  discovered  on  2026-01-18.
 
-Actions  Completed
+Actions  Completed:
 
 A)  Full  repository  code  audit  (30  scripts,  ~1,773  lines)
 -  Systematic  review  methodology:  Line-by-line  code  inspection,  execution  log  cross-validation,  intermediate  file  row  count  verification
@@ -810,5 +810,129 @@ B)  Critical  bug  identified:  Script  21  (VIIRS  Full  Extraction)
     districts_gdf  =  districts_gdf.dissolve(by='NAME_2',  as_index=False)
 
 ======================================================================
-END  OF  LOG  -  Last  Updated:  2026-01-19  22:50  PM  IST
+2026-01-20 Tue  1700-2350 PM IST: Phase 5 - Critical Bug Fix & Overnight VIIRS Regeneration
+======================================================================
+Goal: Fix Script 21 dissolve bug, backup all contaminated data, and execute overnight clean VIIRS extraction with validation.
+
+Actions Completed:
+
+A. Bug Discovery & Root Cause Analysis (1700-1730 PM IST)
+- Extended Phase 4 code audit from 2026-01-19
+- Identified critical dissolve bug in Script 21 (Line 53)
+- Buggy code: `districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)`
+- Problem: dissolve(by='NAME_2') groups by district name alone, ignoring state boundaries
+- Impact: Homonymous districts across states (e.g., Aurangabad Bihar + Aurangabad Maharashtra) merged into single observations
+
+B. Contamination Quantification (1730-1800 PM IST)
+- Districts lost: 17 homonymous district-pairs merged → 676 expected districts - 17 missing = 659 actual
+- Missing monthly observations: 17 districts × 120 months = 2,040 observations
+- Missing quarterly observations: 17 districts × 40 quarters = 680 observations  
+- Measurement error propagation: 7 remaining district-pairs now share contaminated identical VIIRS values
+- Example homonymous districts: Aurangabad (Bihar vs Maharashtra), Bilaspur (Chhattisgarh vs Himachal Pradesh), Hamirpur, Pratapgarh, Bijapur
+
+C. Impact Assessment on Regression Results (1800-1830 PM IST)
+- All Phase 4 H1-H4 regression results contaminated by classical measurement error (attenuation bias)
+- H1 (Floods → Lights): β = -0.0126*** — attenuated by missing 17 districts
+- H2 (Lights → Deposits, IV): β = 0.120 (p=0.538) — weakened by contaminated first stage  
+- H3 (Timing lags): All insignificant — contaminated VIIRS input
+- H4 (Urban heterogeneity): β = -0.0404** (p=0.005) — standard errors incorrect (659 vs 676 district clustering)
+- Expected coefficient changes after fix: H1 β will increase in magnitude (~-0.025 to -0.030), H2 first-stage F-stat will strengthen
+
+D. Script 21 Bug Fix Implementation (1830-1900 PM IST)
+- Deleted Lines 52-55 (dissolve block) from 04_Code/21_extract_viirs_full_panel.py
+- Added validation assertion: `assert len(districts_gdf) == 676, f"Expected 676 districts, got {len(districts_gdf)}"`
+- Rationale: Do NOT dissolve multipolygon geometries; rasterio.mask() handles multipolygons natively
+- Code review: Verified no other scripts use NAME_2-only dissolve
+- Testing: Dry-run validation on first 3 months (confirmed 676 districts per month)
+
+E. Contaminated Data Backup Strategy (1900-1945 PM IST)
+- Created backup folders:
+  - `02_Data_Intermediate_CONTAMINATED_BACKUP/`
+  - `05_Outputs_CONTAMINATED_BACKUP/`
+- Files backed up:
+  1. viirs_monthly_panel.csv (79,080 rows, contaminated)
+  2. viirs_quarterly_panel.csv (26,360 rows, contaminated)
+  3. analysis_panel_final.csv (23,347 rows with contaminated VIIRS variables)
+  4. regression_panel_final.csv (22,503 rows, regression-ready contaminated)
+  5. All regression output CSVs (01_descriptive_stats.csv, 02_H1_first_stage.csv, etc.)
+  6. All execution logs (21_viirs_full_extraction.log, 27_H1_regression.txt, etc.)
+- Backup rationale: Enable before-after comparison to quantify measurement error impact
+
+F. Contaminated Data Deletion (1945-2015 PM IST)
+- Deleted from 02_Data_Intermediate/:
+  - viirs_monthly_panel.csv
+  - viirs_quarterly_panel.csv
+- Deleted from 03_Data_Clean/:
+  - analysis_panel_final.csv  
+  - regression_panel_final.csv
+- Deleted from 05_Outputs/Tables/:
+  - 01_descriptive_stats.csv
+  - 02_H1_first_stage.csv
+  - 03_H2_iv2sls.csv
+  - 04_H3_timing.csv
+  - 05_H4_heterogeneity.csv
+- Deleted from 05_Outputs/Logs/:
+  - All VIIRS logs (18-22), all regression logs (25-30)
+  - Plus legacy logs (06, 08, 12)
+- Deletion reason: Force clean regeneration, prevent accidental use of contaminated results
+
+G. Git Commits - Documentation Trail (2015-2230 PM IST)
+Total commits tonight: 10 commits documenting entire bug fix process
+
+1. `fix: Add district count validation to Script 21` (Script 21 fix)
+2. `data: Remove contaminated VIIRS panels for regeneration` (Delete VIIRS panels)
+3. `data: Remove contaminated analysis panels for regeneration` (Delete analysis files)
+4. `chore: Backup contaminated VIIRS panels before regeneration` (Backup VIIRS)
+5. `chore: Backup contaminated analysis datasets before regeneration` (Backup analysis)
+6. `chore: Backup all contaminated output logs and regression results` (Backup outputs)
+7. `data: Remove all contaminated regression outputs for regeneration` (Delete outputs)
+8. `doc: Update README with Phase 5 bug fix documentation` (README Phase 5)
+9. `doc: Update hypotheses to v1.6 with bug fix regeneration status` (Hypotheses v1.6)
+10. `doc: Update codebook to v1.6 with Script 21 bug documentation` (Variables v1.6)
+
+H. Documentation Updates (2230-2345 PM IST)
+- README.md: Added Phase 5 section, updated status to "BUG FIX IN PROGRESS"
+- Hypotheses_Formal_v1.6.md: Marked all Phase 4 results as "CONTAMINATED", pre-registered coefficient predictions
+- Variables_Codebook_and_Coding_Protocol_v1.6.md: Updated Issue 4 from "weak signal" to "VIIRS data contamination", restructured audit checklist
+- All docs: Explicitly invalidated contaminated results, added warning labels "DO NOT CITE"
+
+I. Overnight VIIRS Regeneration Initiated (2345 PM IST)
+- Script executed: `python 04_Code/21_extract_viirs_full_panel.py`
+- Expected runtime: 6-8 hours (2345 PM → ~0600 AM next day)
+- Expected output: `02_Data_Intermediate/viirs_monthly_panel.csv` with 81,120 rows (676 districts × 120 months)
+- Validation upon completion:
+  - Row count: Must be exactly 81,120
+  - District count: Must be exactly 676 unique districts
+  - Temporal coverage: 120 months (2015-01 to 2024-12)
+  - No duplicates: Each district-month combination appears exactly once
+
+Scientific Integrity Measures:
+- Pre-registered coefficient predictions BEFORE observing clean results (H1 β: -0.0126 → ~-0.025)
+- Preserved contaminated results for quantitative comparison
+- Explicit invalidation of all Phase 4 mechanistic claims
+- Transparency in documentation: bug discovery process fully logged
+
+Status:
+- Script 21 bug fix implemented and validated
+- All contaminated data backed up and deleted
+- Documentation updated to Phase 5 with contamination warnings
+- Overnight VIIRS extraction running (in progress as of 2350 PM IST)
+- All subsequent analyses (Scripts 22-30) suspended pending clean data
+
+Next Steps (2026-01-21 morning):
+1. Verify Script 21 output: 81,120 rows, 676 districts, no duplicates
+2. Execute Scripts 22-30 sequentially with clean VIIRS data
+3. Compare contaminated vs clean H1-H4 coefficients (quantify measurement error impact)
+4. Update documentation to v1.7 with corrected results
+5. Generate comparison tables (before-after coefficient changes)
+
+Known Remaining Data Quality Issues (unchanged, pending post-regeneration):
+- Extreme outliers in deposit changes (-273%, +656%)
+- Nominal growth confound (no CPI deflation, 47.6% annualized)
+- Zero-inflation (25% of deposit changes = 0)
+- Extra 213 missing deposit observations beyond lag construction
+- These will be addressed AFTER clean VIIRS regeneration completes
+
+======================================================================
+END  OF  LOG  -  Last  Updated:  2026-01-20  23:53  PM  IST
 ======================================================================

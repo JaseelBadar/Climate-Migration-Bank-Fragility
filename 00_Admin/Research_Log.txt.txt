@@ -1,816 +1,816 @@
 ======================================================================
-RESEARCH  LOG  -  Climate  Shocks,  Displacement,  and  Bank  Liquidity  Risk:  Evidence  from  Night-Lights  in  India  (2015–2024)
+RESEARCH LOG - Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)
 ======================================================================
-Project:  Climate-induced  migration  effects  on  banking  sector  stability
-Period:  December  2025  -  Present
-Author:  Jaseel  Badar
-Location:  E:\Climate-Migration-Bank-Fragility\
+Project: Climate-induced migration effects on banking sector stability
+Period: December 2025 - Present
+Author: Jaseel Badar
+Location: E:\Climate-Migration-Bank-Fragility\
 ======================================================================
-
-======================================================================
-2025-12-30  to  2025-12-31:  Phase  1  -  Project  Initialization  &  Environment  Setup
-======================================================================
-Goal:  Set  up  computational  environment  and  project  structure
-
-Environment  Setup:
--  Created  conda  environment:  research_env
--  Installed  core  packages:  pandas,  geopandas,  rasterio,  matplotlib,  statsmodels
--  Python  3.10.19  on  Windows  11
--  VS  Code  configured  as  primary  IDE
-
-Project  Structure  Created:
--  00_Admin/  (documentation,  logs)
--  01_Data_Raw/  (original  data,  never  modified)
--  02_Data_Intermediate/  (intermediate  processing  outputs)
--  03_Data_Clean/  (cleaned  datasets  for  analysis)
--  04_Code/  (all  Python  scripts)
--  05_Outputs/  (regression  outputs,  figures)
--  06_Drafts/  (paper  drafts)
-
-GitHub  Repository:
--  Initialized  local  Git  repository
--  Created  .gitignore  (excludes  large  files  /  prevents  repo  bloat)
--  First  commit:  "Initial  project  structure"
-
-Key  Decisions:
--  Manual  data  download  approach  (API  attempts  for  VIIRS  failed)
--  Focus  on  2015-2024  period  (10-year  panel)
-
-Status:  Environment  ready,  awaiting  data  download
-Next:  Download  RBI,  EM-DAT,  VIIRS  datasets
 
 ======================================================================
-2026-01-02  (Thu):  Phase  2  -  Data  Acquisition  (Day  1)
+2025-12-30 to 2025-12-31: Phase 1 - Project Initialization & Environment Setup
 ======================================================================
-Goal:  Download  all  three  core  datasets
+Goal: Set up computational environment and project structure
 
-Data  Sources  Acquired:
+Environment Setup:
+- Created conda environment: research_env
+- Installed core packages: pandas, geopandas, rasterio, matplotlib, statsmodels
+- Python 3.10.19 on Windows 11
+- VS Code configured as primary IDE
 
-1.  RBI  District  Banking  Statistics  (BSR-2)
-      Location:  01_Data_Raw/RBI_Bank_Data/
-      Files  downloaded:
-      -  RBI_Deposits_2004_2017.xlsx  (historical  baseline)
-      -  RBI_Deposits_2017_2022.xlsx  (5-year  mid-period)
-      -  RBI_Deposits_2023_2024.xlsx  (recent  data)
-      Source:  Reserve  Bank  of  India  official  portal
-      Coverage:  All  districts,  quarterly  snapshots
-      Variables:  Deposits  by  population  group  (Rural/Semi-urban/Urban/Metro)
+Project Structure Created:
+- 00_Admin/ (documentation, logs)
+- 01_Data_Raw/ (original data, never modified)
+- 02_Data_Intermediate/ (intermediate processing outputs)
+- 03_Data_Clean/ (cleaned datasets for analysis)
+- 04_Code/ (all Python scripts)
+- 05_Outputs/ (regression outputs, figures)
+- 06_Drafts/ (paper drafts)
 
-2.  EM-DAT  Disaster  Database
-      Location:  01_Data_Raw/EMDAT_Disasters/
-      File:  public_emdat_custom_request_2026-01-02_c149ea93-8fbf-4f6e-a8f6-3b41cc622ed0.xlsx
-      Source:  Centre  for  Research  on  Epidemiology  of  Disasters  (CRED)
-      Filters  applied:  Country=India,  Disaster  Type=Flood,  Period=2015-2024
-      Events:  70  flood  events  (later  corrected  to  69  after  inspection)
-      Variables:  Location,  dates,  deaths,  affected  population,  damage  estimates
+GitHub Repository:
+- Initialized local Git repository
+- Created .gitignore (excludes large files / prevents repo bloat)
+- First commit: "Initial project structure"
 
-3.  VIIRS  Nighttime  Lights  (Test  Tile)
-      Location:  01_Data_Raw/VIIRS_NightLights/
-      Test  file:  SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600
-      Files  extracted:  .avg_rade9h.tif  (avg  radiance),  .cvg.tif,  .cf_cvg.tif
-      Source:  Colorado  School  of  Mines  Earth  Observation  Group
-      Tile:  75N060E  (covers  all  of  India)
-      Period  tested:  January  2023  (1  month)
-      Note:  Full  download  (120  months,  2015-2024)  deferred  to  Phase  3d
+Key Decisions:
+- Manual data download approach (API attempts for VIIRS failed)
+- Focus on 2015-2024 period (10-year panel)
 
-Key  Decisions:
--  VIIRS  Microsoft  Planetary  Computer  API  failed  (returned  0  items)
--  Pivoted  to  manual  download  from  Colorado  School  of  Mines
--  Downloaded  single  test  tile  to  validate  format  before  bulk  download
--  RBI  files  span  different  periods,  will  require  concatenation
-
-Commits:  3  (data  folder  structure  +  download  documentation)
-Status:  Phase  2  complete
-Next:  Phase  3a  literature  acquisition  +  Phase  3c  data  inspection  (merge  feasibility)
+Status: Environment ready, awaiting data download
+Next: Download RBI, EM-DAT, VIIRS datasets
 
 ======================================================================
-2026-01-05  (Sun):  Phase  3a  -  Literature  Acquisition
+2026-01-02 (Thu): Phase 2 - Data Acquisition (Day 1)
 ======================================================================
-Goal:  Build  a  defensible  novelty  baseline  and  assemble  the  core  bibliography
+Goal: Download all three core datasets
 
-Actions  Completed:
--  Searched  Google  Scholar,  SSRN,  NBER  using  targeted  keywords
--  Used  Harvard  HOLLIS  to  bypass  paywalls  for  locked  papers
--  Downloaded  ~15-18  papers  via  Zotero  Chrome  Connector
--  Organized  PDFs  in  00_Admin/Literature_PDFs  folder
--  Fixed  Zotero  metadata  (missing  authors/dates)
--  Created  LiteratureTracker.xlsx  with  table  structure
+Data Sources Acquired:
 
-Status:  Papers  acquired.  Ready  for  gap  analysis  reading/annotation.
-Next:  Phase  3b  -  Fill  LiteratureTracker.xlsx  using  abstracts/intros/conclusions
+1. RBI District Banking Statistics (BSR-2)
+   Location: 01_Data_Raw/RBI_Bank_Data/
+   Files downloaded:
+   - RBI_Deposits_2004_2017.xlsx (historical baseline)
+   - RBI_Deposits_2017_2022.xlsx (5-year mid-period)
+   - RBI_Deposits_2023_2024.xlsx (recent data)
+   Source: Reserve Bank of India official portal
+   Coverage: All districts, quarterly snapshots
+   Variables: Deposits by population group (Rural/Semi-urban/Urban/Metro)
 
-======================================================================
-2026-01-06  (Mon):  Phase  3b  -  Gap  Analysis
-======================================================================
-Goal:  Confirm  novelty  and  define  “what  the  literature  missed”  in  a  structured  way
+2. EM-DAT Disaster Database
+   Location: 01_Data_Raw/EMDAT_Disasters/
+   File: public_emdat_custom_request_2026-01-02_c149ea93-8fbf-4f6e-a8f6-3b41cc622ed0.xlsx
+   Source: Centre for Research on Epidemiology of Disasters (CRED)
+   Filters applied: Country=India, Disaster Type=Flood, Period=2015-2024
+   Events: 70 flood events (later corrected to 69 after inspection)
+   Variables: Location, dates, deaths, affected population, damage estimates
 
-Actions  Completed:
--  Read  abstracts  /  key  intro  paragraphs  /  conclusions  for  the  collected  paper  set  (~15-18  papers)
--  Filled  LiteratureTracker.xlsx  with  multi-dimensional  gap  analysis:
-    -  Geographic  gaps  (India  district-level  evidence  scarce  /  inconsistent)
-    -  Methodological  gaps  (satellite  lights  often  used  for  activity  proxies;  migration  mechanism  under-tested)
-    -  Temporal  gaps  (many  designs  not  aligned  to  disaster  timing  /  dynamic  panels)
-    -  Mechanistic  gaps  (banking  stability  often  framed  via  credit  risk;  deposit/liquidity  channel  underemphasized)
--  Confirmed  novelty  positioning:  No  paper  in  the  reviewed  set  establishes  the  full  chain:
-    Climate  shock  →  (migration  proxied  by  VIIRS)  →  district-level  deposit  stress  in  India
+3. VIIRS Nighttime Lights (Test Tile)
+   Location: 01_Data_Raw/VIIRS_NightLights/
+   Test file: SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600
+   Files extracted: .avg_rade9h.tif (avg radiance), .cvg.tif, .cf_cvg.tif
+   Source: Colorado School of Mines Earth Observation Group
+   Tile: 75N060E (covers all of India)
+   Period tested: January 2023 (1 month)
+   Note: Full download (120 months, 2015-2024) deferred to Phase 3d
 
-Status:  Literature  phase  complete.  Novelty  defense  ready.
-Next:  Phase  3c  -  Formalize  hypotheses/codebook  and  begin  data  inspection  scripts
+Key Decisions:
+- VIIRS Microsoft Planetary Computer API failed (returned 0 items)
+- Pivoted to manual download from Colorado School of Mines
+- Downloaded single test tile to validate format before bulk download
+- RBI files span different periods, will require concatenation
 
-======================================================================
-2026-01-07  (Tue):  Phase  3c  Day  0  -  Conceptual  Work  (Mobile  Only)
-======================================================================
-Goal:  Maintain  momentum  and  lock  “definitions  +  hypotheses”  before  coding
-
-Actions  Completed:
--  Laptop  unavailable  -  executed  mobile  research  tasks  to  maintain  momentum
--  Created  Variables_Codebook_v1.md:
-    -  Defined  variable  families  (outcomes,  treatments,  controls,  networks,  panel  structure)
-    -  Defined  transformations  to  be  used  in  code  (e.g.,  log  changes,  quarterly  aggregation  targets)
--  Created  Hypotheses_Formal_v1.md:
-    -  H1:  Flood  events  →  Decline  in  nighttime  light  intensity  (VIIRS)
-    -  H2:  Nighttime  light  decline  →  Decline  in  formal  bank  deposits
-    -  H3:  Deposit  decline  →  Increased  reliance  on  shadow  banking  (timing  analysis)
-    -  H4:  Banking  stress  exhibits  spatial  contagion  through  district  networks
--  Both  documents  specify  measurement  intentions  (time  aggregation,  geographic  unit,  sign  expectations)
-
-Status:  Codebook  +  hypotheses  locked.  Ready  to  implement  inspection  scripts  on  laptop.
-Next:  Phase  3c  Day  1  (Jan  8)  -  RBI/EM-DAT/VIIRS  inspection  scripts  +  merge  feasibility  validation
+Commits: 3 (data folder structure + download documentation)
+Status: Phase 2 complete
+Next: Phase 3a literature acquisition + Phase 3c data inspection (merge feasibility)
 
 ======================================================================
-2026-01-08  (Wed)  19:00-21:30  PM  IST:  Phase  3c  Day  1  -  Data  Inspection
+2026-01-05 (Sun): Phase 3a - Literature Acquisition
 ======================================================================
-Goal:  Validate  merge  feasibility  across  3  datasets  (RBI,  EM-DAT,  VIIRS)
+Goal: Build a defensible novelty baseline and assemble the core bibliography
 
-Scripts  Created:
-1.  02_inspect_rbi.py:  RBI  deposit  structure  inspection
-      -  762  unique  districts  (UPPERCASE,  hyphenated  names)
-      -  11  quarters  (2023Q1-2025Q2),  4  population  groups  per  district
-      -  Deposit  columns  at  indices  7,10,13,16,19,22,25,28,31,34,37
-      -  Aggregation  required:  GROUP  BY  district,  SUM  across  population  groups
+Actions Completed:
+- Searched Google Scholar, SSRN, NBER using targeted keywords
+- Used Harvard HOLLIS to bypass paywalls for locked papers
+- Downloaded ~15-18 papers via Zotero Chrome Connector
+- Organized PDFs in 00_Admin/Literature_PDFs folder
+- Fixed Zotero metadata (missing authors/dates)
+- Created LiteratureTracker.xlsx with table structure
 
-2.  03_inspect_emdat.py:  EM-DAT  flood  event  inspection
-      -  69  flood  events  (2015-2024)
-      -  35  events  (50.7%)  have  district-level  Admin  Units  data  →  147  districts
-      -  34  events  (49.3%)  have  empty  Admin  Units  (requires  Location  text  parsing)
-      -  Severity  measure:  No.  Affected  (73.9%  coverage)
-      -  Date  structure:  Complete,  convertible  to  quarters
-
-3.  04_inspect_viirs.py:  VIIRS  nighttime  lights  validation
-      -  Test  tile  (Jan  2023,  75N060E):  1.93  GB  GeoTIFF,  28800×18000  pixels
-      -  India  fully  covered  (60-180°E,  0-75°N  extent)
-      -  Radiance  range:  0-57.24  nW/cm²/sr  (mean  0.87,  median  0.50)
-      -  Resolution:  15  arc-second  (~463m  at  equator)
-      -  Data  validity:  CONFIRMED
-
-Key  Findings:
--  RBI:  762  districts  ready  for  merge  (standardized  naming)
--  EM-DAT:  Geographic  precision  heterogeneous  (50%  district-level,  50%  state-level)
--  VIIRS:  Production-ready,  H1/H2  testable  with  district  aggregation
--  Expected  treatment/control  split:  ~150  flooded  districts,  ~600  non-flooded
--  Update  (Jan  9):  Admin  Units  are  present  for  57/69  events  once  parsed  correctly  (adm2_name  districts  +  adm1_name  states);  only  12/69  require  Location  parsing.
-
-Next  Session  (Phase  3c  Day  2  -  Jan  9):
--  Parse  EM-DAT  Location  text  for  missing  34  events
--  Build  district  name  harmonization  crosswalk  (fuzzy  matching)
--  Test  VIIRS  spatial  subsetting  (extract  India  bounding  box)
-
-Commits:  4  scripts  (01_download_viirs  placeholder,  02-04  inspection  scripts)
-Status:  Phase  3c  Day  1  complete
+Status: Papers acquired. Ready for gap analysis reading/annotation.
+Next: Phase 3b - Fill LiteratureTracker.xlsx using abstracts/intros/conclusions
 
 ======================================================================
-2026-01-09  (Fri)  17:45-18:40  PM  IST:  Phase  3c  Day  2  -  District  Boundaries  +  EM-DAT  Parsing
+2026-01-06 (Mon): Phase 3b - Gap Analysis
 ======================================================================
-Goal:  Begin  district  harmonization  by  locking  district  boundary  polygons  and  extracting  district/state  labels  from  EM-DAT  floods.
+Goal: Confirm novelty and define “what the literature missed” in a structured way
 
-A)  District  boundary  dataset  acquired  (GADM)
--  Downloaded:  gadm41_IND_shp.zip  (GADM  v4.1,  India)
--  Extracted  to:  01_Data_Raw/District_Boundaries/
--  Validated  via  geopandas  load  test:
-    -  gadm41_IND_2.shp  loaded  successfully
-    -  676  district  polygons
-    -  Key  columns  confirmed:  NAME_1  (state),  NAME_2  (district),  geometry
+Actions Completed:
+- Read abstracts / key intro paragraphs / conclusions for the collected paper set (~15-18 papers)
+- Filled LiteratureTracker.xlsx with multi-dimensional gap analysis:
+  - Geographic gaps (India district-level evidence scarce / inconsistent)
+  - Methodological gaps (satellite lights often used for activity proxies; migration mechanism under-tested)
+  - Temporal gaps (many designs not aligned to disaster timing / dynamic panels)
+  - Mechanistic gaps (banking stability often framed via credit risk; deposit/liquidity channel underemphasized)
+- Confirmed novelty positioning: No paper in the reviewed set establishes the full chain:
+  Climate shock → (migration proxied by VIIRS) → district-level deposit stress in India
 
-B)  EM-DAT  district/state  extraction  completed
--  Script  created:  04_Code/06_parse_emdat_locations.py
--  Outputs:
-    -  02_Data_Intermediate/emdat_districts_parsed.csv
-    -  05_Outputs/Logs/06_parse_emdat_log.txt
--  Results:
-    -  Total  flood  events  in  file:  69
-    -  Events  with  usable  Admin  Units  (adm2_name  districts  or  fallback  adm1_name  states):  57  (82.6%)
-    -  Events  missing  Admin  Units:  12  (17.4%)  →  parsed  from  free-text  Location  field
-    -  Geographic  labels  produced  for  all  69  events  (districts  and/or  states)
-
-C)  Output  verification
--  Script  created:  04_Code/07_check_output.py
--  Verified:
-    -  emdat_districts_parsed.csv  loads
-    -  69/69  events  have  non-empty  districts_final_str
-
-Notes  /  Known  issues
--  Parsed  Location  text  contains  typos  and  non-district  tokens  in  some  cases  (e.g.,  “Administrative  unit  not  available”,  “Itanagar  distrci”,  “Meghalaya  states”).
--  These  will  be  handled  during  crosswalk  cleaning  (manual  corrections  +  fuzzy  match).
-
-Status:  District  boundaries  locked;  EM-DAT  geographic  extraction  complete.
-Next:  Build  district  name  crosswalk  (RBI  ↔  GADM  ↔  EM-DAT)  and  then  generate  flood  exposure  panel  (Rule  A  vs  Rule  B).
+Status: Literature phase complete. Novelty defense ready.
+Next: Phase 3c - Formalize hypotheses/codebook and begin data inspection scripts
 
 ======================================================================
-2026-01-10  (Sat)  22:45-23:35  PM  IST:  Phase  3c  Day  2.5  -  Documentation  Hygiene  (No  Coding)
+2026-01-07 (Tue): Phase 3c Day 0 - Conceptual Work (Mobile Only)
 ======================================================================
-Goal:  Lock  documentation  language  to  avoid  overclaiming  and  ensure  repo  docs  match  the  actual  folder  structure  and  current  phase  status.
+Goal: Maintain momentum and lock “definitions + hypotheses” before coding
 
-Actions  Completed
-A)  Claim  discipline  updates  (documentation-only)
--  Core_Claims.docx:  softened  “first  causal  evidence”  phrasing  to  “aims  to  provide”  and  made  propagation  wording  explicitly  conditional  on  data  feasibility.
--  Literature_Tracker.xlsx:  softened  top  novelty  claim  from  “establishes  first  causal  evidence”  to  “aims  to  provide  causal  evidence  consistent  with.”
+Actions Completed:
+- Laptop unavailable - executed mobile research tasks to maintain momentum
+- Created Variables_Codebook_v1.md:
+  - Defined variable families (outcomes, treatments, controls, networks, panel structure)
+  - Defined transformations to be used in code (e.g., log changes, quarterly aggregation targets)
+- Created Hypotheses_Formal_v1.md:
+  - H1: Flood events → Decline in nighttime light intensity (VIIRS)
+  - H2: Nighttime light decline → Decline in formal bank deposits
+  - H3: Deposit decline → Increased reliance on shadow banking (timing analysis)
+  - H4: Banking stress exhibits spatial contagion through district networks
+- Both documents specify measurement intentions (time aggregation, geographic unit, sign expectations)
 
-B)  Identification  /  IV  discipline  wording  (documentation-only)
--  Hypotheses_Formal_v1.1.md:  rewrote  the  H2b  exclusion  restriction  paragraph  to  frame  it  as  an  identifying  assumption  with  explicit  threats  (e.g.,  direct  banking-operations  disruption),  without  changing  the  empirical  plan.
+Status: Codebook + hypotheses locked. Ready to implement inspection scripts on laptop.
+Next: Phase 3c Day 1 (Jan 8) - RBI/EM-DAT/VIIRS inspection scripts + merge feasibility validation
 
-C)  Codebook  consistency  (documentation-only)
--  Variables_Codebook_and_Coding_Protocol_v1.1.md:
-    -  Updated  the  District  Polygons  status  to  reflect  that  GADM  v4.1  Level-2  district  boundaries  are  already  downloaded  and  validated  (676  districts).
-    -  Removed  any  stray  [file:*]  artifacts  left  from  prior  drafting.
+======================================================================
+2026-01-08 (Wed) 19:00-21:30 PM IST: Phase 3c Day 1 - Data Inspection
+======================================================================
+Goal: Validate merge feasibility across 3 datasets (RBI, EM-DAT, VIIRS)
 
-D)  README  cleanup  (documentation-only)
--  README.md:
-    -  Removed  [file:*]  artifacts.
-    -  Updated  repo  layout  to  reflect  current  v1.1  filenames  and  current  pipeline  state.
-    -  Preserved  RBI  file  extensions  as  .xlsx  (local  saved  format).
-    -  Fixed  markdown  formatting  issues  (closed  code  fences)  and  removed  duplicated  outdated  “Last  Updated/Phase”  footer  lines.
+Scripts Created:
+1. 02_inspect_rbi.py: RBI deposit structure inspection
+   - 762 unique districts (UPPERCASE, hyphenated names)
+   - 11 quarters (2023Q1-2025Q2), 4 population groups per district
+   - Deposit columns at indices 7,10,13,16,19,22,25,28,31,34,37
+   - Aggregation required: GROUP BY district, SUM across population groups
 
-Commits  (documentation-only)
--  Commit:  “Tighten  Core  Claims  wording”
--  Commit:  “Update  novelty  statement  in  Literature  Tracker”
--  Commit:  “Clarify  IV  assumption  language  (Hypotheses  v1.1)”
--  Commit:  “Update  codebook:  GADM  obtained  +  cleanup”
--  Commit:  “README  cleanup:  consistency  +  formatting”
+2. 03_inspect_emdat.py: EM-DAT flood event inspection
+   - 69 flood events (2015-2024)
+   - 35 events (50.7%) have district-level Admin Units data → 147 districts
+   - 34 events (49.3%) have empty Admin Units (requires Location text parsing)
+   - Severity measure: No. Affected (73.9% coverage)
+   - Date structure: Complete, convertible to quarters
+
+3. 04_inspect_viirs.py: VIIRS nighttime lights validation
+   - Test tile (Jan 2023, 75N060E): 1.93 GB GeoTIFF, 28800×18000 pixels
+   - India fully covered (60-180°E, 0-75°N extent)
+   - Radiance range: 0-57.24 nW/cm²/sr (mean 0.87, median 0.50)
+   - Resolution: 15 arc-second (~463m at equator)
+   - Data validity: CONFIRMED
+
+Key Findings:
+- RBI: 762 districts ready for merge (standardized naming)
+- EM-DAT: Geographic precision heterogeneous (50% district-level, 50% state-level)
+- VIIRS: Production-ready, H1/H2 testable with district aggregation
+- Expected treatment/control split: ~150 flooded districts, ~600 non-flooded
+- Update (Jan 9): Admin Units are present for 57/69 events once parsed correctly (adm2_name districts + adm1_name states); only 12/69 require Location parsing.
+
+Next Session (Phase 3c Day 2 - Jan 9):
+- Parse EM-DAT Location text for missing 34 events
+- Build district name harmonization crosswalk (fuzzy matching)
+- Test VIIRS spatial subsetting (extract India bounding box)
+
+Commits: 4 scripts (01_download_viirs placeholder, 02-04 inspection scripts)
+Status: Phase 3c Day 1 complete
+
+======================================================================
+2026-01-09 (Fri) 17:45-18:40 PM IST: Phase 3c Day 2 - District Boundaries + EM-DAT Parsing
+======================================================================
+Goal: Begin district harmonization by locking district boundary polygons and extracting district/state labels from EM-DAT floods.
+
+A) District boundary dataset acquired (GADM)
+- Downloaded: gadm41_IND_shp.zip (GADM v4.1, India)
+- Extracted to: 01_Data_Raw/District_Boundaries/
+- Validated via geopandas load test:
+  - gadm41_IND_2.shp loaded successfully
+  - 676 district polygons
+  - Key columns confirmed: NAME_1 (state), NAME_2 (district), geometry
+
+B) EM-DAT district/state extraction completed
+- Script created: 04_Code/06_parse_emdat_locations.py
+- Outputs:
+  - 02_Data_Intermediate/emdat_districts_parsed.csv
+  - 05_Outputs/Logs/06_parse_emdat_log.txt
+- Results:
+  - Total flood events in file: 69
+  - Events with usable Admin Units (adm2_name districts or fallback adm1_name states): 57 (82.6%)
+  - Events missing Admin Units: 12 (17.4%) → parsed from free-text Location field
+  - Geographic labels produced for all 69 events (districts and/or states)
+
+C) Output verification
+- Script created: 04_Code/07_check_output.py
+- Verified:
+  - emdat_districts_parsed.csv loads
+  - 69/69 events have non-empty districts_final_str
+
+Notes / Known issues
+- Parsed Location text contains typos and non-district tokens in some cases (e.g., “Administrative unit not available”, “Itanagar distrci”, “Meghalaya states”).
+- These will be handled during crosswalk cleaning (manual corrections + fuzzy match).
+
+Status: District boundaries locked; EM-DAT geographic extraction complete.
+Next: Build district name crosswalk (RBI ↔ GADM ↔ EM-DAT) and then generate flood exposure panel (Rule A vs Rule B).
+
+======================================================================
+2026-01-10 (Sat) 22:45-23:35 PM IST: Phase 3c Day 2.5 - Documentation Hygiene (No Coding)
+======================================================================
+Goal: Lock documentation language to avoid overclaiming and ensure repo docs match the actual folder structure and current phase status.
+
+Actions Completed
+A) Claim discipline updates (documentation-only)
+- Core_Claims.docx: softened “first causal evidence” phrasing to “aims to provide” and made propagation wording explicitly conditional on data feasibility.
+- Literature_Tracker.xlsx: softened top novelty claim from “establishes first causal evidence” to “aims to provide causal evidence consistent with.”
+
+B) Identification / IV discipline wording (documentation-only)
+- Hypotheses_Formal_v1.1.md: rewrote the H2b exclusion restriction paragraph to frame it as an identifying assumption with explicit threats (e.g., direct banking-operations disruption), without changing the empirical plan.
+
+C) Codebook consistency (documentation-only)
+- Variables_Codebook_and_Coding_Protocol_v1.1.md:
+  - Updated the District Polygons status to reflect that GADM v4.1 Level-2 district boundaries are already downloaded and validated (676 districts).
+  - Removed any stray [file:*] artifacts left from prior drafting.
+
+D) README cleanup (documentation-only)
+- README.md:
+  - Removed [file:*] artifacts.
+  - Updated repo layout to reflect current v1.1 filenames and current pipeline state.
+  - Preserved RBI file extensions as .xlsx (local saved format).
+  - Fixed markdown formatting issues (closed code fences) and removed duplicated outdated “Last Updated/Phase” footer lines.
+
+Commits (documentation-only)
+- Commit: “Tighten Core Claims wording”
+- Commit: “Update novelty statement in Literature Tracker”
+- Commit: “Clarify IV assumption language (Hypotheses v1.1)”
+- Commit: “Update codebook: GADM obtained + cleanup”
+- Commit: “README cleanup: consistency + formatting”
 
 Status:
-Documentation  is  now  aligned  with  the  current  project  state  (Phase  3c  Day  2  complete;  crosswalk  pending).  No  data  or  code  changes  were  made  in  this  session.
+Documentation is now aligned with the current project state (Phase 3c Day 2 complete; crosswalk pending). No data or code changes were made in this session.
 
 Next:
-Phase  3c  Day  3:  Build  district-name  crosswalk  (RBI  ↔  GADM  ↔  EM-DAT),  generate  district_crosswalk_draft.csv,  and  produce  crosswalk  log  with  match-rate  stop  condition  check.
+Phase 3c Day 3: Build district-name crosswalk (RBI ↔ GADM ↔ EM-DAT), generate district_crosswalk_draft.csv, and produce crosswalk log with match-rate stop condition check.
 
 ======================================================================
-2026-01-11  (Sun)  20:10-21:00  PM  IST:  Phase  3c  Day  3–Day  4  -  Crosswalk  +  Flood  Exposure  Panel
+2026-01-11 (Sun) 20:10-21:00 PM IST: Phase 3c Day 3–Day 4 - Crosswalk + Flood Exposure Panel
 ======================================================================
-Goal:  Build  a  reproducible  district-quarter  flood  exposure  panel  (Rule  A/B)  on  a  fixed  geography,  with  logged  match  rates  +  validation  checks.
+Goal: Build a reproducible district-quarter flood exposure panel (Rule A/B) on a fixed geography, with logged match rates + validation checks.
 
-Actions  Completed
-A)  District  name  crosswalk  (RBI  ↔  GADM;  EM-DAT  ↔  GADM)
--  Script  executed:  04_Code/08_build_district_crosswalk.py
--  Inputs:
-    -  GADM  districts:  01_Data_Raw/District_Boundaries/gadm41_IND_2.shp  (666  districts)
-    -  RBI  districts:  01_Data_Raw/RBI_Bank_Data/RBI_Deposits_2023_2024.xlsx  (762  districts)
-    -  EM-DAT  parsed  tokens:  02_Data_Intermediate/emdat_districts_parsed.csv  (209  districts)
--  Outputs:
-    -  02_Data_Intermediate/district_crosswalk_draft.csv  (769  rows)
-    -  02_Data_Intermediate/emdat_district_matches.csv  (209  rows)
-    -  05_Outputs/Logs/08_build_crosswalk_log.txt
--  Match  rates  (stop  conditions):
-    -  RBI  →  GADM:  83.2%  (threshold:  80%)  →  PASSED
-    -  EM-DAT  →  GADM:  81.3%  (informational;  threshold:  75%)
+Actions Completed
+A) District name crosswalk (RBI ↔ GADM; EM-DAT ↔ GADM)
+- Script executed: 04_Code/08_build_district_crosswalk.py
+- Inputs:
+  - GADM districts: 01_Data_Raw/District_Boundaries/gadm41_IND_2.shp (666 districts)
+  - RBI districts: 01_Data_Raw/RBI_Bank_Data/RBI_Deposits_2023_2024.xlsx (762 districts)
+  - EM-DAT parsed tokens: 02_Data_Intermediate/emdat_districts_parsed.csv (209 districts)
+- Outputs:
+  - 02_Data_Intermediate/district_crosswalk_draft.csv (769 rows)
+  - 02_Data_Intermediate/emdat_district_matches.csv (209 rows)
+  - 05_Outputs/Logs/08_build_crosswalk_log.txt
+- Match rates (stop conditions):
+  - RBI → GADM: 83.2% (threshold: 80%) → PASSED
+  - EM-DAT → GADM: 81.3% (informational; threshold: 75%)
 
-B)  Panel  skeleton  construction  (district  ×  quarter)
--  Script  executed:  04_Code/09_build_quarterly_skeleton.py
--  Output:
-    -  02_Data_Intermediate/district_quarter_skeleton.csv
--  Target  structure:  2015Q1–2024Q4  (40  quarters),  intended  to  be  the  backbone  index  for  merges.
+B) Panel skeleton construction (district × quarter)
+- Script executed: 04_Code/09_build_quarterly_skeleton.py
+- Output:
+  - 02_Data_Intermediate/district_quarter_skeleton.csv
+- Target structure: 2015Q1–2024Q4 (40 quarters), intended to be the backbone index for merges.
 
-C)  Flood  exposure  panel  construction  (Rule  A  vs  Rule  B)
--  Script  executed:  04_Code/10_build_flood_exposure.py
--  Output:
-    -  02_Data_Intermediate/flood_exposure_panel.csv
--  Panel  dimensions  (as  generated):
-    -  Total  district-quarters:  26,640
-    -  Districts:  659
-    -  Quarters:  40
-    -  Date  range:  2015Q1  to  2024Q4
--  Exposure  rates:
-    -  Rule  A  (full  sample;  state  fallback  allowed):  2,220  district-quarters  (8.33%)
-    -  Rule  B  (high-precision;  district-only):  272  district-quarters  (1.02%)
+C) Flood exposure panel construction (Rule A vs Rule B)
+- Script executed: 04_Code/10_build_flood_exposure.py
+- Output:
+  - 02_Data_Intermediate/flood_exposure_panel.csv
+- Panel dimensions (as generated):
+  - Total district-quarters: 26,640
+  - Districts: 659
+  - Quarters: 40
+  - Date range: 2015Q1 to 2024Q4
+- Exposure rates:
+  - Rule A (full sample; state fallback allowed): 2,220 district-quarters (8.33%)
+  - Rule B (high-precision; district-only): 272 district-quarters (1.02%)
 
-D)  Validation  +  summary  logging
--  Script  executed:  04_Code/11_validate_flood_events.py
-    -  ✓  Event  2019-0331-IND:  33  Rule  B  districts  correctly  coded
-    -  ✓  Event  2023-0428-IND:  State  fallback  triggered  for  HP,  Delhi  (Rule  A  only)
-    -  ✓  Event  2015-0504-IND:  9/10  AP/TN  districts  matched  (90%  rate)
--  Script  executed:  04_Code/12_summarize_flood_exposure.py
-    -  Output  log:  05_Outputs/Logs/12_flood_exposure_summary.txt  (exposure  rates,  top  districts/states,  limitations)
+D) Validation + summary logging
+- Script executed: 04_Code/11_validate_flood_events.py
+  - ✓ Event 2019-0331-IND: 33 Rule B districts correctly coded
+  - ✓ Event 2023-0428-IND: State fallback triggered for HP, Delhi (Rule A only)
+  - ✓ Event 2015-0504-IND: 9/10 AP/TN districts matched (90% rate)
+- Script executed: 04_Code/12_summarize_flood_exposure.py
+  - Output log: 05_Outputs/Logs/12_flood_exposure_summary.txt (exposure rates, top districts/states, limitations)
 
-E)  Design  decision  logged  (geography  standard)
--  Logged  decision:  Use  GADM  districts  as  panel  skeleton  (not  RBI  districts)
--  Output:
-    -  05_Outputs/Logs/Phase3c_Day4_Design_Decision.txt
--  Consequence  recorded:  RBI  deposit  data  will  be  merged  into  GADM  skeleton  via  district_crosswalk_draft.csv;  unmatched  RBI  districts  will  be  dropped  or  manually  investigated  in  Phase  3d.
+E) Design decision logged (geography standard)
+- Logged decision: Use GADM districts as panel skeleton (not RBI districts)
+- Output:
+  - 05_Outputs/Logs/Phase3c_Day4_Design_Decision.txt
+- Consequence recorded: RBI deposit data will be merged into GADM skeleton via district_crosswalk_draft.csv; unmatched RBI districts will be dropped or manually investigated in Phase 3d.
 
-Known  Issues  /  Limitations  (as  of  Day  4)
--  46  unmatched  EM-DAT  location  tokens  remain  (typos,  J&K  gaps,  historical  names).
--  State-level  fallback  in  Rule  A  introduces  measurement  error  by  construction.
--  Historical  district  name  changes  (e.g.,  “Cuddapah”  →  “Kadapa”)  are  not  fully  resolved.
+Known Issues / Limitations (as of Day 4)
+- 46 unmatched EM-DAT location tokens remain (typos, J&K gaps, historical names).
+- State-level fallback in Rule A introduces measurement error by construction.
+- Historical district name changes (e.g., “Cuddapah” → “Kadapa”) are not fully resolved.
 
 Status:
-Crosswalk  +  quarterly  skeleton  +  flood  exposure  panel  are  now  constructed  and  logged  (Rule  A/B),  with  basic  validation  checks  passed.
+Crosswalk + quarterly skeleton + flood exposure panel are now constructed and logged (Rule A/B), with basic validation checks passed.
 
 Next:
-Phase  3d:  Extract  RBI  deposits  to  long  panel,  bulk-download/aggregate  VIIRS  to  districts,  then  merge  RBI  +  VIIRS  +  flood  exposure  into  a  single  district-quarter  analysis  dataset  (03_Data_Clean),  with  missingness  and  drop  logs.
+Phase 3d: Extract RBI deposits to long panel, bulk-download/aggregate VIIRS to districts, then merge RBI + VIIRS + flood exposure into a single district-quarter analysis dataset (03_Data_Clean), with missingness and drop logs.
 
 ======================================================================
-2026-01-12  (Mon)  18:45-19:05  PM  IST:  Phase  3d  -  RBI  Deposits  Panel  +  Master  Merge
+2026-01-12 (Mon) 18:45-19:05 PM IST: Phase 3d - RBI Deposits Panel + Master Merge
 ======================================================================
-Goal:  Convert  RBI  deposits  to  a  GADM  district-quarter  panel  and  merge  deposits  +  floods  into  a  single  analysis-ready  dataset.
+Goal: Convert RBI deposits to a GADM district-quarter panel and merge deposits + floods into a single analysis-ready dataset.
 
-Actions  Completed
-A)  RBI  deposits  extraction  (quarterly  panel)
--  Script  executed:  04_Code/13_extract_rbi_deposits.py
--  Outputs:
-    -  02_Data_Intermediate/rbi_deposits_panel.csv
--  Key  fix:  Aggregated  to  unique  (district_gadm,  state_gadm,  quarter)  to  eliminate  duplicate  merge  keys  caused  by  ambiguous  district-name  crosswalk  matches.
+Actions Completed
+A) RBI deposits extraction (quarterly panel)
+- Script executed: 04_Code/13_extract_rbi_deposits.py
+- Outputs:
+  - 02_Data_Intermediate/rbi_deposits_panel.csv
+- Key fix: Aggregated to unique (district_gadm, state_gadm, quarter) to eliminate duplicate merge keys caused by ambiguous district-name crosswalk matches.
 
-B)  Master  panel  merge  (skeleton  +  floods  +  deposits)
--  Script  executed:  04_Code/14_merge_master_panel.py
--  Output:
-    -  02_Data_Intermediate/master_panel_raw.csv
--  Merge  keys  standardized  to:  (district_gadm,  state_gadm,  quarter)
+B) Master panel merge (skeleton + floods + deposits)
+- Script executed: 04_Code/14_merge_master_panel.py
+- Output:
+  - 02_Data_Intermediate/master_panel_raw.csv
+- Merge keys standardized to: (district_gadm, state_gadm, quarter)
 
-C)  Validation  +  missingness  diagnostics
--  Scripts  executed:
-    -  04_Code/15_validate_master_panel.py
-    -  04_Code/16_diagnose_missing_data.py
--  Output:
-    -  02_Data_Intermediate/master_panel_validation_log.txt
--  Findings:
-    -  Panel  structure  is  balanced  at  666  districts  ×  40  quarters  =  26,640  rows.
-    -  Deposits  blackout  identified  for  2016Q3–2017Q1  (2016Q3/Q4  and  2017Q1  fully  missing).
-    -  35  districts  have  0%  deposit  coverage  across  the  entire  window  (likely  crosswalk/name-change  issues).
+C) Validation + missingness diagnostics
+- Scripts executed:
+  - 04_Code/15_validate_master_panel.py
+  - 04_Code/16_diagnose_missing_data.py
+- Output:
+  - 02_Data_Intermediate/master_panel_validation_log.txt
+- Findings:
+  - Panel structure is balanced at 666 districts × 40 quarters = 26,640 rows.
+  - Deposits blackout identified for 2016Q3–2017Q1 (2016Q3/Q4 and 2017Q1 fully missing).
+  - 35 districts have 0% deposit coverage across the entire window (likely crosswalk/name-change issues).
 
-D)  Analysis  sample  construction  (restricted  sample)
--  Script  executed:  04_Code/17_prepare_analysis_sample.py
--  Output:
-    -  02_Data_Intermediate/master_panel_analysis.csv
--  Restrictions  applied:
-    -  Dropped  quarters:  2016Q3,  2016Q4,  2017Q1
-    -  Dropped  districts:  35  districts  with  zero  deposit  coverage
--  Final  analysis  sample:
-    -  631  districts  ×  37  quarters  =  23,347  observations
-    -  Deposit  coverage:  99.1%
-    -  Flood  events  (Rule  A):  1,984  (all  with  deposits  present  in  the  restricted  sample)
+D) Analysis sample construction (restricted sample)
+- Script executed: 04_Code/17_prepare_analysis_sample.py
+- Output:
+  - 02_Data_Intermediate/master_panel_analysis.csv
+- Restrictions applied:
+  - Dropped quarters: 2016Q3, 2016Q4, 2017Q1
+  - Dropped districts: 35 districts with zero deposit coverage
+- Final analysis sample:
+  - 631 districts × 37 quarters = 23,347 observations
+  - Deposit coverage: 99.1%
+  - Flood events (Rule A): 1,984 (all with deposits present in the restricted sample)
 
-Status:  Phase  3d  master  panel  construction  completed  through  analysis-sample  output;  VIIRS  integration  remains.
-Next:  Begin  VIIRS  monthly  download/aggregation  to  district-quarter,  then  engineer  regression  variables  (growth  rates,  lags)  and  generate  descriptive  tables.
+Status: Phase 3d master panel construction completed through analysis-sample output; VIIRS integration remains.
+Next: Begin VIIRS monthly download/aggregation to district-quarter, then engineer regression variables (growth rates, lags) and generate descriptive tables.
 
 ======================================================================
-2026-01-13  (Tue)  18:25-19:05  PM  IST:  Phase  3d  -  VIIRS  Integration  (Test  Validation)
+2026-01-13 (Tue) 18:25-19:05 PM IST: Phase 3d - VIIRS Integration (Test Validation)
 ======================================================================
-Goal:  Validate  VIIRS  district  extraction  +  quarterly  aggregation  +  merge  feasibility  with  master_panel_analysis.csv  before  bulk  (2015–2024)  processing.
+Goal: Validate VIIRS district extraction + quarterly aggregation + merge feasibility with master_panel_analysis.csv before bulk (2015–2024) processing.
 
-A)  VIIRS  district  extraction  (Jan  2023  test)
--  Script  executed:  04_Code/18_extract_viirs_district_means.py
--  Intended  input  (as  coded):  01_Data_Raw/VIIRS_NightLights/SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600.avg_rade9h.tif
--  Log:  05_Outputs/Logs/18_viirs_extraction.log
--  Note:  First  run  failed  due  to  path  mismatch  ("No  such  file  or  directory"),  then  corrected  and  re-run  succeeded.
--  Result:  GADM  districts  loaded:  676;  extraction  complete:  676  districts,  676  with  data.
+A) VIIRS district extraction (Jan 2023 test)
+- Script executed: 04_Code/18_extract_viirs_district_means.py
+- Intended input (as coded): 01_Data_Raw/VIIRS_NightLights/SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600.avg_rade9h.tif
+- Log: 05_Outputs/Logs/18_viirs_extraction.log
+- Note: First run failed due to path mismatch ("No such file or directory"), then corrected and re-run succeeded.
+- Result: GADM districts loaded: 676; extraction complete: 676 districts, 676 with data.
 
-B)  Validation  checks  (district  overlap  +  coverage)
--  Script  executed:  04_Code/19_validate_viirs_extraction.py
--  Log:  05_Outputs/Logs/19_viirs_validation.log
--  Logged  result:  Validation  complete:  624/624  districts  covered  (100.0%).
--  Note:  This  denominator  depends  on  the  master  panel  districts  loaded  at  runtime;  treat  as  a  computed  check,  not  a  fixed  project  constant.
+B) Validation checks (district overlap + coverage)
+- Script executed: 04_Code/19_validate_viirs_extraction.py
+- Log: 05_Outputs/Logs/19_viirs_validation.log
+- Logged result: Validation complete: 624/624 districts covered (100.0%).
+- Note: This denominator depends on the master panel districts loaded at runtime; treat as a computed check, not a fixed project constant.
 
-C)  Quarterly  aggregation  +  master  panel  test  merge  (Jan  2023  only)
--  Script  executed:  04_Code/20_aggregate_viirs_to_quarterly.py
--  Log:  05_Outputs/Logs/20_viirs_quarterly_test.log
--  Logged  result:  Test  merge  complete:  2.70%  coverage;  Total  obs:  23347,  VIIRS  obs:  631
--  Output:  02_Data_Intermediate/master_panel_viirs_test.csv
+C) Quarterly aggregation + master panel test merge (Jan 2023 only)
+- Script executed: 04_Code/20_aggregate_viirs_to_quarterly.py
+- Log: 05_Outputs/Logs/20_viirs_quarterly_test.log
+- Logged result: Test merge complete: 2.70% coverage; Total obs: 23347, VIIRS obs: 631
+- Output: 02_Data_Intermediate/master_panel_viirs_test.csv
 
 Status:
--  VIIRS  test  pipeline  is  functioning  end-to-end  (extract  →  validate  →  aggregate  →  merge  test).
--  Bulk  monthly  downloads  (2015–2024)  are  in  progress  outside  the  repo  on  external  storage  (see  local  setup  notes).
+- VIIRS test pipeline is functioning end-to-end (extract → validate → aggregate → merge test).
+- Bulk monthly downloads (2015–2024) are in progress outside the repo on external storage (see local setup notes).
 
 Next:
--  Complete  bulk  VIIRS  monthly  downloads  for  2015–2024.
--  Generalize  Script  18  to  loop  over  all  months  and  write  a  single  district-month  panel  (02_Data_Intermediate).
--  Aggregate  district-month  →  district-quarter  and  merge  into  the  master  analysis  sample  for  Phase  4  regressions.
+- Complete bulk VIIRS monthly downloads for 2015–2024.
+- Generalize Script 18 to loop over all months and write a single district-month panel (02_Data_Intermediate).
+- Aggregate district-month → district-quarter and merge into the master analysis sample for Phase 4 regressions.
 
 ======================================================================
-2026-01-14  (Wed)  22:00-23:50  PM  IST:  Phase  3d  Day  3  -  VIIRS  Bulk  Downloads  Complete
+2026-01-14 (Wed) 22:00-23:50 PM IST: Phase 3d Day 3 - VIIRS Bulk Downloads Complete
 ======================================================================
-Goal:  Complete  bulk  VIIRS  monthly  tile  downloads  (2015–2024)  to  external  storage;  document  Phase  3d  final  execution  pipeline.
+Goal: Complete bulk VIIRS monthly tile downloads (2015–2024) to external storage; document Phase 3d final execution pipeline.
 
-A)  Bulk  VIIRS  downloads  finalized
--  120  monthly  tiles  downloaded  manually  from  EOG  Colorado  School  of  Mines  server
--  Tile:  75N060E  (covers  India;  0°N-75°N,  60°E-180°E)
--  Save  location:  E:\VIIRS_Raw_Data_75N060E\  (external  storage,  outside  repo)
--  Folder  structure:  Year  subfolders  (2015–2024)  →  Month  subfolders  (January–December)  →  .tgz  archives
--  Total  compressed  size:  ~60–70  GB
--  Download  completion:  Jan  13  22:00  –  Jan  14  22:00  (24-hour  manual  download  session)
+A) Bulk VIIRS downloads finalized
+- 120 monthly tiles downloaded manually from EOG Colorado School of Mines server
+- Tile: 75N060E (covers India; 0°N-75°N, 60°E-180°E)
+- Save location: E:\VIIRS_Raw_Data_75N060E\ (external storage, outside repo)
+- Folder structure: Year subfolders (2015–2024) → Month subfolders (January–December) → .tgz archives
+- Total compressed size: ~60–70 GB
+- Download completion: Jan 13 22:00 – Jan 14 22:00 (24-hour manual download session)
 
-B)  Phase  3d  script  pipeline  documented
--  Created  script  skeletons  (21–25)  with  headers,  inputs/outputs,  runtime  estimates
--  Script  21:  Extract  VIIRS  monthly  panel  (81,120  rows;  6-8  hour  runtime)
--  Script  22:  Aggregate  monthly  →  quarterly  (27,040  rows;  1-2  minutes)
--  Script  23:  Merge  VIIRS  +  master  panel  (23,347  rows;  ~90%+  coverage  expected)
--  Script  24:  Engineer  regression  variables  (logs,  changes,  lags  per  codebook)
--  Script  25:  Generate  descriptive  statistics  (Table  1  for  paper)
--  Scripts  documented  with  clear  dependencies:  21  →  22  →  23  →  24  →  25
+B) Phase 3d script pipeline documented
+- Created script skeletons (21–25) with headers, inputs/outputs, runtime estimates
+- Script 21: Extract VIIRS monthly panel (81,120 rows; 6-8 hour runtime)
+- Script 22: Aggregate monthly → quarterly (27,040 rows; 1-2 minutes)
+- Script 23: Merge VIIRS + master panel (23,347 rows; ~90%+ coverage expected)
+- Script 24: Engineer regression variables (logs, changes, lags per codebook)
+- Script 25: Generate descriptive statistics (Table 1 for paper)
+- Scripts documented with clear dependencies: 21 → 22 → 23 → 24 → 25
 
-C)  Project  infrastructure  updates
--  Created  Phase  3d  execution  plan  document  (00_Admin/Phase_3d_Execution_Plan.txt)
--  Prepared  output  folder  structure  (03_Data_Clean/,  05_Outputs/Tables/,  05_Outputs/Figures/)
--  Locked  final  paper  title  across  all  documentation:  "Climate  Shocks,  Displacement,  and  Bank  Liquidity  Risk:  Evidence  from  Night-Lights  in  India"
--  Title  changes:  Migration  →  Displacement  (more  precise);  Banking  Stability  →  Bank  Liquidity  Risk  (mechanism-specific)
+C) Project infrastructure updates
+- Created Phase 3d execution plan document (00_Admin/Phase_3d_Execution_Plan.txt)
+- Prepared output folder structure (03_Data_Clean/, 05_Outputs/Tables/, 05_Outputs/Figures/)
+- Locked final paper title across all documentation: "Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India"
+- Title changes: Migration → Displacement (more precise); Banking Stability → Bank Liquidity Risk (mechanism-specific)
 
-D)  Expected  outputs  (Phase  3d  final)
--  viirs_monthly_panel.csv:  81,120  rows  (676  districts  ×  120  months)
--  viirs_quarterly_panel.csv:  27,040  rows  (676  districts  ×  40  quarters)
--  analysis_panel_final.csv:  23,347  rows  (master  panel  +  VIIRS  merged)
--  regression_ready_panel.csv:  same,  with  engineered  variables
--  01_descriptive_stats.csv:  Summary  statistics  table  for  paper
+D) Expected outputs (Phase 3d final)
+- viirs_monthly_panel.csv: 81,120 rows (676 districts × 120 months)
+- viirs_quarterly_panel.csv: 27,040 rows (676 districts × 40 quarters)
+- analysis_panel_final.csv: 23,347 rows (master panel + VIIRS merged)
+- regression_ready_panel.csv: same, with engineered variables
+- 01_descriptive_stats.csv: Summary statistics table for paper
 
 Status:
--  Bulk  downloads  complete  (120  months  validated)
--  Scripts  21–25  documented  and  ready  for  implementation
--  Overnight  execution  planned  for  Script  21  (Jan  15  evening  →  Jan  16  morning)
+- Bulk downloads complete (120 months validated)
+- Scripts 21–25 documented and ready for implementation
+- Overnight execution planned for Script 21 (Jan 15 evening → Jan 16 morning)
 
 Next:
--  Phase  3d  Day  4  (Jan  15):  Implement  Scripts  21–25;  execute  overnight  extraction;  produce  final  analysis-ready  panel
--  Phase  4  (Jan  16  onward):  Begin  regressions  (H1–H4  tests)
+- Phase 3d Day 4 (Jan 15): Implement Scripts 21–25; execute overnight extraction; produce final analysis-ready panel
+- Phase 4 (Jan 16 onward): Begin regressions (H1–H4 tests)
 
 ======================================================================
-2026-01-15  (Thu)  2030-2200  PM  IST:  Phase  3d  Day  4  -  Full  Pipeline  Implementation  +  Validation
+2026-01-15 (Thu) 2030-2200 PM IST: Phase 3d Day 4 - Full Pipeline Implementation + Validation
 ======================================================================
-Goal:  Implement  and  execute  Phase  3d  pipeline  (Scripts  21–25),  validate  data  quality  before  regressions.
+Goal: Implement and execute Phase 3d pipeline (Scripts 21–25), validate data quality before regressions.
 
-A)  Script  21:  Full  VIIRS  extraction  (COMPLETED)
--  Executed  04_Code/21_extract_viirs_full_panel.py
--  Runtime:  ~60  minutes  (much  faster  than  6-8hr  estimate)
--  Input:  120  monthly  VIIRS  tiles  from  F:\Jaseel\VIIRS_Raw_Data_75N060E\
--  Output:  02_Data_Intermediate/viirs_monthly_panel.csv  (81,120  rows)
--  Status:  Extraction  complete,  but  contains  duplicates  (see  validation  below)
+A) Script 21: Full VIIRS extraction (COMPLETED)
+- Executed 04_Code/21_extract_viirs_full_panel.py
+- Runtime: ~60 minutes (much faster than 6-8hr estimate)
+- Input: 120 monthly VIIRS tiles from F:\Jaseel\VIIRS_Raw_Data_75N060E\
+- Output: 02_Data_Intermediate/viirs_monthly_panel.csv (81,120 rows)
+- Status: Extraction complete, but contains duplicates (see validation below)
 
-B)  Scripts  22-25:  Data  pipeline  (IMPLEMENTED,  execution  deferred)
--  22_aggregate_viirs_quarterly.py:  Monthly  →  quarterly  aggregation
--  23_merge_viirs_master.py:  VIIRS  +  deposits  +  floods  merge
--  24_engineer_regression_variables.py:  Logs,  changes,  lags
--  25_descriptive_statistics.py:  Table  1  summary  stats
--  Status:  Code  complete,  awaiting  validated  input  data
+B) Scripts 22-25: Data pipeline (IMPLEMENTED, execution deferred)
+- 22_aggregate_viirs_quarterly.py: Monthly → quarterly aggregation
+- 23_merge_viirs_master.py: VIIRS + deposits + floods merge
+- 24_engineer_regression_variables.py: Logs, changes, lags
+- 25_descriptive_statistics.py: Table 1 summary stats
+- Status: Code complete, awaiting validated input data
 
-C)  Scripts  27-29:  Phase  4  regression  scripts  (IMPLEMENTED,  execution  deferred)
--  27_regression_H1_first_stage.py:  Floods  →  Lights  (first  stage)
--  28_regression_H2_iv2sls.py:  Lights  →  Deposits  (IV  2SLS)
--  29_regression_H3_timing.py:  Distributed  lags,  timing  analysis
--  Status:  Code  complete,  awaiting  analysis-ready  panel
+C) Scripts 27-29: Phase 4 regression scripts (IMPLEMENTED, execution deferred)
+- 27_regression_H1_first_stage.py: Floods → Lights (first stage)
+- 28_regression_H2_iv2sls.py: Lights → Deposits (IV 2SLS)
+- 29_regression_H3_timing.py: Distributed lags, timing analysis
+- Status: Code complete, awaiting analysis-ready panel
 
-D)  Script  26:  VIIRS  monthly  validation  (EXECUTED  -  FAILED)
--  Created  04_Code/26_validate_viirs_monthly.py
--  Comprehensive  8-check  validation  of  viirs_monthly_panel.csv
--  Result:  VALIDATION  FAILED  (3  checks  failed,  5  passed)
-    -  ✓  PASS:  Dimensions  (81,120  rows)
-    -  ✓  PASS:  Required  columns  present
-    -  ✗  FAIL:  District  coverage  (expected  676,  got  659  unique)
-    -  ✓  PASS:  Temporal  coverage  (120  months,  2015-2024)
-    -  ✓  PASS:  No  NaN  values
-    -  ✓  PASS:  No  Inf  values
-    -  ✓  PASS:  Valid  radiance  range  (0-41.33)
-    -  ✗  FAIL:  Unbalanced  panel  (16  districts  with  ≠  120  obs)
--  Diagnostic  finding:  One  district  (Kinnaur)  has  360  obs  (3×  expected)
--  Output:  05_Outputs/Logs/26_viirs_monthly_validation.txt
+D) Script 26: VIIRS monthly validation (EXECUTED - FAILED)
+- Created 04_Code/26_validate_viirs_monthly.py
+- Comprehensive 8-check validation of viirs_monthly_panel.csv
+- Result: VALIDATION FAILED (3 checks failed, 5 passed)
+  - ✓ PASS: Dimensions (81,120 rows)
+  - ✓ PASS: Required columns present
+  - ✗ FAIL: District coverage (expected 676, got 659 unique)
+  - ✓ PASS: Temporal coverage (120 months, 2015-2024)
+  - ✓ PASS: No NaN values
+  - ✓ PASS: No Inf values
+  - ✓ PASS: Valid radiance range (0-41.33)
+  - ✗ FAIL: Unbalanced panel (16 districts with ≠ 120 obs)
+- Diagnostic finding: One district (Kinnaur) has 360 obs (3× expected)
+- Output: 05_Outputs/Logs/26_viirs_monthly_validation.txt
 
-E)  Script  21b:  Diagnostic  for  duplicate  extractions  (EXECUTED)
--  Created  04_Code/21b_diagnose_viirs_duplicates.py  (temporary  debug  script)
--  Compared  GADM  districts  (expected)  vs  VIIRS  panel  (actual)
--  Key  findings:
-    -  GADM  shapefile  has  676  rows  but  only  659  unique  district  names
-    -  16  districts  have  multipolygon  geometries  (2-3  geometries  per  district)
-    -  Script  21  iterated  over  rows  (676)  instead  of  unique  districts  (659)
-    -  Result:  Duplicate  extractions  for  multipolygon  districts
-    -  Kinnaur:  3  geometries  →  360  obs  (120  months  ×  3)
-    -  Bilaspur,  Aurangabad,  etc.:  2  geometries  →  240  obs  (120  months  ×  2)
--  Root  cause  identified:  Missing  dissolve  step  before  extraction  loop
--  Output:  Console  diagnostic  report
+E) Script 21b: Diagnostic for duplicate extractions (EXECUTED)
+- Created 04_Code/21b_diagnose_viirs_duplicates.py (temporary debug script)
+- Compared GADM districts (expected) vs VIIRS panel (actual)
+- Key findings:
+  - GADM shapefile has 676 rows but only 659 unique district names
+  - 16 districts have multipolygon geometries (2-3 geometries per district)
+  - Script 21 iterated over rows (676) instead of unique districts (659)
+  - Result: Duplicate extractions for multipolygon districts
+  - Kinnaur: 3 geometries → 360 obs (120 months × 3)
+  - Bilaspur, Aurangabad, etc.: 2 geometries → 240 obs (120 months × 2)
+- Root cause identified: Missing dissolve step before extraction loop
+- Output: Console diagnostic report
 
-F)  Fix  documentation:  Script_21_Fix_Notes.txt
--  Created  00_Admin/Script_21_Fix_Notes.txt
--  Documents  multipolygon  duplicate  extraction  issue
--  Provides  exact  code  fix:
-    ```python
-    districts_gdf  =  districts_gdf.dissolve(by='NAME_2',  as_index=False)
+F) Fix documentation: Script_21_Fix_Notes.txt
+- Created 00_Admin/Script_21_Fix_Notes.txt
+- Documents multipolygon duplicate extraction issue
+- Provides exact code fix:
+  ```python
+  districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
 
 ======================================================================
-2026-01-16  (Fri)  18:40-20:45  PM  IST:  Phase  4  -  Full  Pipeline  Execution  +  H1–H4  Regressions
+2026-01-16 (Fri) 18:40-20:45 PM IST: Phase 4 - Full Pipeline Execution + H1–H4 Regressions
 ======================================================================
-Goal:  Resolve  VIIRS  duplicate/multipolygon  issue,  run  the  full  post-VIIRS  pipeline  (Scripts  22–26),  and  execute  Phase  4  regressions  (H1–H4)  with  saved  tables  +  logs.
+Goal: Resolve VIIRS duplicate/multipolygon issue, run the full post-VIIRS pipeline (Scripts 22–26), and execute Phase 4 regressions (H1–H4) with saved tables + logs.
 
-Actions  Completed
+Actions Completed
 
-A)  VIIRS  duplicate  fix  +  rerun  extraction  (Script  21)
--  Implemented  the  multipolygon  fix  documented  on  Day  4  (dissolve  districts  before  looping).
--  Re-ran:  04_Code/21_extract_viirs_full_panel.py
--  Output  regenerated:
-    -  02_Data_Intermediate/viirs_monthly_panel.csv
+A) VIIRS duplicate fix + rerun extraction (Script 21)
+- Implemented the multipolygon fix documented on Day 4 (dissolve districts before looping).
+- Re-ran: 04_Code/21_extract_viirs_full_panel.py
+- Output regenerated:
+  - 02_Data_Intermediate/viirs_monthly_panel.csv
 
-B)  VIIRS  quarterly  aggregation  (Script  22)
--  Executed:  04_Code/22_aggregate_viirs_quarterly.py
--  Input:  02_Data_Intermediate/viirs_monthly_panel.csv
--  Output:
-    -  02_Data_Intermediate/viirs_quarterly_panel.csv
--  Log:
-    -  05_Outputs/Logs/22_viirs_quarterly
+B) VIIRS quarterly aggregation (Script 22)
+- Executed: 04_Code/22_aggregate_viirs_quarterly.py
+- Input: 02_Data_Intermediate/viirs_monthly_panel.csv
+- Output:
+  - 02_Data_Intermediate/viirs_quarterly_panel.csv
+- Log:
+  - 05_Outputs/Logs/22_viirs_quarterly
 
-C)  Merge  VIIRS  into  master  analysis  panel  (Script  23)
--  Executed:  04_Code/23_merge_viirs_master.py
--  Inputs:
-    -  02_Data_Intermediate/master_panel_analysis.csv
-    -  02_Data_Intermediate/viirs_quarterly_panel.csv
--  Output:
-    -  03_Data_Clean/analysis_panel_final.csv
--  Log:
-    -  05_Outputs/Logs/23_viirs_master_merge
+C) Merge VIIRS into master analysis panel (Script 23)
+- Executed: 04_Code/23_merge_viirs_master.py
+- Inputs:
+  - 02_Data_Intermediate/master_panel_analysis.csv
+  - 02_Data_Intermediate/viirs_quarterly_panel.csv
+- Output:
+  - 03_Data_Clean/analysis_panel_final.csv
+- Log:
+  - 05_Outputs/Logs/23_viirs_master_merge
 
-D)  Regression  variable  engineering  (Script  24)
--  Executed:  04_Code/24_engineer_regression_variables.py
--  Input:
-    -  03_Data_Clean/analysis_panel_final.csv
--  Output:
-    -  03_Data_Clean/regression_panel_final.csv
--  Key  constructions  (as  per  codebook  intent):
-    -  Quarterly  changes  (deposits  +  lights),  logs,  and  lagged  flood  indicators.
--  Log:
-    -  05_Outputs/Logs/24_variable_engineering
+D) Regression variable engineering (Script 24)
+- Executed: 04_Code/24_engineer_regression_variables.py
+- Input:
+  - 03_Data_Clean/analysis_panel_final.csv
+- Output:
+  - 03_Data_Clean/regression_panel_final.csv
+- Key constructions (as per codebook intent):
+  - Quarterly changes (deposits + lights), logs, and lagged flood indicators.
+- Log:
+  - 05_Outputs/Logs/24_variable_engineering
 
-E)  Descriptive  statistics  table  generated  (Script  25)
--  Executed:  04_Code/25_descriptive_statistics.py
--  Output:
-    -  05_Outputs/Tables/01_descriptive_stats.csv
--  Log:
-    -  05_Outputs/Logs/25_descriptive_summary
+E) Descriptive statistics table generated (Script 25)
+- Executed: 04_Code/25_descriptive_statistics.py
+- Output:
+  - 05_Outputs/Tables/01_descriptive_stats.csv
+- Log:
+  - 05_Outputs/Logs/25_descriptive_summary
 
-F)  Post-fix  VIIRS  validation  (Script  26)
--  Executed:  04_Code/26_validate_viirs_monthly.py
--  Purpose:  confirm  panel  balance  +  district  coverage  after  the  multipolygon  fix.
--  Log:
-    -  05_Outputs/Logs/26_viirs_monthly_validation
+F) Post-fix VIIRS validation (Script 26)
+- Executed: 04_Code/26_validate_viirs_monthly.py
+- Purpose: confirm panel balance + district coverage after the multipolygon fix.
+- Log:
+  - 05_Outputs/Logs/26_viirs_monthly_validation
 
-G)  Phase  4  regressions  executed  (H1–H4)
-H1)  Floods  →  Nighttime  lights  (first  stage)
--  Executed:  04_Code/27_regression_H1_first_stage.py
--  Outputs:
-    -  05_Outputs/Tables/02_H1_first_stage.csv
-    -  05_Outputs/Logs/27_H1_regression.txt
-    -  05_Outputs/Logs/27_H1_regression_full.txt
+G) Phase 4 regressions executed (H1–H4)
+H1) Floods → Nighttime lights (first stage)
+- Executed: 04_Code/27_regression_H1_first_stage.py
+- Outputs:
+  - 05_Outputs/Tables/02_H1_first_stage.csv
+  - 05_Outputs/Logs/27_H1_regression.txt
+  - 05_Outputs/Logs/27_H1_regression_full.txt
 
-H2)  IV  2SLS:  Lights  →  Deposits,  instrumented  by  floods
--  Executed:  04_Code/28_regression_H2_iv2sls.py
--  Outputs:
-    -  05_Outputs/Tables/03_H2_iv2sls.csv
-    -  05_Outputs/Logs/28_H2_iv_results
+H2) IV 2SLS: Lights → Deposits, instrumented by floods
+- Executed: 04_Code/28_regression_H2_iv2sls.py
+- Outputs:
+  - 05_Outputs/Tables/03_H2_iv2sls.csv
+  - 05_Outputs/Logs/28_H2_iv_results
 
-H3)  Timing  /  distributed  lag  effects
--  Executed:  04_Code/29_regression_H3_timing.py
--  Outputs:
-    -  05_Outputs/Tables/04_H3_timing.csv
-    -  05_Outputs/Logs/29_H3_timing
+H3) Timing / distributed lag effects
+- Executed: 04_Code/29_regression_H3_timing.py
+- Outputs:
+  - 05_Outputs/Tables/04_H3_timing.csv
+  - 05_Outputs/Logs/29_H3_timing
 
-H4)  Heterogeneity  analysis
--  Executed:  04_Code/30_regression_H4_heterogeneity.py
--  Outputs:
-    -  05_Outputs/Tables/05_H4_heterogeneity.csv
-    -  05_Outputs/Logs/30_H4_heterogeneity
+H4) Heterogeneity analysis
+- Executed: 04_Code/30_regression_H4_heterogeneity.py
+- Outputs:
+  - 05_Outputs/Tables/05_H4_heterogeneity.csv
+  - 05_Outputs/Logs/30_H4_heterogeneity
 
-Known  Limitations  /  Warnings  (do  not  overclaim)
--  H2  IV  credibility  depends  on  first-stage  strength;  weak-instrument  risk  must  be  reported  directly  (F-stat  +  p-values)  rather  than  interpreted  away.
--  All  inference  statements  must  clarify  whether  SEs  are  clustered  by  district;  if  not  clustered,  treat  p-values  as  potentially  optimistic.
--  Flood  exposure  Rule  A  includes  state-level  fallback,  which  mechanically  introduces  false  positives  and  attenuates  coefficients  toward  zero.
+Known Limitations / Warnings (do not overclaim)
+- H2 IV credibility depends on first-stage strength; weak-instrument risk must be reported directly (F-stat + p-values) rather than interpreted away.
+- All inference statements must clarify whether SEs are clustered by district; if not clustered, treat p-values as potentially optimistic.
+- Flood exposure Rule A includes state-level fallback, which mechanically introduces false positives and attenuates coefficients toward zero.
 
 Status:
--  Phase  4  execution  complete:  final  cleaned  panels  produced  +  all  H1–H4  scripts  executed  with  saved  CSV  tables  and  text  logs.
+- Phase 4 execution complete: final cleaned panels produced + all H1–H4 scripts executed with saved CSV tables and text logs.
 
 Next:
--  Robustness:  re-run  key  specs  with  district-clustered  SEs;  run  “Rule  B  only”  (district-precision  floods)  as  a  credibility  check.
--  Begin  Phase  5  writing:  Results  section  anchored  on  Tables  02–05,  with  explicit  identification/limitations  language.
+- Robustness: re-run key specs with district-clustered SEs; run “Rule B only” (district-precision floods) as a credibility check.
+- Begin Phase 5 writing: Results section anchored on Tables 02–05, with explicit identification/limitations language.
 
 ======================================================================
-2026-01-17  (Sat)  20:00-23:50  PM  IST:  Phase  3  -  Literature  Review  Expansion
+2026-01-17 (Sat) 20:00-23:50 PM IST: Phase 3 - Literature Review Expansion
 ======================================================================
-Goal:  Extend  literature  tracker  from  16  to  20  papers  to  cover  all  mechanism  components  (climate  shocks  →  migration  →  banking  fragility)  with  top-tier  foundational  papers.
+Goal: Extend literature tracker from 16 to 20 papers to cover all mechanism components (climate shocks → migration → banking fragility) with top-tier foundational papers.
 
-Actions  Completed
+Actions Completed
 
-A)  Deep  literature  search  (targeted  gap-filling)
--  Conducted  systematic  search  across  top-5  economics  journals  (AER,  QJE,  RestudS,  Econometrica,  JPE)  and  field  journals  (JDE,  JEEM,  AEJ:Applied)
--  Focus  areas:  (1)  labor  reallocation  mechanisms,  (2)  spatial  equilibrium  migration  models,  (3)  temperature-migration  elasticity,  (4)  adaptation  cost  heterogeneity
--  Verification:  All  publication  dates  cross-checked  against  official  journal  metadata  and  screenshots
+A) Deep literature search (targeted gap-filling)
+- Conducted systematic search across top-5 economics journals (AER, QJE, RestudS, Econometrica, JPE) and field journals (JDE, JEEM, AEJ:Applied)
+- Focus areas: (1) labor reallocation mechanisms, (2) spatial equilibrium migration models, (3) temperature-migration elasticity, (4) adaptation cost heterogeneity
+- Verification: All publication dates cross-checked against official journal metadata and screenshots
 
-B)  Four  foundational  papers  identified  and  documented
-1.  Colmer  (2021,  AEJ:Applied  Economics,  Vol  13(4),  Oct  2021)
-      -  Title:  "Temperature,  Labor  Reallocation,  and  Industrial  Production:  Evidence  from  India"
-      -  Contribution:  Identifies  sectoral  labor  reallocation  mechanism  triggered  by  temperature  shocks;  shows  migration  can  offset  31-69%  of  productivity  losses
-      -  Citations:  266+
-      -  Gap  filled:  Provides  micro-mechanism  for  how  climate  shocks  disrupt  household  income  streams  before  affecting  bank  deposits
+B) Four foundational papers identified and documented
+1. Colmer (2021, AEJ:Applied Economics, Vol 13(4), Oct 2021)
+   - Title: "Temperature, Labor Reallocation, and Industrial Production: Evidence from India"
+   - Contribution: Identifies sectoral labor reallocation mechanism triggered by temperature shocks; shows migration can offset 31-69% of productivity losses
+   - Citations: 266+
+   - Gap filled: Provides micro-mechanism for how climate shocks disrupt household income streams before affecting bank deposits
 
-2.  Cruz  &  Rossi-Hansberg  (2024,  Review  of  Economic  Studies,  Vol  91(2),  March  2024)
-      -  Title:  "The  Economic  Geography  of  Global  Warming"
-      -  Contribution:  High-resolution  (17,000+  grid  cells)  spatial  equilibrium  model  with  endogenous  migration,  trade,  and  adaptation;  shows  heterogeneous  regional  collapse  patterns
-      -  Citations:  334+
-      -  Gap  filled:  Theoretical  framework  for  why  some  districts  face  deposit  flight  while  others  attract  inflows  post-disaster
+2. Cruz & Rossi-Hansberg (2024, Review of Economic Studies, Vol 91(2), March 2024)
+   - Title: "The Economic Geography of Global Warming"
+   - Contribution: High-resolution (17,000+ grid cells) spatial equilibrium model with endogenous migration, trade, and adaptation; shows heterogeneous regional collapse patterns
+   - Citations: 334+
+   - Gap filled: Theoretical framework for why some districts face deposit flight while others attract inflows post-disaster
 
-3.  Cattaneo  &  Peri  (2016,  Journal  of  Development  Economics,  Vol  122,  May  2016)
-      -  Title:  "The  migration  response  to  increasing  temperatures"
-      -  Contribution:  Cross-country  evidence  (115  countries,  1960-2000)  showing  1°C  increase  →  20%  rise  in  emigration  in  middle-income  economies;  demonstrates  liquidity  constraints  prevent  migration  in  poor  countries
-      -  Citations:  734+
-      -  Gap  filled:  Establishes  temperature-migration  link  relevant  to  India's  income  level;  justifies  VIIRS  nighttime  lights  as  migration  proxy
+3. Cattaneo & Peri (2016, Journal of Development Economics, Vol 122, May 2016)
+   - Title: "The migration response to increasing temperatures"
+   - Contribution: Cross-country evidence (115 countries, 1960-2000) showing 1°C increase → 20% rise in emigration in middle-income economies; demonstrates liquidity constraints prevent migration in poor countries
+   - Citations: 734+
+   - Gap filled: Establishes temperature-migration link relevant to India's income level; justifies VIIRS nighttime lights as migration proxy
 
-4.  Carleton  et  al.  (2022,  Quarterly  Journal  of  Economics,  Vol  137(4),  Nov  2022)
-      -  Title:  "Valuing  the  Global  Mortality  Consequences  of  Climate  Change  Accounting  for  Adaptation  Costs  and  Benefits"
-      -  Contribution:  Subnational  mortality-temperature  analysis  (40  countries  including  India)  with  explicit  adaptation  cost  accounting;  shows  poor  regions  cannot  afford  adaptation  →  larger  welfare  losses
-      -  Citations:  781+
-      -  Gap  filled:  Demonstrates  heterogeneous  adaptation  capacity  driving  differential  banking  stress  across  districts
+4. Carleton et al. (2022, Quarterly Journal of Economics, Vol 137(4), Nov 2022)
+   - Title: "Valuing the Global Mortality Consequences of Climate Change Accounting for Adaptation Costs and Benefits"
+   - Contribution: Subnational mortality-temperature analysis (40 countries including India) with explicit adaptation cost accounting; shows poor regions cannot afford adaptation → larger welfare losses
+   - Citations: 781+
+   - Gap filled: Demonstrates heterogeneous adaptation capacity driving differential banking stress across districts
 
-C)  Literature  tracker  expansion
--  Created  Literature_Tracker_4_New_Rows.csv  with  standardized  format
--  Updated  LiteratureTracker.xlsx:  16  papers  →  20  papers
--  Maintained  consistent  "What  They  Missed"  column  structure  (focus  on  district-level  banking  outcomes,  VIIRS  migration  proxy,  causal  chain  gaps)
+C) Literature tracker expansion
+- Created Literature_Tracker_4_New_Rows.csv with standardized format
+- Updated LiteratureTracker.xlsx: 16 papers → 20 papers
+- Maintained consistent "What They Missed" column structure (focus on district-level banking outcomes, VIIRS migration proxy, causal chain gaps)
 
 Status:
-Literature  review  complete  with  20  papers  covering  all  mechanism  components:
--  VIIRS  methodology:  5  papers  (Beyer,  Hu-Yao,  Bhandari,  Chen-Nordhaus,  K  et  al.)
--  Climate  impacts:  4  papers  (Hsiang,  Zhu,  Zhao,  Colmer)
--  Banking  responses:  3  papers  (Gandhi,  Peters,  Benmelech,  Cortés  review)
--  Migration  mechanisms:  4  papers  (Colmer,  Cattaneo-Peri,  Cruz-Rossi,  Zhu)
--  Spatial/adaptation  heterogeneity:  4  papers  (Cruz-Rossi,  Carleton,  Cattaneo-Peri,  Colmer)
+Literature review complete with 20 papers covering all mechanism components:
+- VIIRS methodology: 5 papers (Beyer, Hu-Yao, Bhandari, Chen-Nordhaus, K et al.)
+- Climate impacts: 4 papers (Hsiang, Zhu, Zhao, Colmer)
+- Banking responses: 3 papers (Gandhi, Peters, Benmelech, Cortés review)
+- Migration mechanisms: 4 papers (Colmer, Cattaneo-Peri, Cruz-Rossi, Zhu)
+- Spatial/adaptation heterogeneity: 4 papers (Cruz-Rossi, Carleton, Cattaneo-Peri, Colmer)
 
 Next:
--  Add  4  PDFs  to  00_Admin/Literature_PDFs/  (commit  separately  or  combined)
--  Update  README.md:  change  "16  papers"  →  "20  papers"  in  literature  section
--  Begin  Phase  4  robustness  checks  (district-clustered  SEs,  Rule  B  specification)
+- Add 4 PDFs to 00_Admin/Literature_PDFs/ (commit separately or combined)
+- Update README.md: change "16 papers" → "20 papers" in literature section
+- Begin Phase 4 robustness checks (district-clustered SEs, Rule B specification)
 
 ======================================================================
-2026-01-18  (Sun)  14:30-22:26  PM  IST:  Phase  4  -  Regression  Execution  &  Data  Quality  Review
+2026-01-18 (Sun) 14:30-22:26 PM IST: Phase 4 - Regression Execution & Data Quality Review
 ======================================================================
-Goal:  Execute  all  hypothesis  tests  (H1-H4),  generate  regression  outputs,  and  conduct  comprehensive  data  quality  assessment  of  descriptive  statistics.
+Goal: Execute all hypothesis tests (H1-H4), generate regression outputs, and conduct comprehensive data quality assessment of descriptive statistics.
 
-Actions  Completed
+Actions Completed
 
-A)  H1  First-Stage  Regression:  Flood  →  Nighttime  Lights
--  Executed:  04_Code/27_regression_H1_first_stage.py
--  Specification:  lights_change_qt  ~  flood_exposure_ruleA_qt  +  district  FE  +  quarter  FE
--  Results:
-    •  Coefficient:  β  =  -0.0126***  (p  <  0.001)
-    •  t-statistic:  -6.31
-    •  N  =  22,716  district-quarters
-    •  Interpretation:  Floods  reduce  nighttime  lights  by  1.26  log  points  (≈1.25%  decline)
--  Outputs:
-    •  05_Outputs/Tables/02_H1_first_stage.csv
-    •  05_Outputs/Logs/27_H1_regression.txt
-    •  05_Outputs/Logs/27_H1_regression_full.txt  (complete  statsmodels  summary)
--  First-stage  strength:  Confirmed  statistically  significant,  validates  IV  strategy  for  H2
+A) H1 First-Stage Regression: Flood → Nighttime Lights
+- Executed: 04_Code/27_regression_H1_first_stage.py
+- Specification: lights_change_qt ~ flood_exposure_ruleA_qt + district FE + quarter FE
+- Results:
+  • Coefficient: β = -0.0126*** (p < 0.001)
+  • t-statistic: -6.31
+  • N = 22,716 district-quarters
+  • Interpretation: Floods reduce nighttime lights by 1.26 log points (≈1.25% decline)
+- Outputs:
+  • 05_Outputs/Tables/02_H1_first_stage.csv
+  • 05_Outputs/Logs/27_H1_regression.txt
+  • 05_Outputs/Logs/27_H1_regression_full.txt (complete statsmodels summary)
+- First-stage strength: Confirmed statistically significant, validates IV strategy for H2
 
-B)  H2  IV  2SLS  Regression:  Lights  →  Deposits  (Instrumented  by  Floods)
--  Executed:  04_Code/28_regression_H2_iv2sls.py  (revised  3x  for  correct  IV  implementation)
--  First  Stage:  lights_change_qt  ~  flood_exposure_ruleA_qt  +  controls
-    •  β  =  -0.0129***  (p  =  0.000012)
-    •  Strong  instrument  confirmed
--  Second  Stage:  deposit_change_qt  ~  lights_change_qt_hat  +  controls
-    •  Coefficient:  β  =  0.120  (p  =  0.538)
-    •  t-statistic:  0.616
-    •  N  =  22,503
-    •  Interpretation:  Null  result—no  detectable  deposit  response  to  instrumented  lights  changes
--  Outputs:
-    •  05_Outputs/Tables/03_H2_iv2sls.csv
-    •  05_Outputs/Logs/28_H2_regression.txt
-    •  05_Outputs/Logs/28_H2_iv_results.txt
--  Critical  finding:  Migration  channel  (Floods  →  Lights)  exists,  but  transmission  to  deposits  is  NOT  detected
--  Possible  explanations:  (1)  deposit  insurance  dampens  withdrawals,  (2)  remittances  offset  outflows,  (3)  measurement  error  in  lights  proxy,  (4)  insufficient  statistical  power
+B) H2 IV 2SLS Regression: Lights → Deposits (Instrumented by Floods)
+- Executed: 04_Code/28_regression_H2_iv2sls.py (revised 3x for correct IV implementation)
+- First Stage: lights_change_qt ~ flood_exposure_ruleA_qt + controls
+  • β = -0.0129*** (p = 0.000012)
+  • Strong instrument confirmed
+- Second Stage: deposit_change_qt ~ lights_change_qt_hat + controls
+  • Coefficient: β = 0.120 (p = 0.538)
+  • t-statistic: 0.616
+  • N = 22,503
+  • Interpretation: Null result—no detectable deposit response to instrumented lights changes
+- Outputs:
+  • 05_Outputs/Tables/03_H2_iv2sls.csv
+  • 05_Outputs/Logs/28_H2_regression.txt
+  • 05_Outputs/Logs/28_H2_iv_results.txt
+- Critical finding: Migration channel (Floods → Lights) exists, but transmission to deposits is NOT detected
+- Possible explanations: (1) deposit insurance dampens withdrawals, (2) remittances offset outflows, (3) measurement error in lights proxy, (4) insufficient statistical power
 
-C)  H3  Timing  /  Distributed  Lag  Analysis
--  Executed:  04_Code/29_regression_H3_timing.py
--  Specification:  deposit_change_qt  ~  flood_t0  +  flood_t1_lag  +  flood_t2_lag  +  controls
--  Results:
-    •  Contemporaneous  (t=0):  β  =  -0.0052  (p  =  0.668)
-    •  1-quarter  lag  (t-1):  β  =  0.0110  (p  =  0.372)
-    •  2-quarter  lag  (t-2):  β  =  -0.0086  (p  =  0.496)
-    •  N  =  21,912
-    •  All  coefficients  insignificant—no  clear  temporal  pattern
--  Outputs:
-    •  05_Outputs/Tables/04_H3_timing.csv
-    •  05_Outputs/Logs/29_H3_timing.txt
--  Interpretation:  No  evidence  of  delayed  "shadow  run"  effects;  deposit  responses  do  not  lag  floods  by  1-2  quarters
+C) H3 Timing / Distributed Lag Analysis
+- Executed: 04_Code/29_regression_H3_timing.py
+- Specification: deposit_change_qt ~ flood_t0 + flood_t1_lag + flood_t2_lag + controls
+- Results:
+  • Contemporaneous (t=0): β = -0.0052 (p = 0.668)
+  • 1-quarter lag (t-1): β = 0.0110 (p = 0.372)
+  • 2-quarter lag (t-2): β = -0.0086 (p = 0.496)
+  • N = 21,912
+  • All coefficients insignificant—no clear temporal pattern
+- Outputs:
+  • 05_Outputs/Tables/04_H3_timing.csv
+  • 05_Outputs/Logs/29_H3_timing.txt
+- Interpretation: No evidence of delayed "shadow run" effects; deposit responses do not lag floods by 1-2 quarters
 
-D)  H4  Heterogeneity  Analysis:  Urban  ×  Flood  Interactions
--  Executed:  04_Code/30_regression_H4_heterogeneity.py
--  Specifications:
-    1.  H4a:  deposit_change  ~  flood  ×  urban_dummy  +  controls
-          •  Interaction  coefficient:  β  =  -0.0404**  (p  =  0.005)
-          •  Main  flood  effect:  β  =  0.0059  (p  =  0.632)
-          •  Interpretation:  Urban  districts  show  4%  larger  deposit  declines  during  floods
-    2.  H4b:  deposit_change  ~  flood  ×  high_flood_exposure_district  +  controls
-          •  Interaction:  β  =  -0.0124  (p  =  0.309,  insignificant)
-    3.  H4c:  deposit_change  ~  flood  ×  monsoon_quarter  +  controls
-          •  Interaction:  β  =  -0.0067  (p  =  0.561,  insignificant)
--  Outputs:
-    •  05_Outputs/Tables/05_H4_heterogeneity.csv
-    •  05_Outputs/Logs/30_H4_heterogeneity.txt
--  Key  finding:  Urban  heterogeneity  significant,  but  high-exposure  and  seasonal  effects  not  detected
--  N  =  22,503  for  all  specifications
+D) H4 Heterogeneity Analysis: Urban × Flood Interactions
+- Executed: 04_Code/30_regression_H4_heterogeneity.py
+- Specifications:
+  1. H4a: deposit_change ~ flood × urban_dummy + controls
+     • Interaction coefficient: β = -0.0404** (p = 0.005)
+     • Main flood effect: β = 0.0059 (p = 0.632)
+     • Interpretation: Urban districts show 4% larger deposit declines during floods
+  2. H4b: deposit_change ~ flood × high_flood_exposure_district + controls
+     • Interaction: β = -0.0124 (p = 0.309, insignificant)
+  3. H4c: deposit_change ~ flood × monsoon_quarter + controls
+     • Interaction: β = -0.0067 (p = 0.561, insignificant)
+- Outputs:
+  • 05_Outputs/Tables/05_H4_heterogeneity.csv
+  • 05_Outputs/Logs/30_H4_heterogeneity.txt
+- Key finding: Urban heterogeneity significant, but high-exposure and seasonal effects not detected
+- N = 22,503 for all specifications
 
-E)  Descriptive  Statistics  -  Data  Quality  Assessment  (Critical  Review)
--  Analyzed:  05_Outputs/Tables/01_descriptive_stats.csv  (4  variables,  N=23,347)
--  Variables  reviewed:
-    1.  mean_radiance:  Mean=0.686,  σ=1.69,  max=35.02  (urban  districts)
-    2.  log_lights_qt:  Mean=0.420,  σ=0.337
-    3.  lights_change_qt:  Mean=0.005,  σ=0.110  (high  noise-to-signal  ratio)
-    4.  deposit_change_qt:  Mean=0.119,  σ=0.659
+E) Descriptive Statistics - Data Quality Assessment (Critical Review)
+- Analyzed: 05_Outputs/Tables/01_descriptive_stats.csv (4 variables, N=23,347)
+- Variables reviewed:
+  1. mean_radiance: Mean=0.686, σ=1.69, max=35.02 (urban districts)
+  2. log_lights_qt: Mean=0.420, σ=0.337
+  3. lights_change_qt: Mean=0.005, σ=0.110 (high noise-to-signal ratio)
+  4. deposit_change_qt: Mean=0.119, σ=0.659
 
-**CRITICAL  DATA  QUALITY  ISSUES  IDENTIFIED:**
+**CRITICAL DATA QUALITY ISSUES IDENTIFIED:**
 
-Issue  1:  Extreme  Outliers  in  Deposit  Changes
--  Min:  -2.73  (93%  quarterly  decline)  —  impossible  under  normal  banking
--  Max:  +6.56  (656%  quarterly  increase)  —  impossible  under  normal  banking
--  Likely  causes:  District  boundary  changes,  bank  branch  reclassifications,  RBI  data  entry  errors
--  Impact:  Outliers  bias  OLS  coefficients  and  inflate  standard  errors
--  **DECISION  REQUIRED:  Winsorize  at  1st/99th  percentile  before  final  regressions**
+Issue 1: Extreme Outliers in Deposit Changes
+- Min: -2.73 (93% quarterly decline) — impossible under normal banking
+- Max: +6.56 (656% quarterly increase) — impossible under normal banking
+- Likely causes: District boundary changes, bank branch reclassifications, RBI data entry errors
+- Impact: Outliers bias OLS coefficients and inflate standard errors
+- **DECISION REQUIRED: Winsorize at 1st/99th percentile before final regressions**
 
-Issue  2:  Nominal  Growth  Confound  (No  Deflation  Applied)
--  Mean  deposit  growth:  11.9%  quarterly  =  47.6%  annualized  (compounded)
--  Problem:  Deposits  measured  in  nominal  rupees  without  CPI  deflation
--  Impact:  Inflation  trends  confound  flood  treatment  effects;  cannot  distinguish  real  shock  from  price  growth
--  **DECISION  REQUIRED:  Either  (1)  deflate  by  CPI,  or  (2)  disclose  limitation  explicitly  in  paper**
+Issue 2: Nominal Growth Confound (No Deflation Applied)
+- Mean deposit growth: 11.9% quarterly = 47.6% annualized (compounded)
+- Problem: Deposits measured in nominal rupees without CPI deflation
+- Impact: Inflation trends confound flood treatment effects; cannot distinguish real shock from price growth
+- **DECISION REQUIRED: Either (1) deflate by CPI, or (2) disclose limitation explicitly in paper**
 
-Issue  3:  Zero-Inflation  in  Deposit  Changes
--  25th  percentile  =  0.00  →  25%  of  district-quarters  have  exactly  zero  deposit  change
--  Possible  causes:  Rounding  in  RBI  source  data,  static  rural  districts,  copy-forward  errors
--  Impact:  Potential  measurement  error,  though  may  reflect  true  absence  of  banking  activity  in  rural  areas
--  **DECISION:  Investigate  zero-change  quarters  tomorrow  (which  districts?  which  periods?)**
+Issue 3: Zero-Inflation in Deposit Changes
+- 25th percentile = 0.00 → 25% of district-quarters have exactly zero deposit change
+- Possible causes: Rounding in RBI source data, static rural districts, copy-forward errors
+- Impact: Potential measurement error, though may reflect true absence of banking activity in rural areas
+- **DECISION: Investigate zero-change quarters tomorrow (which districts? which periods?)**
 
-Issue  4:  Weak  Migration  Signal  (High  Noise)
--  lights_change_qt:  Coefficient  of  variation  =  20.7  (mean  ≈  0,  high  volatility)
--  Interpretation:  VIIRS  nighttime  lights  are  a  noisy  proxy  for  migration
--  Impact:  Attenuates  H1/H2  coefficients  toward  zero  (expected  from  proxy  variable  measurement  error)
--  This  is  inherent  to  VIIRS  data—not  a  fixable  issue,  but  must  be  acknowledged  in  paper
+Issue 4: Weak Migration Signal (High Noise)
+- lights_change_qt: Coefficient of variation = 20.7 (mean ≈ 0, high volatility)
+- Interpretation: VIIRS nighttime lights are a noisy proxy for migration
+- Impact: Attenuates H1/H2 coefficients toward zero (expected from proxy variable measurement error)
+- This is inherent to VIIRS data—not a fixable issue, but must be acknowledged in paper
 
-Issue  5:  Missing  Data  in  Change  Variables
--  lights_change_qt:  631  missing  (2.70%)
--  deposit_change_qt:  844  missing  (3.62%)
--  Expected:  631  districts  ×  1  first  period  =  631  missing  (confirmed)
--  Unexpected:  Extra  213  missing  deposit  changes  →  suggests  additional  data  gaps  beyond  lag  construction
--  **DECISION:  Diagnose  source  of  extra  213  missing  observations  tomorrow**
+Issue 5: Missing Data in Change Variables
+- lights_change_qt: 631 missing (2.70%)
+- deposit_change_qt: 844 missing (3.62%)
+- Expected: 631 districts × 1 first period = 631 missing (confirmed)
+- Unexpected: Extra 213 missing deposit changes → suggests additional data gaps beyond lag construction
+- **DECISION: Diagnose source of extra 213 missing observations tomorrow**
 
-Regression  Readiness  Checklist:
-✓  Sample  size  adequate  (N  >  20,000)
-✓  Variables  have  sufficient  variation  (all  σ  >  0)
-✗  **Outliers  NOT  handled**  (deposit_change  has  extreme  values)
-✗  **Not  deflated  to  real  terms**  (nominal  growth  confounds  trends)
-✓  Missing  data  documented  (expected  from  lag  construction)
-✓  Distributions  checked  (all  right-skewed,  expected  for  economic  data)
+Regression Readiness Checklist:
+✓ Sample size adequate (N > 20,000)
+✓ Variables have sufficient variation (all σ > 0)
+✗ **Outliers NOT handled** (deposit_change has extreme values)
+✗ **Not deflated to real terms** (nominal growth confounds trends)
+✓ Missing data documented (expected from lag construction)
+✓ Distributions checked (all right-skewed, expected for economic data)
 
-**STATUS:  Regressions  executed,  but  data  quality  issues  require  correction  before  final  results**
+**STATUS: Regressions executed, but data quality issues require correction before final results**
 
-F)  Tomorrow's  Plan:  Comprehensive  Data  Audit  &  Corrections
-Scheduled  tasks  (2026-01-19):
-1.  Microscopic  file  audit:  Verify  all  CSV  columns,  row  counts,  variable  names,  merge  keys  across  all  31  files
-2.  Apply  winsorization  to  deposit_change_qt  (trim  at  1st/99th  percentile)
-3.  Investigate  zero-change  quarters:  Identify  which  districts/periods,  assess  if  genuine  or  data  error
-4.  Diagnose  213  extra  missing  deposit  observations
-5.  Decision  on  deflation:  Implement  CPI  adjustment  OR  document  nominal-growth  limitation
-6.  Re-run  all  regressions  (Scripts  27-30)  with  corrected  data
-7.  Generate  consolidated  results  reference  file:  "Regression_Results_Summary.txt"  with  all  coefficients,  p-values,  N  for  quick  reference
-8.  Create  similar  reference  files  for:  (a)  data  decisions  log,  (b)  variable  transformations  applied,  (c)  sample  restrictions  summary
+F) Tomorrow's Plan: Comprehensive Data Audit & Corrections
+Scheduled tasks (2026-01-19):
+1. Microscopic file audit: Verify all CSV columns, row counts, variable names, merge keys across all 31 files
+2. Apply winsorization to deposit_change_qt (trim at 1st/99th percentile)
+3. Investigate zero-change quarters: Identify which districts/periods, assess if genuine or data error
+4. Diagnose 213 extra missing deposit observations
+5. Decision on deflation: Implement CPI adjustment OR document nominal-growth limitation
+6. Re-run all regressions (Scripts 27-30) with corrected data
+7. Generate consolidated results reference file: "Regression_Results_Summary.txt" with all coefficients, p-values, N for quick reference
+8. Create similar reference files for: (a) data decisions log, (b) variable transformations applied, (c) sample restrictions summary
 
 Status:
--  Phase  4  regression  scripts  complete  (H1-H4  executed)
--  Descriptive  statistics  generated  and  critically  reviewed
--  **Data  quality  issues  identified  and  documented**
--  Regressions  need  re-execution  after  corrections  applied  tomorrow
--  All  hypothesis  tests  show  preliminary  results  (H1  significant,  H2-H3  null,  H4a  significant)
+- Phase 4 regression scripts complete (H1-H4 executed)
+- Descriptive statistics generated and critically reviewed
+- **Data quality issues identified and documented**
+- Regressions need re-execution after corrections applied tomorrow
+- All hypothesis tests show preliminary results (H1 significant, H2-H3 null, H4a significant)
 
 Next:
--  Tomorrow  (2026-01-19):  Full  repository  audit,  data  corrections,  re-run  regressions  with  cleaned  data
--  Create  consolidated  reference  files  for  all  results  and  decisions
--  Prepare  for  Phase  5  (writing)  with  finalized,  publication-ready  regression  outputs
+- Tomorrow (2026-01-19): Full repository audit, data corrections, re-run regressions with cleaned data
+- Create consolidated reference files for all results and decisions
+- Prepare for Phase 5 (writing) with finalized, publication-ready regression outputs
 
 ======================================================================
-2026-01-19  (Mon)  20:00-22:44  PM  IST:  Phase  4  -  Comprehensive  Code  Audit  &  Bug  Discovery
+2026-01-19 (Mon) 20:00-22:44 PM IST: Phase 4 - Comprehensive Code Audit & Bug Discovery
 ======================================================================
-Goal:  Conduct  forensic  audit  of  entire  codebase  (Scripts  01-30)  to  identify  data  quality  issues,  validate  pipeline  integrity,  and  diagnose  regression  anomalies  discovered  on  2026-01-18.
+Goal: Conduct forensic audit of entire codebase (Scripts 01-30) to identify data quality issues, validate pipeline integrity, and diagnose regression anomalies discovered on 2026-01-18.
 
-Actions  Completed:
+Actions Completed:
 
-A)  Full  repository  code  audit  (30  scripts,  ~1,773  lines)
--  Systematic  review  methodology:  Line-by-line  code  inspection,  execution  log  cross-validation,  intermediate  file  row  count  verification
--  Scope:  Scripts  01-10  (data  acquisition/inspection),  11-20  (master  panel  construction),  21-30  (VIIRS  full  extraction  +  regressions)
--  Audit  documentation  created:  00_Admin/issues.txt  (90,921  characters,  2,370  lines,  107  sections)
--  Cross-referenced:  Script  outputs  vs  expected  outputs,  log  files  vs  code  comments,  row  counts  vs  panel  dimensions
+A) Full repository code audit (30 scripts, ~1,773 lines)
+- Systematic review methodology: Line-by-line code inspection, execution log cross-validation, intermediate file row count verification
+- Scope: Scripts 01-10 (data acquisition/inspection), 11-20 (master panel construction), 21-30 (VIIRS full extraction + regressions)
+- Audit documentation created: 00_Admin/issues.txt (90,921 characters, 2,370 lines, 107 sections)
+- Cross-referenced: Script outputs vs expected outputs, log files vs code comments, row counts vs panel dimensions
 
-B)  Critical  bug  identified:  Script  21  (VIIRS  Full  Extraction)
--  Location:  04_Code/21_extract_viirs_full_panel.py,  Line  53
--  Buggy  code:
-    ```python
-    districts_gdf  =  districts_gdf.dissolve(by='NAME_2',  as_index=False)
+B) Critical bug identified: Script 21 (VIIRS Full Extraction)
+- Location: 04_Code/21_extract_viirs_full_panel.py, Line 53
+- Buggy code:
+  ```python
+  districts_gdf = districts_gdf.dissolve(by='NAME_2', as_index=False)
 
 ======================================================================
-2026-01-20 Tue  1700-2350 PM IST: Phase 5 - Critical Bug Fix & Overnight VIIRS Regeneration
+2026-01-20 Tue 1700-2350 PM IST: Phase 5 - Critical Bug Fix & Overnight VIIRS Regeneration
 ======================================================================
 Goal: Fix Script 21 dissolve bug, backup all contaminated data, and execute overnight clean VIIRS extraction with validation.
 
@@ -826,14 +826,14 @@ A. Bug Discovery & Root Cause Analysis (1700-1730 PM IST)
 B. Contamination Quantification (1730-1800 PM IST)
 - Districts lost: 17 homonymous district-pairs merged → 676 expected districts - 17 missing = 659 actual
 - Missing monthly observations: 17 districts × 120 months = 2,040 observations
-- Missing quarterly observations: 17 districts × 40 quarters = 680 observations  
+- Missing quarterly observations: 17 districts × 40 quarters = 680 observations 
 - Measurement error propagation: 7 remaining district-pairs now share contaminated identical VIIRS values
 - Example homonymous districts: Aurangabad (Bihar vs Maharashtra), Bilaspur (Chhattisgarh vs Himachal Pradesh), Hamirpur, Pratapgarh, Bijapur
 
 C. Impact Assessment on Regression Results (1800-1830 PM IST)
 - All Phase 4 H1-H4 regression results contaminated by classical measurement error (attenuation bias)
 - H1 (Floods → Lights): β = -0.0126*** — attenuated by missing 17 districts
-- H2 (Lights → Deposits, IV): β = 0.120 (p=0.538) — weakened by contaminated first stage  
+- H2 (Lights → Deposits, IV): β = 0.120 (p=0.538) — weakened by contaminated first stage 
 - H3 (Timing lags): All insignificant — contaminated VIIRS input
 - H4 (Urban heterogeneity): β = -0.0404** (p=0.005) — standard errors incorrect (659 vs 676 district clustering)
 - Expected coefficient changes after fix: H1 β will increase in magnitude (~-0.025 to -0.030), H2 first-stage F-stat will strengthen
@@ -847,33 +847,33 @@ D. Script 21 Bug Fix Implementation (1830-1900 PM IST)
 
 E. Contaminated Data Backup Strategy (1900-1945 PM IST)
 - Created backup folders:
-  - `02_Data_Intermediate_CONTAMINATED_BACKUP/`
-  - `05_Outputs_CONTAMINATED_BACKUP/`
+ - `02_Data_Intermediate_CONTAMINATED_BACKUP/`
+ - `05_Outputs_CONTAMINATED_BACKUP/`
 - Files backed up:
-  1. viirs_monthly_panel.csv (79,080 rows, contaminated)
-  2. viirs_quarterly_panel.csv (26,360 rows, contaminated)
-  3. analysis_panel_final.csv (23,347 rows with contaminated VIIRS variables)
-  4. regression_panel_final.csv (22,503 rows, regression-ready contaminated)
-  5. All regression output CSVs (01_descriptive_stats.csv, 02_H1_first_stage.csv, etc.)
-  6. All execution logs (21_viirs_full_extraction.log, 27_H1_regression.txt, etc.)
+ 1. viirs_monthly_panel.csv (79,080 rows, contaminated)
+ 2. viirs_quarterly_panel.csv (26,360 rows, contaminated)
+ 3. analysis_panel_final.csv (23,347 rows with contaminated VIIRS variables)
+ 4. regression_panel_final.csv (22,503 rows, regression-ready contaminated)
+ 5. All regression output CSVs (01_descriptive_stats.csv, 02_H1_first_stage.csv, etc.)
+ 6. All execution logs (21_viirs_full_extraction.log, 27_H1_regression.txt, etc.)
 - Backup rationale: Enable before-after comparison to quantify measurement error impact
 
 F. Contaminated Data Deletion (1945-2015 PM IST)
 - Deleted from 02_Data_Intermediate/:
-  - viirs_monthly_panel.csv
-  - viirs_quarterly_panel.csv
+ - viirs_monthly_panel.csv
+ - viirs_quarterly_panel.csv
 - Deleted from 03_Data_Clean/:
-  - analysis_panel_final.csv  
-  - regression_panel_final.csv
+ - analysis_panel_final.csv 
+ - regression_panel_final.csv
 - Deleted from 05_Outputs/Tables/:
-  - 01_descriptive_stats.csv
-  - 02_H1_first_stage.csv
-  - 03_H2_iv2sls.csv
-  - 04_H3_timing.csv
-  - 05_H4_heterogeneity.csv
+ - 01_descriptive_stats.csv
+ - 02_H1_first_stage.csv
+ - 03_H2_iv2sls.csv
+ - 04_H3_timing.csv
+ - 05_H4_heterogeneity.csv
 - Deleted from 05_Outputs/Logs/:
-  - All VIIRS logs (18-22), all regression logs (25-30)
-  - Plus legacy logs (06, 08, 12)
+ - All VIIRS logs (18-22), all regression logs (25-30)
+ - Plus legacy logs (06, 08, 12)
 - Deletion reason: Force clean regeneration, prevent accidental use of contaminated results
 
 G. Git Commits - Documentation Trail (2015-2230 PM IST)
@@ -901,10 +901,10 @@ I. Overnight VIIRS Regeneration Initiated (2345 PM IST)
 - Expected runtime: 6-8 hours (2345 PM → ~0600 AM next day)
 - Expected output: `02_Data_Intermediate/viirs_monthly_panel.csv` with 81,120 rows (676 districts × 120 months)
 - Validation upon completion:
-  - Row count: Must be exactly 81,120
-  - District count: Must be exactly 676 unique districts
-  - Temporal coverage: 120 months (2015-01 to 2024-12)
-  - No duplicates: Each district-month combination appears exactly once
+ - Row count: Must be exactly 81,120
+ - District count: Must be exactly 676 unique districts
+ - Temporal coverage: 120 months (2015-01 to 2024-12)
+ - No duplicates: Each district-month combination appears exactly once
 
 Scientific Integrity Measures:
 - Pre-registered coefficient predictions BEFORE observing clean results (H1 β: -0.0126 → ~-0.025)
@@ -933,6 +933,212 @@ Known Remaining Data Quality Issues (unchanged, pending post-regeneration):
 - Extra 213 missing deposit observations beyond lag construction
 - These will be addressed AFTER clean VIIRS regeneration completes
 
+📋 COMMIT MESSAGE for 21b (Standalone)
+text
+fix: Aggregate duplicate districts from multi-tile VIIRS overlap using weighted averaging
+
+Problem Identified:
+- Script 21 extracted 81,120 rows but with 1,080 duplicate district-month observations
+- 9 Himalayan/Northeast border districts (Anjaw, Chamoli, East Siang, Kinnaur, 
+ Lahul & Spiti, Lohit, Lower Dibang Valley, Pithoragarh, Uttarkashi) span 
+ multiple VIIRS tiles with overlapping boundaries
+- Each tile extraction produced different mean_radiance + pixel_count values 
+ for overlapping regions
+- Example: Anjaw Jan 2015 appeared twice (radiance: 0.020 vs 0.058; pixels: 24,081 vs 45,973)
+
+Root Cause:
+- Script 21 did not anticipate multi-tile district coverage
+- Districts straddling tile boundaries were extracted independently from each tile
+- No post-extraction aggregation logic implemented
+
+Solution Implemented:
+- Created 04_Code/21b_fix_duplicate_districts.py
+- Applied pixel-count weighted averaging to combine multi-tile extractions
+- Formula: weighted_mean_radiance = Σ(mean_radiance × pixel_count) / Σ(pixel_count)
+- Aggregated all 9 affected districts across 120 months (1,080 duplicates → 1,080 unique)
+
+Results:
+- Before: 81,120 rows with 1,080 duplicates (expected 79,920 unique)
+- After: 79,920 unique district-month combinations (666 districts × 120 months)
+- Example validation: Anjaw Jan 2015 weighted mean = 0.044995 (verified manually)
+- All duplicates resolved: 0 duplicate district-month combinations remain
+
+Data Quality Impact:
+- Measurement precision improved for border districts (now accounts for full district area)
+- Pixel coverage increased for affected districts (e.g., Anjaw: 24,081 → 70,054 pixels)
+- No districts dropped (all 9 retained with corrected values)
+
+Files Modified:
+- NEW: 04_Code/21b_fix_duplicate_districts.py
+- OUTPUT: 02_Data_Intermediate/viirs_monthly_panel_fixed.csv (4.4 MB, deduplicated)
+
+Known Limitations:
+- 10 districts still missing from expected 676 GADM total (666 extracted)
+- Missing districts likely small island territories outside VIIRS tile coverage
+- Investigation deferred to next session
+
+Validation:
+- Script executed with comprehensive diagnostics (before-after comparison)
+- Manual verification of weighted averaging formula (Anjaw case study)
+- Zero duplicates confirmed via groupby().size() check
+
+Status: VIIRS monthly panel deduplication complete; quarterly aggregation ready to proceed.
+📝 RESEARCH LOG ENTRY (Exact Location)
+WHERE TO ADD:
+Add this entry AFTER the section ending with:
+
+text
 ======================================================================
-END  OF  LOG  -  Last  Updated:  2026-01-20  23:53  PM  IST
+END OF LOG - Last Updated: 2026-01-20 23:53 PM IST
+======================================================================
+WHAT TO REPLACE:
+Replace the line:
+
+text
+END OF LOG - Last Updated: 2026-01-20 23:53 PM IST
+With this new section + updated footer:
+
+text
+======================================================================
+2026-01-21 (Tue) 1730-2340 PM IST: Phase 5 Day 2 - VIIRS Extraction Validation & Multi-Tile Duplicate Fix
+======================================================================
+Goal: Verify overnight VIIRS extraction output (Script 21), validate data integrity, and resolve any anomalies discovered during validation checks.
+
+Actions Completed:
+
+A) Overnight VIIRS Extraction Completion Verification (1730-1750 PM IST)
+- Script 21 executed overnight (2026-01-20 2345 PM → 2026-01-21 ~0600 AM)
+- Execution log reviewed: 05_Outputs/Logs/21_viirs_full_extraction.log
+- Confirmed completion: "Extraction complete for all 120 months" (120/120 tiles processed)
+- Runtime: ~2.5 hours (significantly faster than 6-8hr estimate due to SSD I/O optimization)
+- Output generated: 02_Data_Intermediate/viirs_monthly_panel.csv
+
+B) Initial Data Quality Check - Duplicate Discovery (1750-1830 PM IST)
+- Basic validation script executed (temp.py diagnostic)
+- Row count: 81,120 rows (expected 676 districts × 120 months = 81,120) ✓
+- District count: 666 unique district-state pairs (expected 676) ✗
+- Problem identified: 10 districts missing + potential duplicates
+- Further diagnostic: 1,080 duplicate district-month combinations detected
+- Example case: Anjaw, Arunachal Pradesh appeared twice for each month
+ - Row 1: mean_radiance = 0.020, pixel_count = 24,081
+ - Row 2: mean_radiance = 0.058, pixel_count = 45,973
+
+C) Root Cause Analysis - Multi-Tile District Overlap (1830-1900 PM IST)
+- Hypothesis: Border districts span multiple VIIRS tiles with overlapping coverage
+- Investigation: Examined 9 affected districts (all Himalayan/Northeast border regions)
+ - Anjaw (Arunachal Pradesh)
+ - Chamoli (Uttarakhand)
+ - East Siang (Arunachal Pradesh)
+ - Kinnaur (Himachal Pradesh)
+ - Lahul & Spiti (Himachal Pradesh)
+ - Lohit (Arunachal Pradesh)
+ - Lower Dibang Valley (Arunachal Pradesh)
+ - Pithoragarh (Uttarakhand)
+ - Uttarkashi (Uttarakhand)
+- Pattern confirmed: Each district appears 2× per month (2 tiles) → 9 districts × 120 months = 1,080 duplicates
+- Geographic explanation: These districts straddle tile boundaries where 75N060E tile overlaps with adjacent tiles
+- Script 21 limitation: Extracted from each tile independently without post-aggregation logic
+
+D) Solution Design - Pixel-Weighted Averaging (1900-1945 PM IST)
+- Rejected options:
+ 1. Keep first occurrence only → loses partial district coverage from second tile
+ 2. Use max radiance → biases toward urban subregions
+ 3. Simple arithmetic mean → ignores pixel coverage heterogeneity
+- Selected approach: Pixel-count weighted averaging
+ - Formula: weighted_mean = Σ(mean_radiance × pixel_count) / Σ(pixel_count)
+ - Rationale: Accounts for varying district area captured by each tile
+ - Aggregates pixel counts additively (total district coverage)
+- Benefits:
+ - Preserves full spatial coverage (combines all tile fragments)
+ - Weights by observation precision (more pixels = higher weight)
+ - Produces single unbiased district-month observation
+
+E) Script 21b Implementation - Deduplication Fix (1945-2100 PM IST)
+- Created: 04_Code/21b_fix_duplicate_districts.py
+- Input: 02_Data_Intermediate/viirs_monthly_panel.csv (81,120 rows with duplicates)
+- Processing:
+ 1. Loaded raw panel with duplicates
+ 2. Applied groupby(['gadm_district', 'gadm_state', 'year', 'month'])
+ 3. Calculated weighted mean radiance: np.average(mean_radiance, weights=pixel_count)
+ 4. Summed pixel counts: pixel_count.sum() across duplicate rows
+ 5. Reset index to produce flat panel
+- Output: 02_Data_Intermediate/viirs_monthly_panel_fixed.csv (79,920 rows)
+- Validation checks implemented:
+ - Before-after row count comparison (81,120 → 79,920)
+ - Duplicate detection via groupby().size() (0 duplicates remaining)
+ - Manual calculation verification (Anjaw Jan 2015 case study)
+- Example verification (Anjaw Jan 2015):
+ - Before: Row 1 (0.020 × 24,081) + Row 2 (0.058 × 45,973) = 3,149.84 total radiance
+ - Total pixels: 24,081 + 45,973 = 70,054
+ - After: weighted_mean = 3,149.84 / 70,054 = 0.044995 ✓
+
+F) Validation Results - Deduplication Success (2100-2145 PM IST)
+- Executed diagnostic script: temp.py (modified for fixed panel validation)
+- Results:
+ - Total rows: 79,920 (666 districts × 120 months) ✓
+ - Unique district-state pairs: 666 ✓
+ - Duplicate district-month combinations: 0 ✓
+ - No null values detected ✓
+ - Radiance range: 0-41.33 (valid VIIRS range) ✓
+- Remaining issue: 10 districts still missing from expected 676 GADM total
+ - Investigation deferred to next session (likely small island territories outside tile coverage)
+ - Impact assessment: 10/676 = 1.5% missing districts (acceptable if not critical for analysis)
+
+G) Homonymous District Check - False Alarm Resolution (2145-2230 PM IST)
+- Diagnostic identified 14 district-state pairs with duplicate names:
+ - Aurangabad (Bihar vs Maharashtra)
+ - Balrampur (Chhattisgarh vs Uttar Pradesh)
+ - Bijapur (Chhattisgarh vs Karnataka)
+ - Bilaspur (Chhattisgarh vs Himachal Pradesh)
+ - Hamirpur (Himachal Pradesh vs Uttar Pradesh)
+ - Pratapgarh (Rajasthan vs Uttar Pradesh)
+ - Raigarh (Chhattisgarh vs Maharashtra)
+- Verification: These are EXPECTED (different districts with same names in different states)
+- GADM correctly handles via (district_name, state_name) composite key
+- Script 21b correctly preserved all 14 district-state pairs (no merging occurred)
+- Conclusion: Not a bug, proper geographic handling confirmed
+
+H) Data Pipeline Status Assessment (2230-2300 PM IST)
+- VIIRS monthly panel: VALIDATED (79,920 rows, 666 districts, 120 months)
+- Missing components:
+ 1. 10 missing districts (investigation pending)
+ 2. Quarterly aggregation (Script 22) - ready to execute
+ 3. Master panel merge (Script 23) - awaiting quarterly VIIRS
+ 4. Regression variable engineering (Script 24) - awaiting merge
+ 5. Descriptive statistics regeneration (Script 25) - awaiting variables
+ 6. H1-H4 regressions (Scripts 27-30) - awaiting analysis panel
+- Critical path: Must execute Scripts 22-25 sequentially before regressions... I) Git Commits - Deduplication Documentation (2300-2340 PM IST)
+Total commits tonight: 3 commits
+
+1. `fix: Aggregate duplicate districts from multi-tile VIIRS overlap` (Script 21b creation + fixed panel output)
+2. `test: Add VIIRS monthly panel validation diagnostics` (temp.py validation script)
+3. `doc: Update Research_Log.txt with Phase 5 Day 2 deduplication fix` (this log entry)
+
+Known Issues (Unchanged, Pending Next Session):
+- 10 districts missing from GADM baseline (676 expected, 666 extracted)
+ - Likely candidates: Lakshadweep, Andaman islands, small union territories
+ - Requires crosswalk comparison to identify specific missing districts
+- Extreme outliers in deposit changes (-273%, +656%) - winsorization pending
+- Nominal growth confound (no CPI deflation, 47.6% annualized) - decision pending
+- Zero-inflation (25% of deposit changes = 0) - investigation pending
+- Extra 213 missing deposit observations - diagnosis pending
+
+Status:
+- Script 21 VIIRS extraction complete (120 months validated)
+- Script 21b deduplication fix implemented and validated
+- VIIRS monthly panel ready for quarterly aggregation (Script 22)
+- Multi-tile overlap issue resolved via pixel-weighted averaging
+- All 9 border districts retained with corrected values (no data loss)
+- 666/676 districts covered (98.5% spatial coverage)
+
+Next Steps (2026-01-22):
+1. Identify 10 missing districts via crosswalk comparison (GADM 676 vs VIIRS 666)
+2. Execute Script 22 (quarterly aggregation) with validated monthly panel
+3. Execute Scripts 23-25 (merge + variable engineering + descriptive stats)
+4. Re-run H1-H4 regressions with clean deduplicated VIIRS data
+5. Compare Phase 4 contaminated results vs Phase 5 clean results (quantify attenuation bias)
+6. Generate consolidated regression results reference file
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-21 23:47 PM IST
 ======================================================================

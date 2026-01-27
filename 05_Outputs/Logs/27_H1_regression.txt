@@ -1,0 +1,36 @@
+======================================================================
+H1: FIRST STAGE REGRESSION
+Floods \u2192 Nighttime Lights Decline
+======================================================================
+
+Panel loaded: 23,865 rows
+Initial: 23,865 obs
+After restrictions: 23,234 obs
+Dropped: 631 obs
+District FE: 624 categories
+Quarter FE: 37 categories
+
+======================================================================
+REGRESSION SPECIFICATION
+======================================================================
+DV: lights_change_qt (\u0394 log nighttime lights)
+IV: flood_exposure_ruleA_qt (binary)
+FE: District + Quarter
+SE: Clustered by district (using statsmodels cluster functionality)
+
+Model fitted successfully
+N obs: 23,234
+R²: 0.5004
+
+======================================================================
+RESULTS: FLOOD EXPOSURE \u2192 LIGHTS CHANGE
+======================================================================
+Coefficient: -0.012504
+Std Error:   0.002846
+t-statistic: -4.394
+p-value:     0.0000
+Significance: HIGHLY SIGNIFICANT ***
+
+======================================================================
+FIRST STAGE COMPLETE
+======================================================================

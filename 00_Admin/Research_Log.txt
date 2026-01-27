@@ -1556,5 +1556,137 @@ Next Steps (2026-01-27 or next session):
 5. Draft Literature Review section (integrate all 20 papers with citations)
 
 ======================================================================
-END OF LOG - Last Updated: 2026-01-27 19:45 PM IST
+2026-01-27 (Mon) 17:00-23:45 PM IST: Phase 5 Day 8 - README Complete Rewrite & Documentation Audit
+======================================================================
+Goal: Rewrite README.md from scratch with clean separation from Research_Log.txt, eliminate redundant day-by-day chronology, and front-load clean H1-H4 regression results.
+
+Session Context:
+- README had become bloated with Phase 1-5 timeline duplicating Research_Log.txt content
+- User feedback: README should focus on structure/results/reproducibility, Research_Log covers chronological work
+- All 30 scripts validated, VIIRS panel clean (79,920 rows), H1-H4 re-run complete with clean data
+- Tonight's task: Documentation consolidation (no coding)
+
+Actions Completed
+
+A) README Structure Analysis & Redesign (1700-1800 PM IST)
+- Reviewed existing README.md (13,794 characters, Phase 1-5 sections)
+- Identified redundancy: Phase-by-phase timeline duplicated Research_Log.txt entries
+- Identified missing content: No results table, unclear current status, buried bug history
+- Design decision: README = project overview + current results + how-to-reproduce
+- Design decision: Research_Log.txt = chronological work diary + detailed debugging
+- New structure planned:
+  1. Title + status (1 paragraph)
+  2. Research question (1 paragraph)
+  3. Hypotheses & results table (H1-H4 with coefficients, p-values, N)
+  4. Data sources (4 subsections)
+  5. Sample construction (clear restrictions documented)
+  6. Repository structure (tree view)
+  7. Computational environment (setup instructions)
+  8. Reproducibility (full pipeline bash commands)
+  9. Key methodological decisions (5 design choices)
+  10. Known issues & limitations (7 items)
+  11. Critical bug history (resolved, quantified impact)
+  12. Documentation (pointers to other files)
+  13. Next steps (Phase 6 scheduled)
+  14. License + contact
+
+B) README Complete Rewrite (1800-2130 PM IST)
+- Deleted all Phase 1-5 timeline sections (covered in Research_Log.txt)
+- Front-loaded H1-H4 results table with clean Jan 27 coefficients:
+  • H1: β = -0.01250*** (p < 0.0001, N=23,234)
+  • H2: β = -0.27772** (p = 0.0198, N=23,021) — REVERSED from null after bug fix
+  • H3: β = +0.00525** (p = 0.012, N=22,423) — Unexpected positive effect
+  • H4a: β = -0.01249** (p = 0.010, N=23,021) — Urban vulnerability confirmed
+  • H4b: β = +0.01049*** (p = 0.007, N=23,021) — Adaptation in exposed areas
+  • H4c: β = -0.00121 (p = 0.732, N=23,021) — Null seasonal effect
+- Added "Key finding" paragraph: H2 reversed from contaminated null to significant after VIIRS bug fix
+- Added repository tree structure (formatted code block with folder hierarchy)
+- Added full reproducibility pipeline (bash commands for Scripts 01-30)
+- Added "Expected outputs" section with file paths and row counts
+- Added "Key methodological decisions" section (5 items with rationale + consequences)
+- Added "Known issues & limitations" section (7 items with current status)
+- Added "Critical bug history" section:
+  • Bug #1: Homonymous district merge (17 districts lost)
+  • Bug #2: Multi-tile overlap duplicates (1,080 observations)
+  • Impact: H2 coefficient REVERSED (β=0.120, p=0.538 → β=-0.278**, p=0.020)
+  • Contaminated data preserved in BACKUP folders
+- Total new README length: 14,679 characters (vs 13,794 old version)
+- Structure changes: -6 sections (Phase 1-5 removed), +8 sections (results table, decisions, bug history, reproducibility)
+
+C) Line-by-Line README Audit (2130-2245 PM IST)
+- User request: Check line-by-line for any issues
+- Audit findings:
+  • All markdown formatting correct (headers, code blocks, lists)
+  • All version numbers updated (v1.1 → v1.6 for Hypotheses, Codebook)
+  • Script 21b added to repository layout
+  • Status line shows 2026-01-27 (current)
+  • No broken links or orphaned references
+  • Repository structure tree matches actual folder hierarchy
+  • Bash commands syntax-checked (all valid)
+- Validated against Research_Log.txt: Zero content duplication confirmed
+- Cross-referenced with actual regression outputs (05_Outputs/Tables/): All coefficients match
+
+D) Documentation Version Control (2245-2330 PM IST)
+- Confirmed latest documentation versions:
+  • Hypotheses_Formal_v1.6.md (updated 2026-01-20, bug fix documented)
+  • Variables_Codebook_v1.6.md (updated 2026-01-20, VIIRS contamination noted)
+  • README.md (rewritten tonight 2026-01-27)
+  • Research_Log.txt (updated through 2026-01-26, tonight's entry pending)
+- All docs cite consistent values:
+  • RBI-GADM match rate: 83.2%
+  • EM-DAT-GADM match rate: 81.3%
+  • VIIRS districts: 666 (not 676, 10 missing)
+  • Flood exposure Rule A: 8.67% (2,220/26,640 obs)
+  • Analysis sample: 631 districts × 37 quarters = 23,347 rows
+  • Final regression N: ~23,000 (varies by lag structure)
+
+E) Git Commit Preparation (2330-2345 PM IST)
+- Commit summary drafted: "docs: Rewrite README with proper structure, results table, and no Research Log duplication"
+- Commit description drafted (12 lines):
+  • Structure changes: Front-loaded results, removed Phase 1-5 timeline
+  • Content additions: Results table (H1-H4), bug history, methodological decisions, reproducibility pipeline
+  • Removed duplication: No Phase timelines, no contaminated results details, no daily debugging
+  • Clear role separation: README = overview/results/reproducibility, Research_Log = chronology/decisions/forensics
+- Commit message emphasizes complementarity (not redundancy) between README and Research_Log
+
+F) User Feedback Integration (2345 PM IST)
+- User note recorded: "No emojis anywhere in future documentation"
+- Reviewed tonight's README: Zero emojis used ✓
+- Reviewed Research_Log.txt entries: Zero emojis used ✓
+- Reviewed Hypotheses_v1.6.md: Zero emojis used ✓
+- Reviewed Variables_Codebook_v1.6.md: Zero emojis used ✓
+- Style guideline locked: Professional academic tone, no visual decorations, pure markdown formatting
+
+Status:
+- README.md completely rewritten (14,679 characters, 0% content duplication with Research_Log.txt)
+- All H1-H4 clean results (Jan 27) integrated into results table
+- Bug history documented with quantified impact (H2 reversal from null to significant)
+- Repository structure, reproducibility pipeline, methodological decisions all documented
+- README now serves: project overview, current status, how-to-reproduce, design constraints
+- Research_Log.txt serves: chronological work log, detailed decisions, debugging forensics
+- Both documents complementary with zero redundancy
+- Documentation versions validated (v1.6 Hypotheses, v1.6 Codebook, Jan 27 README, Jan 26 Research_Log)
+- No emojis policy confirmed and retroactively validated
+
+Known Issues (Unchanged from Phase 5 Day 7):
+- 10 districts missing from 676 GADM baseline (investigation pending)
+- Extreme outliers in deposit changes (-273%, +656%) - winsorization scheduled Phase 6
+- Nominal growth confound (no CPI deflation, 47.6% annualized) - decision pending
+- Zero-inflation (25% of deposit changes = 0) - diagnosis pending
+- Extra 213 missing deposit observations - diagnosis pending
+
+Next Steps (2026-01-28, Phase 6 scheduled):
+1. Data corrections (Scripts 31-33): Diagnose outliers, zeros, missing districts
+2. Apply winsorization (1st/99th percentile) to deposit_change_qt
+3. Decide on CPI deflation: (a) deflate by India CPI, or (b) disclose nominal-growth limitation
+4. Re-run H1-H4 with corrected data
+5. Generate consolidated results table (all coefficients, SEs, t-stats, p-values, N in single CSV)
+6. Comprehensive Audit #2: Consolidate all values (match rates, exposure rates, coverage %, regression results)
+7. Cross-validate file dimensions, column names across all 31 files
+8. Verify documentation consistency (README, Hypotheses, Codebook cite same values)
+9. Create master decision log for writing phase
+10. Begin Results section writing with finalized, publication-ready numbers
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-27 23:50 PM IST
 ======================================================================

@@ -1,0 +1,18 @@
+======================================================================
+H2: IV 2SLS REGRESSION (District-Clustered SEs)
+======================================================================
+
+[FIRST STAGE: Flood -> Lights]
+  β̂  = -0.012708
+  SE = 0.002870 (clustered)
+  t  = -4.429
+  p  = 0.000010
+  N  = 23,021
+
+[SECOND STAGE: Lights_hat -> Deposits]
+  β̂  = -0.277724
+  SE = 0.119224 (clustered)
+  t  = -2.329
+  p  = 0.0198
+  Significance: **
+  N  = 23,021

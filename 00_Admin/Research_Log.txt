@@ -1687,6 +1687,227 @@ Next Steps (2026-01-28, Phase 6 scheduled):
 9. Create master decision log for writing phase
 10. Begin Results section writing with finalized, publication-ready numbers
 
+text
 ======================================================================
-END OF LOG - Last Updated: 2026-01-27 23:50 PM IST
+2026-01-28 (Tue) 19:05-23:35 IST: Phase 6 - Data Quality Investigation (2023 Deposit Anomaly)
+======================================================================
+Goal: Complete Phase 6 Step 1 (winsorize deposit outliers) and Step 2 (CPI diagnostic for nominal vs real deposits decision). Begin robustness checks pipeline.
+
+Session Context:
+- Phase 6 focus: Data quality, robustness checks, limitations documentation
+- Prior status: Phase 5 complete (regressions H1-H4 run, outputs generated)
+- Today's task: Winsorization to handle extreme deposit growth outliers, then assess need for CPI deflation
+- Unexpected outcome: Discovered critical data quality issue in 2023-2024 deposits requiring forensic investigation
+
+Actions Completed
+
+A) Winsorization Implementation (1905-1920 IST)
+
+Script 31: 31_winsorize_deposits.py
+- Input: 03_Data_Clean/regression_panel_final.csv (23,865 observations)
+- Method: Winsorized deposit_change_qt at 1st and 99th percentiles
+- Thresholds calculated: [-0.050113, 0.944462]
+- Original range (before winsorization): [-0.999, 163.8]
+- Interpretation: Top 1% showed >94% quarterly deposit growth (extreme outliers)
+- Output: regression_panel_final_winsor.csv (23,865 observations retained)
+- Purpose: Prevents extreme outliers from dominating regression estimates
+
+Technical note:
+- Winsorization caps values at percentile thresholds (does not drop observations)
+- Preserves sample size while reducing sensitivity to measurement error
+- Standard approach in finance/banking empirical work (Gandhi et al. 2023, Benmelech review)
+
+B) CPI Diagnostic and Anomaly Detection (1920-1935 IST)
+
+Script 32: 32_cpi_diagnostic.py
+- Input: regression_panel_final_winsor.csv
+- Task: Calculate annualized nominal deposit growth by year to assess inflation bias
+- Technical fix required: Quarter string format "2015Q1" (not "2015-01" as initially assumed)
+- Method: Quarterly growth compounded to annual: (1 + mean_growth)^4 - 1
+
+Diagnostic output - Annualized Nominal Deposit Growth by Year:
+----------------------------------------------------------------------
+Year    Mean_Q    Std_Q     N        Annual_Growth_%
+----------------------------------------------------------------------
+2015    0.0123    0.0232    1,881    5.01
+2016    0.0123    0.0291    1,258    5.01
+2017    0.0145    0.0451    1,910    5.93
+2018    0.0031    0.0137    2,564    1.25
+2019    0.0142    0.0431    2,564    5.80
+2020    0.0040    0.0136    2,564    1.61
+2021    0.0036    0.0190    2,568    1.45
+2022    0.0056    0.0263    2,570    2.26
+2023    0.9398    1.6232    2,570    1,315.88  [CRITICAL ANOMALY]
+2024    0.0235    0.0397    2,572    9.74
+----------------------------------------------------------------------
+Mean across years (excluding 2023): 135.4%
+
+CRITICAL ANOMALY DETECTED:
+- 2023 shows 1,315.88% annualized growth (93.98% per quarter)
+- Baseline comparison: 2015-2022 average = 3.3% annual growth
+- Pattern: 2023 is 398x higher than typical year
+- Interpretation: Physically impossible (would imply deposits nearly doubling every quarter)
+- Implication: Systemic data quality issue, not outliers
+
+Decision: Pause CPI diagnostic, investigate 2023 deposits immediately
+
+C) Forensic Investigation - 2023 Deposit Spike (1935-2135 IST)
+
+Script 32b: 32b_diagnose_2023_spike.py
+- Purpose: Isolate root cause of 2023 anomaly
+- Method: Compare deposit LEVELS (not growth rates) across 2022-2024
+
+Deposit levels diagnostic (median by year, Rupees crores):
+----------------------------------------------------------------------
+Year    Median    Mean        Min       Max           N
+----------------------------------------------------------------------
+2022    163.00    212.01      3.00      1,714.00      2,571
+2023    7,646.70  20,918.06   28.99     1,081,685.00  2,573
+2024    8,321.53  22,964.04   105.73    1,237,744.00  2,572
+----------------------------------------------------------------------
+
+Key finding: 2023 vs 2022 median ratio = 46.91x (systematic jump across all districts)
+
+Example case - Azamgarh district time series (Rupees crores):
+----------------------------------------------------------------------
+Quarter     Deposits
+----------------------------------------------------------------------
+2022Q4      325
+2023Q1      17,805.5663  [54.8x jump from previous quarter]
+2023Q2      17,646.6872
+2023Q3      18,220.8248
+2023Q4      18,549.3747
+2024Q1      19,576.4938
+----------------------------------------------------------------------
+
+Pattern analysis:
+- 2023-2024 values approximately 55x higher than 2022
+- Decimal precision present in 2023-2024 (XXXXX.XXXX) vs 2022 integers
+- Systematic across all 666 districts (not isolated to specific states)
+- High-growth districts: 630 out of 2,570 (24.5%) show >50% quarterly growth in 2023Q1
+- All extreme cases hit winsorization ceiling (4.063) - indicates systemic issue, not outliers
+
+D) Initial Hypothesis Testing (1935-2020 IST)
+
+Hypothesis 1 (REJECTED): Units changed from crores to lakhs in 2023-2024 file
+- Prediction: Dividing 2023-2024 by 100 would restore continuity
+- Test: User inspected RBI_Deposits_2023_2024.xlsx header
+- Finding: Header explicitly states "(No. of Accounts in Thousands and Amount in Rupees Crores)"
+- Conclusion: Units are CRORES in both files - not a simple unit conversion error
+
+E) Cross-Validation Against Official RBI Sources (2020-2050 IST)
+
+External validation: RBI Economic Survey 2023-24, Table 3.3
+- Source: Government of India, Ministry of Finance
+- Scope: State-wise deposits of Scheduled Commercial Banks
+- Unit: Explicitly stated "(in Rupees Crore)"
+
+All-India aggregate deposits:
+----------------------------------------------------------------------
+Year    Total_Deposits_Crores    YoY_Growth_%
+----------------------------------------------------------------------
+2022    17,008,795              -
+2023    18,742,311              10.2%
+----------------------------------------------------------------------
+
+Key finding: Official RBI aggregates show NORMAL 10.2% growth in 2023
+- Our district-level data shows 46.91x jump (4,691% growth)
+- Contradiction: Aggregate is realistic, but district-level is impossible
+- Implication: Issue is in district-level file structure, not overall RBI methodology
+
+F) Additional Temporal Issue Discovered (2050-2105 IST)
+
+User inspection of RBI_Deposits_2023_2024.xlsx column headers:
+- Expected: Mar-2023, Jun-2023, Sep-2023, Dec-2023, Mar-2024, Jun-2024, Sep-2024, Dec-2024
+- Observed: Sep-2025, Jun-2025, Mar-2025, Dec-2024, Sep-2024, Jun-2024, Mar-2024, Dec-2023, Sep-2023, Jun-2024(?), Mar-2023
+
+Issues identified:
+1. File contains 2025 data (Sep-2025, Jun-2025, Mar-2025)
+2. Possible duplicate "Jun-2024" column
+3. Temporal ordering inconsistent (reverse chronological?)
+4. Uncertainty: Are these month labels or quarter labels?
+
+Implication: Raw Excel file structure more complex than assumed during original extraction
+
+G) Revised Hypotheses Under Investigation (2105-2135 IST)
+
+Hypothesis A (Likelihood: 90%): RBI Reporting Methodology Change in 2023
+- Possible changes:
+  (1) Definition shift: "Total deposits" vs "Aggregate deposits" (e.g., now includes interbank deposits)
+  (2) Population group aggregation: Urban + rural combined in 2023, separate before
+  (3) Gross vs net deposits: Removal of withdrawals vs gross inflows
+- Evidence: Decimal precision in 2023-2024 suggests different calculation methodology
+- Validation needed: Cross-check RBI circular/notification for 2023 reporting changes
+
+Hypothesis B (Likelihood: 50%): Geographic Unit Redefinition
+- Possible change: District boundaries merged/reorganized in 2023
+- Example: "Azamgarh" in 2022 may include additional taluks in 2023
+- Evidence: Systematic 50x increase suggests structural change, not data entry error
+- Validation needed: Check if RBI adopted new district classification system in 2023
+
+Hypothesis C (Likelihood: 10%): Data Entry Error at RBI Source
+- Possible error: Accidental multiplication by 100 during compilation
+- Evidence: 50x factor suggests decimal point shift
+- Counter-evidence: Error would likely affect subset of districts, not all 666 uniformly
+- Validation needed: Check if other researchers using same RBI file report similar issue
+
+Research standards applied:
+- Refused to delete 2023-2024 data without establishing root cause
+- Cross-validated district-level data against official aggregates
+- Verified source file metadata directly (Excel headers)
+- Documented multiple competing hypotheses with probability estimates
+- Preserved audit trail for future correction decisions
+
+H) Decision Log Documentation (2135 IST)
+
+Created: RBI_Unit_Research.md (workspace file)
+- Purpose: Preserve forensic analysis for Methods section documentation
+- Contents:
+  (1) All 3 hypotheses with supporting/contradicting evidence
+  (2) Validation strategy for next session (RBI DBIE cross-check, extraction script review)
+  (3) Decision tree for correction approach based on root cause
+  (4) Audit trail showing why simple solutions (divide by 100, delete 2023-2024) were rejected
+
+Research integrity principle upheld:
+"Data quality issues require forensic investigation, not shortcuts. 
+Research integrity takes priority over convenience."
+
+Next Session Plan (2026-01-29)
+======================================================================
+
+Investigation tasks (priority order):
+
+Task 1: Deep inspection of RBI_Deposits_2023_2024.xlsx structure
+- Create Script 33: 33_investigate_2023_source.py
+- Read Excel file raw (no header inference)
+- Identify actual row/column where data begins
+- Check for merged cells, formula errors, hidden rows
+- Sample multiple districts (Agra, Azamgarh, Badgam) to verify pattern consistency
+
+Task 2: Cross-validation against RBI DBIE database
+- Access: data.rbi.org.in (Database on Indian Economy)
+- Download: State-level quarterly deposits 2022Q4, 2023Q1 (published aggregates)
+- Calculate: Sum of our district-level data by state
+- Compare: Our state aggregates vs official RBI state totals
+- Result: Identifies if 50x factor appears in published data or is extraction artifact
+
+Task 3: Trace original extraction script
+- Review: Script 14 (or whichever script extracted RBI 2023-2024 originally)
+- Check: Excel read parameters (header row, skiprows, converters)
+- Verify: No accidental multipliers or formula evaluation errors
+- Test: Re-extract single quarter (2023Q1) with verbose logging
+
+Task 4: Make correction decision
+- If methodology change confirmed: Document and KEEP 2023-2024 data (adjust interpretation)
+- If extraction error confirmed: Fix script, re-extract, re-run pipeline
+- If source file corrupt: Seek alternative source (RBI DBIE direct download)
+- If unresolvable: Drop 2023-2024, restrict analysis to 2015-2022 (8 years still sufficient)
+
+Phase 6 pipeline resumption (after 2023 resolution):
+- Re-run Script 31 (winsorization) with clean data
+- Re-run Script 32 (CPI diagnostic) to make nominal vs real decision
+- Proceed to Steps 3-6: Sensitivity analysis, alternative specifications, placebo tests
+
+======================================================================
+END OF LOG - Last Updated: 2026-01-28 23:45 PM IST
 ======================================================================

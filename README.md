@@ -2,8 +2,9 @@
 
 **Empirical analysis of flood-induced migration effects on district-level banking stability in India, 2015–2024.**
 
-**Status:** Analysis complete. H1-H4 tested with clean VIIRS data (666 districts, 37 quarters, N≈23,000). H2 mechanism validated: floods reduce nighttime lights by 1.25% (p<0.001), instrumented lights decline reduces deposits by 27.8% (p=0.020). Data corrections pending (outliers, CPI deflation).  
-**Last updated:** 2026-01-27  
+**Status:** Data extraction error discovered. RBI format changed in 2023Q1 to population-group stratification; extraction code summed groups instead of aggregating correctly, creating false 4x spike. All regression results (H1-H4) invalid until extraction corrected and pipeline re-run. Extraction fix in progress.
+
+**Last updated:** 2026-01-29  
 **Project start:** 2025-12-30
 
 ---

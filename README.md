@@ -283,23 +283,141 @@ Variables_Codebook_v1.6.md: Variable definitions, transformations, coding protoc
 Literature_Tracker.xlsx: Novelty defense matrix (20 papers), gap analysis
 Core_Claims.docx: Project positioning, contribution statement
 
-Next steps (Phase 6)
-Scheduled: 2026-01-28
+## Next Steps (Phase 6): Data Correction & Re-Extraction
+**Scheduled:** 2026-01-30 to 2026-02-02
 
-Data corrections (Scripts 31-33):
-Diagnose outliers, zeros, missing districts
-Apply winsorization (1st/99th percentile)
-Decide on CPI deflation or disclose nominal-growth limitation
-Re-run regressions with corrected data:
-Generate consolidated results table (all H1-H4 coefficients, SEs, t-stats, p-values, N)
-Compare before/after correction coefficients (quantify outlier impact)
+### PRIORITY 1: Fix RBI Extraction (Population Groups Issue)
+**Critical:** 2023-2024 data currently invalid due to population group summation error.
 
-Comprehensive Audit #2:
-Consolidate all values (match rates, exposure rates, coverage %, regression results)
-Cross-validate file dimensions, column names across all 31 files
-Verify documentation consistency (README, Hypotheses, Codebook cite same values)
-Create master decision log for writing phase
-Begin Results section writing with finalized, publication-ready numbers
+**Tasks:**
+1. **Verify Files 1-2 Structure (Script 33):**
+   - Extract 2017Q2 from both File 1 (2004-2017) and File 2 (2017-2022)
+   - Compare 50 random districts to confirm both report district totals
+   - Validate that pre-2023 files contain aggregate district deposits
+
+2. **Revise RBI Extraction Code (Script 14_revised):**
+   - Detect `POPULATION\nGROUP` column in File 3 (2023-2024)
+   - Implement population group aggregation: `groupby([district, quarter]).sum()`
+   - Filter out aggregate rows (ALL-INDIA, regional totals, Notes)
+   - Validate quarter date parsing for File 3's datetime format
+   - Document population group handling in script header
+
+3. **Re-Extract RBI Deposits (Scripts 14-17 re-run):**
+   - Execute revised 14_extract_rbi_deposits.py
+   - Run 15_merge_flood_deposits.py with corrected data
+   - Run 16_validate_master_panel.py with new deposit values
+   - Run 17_build_master_analysis.py to create corrected master panel
+
+4. **Validate Correction Success:**
+   - Check 2023Q1 follows 2022Q4 trend (20-30% annual growth)
+   - Verify Bilaspur 2023Q1: ~400-500 crores (not 29,653)
+   - Confirm max deposits < 50,000 crores (Mumbai/Delhi expected max)
+   - Validate Max/Q3 ratio < 10 (healthy distribution)
+   - Run 32b_diagnose_2023_spike.py on corrected data
+
+5. **Update Documentation:**
+   - Add population group handling to Variables_Codebook v1.7
+   - Document RBI format change in README Data Sources section
+   - Update Research_Log with extraction correction details
+   - Add RBI official citation to references
+
+### PRIORITY 2: Standard Data Cleaning (Post-Extraction Fix)
+
+**After extraction correction validated:**
+
+6. **Outlier Analysis (Script 31_revised):**
+   - Re-run winsorization on corrected deposits (1st/99th percentile)
+   - Check if winsorization still needed after population group fix
+   - Document outlier treatment decision
+
+7. **Missing Data Audit (Script 34):**
+   - Identify districts with <20 quarters of data
+   - Decide on minimum-quarter threshold for inclusion
+   - Document district exclusion criteria
+
+8. **CPI Deflation Decision (Script 35):**
+   - Research India CPI-Urban quarterly data 2015-2024
+   - Decide: deflate to real terms OR disclose nominal-growth limitation
+   - If deflating: apply CPI, regenerate deposit_change_qt
+   - Document choice in codebook with justification
+
+### PRIORITY 3: Re-Run Full Analysis Pipeline
+
+9. **Re-Merge VIIRS with Corrected Master Panel (Script 23_revised):**
+   - Merge viirs_quarterly_panel.csv with corrected deposits
+   - Generate master_panel_viirs_corrected.csv
+
+10. **Re-Engineer Regression Variables (Script 24_revised):**
+    - Regenerate log_lights_qt, lights_change_qt, deposit_change_qt
+    - Create lag variables with corrected data
+    - Output: analysis_panel_corrected.csv
+
+11. **Re-Run Descriptive Statistics (Script 25_revised):**
+    - Generate corrected summary stats
+    - Compare before/after correction (document impact)
+    - Output: 01_descriptive_stats_corrected.csv
+
+12. **Re-Run All Regressions (Scripts 27-30_revised):**
+    - H1 First Stage (flood → lights)
+    - H2 IV 2SLS (lights → deposits)
+    - H3 Timing (lag structure)
+    - H4 Heterogeneity (interactions)
+    - Save corrected results to 05_Outputs/Corrected/
+
+### PRIORITY 4: Results Consolidation & Validation
+
+13. **Generate Consolidated Results Table (Script 36):**
+    - All H1-H4 coefficients, SEs, t-stats, p-values, N in single CSV
+    - Side-by-side comparison: before vs after correction
+    - Quantify coefficient changes, significance shifts
+    - Flag which results changed substantively
+
+14. **Comprehensive Data Audit #2 (Script 37):**
+    - Cross-validate all file dimensions (rows, columns, districts, quarters)
+    - Verify match rates unchanged (crosswalk still 83.2%)
+    - Check flood exposure rates stable (Rule A 8.33%, Rule B 1.02%)
+    - Confirm VIIRS coverage (666 districts, 120 months)
+    - Document any discrepancies from pre-correction state
+
+15. **Documentation Consistency Check:**
+    - Verify README, Hypotheses v1.7, Codebook v1.7 cite same values
+    - Update all N, district counts, quarter coverage
+    - Ensure RBI format change documented consistently
+    - Cross-reference all script numbers, file names, outputs
+
+16. **Create Master Decision Log (00_Admin/Decisions_Log.md):**
+    - All major methodological choices (crosswalk threshold, flood rules, etc.)
+    - Population group aggregation decision and justification
+    - Winsorization, CPI, missing data handling
+    - Publication-ready reference for Methods section writing
+
+### PRIORITY 5: Begin Results Writing (Post-Validation)
+
+17. **Draft Results Section Outline:**
+    - Section 4.1: Descriptive Statistics
+    - Section 4.2: H1 First Stage (floods reduce lights)
+    - Section 4.3: H2 IV Results (lights → deposits mechanism)
+    - Section 4.4: H3 Timing Dynamics
+    - Section 4.5: H4 Heterogeneity Analysis
+    - Section 4.6: Robustness Checks
+
+18. **Prepare Tables and Figures:**
+    - Table 1: Descriptive statistics
+    - Table 2: Main regression results (H1-H2)
+    - Table 3: Timing and heterogeneity (H3-H4)
+    - Figure 1: Deposit time series (before/after correction)
+    - Figure 2: Event study plot (flood timing)
+
+**Estimated Duration:** 4-5 days (extraction fix: 1 day, cleaning: 1 day, re-analysis: 1 day, validation: 1 day, writing prep: 1 day)
+
+**Success Criteria:**
+- [ ] 2023Q1 spike eliminated (smooth trend from 2022Q4)
+- [ ] Max deposits < 50,000 crores
+- [ ] All regressions re-run with corrected data
+- [ ] Consolidated results table generated
+- [ ] Documentation updated and internally consistent
+- [ ] Master decision log complete
+- [ ] Results section outline drafted
 
 License & data terms
 Code: MIT License (repository-level)
@@ -312,4 +430,4 @@ University Email: jab9733@g.harvard.edu
 Institution: Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 
-Last updated: 2026-01-27 | Project initiated: December 30, 2025
+Last updated: 2026-01-29 | Project initiated: December 30, 2025

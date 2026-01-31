@@ -300,20 +300,6 @@ Fix: Pixel-weighted averaging (Script 21b, 2026-01-21)
 
 Result: H2 coefficient REVERSED from null (β=0.120, p=0.538) to significant (β=-0.278**, p=0.020) after clean VIIRS extraction.
 
-Phase 6 RBI contamination (in progress Jan 2026):
-
-Source error #1: Duplicate 2016 quarters mislabeled as 2017
-Discovered: 2026-01-30 (overlap period verification)
-Impact: 1,998 obs (8.56% of sample)
-Status: Awaiting Script 13 rewrite with date validation
-
-Source error #2: Population group stratification (2023+)
-Discovered: 2026-01-29 (diagnostic forensics)
-Impact: False 4x spike in 2023-2024
-Status: Aggregation strategy selected, implementation pending
-
-Contaminated outputs preserved in BACKUP folders for audit trail.
-
 Documentation
 - Research_Log.txt: Chronological work log (Dec 2025 - Jan 2026)
 - Hypotheses_Formal_v1.7.md: H1-H4 specs, IV strategy, contamination status
@@ -321,32 +307,6 @@ Documentation
 - Literature_Tracker.xlsx: Gap analysis (20 papers)
 - RBI_Format_Change_Confirmation.md: Official RBI evidence
 - Core_Claims.docx: Project positioning
-
-Phase 6: Data Correction Pipeline (In Progress)
-
-PRIORITY 1: Fix RBI Extraction
-1. Verify Files 1-2 structure (overlap period cross-check)
-2. Revise Script 13 with quarter-level date validation
-3. Implement population group aggregation for File 3
-4. Re-extract RBI deposits (Scripts 13-17 re-run)
-5. Validate 2023Q1 continuity (no spike)
-
-PRIORITY 2: Standard Cleaning
-6. Outlier analysis (winsorization post-correction)
-7. Missing data audit (district exclusion criteria)
-8. CPI deflation decision (real vs nominal growth)
-
-PRIORITY 3: Re-Run Analysis
-9. Re-merge VIIRS with corrected deposits
-10. Re-engineer regression variables
-11. Re-run descriptive statistics
-12. Re-run H1-H4 regressions
-
-PRIORITY 4: Validation
-13. Generate consolidated results table (before/after comparison)
-14. Comprehensive data audit #2
-15. Documentation consistency check
-16. Create master decision log
 
 Success criteria:
 

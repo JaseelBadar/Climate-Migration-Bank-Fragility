@@ -1,0 +1,23 @@
+MASTER PANEL VALIDATION REPORT
+Generated: 2026-01-12
+
+STRUCTURE:
+- Rows: 26640
+- Unique (district, state) pairs: 666
+- Quarters: 40
+- Balanced: True
+
+DATA AVAILABILITY:
+- Deposits: 23139 / 26640 (86.9%)
+- Floods (Rule A): 2220 events
+- Floods (Rule B): 272 events
+
+CRITICAL ISSUES:
+1. 2016Q3-Q4: 100% missing deposits (RBI data gap)
+2. 2017: 29.3% missing deposits
+3. Treatment coverage: 88.6% of floods have deposit data
+
+RECOMMENDATIONS:
+- DROP 2016Q3-Q4 from analysis (no deposit data)
+- INVESTIGATE 2017 gaps (specific districts or states?)
+- Use 2015-2024 with 2016Q3-Q4 excluded

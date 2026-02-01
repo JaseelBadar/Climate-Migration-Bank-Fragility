@@ -45,8 +45,8 @@ print("[3/4] Merging VIIRS with master panel (left join)...")
 
 # Left join: keep all master panel observations
 merged_df = master_df.merge(
-    viirs_df[['district_gadm', 'year', 'quarter', 'mean_radiance', 'pixel_count']],
-    on=['district_gadm', 'year', 'quarter'],
+    viirs_df[['district_gadm', 'state_gadm', 'year', 'quarter', 'mean_radiance', 'pixel_count']],  # Added state_gadm
+    on=['district_gadm', 'state_gadm', 'year', 'quarter'],  # Added state_gadm
     how='left',
     suffixes=('', '_viirs')
 )

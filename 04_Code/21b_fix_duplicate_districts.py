@@ -71,5 +71,5 @@ df_agg.to_csv(output_path, index=False)
 print(f"\n✅ Fixed data saved to: {output_path}")
 
 print("\n" + "=" * 70)
-print("NEXT STEP: Replace viirs_monthly_panel.csv with fixed version")
+print("NEXT STEP: Replace viirs_monthly_panel.csv fixed version")
 print("=" * 70)

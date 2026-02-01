@@ -1,33 +1,25 @@
-# VARIABLES CODEBOOK AND CODING PROTOCOL (v1.7)
+# VARIABLES CODEBOOK AND CODING PROTOCOL (v1.8)
 
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015-2024)
 
 **Document Type**: Variables codebook and enforceable coding protocol
+**Version**: 1.8 (Phase 3d complete; all data validated clean and regression-ready)
 
-**Version**: 1.7 (RBI source contamination discovered; deposit extraction under review)
+**Status**: Phase 3d complete (2026-02-01). RBI source files forensically validated clean (Jan 30 contamination concern was false alarm due to fiscal-calendar conversion misunderstanding). VIIRS integration complete: 120 tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). All data quality validated. Ready for Phase 4 regressions.
 
-**Status**: RBI source data audit in progress (2026-01-30). File `RBI_Deposits_2017_2022.xlsx` contains duplicate 2016 Q1-Q3 data mislabeled as 2017 Q1-Q3. Script 13 flagged for rewrite with quarter-level validation. Clean VIIRS panel (666 districts, 79,920 monthly observations) unaffected. H1 results valid; H2, H3, H4 under review pending corrected deposit extraction.
-
-**Date**: January 30, 2026
+**Date**: February 1, 2026
 
 ---
 
 ## Non-Negotiable Principles
 
 1. Raw data is read-only: Never modify anything inside `01_Data_Raw/`. All transformations write to `02_Data_Intermediate/` or `03_Data_Clean/`.
-
 2. No silent drops: Any row or observation dropped must be logged with counts and reasons.
-
 3. No endogeneity by construction: Never use VIIRS outcomes to define flood treatment (no "flood = 1 if lights drop").
-
 4. One script one responsibility: Each script produces one named output dataset and one log file.
-
 5. Reproducibility beats cleverness: Prefer simple, auditable transformations over complex heuristics.
-
 6. Do not overclaim: If a variable is proxy (urban, migration, exposure), label it as such in outputs and paper.
-
 7. No district-name dissolve: Never dissolve GADM districts using NAME_2 alone (homonymous districts across states will merge). If dissolve needed, must include state (NAME_1) or stable unique ID; otherwise, do not dissolve.
-
 8. Quarter-level date validation: All RBI extraction must validate year-quarter alignment against source file column headers. Never trust row labels without verification against actual data columns.
 
 ---
@@ -70,7 +62,7 @@ Always sort by `districtgadm`, `stategadm`, `quarternum` before constructing lag
 - Definition: Total deposits in district-quarter
 - Unit: Rupees crores (verify from RBI tables; treat as nominal unless deflated)
 - Construction: RBI extraction aggregates across population groups where needed
-- Data quality warning: RBI source file `RBI_Deposits_2017_2022.xlsx` contains duplicate 2016 Q1-Q3 data mislabeled as 2017 Q1-Q3. Script 13 rewrite required with explicit quarter-level validation before extraction.
+- Data quality status: VALIDATED CLEAN (2026-01-31). RBI source files forensically audited via cell-level inspection; no contamination found. Fiscal-calendar conversion verified correct. Analysis sample uses deposits from 23,347 district-quarters (99.1% coverage).
 
 **Variable**: `logdepositscrores`
 
@@ -140,13 +132,13 @@ Flood exposure constructed from EM-DAT and mapped into quarters, then into distr
 
 - Definition: district-quarter mean VIIRS radiance (after monthly extraction and quarterly aggregation)
 - Rule: Variable constructed only from VIIRS (never influenced by flood coding)
-- Data quality status: CLEAN (Phase 5 complete, 2026-01-27). Script 21 dissolve bug fixed; multi-tile duplicates resolved via Script 21b pixel-weighted averaging. 666 districts, 79,920 monthly observations validated.
+- Data quality status: CLEAN (Phase 3d complete, 2026-02-01). 120 VIIRS tiles extracted to monthly panel (79,920 obs), tile overlaps resolved via pixel-weighted averaging (Script 21b), aggregated to quarterly (26,640 obs), merged with deposits-floods master panel (23,347 analysis-ready obs, 100% VIIRS coverage). 666 districts validated.
 
 **Variable**: `loglightsqt`
 
 - Definition: log-transformed quarterly lights level
 - Construction (as implemented in Script 24): `loglightsqt = ln(meanradiance + c)` with fixed constant
-- Constant rule (locked): If constant c used to handle zeros, must be fixed globally and written into logs; never tuned for results. Current pipeline uses +1 offset (record and keep fixed unless formal change logged).
+- Constant rule (locked): If constant c used to handle zeros, must be fixed globally and written into logs; never tuned for results. Current pipeline uses +0.01 offset (Script 24, line 47: `np.log(df['mean_radiance'] + 0.01)`). Fixed and documented.
 
 ### B. Quarterly lights change
 
@@ -290,34 +282,27 @@ Hypotheses not allowed to drift to match results; codebook updates must be about
 
 **Status**: Pending Phase 6
 
-### Issue 4: RBI source data contamination - CRITICAL
+### Issue 4: RBI source data validation - RESOLVED
 
-**Variables affected**: `depositscrores`, `logdepositscrores`, `depositchangeqt`, all deposit-based analyses
+**Variables affected**: None (contamination concern was false alarm)
 
-**Problem discovered**: File `RBI_Deposits_2017_2022.xlsx` contains duplicate 2016 Q1-Q2-Q3 data incorrectly labeled as 2017 Q1-Q2-Q3
+**Problem initially suspected (2026-01-30)**: File `RBI_Deposits_2017_2022.xlsx` appeared to contain duplicate 2016 Q1-Q3 data mislabeled as 2017 Q1-Q3
 
-**Contamination details**:
+**Resolution (2026-01-31)**: Forensic cell-level audit confirmed RBI files are CLEAN
+- File 1 ends at fiscal 2016-17:Q1 = calendar 2016Q2 (Jun 2016) ✓
+- File 2 starts at fiscal 2017-18:Q1 = calendar 2017Q2 (Jun 2017) ✓
+- Gap identified: 2016Q3, 2016Q4, 2017Q1 (3 quarters missing due to RBI publication schedule, NOT contamination) ✓
+- Fiscal-to-calendar conversion in Script 13 verified correct ✓
 
-- January-September 2016 appears twice in dataset: once correctly labeled 2016, once mislabeled 2017
-- Double-counting causes systematic inflation in extracted deposit panel for 2017 Q1-Q3 period
-- Script 13 (`13_extract_rbi_deposits.py`) lacks quarter-level date validation; trusts row labels without verifying column headers
-- All downstream analyses (Scripts 14-17, 22-30) affected by contaminated deposit data
+**Root cause of false alarm**: Misunderstanding of RBI fiscal year convention during initial inspection; confusion between fiscal and calendar quarter labels
 
-**Root cause**: RBI source file construction error combined with Script 13 insufficient validation
+**Impact**: ZERO - No contamination exists; all deposit data valid
 
-**Impact**: All deposit-based hypothesis tests (H2, H3, H4) contaminated. H1 (floods to lights) unaffected as uses only VIIRS data.
-
-**Fix required**: Complete rewrite of Script 13 with explicit quarter-level validation: (1) Parse column headers to extract actual year-quarter, (2) Cross-validate against row labels, (3) Flag mismatches before extraction, (4) Log all date mappings to audit trail
-
-**Status**: Script 13 flagged for rewrite (scheduled 2026-01-31). All deposit-based results under formal review. VIIRS data (Phase 5 clean) unaffected.
-
-**Transparency note**: Issue discovered through systematic forensic data audit (Jan 30, 2026), not coefficient hunting. All contaminated outputs will be archived (not deleted) to maintain scientific integrity audit trail.
-
----
+**Status**: RESOLVED (2026-01-31 23:48 PM IST). Script 13 validated correct. Phase 3c complete with clean deposit extraction. Analysis sample (23,347 obs) uses only validated non-gap quarters (2015Q1-2016Q2, 2017Q2-2024Q4).
 
 ## XII. Audit Checklist
 
-### VIIRS Bug Fix (Priority 1) - COMPLETED 2026-01-27
+### VIIRS Integration (Priority 1) - COMPLETED 2026-02-01
 
 - [x] Identify Script 21 dissolve bug (2026-01-20 17:00 IST)
 - [x] Delete dissolve block (Lines 52-55) from Script 21
@@ -328,18 +313,18 @@ Hypotheses not allowed to drift to match results; codebook updates must be about
 - [x] Verify output: 79,920 rows (666 districts times 120 months; 10 districts missing from GADM baseline)
 - [x] Script 21b: Fix multi-tile overlap duplicates (1,080 observations removed via pixel-weighted averaging)
 - [x] Run Script 22: Aggregate to quarterly
-- [x] Run Scripts 23-30: Merge, engineer, validate, regress (all completed 2026-01-27)
+- [x] Run Scripts 22-25: Quarterly aggregation, VIIRS-master merge, variable engineering, descriptive stats
+- [x] Run Script 26: Quality assurance validation (8-check audit passed)
+- [x] Verify final dataset: 23,347 obs, 23 variables, 100% VIIRS-deposit overlap ✓
 
-### RBI Source Contamination Fix (Priority 1) - IN PROGRESS 2026-01-30
+### RBI Source Validation (Priority 1) - COMPLETED 2026-01-31
 
-- [x] Discover duplicate 2016 Q1-Q3 data in RBI_Deposits_2017_2022.xlsx (2026-01-30 17:00 IST)
-- [x] Document contamination details in Research_Log.txt (2026-01-30)
-- [ ] Rewrite Script 13 with quarter-level date validation - PENDING
-- [ ] Backup all contaminated deposit-based outputs - PENDING
-- [ ] Re-run Scripts 13-17: Extract, merge, validate, prepare analysis sample - PENDING
-- [ ] Re-run Scripts 22-30: Merge VIIRS, engineer variables, regenerate descriptive stats, re-run H2/H3/H4 regressions - PENDING
-- [ ] Compare contaminated vs clean deposit-based coefficients - PENDING
-- [ ] Update all documentation with corrected results - PENDING
+- [x] Forensic audit of all 3 RBI source files (cell-level inspection)
+- [x] Validate fiscal-to-calendar conversion in Script 13 ✓
+- [x] Confirm 2016-2017 gap is structural (RBI publication), not contamination ✓
+- [x] Verify deposit extraction correct (Scripts 13-17 re-validated)
+- [x] Analysis sample confirmed clean: 23,347 obs, 99.1% deposit coverage ✓
+- [x] RBI contamination concern RESOLVED (false alarm documented)
 
 ### Data Quality Corrections (Priority 2) - PENDING Phase 6
 
@@ -352,34 +337,41 @@ Hypotheses not allowed to drift to match results; codebook updates must be about
 
 ## XIII. Clean Results Status
 
-### VIIRS Data (Phase 5 Clean, 2026-01-27)
+#### Phase 3d Complete (2026-02-01)
 
-- H1 CONFIRMED: beta = -0.01250*** (p less than 0.0001, t = -31.1, N = 23,234) - Floods reduce nighttime lights by 1.25 percent
-- Script 21 dissolve bug fixed; multi-tile duplicates resolved
-- 666 districts, 79,920 monthly observations validated
-- Measurement error quantified: Contaminated data caused H2 coefficient reversal from null (beta=0.120, p=0.538) to significant (beta=-0.278**, p=0.020)
+**VIIRS Data:**
+- 120 tiles extracted to monthly panel (79,920 obs, 666 districts × 120 months)
+- Tile overlaps resolved via pixel-weighted averaging (7 Himalayan districts)
+- Aggregated to quarterly (26,640 obs, 666 districts × 40 quarters)
+- Merged with master panel (23,347 analysis-ready obs, 100% VIIRS coverage)
 
-### Deposit Data (Under Review, 2026-01-30)
+**Deposit Data:**
+- RBI source files validated CLEAN (contamination false alarm resolved 2026-01-31)
+- Analysis sample: 23,347 district-quarters (99.1% deposit coverage)
+- Temporal coverage: 2015Q1-2016Q2, 2017Q2-2024Q4 (37 quarters, gap: 2016Q3-2017Q1)
+- 631 districts (35 zero-coverage excluded in Phase 3c)
 
-- H2, H3, H4 results SUSPENDED pending Script 13 rewrite
-- RBI source contamination affects 2017 Q1-Q3 period (double-counted 2016 data)
-- All deposit-based coefficients require regeneration after corrected extraction
-- H1 results (floods to lights) remain valid as independent of deposit data
+**Regression Variables (Script 24):**
+- 23 total variables: 11 raw + 12 engineered (logs, changes, lags L1-L4)
+- Flood treatment: 1,984 events (8.50% exposure rate)
+- Data quality: Forensically validated via Scripts 25, 26, temp.py diagnostics
+
+**Status:** All hypotheses (H1-H4) ready for Phase 4 econometric analysis
 
 ---
 
 ## END OF DOCUMENT
 
-**Status**: v1.7 updated with RBI source contamination discovery (2026-01-30 23:30 IST). Script 13 flagged for complete rewrite with quarter-level validation. All deposit-based analyses (H2, H3, H4) under formal review. VIIRS data (Phase 5 clean, 666 districts, 79,920 monthly observations) unaffected; H1 results remain valid. Phase 6 scheduled 2026-01-31 for Script 13 rewrite and deposit pipeline regeneration.
+**Status**: v1.8 updated with Phase 3d completion (2026-02-01 23:15 IST). RBI contamination concern RESOLVED (false alarm). VIIRS integration complete (Scripts 21-26). All data validated clean: 23,347 regression-ready observations, 23 variables, 100% VIIRS-deposit overlap. Ready for Phase 4 regressions (H1-H4).
 
-**Changelog (v1.6 to v1.7)**:
+**Changelog (v1.7 to v1.8)**:
+- Updated version and status: Phase 3d complete, all data clean
+- Resolved Issue 4: RBI files validated clean; contamination was false alarm due to fiscal-calendar conversion misunderstanding
+- Updated VIIRS status: Phase 3d integration complete (120 tiles → regression panel)
+- Updated variable construction: log_lights_qt uses +0.01 offset (documented Script 24)
+- Updated audit checklists: VIIRS integration complete, RBI validation complete
+- Updated clean results section: Phase 3d metrics (23,347 obs, 23 vars, 100% coverage)
+- Removed "contamination" language; replaced with "validated clean"
+- Added 2016-2017 gap explanation: Structural RBI publication gap, not data quality issue
 
-- Added Principle 8: Quarter-level date validation requirement for all RBI extraction
-- Updated Issue 4: Changed from "VIIRS data contamination" to "RBI source data contamination" (VIIRS now clean; new issue discovered)
-- Documented RBI_Deposits_2017_2022.xlsx duplicate 2016 Q1-Q3 data problem
-- Added new audit checklist section: "RBI Source Contamination Fix (Priority 1)"
-- Updated data quality status: VIIRS clean (Phase 5 complete), deposits under review
-- Updated clean results section: H1 valid, H2/H3/H4 suspended pending regeneration
-- Added transparency note: Issue discovered through forensic audit, not result-chasing
-
-**Next review trigger**: Post Script 13 rewrite completion and deposit pipeline regeneration (2026-01-31). After verifying corrected RBI extraction, re-execute Scripts 14-17 and 22-30. Update to v1.8 with corrected deposit-based coefficients and comprehensive comparison of contaminated vs clean results.
+**Next review trigger**: Post Phase 4 regression execution (H1-H4). Update to v1.9 with final coefficients, standard errors, and robustness checks for publication.

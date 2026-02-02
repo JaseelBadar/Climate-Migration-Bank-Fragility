@@ -2142,5 +2142,93 @@ Next (2026-02-02):
 7. Robustness checks
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-01 23:15 PM IST
+2026-02-02 (Mon) 15:57-23:48 PM IST: Phase 4 Complete - Hypothesis Tests Executed
+======================================================================
+Goal: Execute H1-H4 regressions with district-clustered standard errors, verify outputs, update documentation.
+
+Actions Completed
+
+A) H1 First Stage - Script 27 (1557-1604 PM IST)
+- Created 27_regression_H1_first_stage.py
+- Specification: lights_change_qt ~ flood_exposure_ruleA_qt + district_FE + quarter_FE
+- Sample: 22,716 observations (631 districts, loses 1 lag per district)
+- Results:
+  Coefficient: -0.014867 (floods reduce lights by 1.49%)
+  Clustered SE: 0.002768
+  t-statistic: -5.371
+  p-value: <0.001 ***
+- Output: 02_H1_first_stage.csv, 27_H1_regression_full.txt
+- Verification: First stage strong (t > 3.5 threshold) ✓
+
+B) H2 IV 2SLS - Script 28 (1609-1611 PM IST)
+- Created 28_regression_H2_iv2sls.py
+- Specification: deposit_change_qt ~ lights_change_qt (instrumented with flood_exposure_ruleA_qt)
+- Sample: 22,503 observations (drops 844 missing deposits)
+- Results:
+  First stage: -0.015104 (t=-5.416, strong instrument) ✓
+  Second stage: 0.083926 (SE=0.164038, t=0.512, p=0.609)
+  Result: NULL (lights do not mediate deposit effects via IV)
+- Output: 03_H2_iv2sls.csv, 28_H2_iv2sls.txt
+- Interpretation: Effect operates through alternative channels or lights imperfect proxy
+
+C) H3 Timing Analysis - Script 29 (1612-1613 PM IST)
+- Created 29_regression_H3_timing.py
+- Specification: deposit_change_qt ~ flood_t0 + flood_t1_lag + flood_t2_lag + district_FE + quarter_FE
+- Sample: 21,912 observations (loses 2 lags per district = 1,435 obs)
+- Results:
+  Current quarter (t0): 0.000567 (p=0.699, NOT significant)
+  1-quarter lag (t-1): -0.006188 (p=0.000006 ***) [KEY FINDING]
+  2-quarter lag (t-2): -0.005337 (p=0.280, NOT significant)
+- Output: 04_H3_timing.csv, 29_H3_timing.txt
+- Interpretation: Delayed deposit stress peaks 3 months post-flood, dissipates by 6 months
+- Reconciliation: Explains H2 null (effect lagged, not contemporaneous)
+
+D) H4 Heterogeneity Tests - Script 30 (1616-1617 PM IST)
+- Created 30_regression_H4_heterogeneity.py
+- Three interaction specifications:
+  H4a: Urban x Flood (urban = median split on district mean lights)
+  H4b: HighExposure x Flood (high_exposure = median split on cumulative floods)
+  H4c: Monsoon x Flood (monsoon = Q3 indicator)
+- Sample: 22,503 observations (same as H2)
+- Results:
+  H4a: Baseline (rural) = +0.006948 (p<0.001), Interaction = -0.011099 (p=0.000001 ***)
+       Net urban effect: +0.69% - 1.11% = -0.42% (urban vulnerability confirmed)
+  H4b: Interaction = 0.002067 (p=0.360, NOT significant)
+  H4c: Interaction = -0.001785 (p=0.511, NOT significant)
+- Output: 05_H4_heterogeneity.csv, 30_H4_heterogeneity.txt
+- Interpretation: Urban districts experience deposit stress, rural districts show resilience (relief inflows)
+
+E) Comprehensive Verification (2130-2348 PM IST)
+- Cross-validated all terminal outputs vs CSV files (decimal precision to 6+ places) ✓
+- Verified sample size logic across specifications ✓
+- Confirmed first stage consistency (H1 vs H2 differ by 1.6% due to sample composition) ✓
+- Validated H4a rural baseline paradox (economically plausible: relief transfers, remittances) ✓
+- Inspected Script 30 code (urban variable correctly defined as median split on district mean lights) ✓
+- Verified descriptive statistics CSV (all 32 cells correct, deposit_change_qt right-skewed as expected) ✓
+- Reconciled H2 null with H3 significant lag (consistent, not contradictory) ✓
+- No errors detected in any output ✓
+
+F) Documentation Updates (2348 PM IST)
+- Updated README.md with Phase 4 results table, output structure, Key Findings section
+- Removed date-specific references, pending status language, non-existent file references
+- Added all regression table and log file listings to repository structure
+- Net change: -7 lines (more concise, results-focused)
+
+Status:
+- Phase 4 COMPLETE 
+- All hypotheses tested (H1, H3-t1, H4a confirmed; H2, H3-t0, H3-t2, H4b, H4c null) ✓
+- Key findings: Delayed deposit stress (1Q lag), urban vulnerability, lights-deposits IV null
+- All outputs numerically verified to 6+ decimal precision ✓
+- District-clustered standard errors throughout ✓
+- 8 regression outputs: 5 CSV tables + 4 detailed logs ✓
+- Documentation complete and consistent ✓
+
+Next:
+1. Robustness checks (Rule B, winsorization, longer lags) [optional]
+2. Regression tables formatting (LaTeX) [Phase 5]
+3. Results interpretation memo [Phase 5]
+4. Paper drafting [Phase 6]
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-02 23:50 PM IST
 ======================================================================

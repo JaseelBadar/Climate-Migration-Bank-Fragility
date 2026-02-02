@@ -2,9 +2,9 @@
 
 **Empirical analysis of flood-induced migration effects on district-level banking stability in India, 2015-2024.**
 
-**Status:** Phase 3d Complete. Regression-ready data validated (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). 120 VIIRS tiles processed to quarterly panel. RBI contamination concern resolved (false alarm, 2026-01-31). All data clean. Ready for Phase 4 regressions (H1-H4).
+**Status:** Phase 4 Complete. All regressions executed (H1-H4). Results: H1 confirmed (floods reduce lights), H2 null (lights-deposits IV), H3 confirmed (1-quarter lagged effect), H4a confirmed (urban vulnerability). Data validated clean (23,347 obs, 23 variables).
 
-**Last updated:** 2026-02-01
+**Last updated:** 2026-02-02
 **Project start:** 2025-12-30
 
 ---
@@ -17,20 +17,18 @@ Do climate disasters trigger migration (proxied by nighttime-lights declines) th
 
 ## Hypotheses & Current Results
 
-**NOTE:** Phase 3d complete (2026-02-01). All data validated clean. Phase 4 regressions pending (scheduled 2026-02-02).
+| Hypothesis | Specification | Coefficient | p-value | Result |
+|------------|---------------|-------------|---------|--------|
+| **H1** | Floods → Lights (first stage) | -0.0149 | <0.001 | Confirmed |
+| **H2** | Lights → Deposits (IV 2SLS) | 0.0839 | 0.609 | Null |
+| **H3-t0** | Floods → Deposits (current) | 0.0006 | 0.699 | Null |
+| **H3-t1** | Floods → Deposits (1Q lag) | -0.0062 | <0.001 | Confirmed |
+| **H3-t2** | Floods → Deposits (2Q lag) | -0.0053 | 0.280 | Null |
+| **H4a** | Urban × Flood | -0.0111 | <0.001 | Confirmed |
+| **H4b** | HighExp × Flood | 0.0021 | 0.360 | Null |
+| **H4c** | Monsoon × Flood | -0.0018 | 0.511 | Null |
 
-| Hypothesis | Specification | Status | Notes |
-|------------|---------------|--------|-------|
-| **H1** | Floods → Lights (first stage) | Ready | Data: 23,347 obs, 100% VIIRS coverage |
-| **H2** | Lights → Deposits (IV 2SLS) | Ready | Instrumented with flood exposure |
-| **H3** | Timing (lags L1-L4) | Ready | Distributed lag variables engineered |
-| **H4a** | Urban × Flood | Ready | Interaction terms constructible |
-| **H4b** | High-exposure × Flood | Ready | Baseline classification required |
-| **H4c** | Monsoon × Flood | Ready | Quarter indicator available |
-
-**Data quality:** All Phase 3d validation passed (Scripts 25, 26, temp.py diagnostics). Regression variables engineered (logs, changes, lags). No preliminary results to report.
-
-**Standard errors:** District-clustered in all specifications.
+**Key findings:** Floods reduce economic activity (H1) and cause delayed deposit stress (H3, 1-quarter lag). Effect concentrated in urban districts (H4a). Nighttime lights do not mediate deposit effects via IV (H2 null). All specifications use district-clustered standard errors.
 
 ---
 
@@ -95,7 +93,7 @@ Raw data never modified. All transformations in intermediate/clean folders.
 - Flood-deposit overlap: 100%
 - Treatment rate: 8.50% (1,984 flood events)
 
-### Phase 3d: VIIRS Integration (Complete 2026-02-01)
+### Phase 3d: VIIRS Integration (Complete)
 
 **VIIRS Monthly Extraction** (Scripts 21, 21b)
 - 79,920 rows (666 districts × 120 months, 2015-01 to 2024-12)
@@ -117,10 +115,9 @@ Raw data never modified. All transformations in intermediate/clean folders.
 - Changes: deposit_change_qt, lights_change_qt
 - Lags: flood_ruleA_L1-L4, flood_ruleB_L1-L4
 
-**Validation** (Scripts 25, 26, temp.py)
+**Validation** (Scripts 25, 26)
 - Descriptive statistics generated
 - 8-check QA validation passed
-- Pixel variance diagnostics confirmed natural variation
 - Data quality: Forensically validated clean
 
 **District crosswalk:**
@@ -192,14 +189,21 @@ E:\Climate-Migration-Bank-Fragility\
 ├── 31: Winsorization (deposits)
 └── 32-32b: CPI diagnostic, 2023 spike investigation
 
+NEW:
 05_Outputs/
 ├── Tables/
-│   └── 01_descriptive_stats.csv (Phase 3d complete)
+│   ├── 01_descriptive_stats.csv
+│   ├── 02_H1_first_stage.csv
+│   ├── 03_H2_iv2sls.csv
+│   ├── 04_H3_timing.csv
+│   └── 05_H4_heterogeneity.csv
 ├── Logs/
 │   ├── 25_descriptive_summary.txt
-│   ├── 26_viirs_monthly_validation.txt
-│   └── diagnose_all_files_20260129_185928.log
-└── Figures/ - (empty, pending)
+│   ├── 27_H1_regression_full.txt
+│   ├── 28_H2_iv2sls.txt
+│   ├── 29_H3_timing.txt
+│   └── 30_H4_heterogeneity.txt
+└── Figures/ - (empty)
 
 06_Drafts/ - (empty, pending)
 
@@ -254,15 +258,24 @@ python 04_Code/30_regression_H4_heterogeneity.py
 
 Expected outputs:
 
-Phase 3d (Complete):
+Expected outputs:
+
+Phase 3d:
 - 02_Data_Intermediate/viirs_monthly_panel.csv (79,920 rows)
 - 02_Data_Intermediate/viirs_quarterly_panel.csv (26,640 rows)
 - 03_Data_Clean/analysis_panel_final.csv (23,347 rows)
 - 03_Data_Clean/regression_panel_final.csv (23,347 rows, 23 variables)
-- 05_Outputs/Tables/01_descriptive_stats.csv
 
-Phase 4 (Pending):
-- 05_Outputs/Tables/02_H1_first_stage.csv through 05_H4_heterogeneity.csv
+Phase 4:
+- 05_Outputs/Tables/01_descriptive_stats.csv
+- 05_Outputs/Tables/02_H1_first_stage.csv
+- 05_Outputs/Tables/03_H2_iv2sls.csv
+- 05_Outputs/Tables/04_H3_timing.csv
+- 05_Outputs/Tables/05_H4_heterogeneity.csv
+- 05_Outputs/Logs/27_H1_regression_full.txt
+- 05_Outputs/Logs/28_H2_iv2sls.txt
+- 05_Outputs/Logs/29_H3_timing.txt
+- 05_Outputs/Logs/30_H4_heterogeneity.txt
 
 Key Methodological Decisions
 
@@ -311,13 +324,13 @@ Growth variables lose first quarter per district (lag construction)
 SECONDARY ISSUES:
 
 3. 10 missing districts (676 GADM → 666 VIIRS extraction)
-Likely small islands/UTs outside tile 75N060E coverage
-Investigation pending
+Small islands/UTs outside tile 75N060E coverage
+Not recoverable; analysis proceeds with 666 districts
 
 4. VIIRS measurement error
-Nighttime lights = noisy migration proxy (CV=20.7)
-Attenuates coefficients toward zero
-Inherent to VIIRS data; acknowledged in interpretation
+Nighttime lights imperfect migration proxy (standard deviation 0.33 in logs)
+May attenuate coefficients or introduce measurement error
+H2 null result may reflect proxy limitations rather than true null effect
 
 5. EM-DAT geographic precision
 17.4% of flood events require Location text parsing
@@ -329,7 +342,7 @@ Crosswalk cleaning applied, some ambiguity remains
 Fuzzy matching threshold (80%) trades precision for coverage
 
 Critical Bug History
-Phase 4 VIIRS contamination (resolved Jan 2026):
+Phase 4 VIIRS contamination (resolved):
 
 Bug #1: Homonymous district merge
 Root cause: dissolve(by='NAME_2') ignored state boundaries
@@ -341,30 +354,17 @@ Root cause: 9 border districts extracted twice across tile boundaries
 Impact: 1,080 duplicate observations
 Fix: Pixel-weighted averaging (Script 21b, 2026-01-21)
 
-RBI contamination concern (resolved 2026-01-31):
-- Initial concern: Suspected duplicate 2016 Q1-Q3 data in RBI_Deposits_2017_2022.xlsx
-- Investigation: Cell-level forensic audit of all 3 RBI files
-- Resolution: Files confirmed CLEAN; concern was false alarm due to fiscal-calendar conversion misunderstanding
-- Impact: Zero (no actual contamination; all deposit data valid)
-- Documentation: Full audit trail preserved in Research_Log.txt (2026-01-31 session)
-
-Result: H2 coefficient REVERSED from null (β=0.120, p=0.538) to significant (β=-0.278**, p=0.020) after clean VIIRS extraction.
+RBI contamination concern (resolved):
+- Files confirmed CLEAN via forensic audit
+- 2016-2017 gap is structural (RBI publication schedule), not data error
+- Impact: Zero (no contamination)
 
 Documentation
-- Research_Log.txt: Chronological work log (Dec 2025 - Feb 2026)
-- Hypotheses_Formal_v1.8.md: H1-H4 specs, IV strategy, Phase 3d status
-- Variables_Codebook_v1.8.md: Variable definitions, Phase 3d completion
+- Research_Log.txt: Chronological work log
+- Hypotheses_Formal_v1.7.md: H1-H4 specifications, IV strategy
+- Variables_Codebook_v1.7.md: Variable definitions, transformations
 - Literature_Tracker.xlsx: Gap analysis (20 papers)
-- RBI_Format_Change_Confirmation.md: Official RBI evidence
 - Core_Claims.docx: Project positioning
-
-Success criteria:
-
--2023Q1 spike eliminated
--Max deposits < 50,000 crores
--Smooth 2022Q4 → 2023Q1 transition
--All regressions re-run with corrected data
--Documentation updated consistently
 
 License & Data Terms
 Code: MIT License (repository-level)
@@ -378,4 +378,4 @@ University Email: jab9733@g.harvard.edu
 Institution: Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 
-Last updated: 2026-02-01 | Project initiated: December 30, 2025
+Last updated: 2026-02-02 | Project initiated: December 30, 2025

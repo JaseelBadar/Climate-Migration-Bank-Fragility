@@ -200,7 +200,7 @@ NEW:
 ├── Logs/
 │   ├── 25_descriptive_summary.txt
 │   ├── 27_H1_regression_full.txt
-│   ├── 28_H2_iv2sls.txt
+│   ├── 28_H2_regression.txt
 │   ├── 29_H3_timing.txt
 │   └── 30_H4_heterogeneity.txt
 └── Figures/ - (empty)
@@ -273,7 +273,7 @@ Phase 4:
 - 05_Outputs/Tables/04_H3_timing.csv
 - 05_Outputs/Tables/05_H4_heterogeneity.csv
 - 05_Outputs/Logs/27_H1_regression_full.txt
-- 05_Outputs/Logs/28_H2_iv2sls.txt
+- 05_Outputs/Logs/28_H2_regression.txt
 - 05_Outputs/Logs/29_H3_timing.txt
 - 05_Outputs/Logs/30_H4_heterogeneity.txt
 

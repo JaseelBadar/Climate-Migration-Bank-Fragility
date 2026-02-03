@@ -281,6 +281,94 @@ If H1 fails, displacement proxy fails and chain cannot be claimed.
 
 ---
 
-**Last updated**: 2026-02-01 23:15 IST (v1.8)
+**Last updated**: 2026-02-02 21:30 IST (v1.8)
 
-**Status**: Phase 3d complete. All data validated clean (RBI contamination false alarm resolved). Regression-ready panel: 23,347 obs, 23 variables, 100% VIIRS-deposit overlap. Ready for Phase 4 hypothesis testing (H1-H4). No hypotheses modified; only data preparation status updated.
+**Status**: Phase 4 complete. All hypotheses tested (H1, H3-t1, H4a confirmed; H2, H3-t0/t2, H4b/c null). Results documented below.
+
+---
+
+## Empirical Results (Phase 4 Complete)
+
+**Analysis Period:** 2015Q1-2024Q4 (37 quarters, excludes 2016Q3-2017Q1 RBI gap)
+**Sample:** 23,347 district-quarters (631 districts)
+**Standard Errors:** District-clustered in all specifications
+**Fixed Effects:** District + Quarter in all specifications
+
+### H1: First Stage (Floods → Economic Activity)
+
+**Specification:** lights_change_qt ~ flood_exposure_ruleA_qt + district_FE + quarter_FE
+
+**Result:** CONFIRMED
+- Coefficient: -0.014867 (floods reduce lights by 1.49%)
+- Standard Error: 0.002768 (clustered)
+- t-statistic: -5.371
+- p-value: <0.001
+- N: 22,716 observations
+- R-squared: 0.5566
+
+**Interpretation:** Strong first stage. Floods cause significant immediate decline in nighttime lights (economic activity proxy). Instrument strength exceeds conventional threshold.
+
+### H2: Reduced Form IV (Lights → Deposits)
+
+**Specification:** deposit_change_qt ~ lights_change_qt_hat + district_FE + quarter_FE (instrumented with flood_exposure_ruleA_qt)
+
+**Result:** NULL
+- First Stage: -0.015104 (t=-5.416, strong instrument)
+- Second Stage: 0.083926 (SE=0.164038, t=0.512, p=0.609)
+- N: 22,503 observations
+
+**Interpretation:** Nighttime lights do not mediate deposit effects via IV. Three possible explanations: (1) lights are noisy migration proxy, (2) effect operates through non-migration channels (direct flood damage, credit constraints), (3) effect is lagged not contemporaneous (see H3).
+
+### H3: Timing Structure (Distributed Lags)
+
+**Specification:** deposit_change_qt ~ flood_t0 + flood_t1_lag + flood_t2_lag + district_FE + quarter_FE
+
+**Results:**
+- Current Quarter (t0): 0.000567 (SE=0.001464, t=0.387, p=0.699) NOT significant
+- 1-Quarter Lag (t-1): -0.006188 (SE=0.001368, t=-4.522, p<0.001) CONFIRMED
+- 2-Quarter Lag (t-2): -0.005337 (SE=0.004938, t=-1.081, p=0.280) NOT significant
+- N: 21,912 observations
+
+**Interpretation:** Delayed deposit stress. Floods cause deposit declines with 1-quarter (3-month) lag, not contemporaneously. Effect peaks at t-1 (-0.62%) and dissipates by t-2. This reconciles H2 null: effect is lagged, not immediate.
+
+### H4: Heterogeneity Analysis
+
+**Specification:** deposit_change_qt ~ flood + [interaction_term] + district_FE + quarter_FE
+
+**H4a: Urban × Flood - CONFIRMED**
+- Baseline (rural): 0.006948 (SE=0.001916, t=3.626, p<0.001)
+- Interaction: -0.011099 (SE=0.002259, t=-4.913, p<0.001)
+- Net Urban Effect: +0.69% - 1.11% = -0.42% (deposit decline)
+- N: 22,503 observations
+
+**Interpretation:** Urban vulnerability. Flood effects concentrated in urban districts. Rural baseline paradoxically positive (+0.69%), likely reflecting relief transfers or remittances. Urban districts experience net deposit stress (-0.42%).
+
+**H4b: High-Exposure × Flood - NULL**
+- Interaction: 0.002067 (SE=0.002258, t=0.915, p=0.360)
+
+**Interpretation:** No evidence of adaptation in chronically flood-prone districts.
+
+**H4c: Monsoon × Flood - NULL**
+- Interaction: -0.001785 (SE=0.002716, t=-0.657, p=0.511)
+
+**Interpretation:** Monsoon season floods do not produce different deposit effects than off-season floods.
+
+---
+
+## Summary of Findings
+
+**Confirmed Hypotheses (3/8):**
+1. H1: Floods reduce economic activity (lights)
+2. H3-t1: Floods cause delayed deposit stress (1-quarter lag)
+3. H4a: Urban districts vulnerable (rural districts resilient)
+
+**Null Results (5/8):**
+1. H2: Lights do not mediate deposits via IV (contemporaneous)
+2. H3-t0: No immediate deposit effect
+3. H3-t2: Effect dissipates by 2 quarters post-flood
+4. H4b: No adaptation in high-exposure districts
+5. H4c: No monsoon seasonality effect
+
+**Key Insight:** Floods cause banking fragility through delayed, geographically concentrated mechanisms. Effect emerges 3 months post-disaster and concentrates in urban areas. Nighttime lights confirm economic disruption but do not fully mediate deposit effects.
+
+**Policy Implication:** Banking regulators should monitor deposit trends in urban flood-affected districts with 3-6 month post-disaster window. Rural areas may not require intervention or benefit from different support mechanisms.

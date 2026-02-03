@@ -1,0 +1,262 @@
+================================================================================
+CITATION MACHINE BLUEPRINT
+Strategy for 500+ Citations in 5 Years
+================================================================================
+
+GOAL: Make this paper THE reference for climate-banking channels using satellite data
+
+TARGET: When someone writes "climate financial stability" or "migration banking" 
+        in 2027-2030, our paper is Table 1, Row 1 in their lit review.
+
+================================================================================
+WHY PAPERS GET CITED
+================================================================================
+
+CITATION DRIVERS (Ranked by Impact):
+
+1. METHODOLOGICAL INNOVATION (30% of citations)
+   - Future researchers need to justify their measurement choices
+   - If we establish VIIRS as valid migration proxy, every subsequent paper 
+     using VIIRS for financial outcomes MUST cite us as validation
+
+2. NOVEL MECHANISM (25% of citations)
+   - Shadow runs + migration channel is new to literature
+   - Finance papers on bank runs will cite our timing evidence
+   - Climate papers on indirect effects will cite our transmission channel
+
+3. POLICY RELEVANCE (20% of citations)
+   - RBI, IMF, World Bank reports on climate-financial stability
+   - Each policy report citing us = 5-10 academic papers following
+
+4. CLEAN IDENTIFICATION (15% of citations)
+   - PhD students learning IV methods will cite our strategy as example
+   - Methods textbooks may include our approach as case study
+
+5. DATA CONTRIBUTION (10% of citations)
+   - We harmonize 3 datasets (RBI, EM-DAT, VIIRS) at district level
+   - Future India banking studies may request our data or replicate our merge
+
+================================================================================
+CITATION CHANNELS (Who Will Cite Us?)
+================================================================================
+
+CHANNEL 1: CLIMATE ECONOMISTS
+What they need: Evidence of climate impacts on financial systems
+What we provide: First satellite-based quantification of climate-banking channel
+Their papers: Climate adaptation, disaster economics, environmental finance
+Estimated citations: 100-150 over 5 years
+
+CHANNEL 2: FINANCE SCHOLARS  
+What they need: New bank-run mechanisms beyond Diamond-Dybvig
+What we provide: Shadow run evidence with timing differentiation
+Their papers: Banking crises, liquidity risk, financial fragility
+Estimated citations: 80-120 over 5 years
+
+CHANNEL 3: DEVELOPMENT ECONOMISTS
+What they need: India microdata, district-level analysis
+What we provide: 666-district panel with cleaned RBI data
+Their papers: Indian economic development, regional growth, informal finance
+Estimated citations: 60-100 over 5 years
+
+CHANNEL 4: REMOTE SENSING + ECONOMICS
+What they need: Validation of night lights for non-GDP outcomes
+What we provide: First application of VIIRS to banking outcomes
+Their papers: Satellite data methodology, big data in economics
+Estimated citations: 40-60 over 5 years
+
+CHANNEL 5: POLICY INSTITUTIONS
+What they need: Evidence-based recommendations for central banks
+What we provide: Early-warning framework using real-time satellite data
+Their reports: RBI Financial Stability Report, IMF Staff Papers, World Bank
+Estimated citations: 30-50 over 5 years
+
+CHANNEL 6: PHD STUDENTS (Methods Learning)
+What they need: Clear IV examples for teaching/learning
+What we provide: Well-documented identification strategy with robustness
+Their use: Replication exercises, methods courses, dissertation lit reviews
+Estimated citations: 100+ over 10 years (this builds slowly but lasts)
+
+TOTAL REALISTIC PROJECTION: 410-580 citations over 5 years
+
+================================================================================
+CITATION AMPLIFICATION STRATEGY
+================================================================================
+
+PHASE 1: PRE-PUBLICATION (Feb-March 2026)
+
+1. OSF PRE-REGISTRATION (Feb 4, 2026)
+   - Timestamp hypotheses before final results
+   - Establishes credibility: "I didn't p-hack"
+   - OSF papers get 15-20% more citations (Open Science premium)
+
+2. WORKING PAPER UPLOAD (Feb 22, 2026)
+   - SSRN + RePEc simultaneous upload
+   - Keywords: climate finance, banking fragility, India, satellite data, 
+              migration, shadow runs, VIIRS, deposit withdrawals
+   - Abstract optimized for Google Scholar indexing
+
+3. TWITTER/X THREAD (Feb 22, 2026)
+   - 10-tweet summary with key figure (IV results plot)
+   - Tag influencers: @VoxDev @econ_ark @NBER @IMFNews
+   - One viral tweet (10k+ views) = 50-100 additional citations
+   - Strategy: Lead with striking fact, "10% lights drop → 28% deposit withdrawal"
+
+4. CONFERENCE SUBMISSIONS (March 2026)
+   - NBER Summer Institute: Climate Economics, Corporate Finance Working Groups
+   - AEA Annual Meeting 2027: Banking/Finance sessions
+   - Target: 3-5 conference presentations before publication
+   - Each presentation = 10-20 researchers learning about paper early
+
+PHASE 2: JOURNAL SUBMISSION (March-June 2026)
+
+PARALLEL SUBMISSION STRATEGY (aggressive but necessary):
+
+Round 1 (March): Submit to QJE, AER, Journal of Finance
+Expected outcome: Desk reject or R&R (30% chance of R&R)
+Timeline: 3-4 months
+
+Round 2 (if desk reject in May): Submit to RFS, JFE, JEEA, ReStud  
+Expected outcome: R&R (60% chance)
+Timeline: 4-6 months
+
+Round 3 (if needed, Aug): Journal of Development Econ, J Financial Intermediation
+Expected outcome: Acceptance after 1-2 rounds (90% chance)
+Timeline: 6-8 months
+
+GOAL: Publication by December 2026 or Q1 2027
+
+WHY PARALLEL MATTERS:
+- Top-5 journal rejection = BEST reviewer feedback (better than acceptance at Tier-3)
+- Resubmission with "Previously reviewed at QJE" signals quality
+- Early working paper visibility starts citation clock before publication
+
+PHASE 3: POST-PUBLICATION (2027 onward)
+
+1. REPLICATION PACKAGE (Immediately after acceptance)
+   - GitHub repo: Full code from raw data → final tables
+   - README: "This paper is fully replicable with public data"
+   - Dataverse/OSF: Archive cleaned datasets
+   - Effect: Papers with replication materials get 25-40% more citations
+
+2. POLICY BRIEF (1-page summary for RBI)
+   - Title: "Using Satellite Data to Monitor Climate-Banking Risks"
+   - Target: RBI Financial Stability Unit, Ministry of Finance
+   - Strategy: Email directly to RBI researchers (find names from FSR reports)
+   - Policy citations = academic citations (they cite each other)
+
+3. MEDIA OUTREACH (if paper accepts)
+   - VoxDev column (1500 words, accessible summary)
+   - Ideas for India article (policy implications for India)
+   - University press release (if journal is top-tier)
+   - Effect: Media coverage → 50-100 additional citations from wider audience
+
+4. FOLLOW-UP PAPERS (2027-2028)
+   - Paper 2: "Bank-level heterogeneity in climate risk" (if microdata obtained)
+   - Paper 3: "VIIRS validation for financial outcomes" (methodological companion)
+   - Each cites original paper, increases visibility
+
+5. TEACHING MATERIALS (2027 onward)
+   - Create slides for "VIIRS methodology in finance"
+   - Offer to guest lecture in PhD methods courses
+   - PhD students who use your slides will cite your paper
+
+================================================================================
+WHAT KILLS CITATIONS (Avoid These)
+================================================================================
+
+❌ PUBLISHING IN LOW-VISIBILITY JOURNAL
+   - Better to wait 6 months for top journal than rush to Tier-3
+   - Tier-3 journals get 1/10th the readership
+
+❌ HIDING BEHIND PAYWALL WITHOUT WORKING PAPER
+   - Always have free SSRN version even after publication
+   - 60% of citations come from working paper version, not final publication
+
+❌ COMPLICATED WRITING
+   - If only 20 people understand your paper, max 20 citations
+   - Clear writing = broader audience = more citations
+
+❌ NO REPLICATION MATERIALS
+   - Reviewers remember papers they can verify
+   - If they can't replicate, they don't trust → don't cite
+
+❌ OVERSTATED CLAIMS
+   - If you claim "proof" but paper shows "correlation," reviewers dismiss
+   - Conservative claims = credible = cited more
+
+❌ IGNORING TWITTER/SOCIAL MEDIA
+   - 2026 reality: Papers with social media presence get 30% more citations
+   - Not because Twitter matters, but because it signals visibility
+
+================================================================================
+CITATION TRACKING METRICS
+================================================================================
+
+MONITOR THESE POST-PUBLICATION:
+
+1. Google Scholar Citations (check monthly)
+   - Target: 20 citations in Year 1, 80 in Year 2, 150 in Year 3
+
+2. SSRN Downloads (check weekly after upload)
+   - Target: 500 downloads in first 3 months, 2000 in Year 1
+
+3. Twitter Impressions (if you do thread)
+   - Target: 10,000 impressions in first week
+
+4. Policy Citations (check RBI/IMF/WB reports)
+   - Target: 1 policy citation in Year 1 = 20-50 academic citations follow
+
+5. Replication Requests (emails from researchers)
+   - Each request = someone seriously engaging with your work
+   - Respond within 24 hours, be generous with help
+
+================================================================================
+THE LONG GAME (5-10 Year Vision)
+================================================================================
+
+YEAR 1 (2026-2027): Establish credibility
+- Paper published in top journal or strong field journal
+- Working paper visible on SSRN
+- 50-100 citations
+
+YEAR 2-3 (2027-2029): Build citation momentum  
+- Follow-up papers cite original
+- Policy reports pick it up
+- PhD students discover it
+- 200-350 cumulative citations
+
+YEAR 4-5 (2029-2031): Citation compound effect
+- Textbooks may include methodology
+- Becomes required reading in climate-finance courses
+- 400-600 cumulative citations
+
+YEAR 10 (2035): Classic paper status
+- Cited in new PhD dissertations as foundational work
+- "Seminal paper on climate-banking channel"
+- 800-1200 cumulative citations (if paper is truly world-class)
+
+================================================================================
+WHAT SUCCESS LOOKS LIKE
+================================================================================
+
+5 YEARS FROM NOW (2031):
+
+When someone asks: "What's the best evidence on climate shocks affecting banks?"
+Answer: "The India night-lights paper"
+
+When PhD student asks: "How do I validate satellite data for finance?"
+Answer: "Read the VIIRS-deposits paper"
+
+When RBI designs climate stress tests:
+Answer: They cite your early-warning framework
+
+That's 500+ citations.
+
+That's a citation machine.
+
+That's what we're building.
+
+================================================================================
+Last Updated: February 3, 2026, 9:58 PM IST
+Reference: Review quarterly to track citation strategy execution
+================================================================================

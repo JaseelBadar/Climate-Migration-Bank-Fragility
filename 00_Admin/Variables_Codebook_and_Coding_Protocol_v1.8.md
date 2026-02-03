@@ -3,11 +3,11 @@
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015-2024)
 
 **Document Type**: Variables codebook and enforceable coding protocol
-**Version**: 1.8 (Phase 3d complete; all data validated clean and regression-ready)
+**Version**: 1.8 (Phase 4 complete; H1-H4 tested, results documented)
 
-**Status**: Phase 3d complete (2026-02-01). RBI source files forensically validated clean (Jan 30 contamination concern was false alarm due to fiscal-calendar conversion misunderstanding). VIIRS integration complete: 120 tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). All data quality validated. Ready for Phase 4 regressions.
+**Status**: Phase 4 complete (2026-02-02). All hypotheses tested (H1, H3-t1, H4a confirmed; H2, H3-t0/t2, H4b/c null). VIIRS integration complete: 120 tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). RBI data forensically validated clean. Results documented in Hypotheses_Formal_v1.8.md.
 
-**Date**: February 1, 2026
+**Date**: February 2, 2026
 
 ---
 
@@ -356,13 +356,44 @@ Hypotheses not allowed to drift to match results; codebook updates must be about
 - Flood treatment: 1,984 events (8.50% exposure rate)
 - Data quality: Forensically validated via Scripts 25, 26, temp.py diagnostics
 
-**Status:** All hypotheses (H1-H4) ready for Phase 4 econometric analysis
+**Status:** Phase 4 complete. All hypotheses tested. Results: H1 confirmed (floods reduce lights), H3-t1 confirmed (delayed deposit stress), H4a confirmed (urban vulnerability). H2, H3-t0/t2, H4b/c null.
 
 ---
 
 ## END OF DOCUMENT
 
-**Status**: v1.8 updated with Phase 3d completion (2026-02-01 23:15 IST). RBI contamination concern RESOLVED (false alarm). VIIRS integration complete (Scripts 21-26). All data validated clean: 23,347 regression-ready observations, 23 variables, 100% VIIRS-deposit overlap. Ready for Phase 4 regressions (H1-H4).
+**Status**: v1.8 updated with Phase 4 completion (2026-02-02 21:30 IST). All regressions executed (H1-H4). Results: 3 hypotheses confirmed (H1, H3-t1, H4a), 5 null (H2, H3-t0/t2, H4b/c). Key findings: delayed deposit stress (1Q lag), urban vulnerability, lights-deposits IV null. All results documented in Hypotheses_Formal_v1.8.md.
+
+---
+
+## Variable Usage Summary (Phase 4 Results)
+
+### Dependent Variables
+- `lightschangeqt`: Used in H1 first stage (outcome), H2 IV (endogenous regressor)
+- `depositchangeqt`: Used in H2 second stage (outcome), H3 timing (outcome), H4 heterogeneity (outcome)
+
+### Independent Variables
+- `floodexposureruleAqt`: Used in H1 (main regressor), H2 (instrument), H3 (current quarter)
+- `floodlag1qt`: Used in H3 timing (1-quarter lag) [SIGNIFICANT RESULT]
+- `floodlag2qt`: Used in H3 timing (2-quarter lag)
+
+### Interaction Variables (H4 Heterogeneity)
+- `urban`: Constructed from median split of district mean `loglightsqt` [SIGNIFICANT INTERACTION]
+- `highexposure`: Constructed from median split of cumulative flood exposure
+- `monsoon`: Quarter indicator (q == 3, Jul-Sep)
+
+### Variables Not Used in Phase 4
+- `floodexposureruleBqt`: Rule B variables reserved for robustness checks (Phase 5)
+- Longer lags (L3, L4): Reserved for persistence testing (Phase 5)
+- `logdepositscrores`, `loglightsqt`: Reserved for alternative specifications (Phase 5)
+
+### Key Findings by Variable
+1. `floodexposureruleAqt` → `lightschangeqt`: Strong negative effect (-0.0149, p<0.001)
+2. `floodlag1qt` → `depositchangeqt`: Delayed negative effect (-0.0062, p<0.001)
+3. `urban × flood` → `depositchangeqt`: Urban vulnerability confirmed (-0.0111, p<0.001)
+4. All other interactions (high_exposure, monsoon): Null results
+
+---
 
 **Changelog (v1.7 to v1.8)**:
 - Updated version and status: Phase 3d complete, all data clean

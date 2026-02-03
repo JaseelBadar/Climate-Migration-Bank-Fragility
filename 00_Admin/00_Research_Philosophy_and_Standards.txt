@@ -1,0 +1,164 @@
+================================================================================
+RESEARCH PHILOSOPHY AND STANDARDS
+Climate-Migration-Bank-Fragility Project
+================================================================================
+
+MISSION STATEMENT
+
+This is not a resume line. This is not a graduation requirement.
+
+This paper will be cited 500+ times. This paper will set the standard for 
+climate-banking research using satellite data. This paper will be read by 
+RBI governors, IMF economists, and PhD students in 2030.
+
+We are building a citation machine.
+
+================================================================================
+THE STANDARD
+================================================================================
+
+Q: What separates average PhD work from world-class research?
+
+AVERAGE RESEARCH:
+- Finds an effect
+- Reports p < 0.05
+- Writes "further research needed"
+- Gets published in Tier-3 journal
+- Cited 20 times in 5 years
+- Forgotten by 2028
+
+WORLD-CLASS RESEARCH (OUR STANDARD):
+- Finds an effect AND explains the mechanism
+- Reports full robustness battery (6+ tests)
+- Pre-registers hypotheses BEFORE seeing results
+- Transparent about limitations and what DOESN'T work
+- Gets published in QJE/AER/RFS or top field journal
+- Cited 500+ times in 5 years
+- Becomes THE reference paper for climate-banking channels
+
+================================================================================
+WHAT MAKES PAPERS IMMORTAL?
+================================================================================
+
+1. METHODOLOGICAL INNOVATION
+   - We use VIIRS nighttime lights as migration proxy
+   - No one has done this for banking outcomes
+   - Every future climate-finance paper will cite our measurement approach
+
+2. CAUSAL CREDIBILITY
+   - IV strategy with pre-specified hypotheses
+   - Placebo tests, alternate instruments, robustness overkill
+   - Reviewers cannot dismiss our identification
+
+3. UNEXPECTED DISCOVERY
+   - If results contradict our hypothesis → report it honestly
+   - Unexpected findings = novelty = citations
+   - Never chase results, chase truth
+
+4. POLICY RELEVANCE
+   - Quantifies climate-banking transmission for RBI
+   - Provides early-warning framework using satellite data
+   - Policymakers need actionable insights, not academic abstractions
+
+5. FULL TRANSPARENCY
+   - Pre-registered on OSF with timestamp
+   - Replication package on GitHub
+   - Every decision documented in ResearchLog.txt
+   - Limitations disclosed in paper, not hidden
+
+6. WRITING CLARITY
+   - Every sentence earns its place
+   - No jargon without definition
+   - Tables tell stories, not just display numbers
+   - Figures are publication-ready, not Excel screenshots
+
+================================================================================
+THE DAILY TEST
+================================================================================
+
+Every day, before making any research decision, ask:
+
+1. "Is this decision pre-specified or am I chasing results?"
+   → If chasing results: STOP. Document as exploratory.
+
+2. "Can I defend this choice to a skeptical referee?"
+   → If no: Strengthen justification or change approach.
+
+3. "Does this bring me closer to 500 citations?"
+   → If no: Eliminate or streamline.
+
+4. "Would this pass the Nature transparency standard?"
+   → If no: Add documentation, disclosure, or robustness check.
+
+5. "Is this Ivy League quality or just 'good enough'?"
+   → If just good enough: Iterate until excellent.
+
+================================================================================
+RESEARCH INTEGRITY PRINCIPLES
+================================================================================
+
+1. NEVER modify hypotheses after seeing results
+   → Versions exist for audit trail, not result-fitting
+
+2. NEVER drop observations without logging reason
+   → ResearchLog.txt documents every data decision
+
+3. NEVER report only significant results
+   → Null findings are publishable if honestly pre-specified
+
+4. NEVER hide weak identification
+   → Weak IV? Report it, discuss limitations, suggest fixes
+
+5. NEVER oversell contributions
+   → We prove lights-deposits correlation, not causation from 
+     deposits to banking crisis (that requires bank-level data we don't have)
+
+6. ALWAYS disclose data limitations
+   → 49% state-level flood coding = measurement error acknowledged
+   → VIIRS = activity proxy, not direct population count
+
+7. ALWAYS provide replication materials
+   → GitHub repo with full code pipeline
+   → README with exact package versions
+   → Anyone can verify our results
+
+================================================================================
+WHAT CITATION IMMORTALITY REQUIRES
+================================================================================
+
+METHODOLOGISTS will cite us for: VIIRS as migration proxy
+CLIMATE ECONOMISTS will cite us for: Flood-banking transmission quantification
+FINANCE SCHOLARS will cite us for: Shadow run mechanism + timing evidence
+DEVELOPMENT ECONOMISTS will cite us for: India district-level panel construction
+POLICYMAKERS will cite us for: Early-warning system using satellite data
+PHD STUDENTS will cite us for: IV identification strategy example
+
+One paper. Six citation channels.
+
+That's how you get 500+ citations.
+
+================================================================================
+THE COMMITMENT
+================================================================================
+
+I will not:
+- Publish preliminary results without robustness checks
+- Submit to a "safe" journal just to get quick acceptance
+- Hide limitations or negative results
+- Claim causation beyond what the data support
+
+I will:
+- Run every robustness test even if it weakens my results
+- Report unexpected findings even if they contradict hypotheses
+- Pre-register before seeing final results
+- Make this paper fully replicable
+- Target top journals even if it means rejection and resubmission
+
+Because average papers are forgotten in 2 years.
+
+World-class papers are cited in 2035.
+
+================================================================================
+Last Updated: February 3, 2026, 9:58 PM IST
+Next Review: Daily, before any major research decision
+================================================================================

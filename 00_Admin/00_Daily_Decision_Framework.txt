@@ -1,0 +1,193 @@
+================================================================================
+DAILY DECISION FRAMEWORK
+Checkpoint System for Research Quality
+================================================================================
+
+USE THIS FILE WHEN:
+- Starting a new analysis
+- Deciding whether to drop observations
+- Interpreting unexpected results
+- Writing any section of the paper
+- Feeling stuck or uncertain about direction
+- Tempted to take shortcuts
+
+================================================================================
+MORNING CHECKLIST (Before Starting Work)
+================================================================================
+
+□ Review yesterday's ResearchLog.txt entry
+□ Check what was pre-specified in Hypotheses_Formal_v1.X.md
+□ Confirm today's tasks align with project timeline
+□ Verify no result-chasing: "Am I testing what I said I would test?"
+
+RED FLAGS TO WATCH:
+❌ "Let me try 10 specifications and see what works" → P-HACKING
+❌ "I'll update the hypothesis now that I see the data" → HARKING  
+❌ "This null result doesn't support my story, so I'll omit it" → PUBLICATION BIAS
+❌ "The reviewer won't notice if I don't mention this limitation" → DISHONESTY
+
+================================================================================
+DATA DECISION CHECKPOINT
+================================================================================
+
+BEFORE dropping any observations, answer ALL 5 questions:
+
+1. WHY am I dropping these observations?
+   → Write exact reason in ResearchLog.txt
+
+2. Did I pre-specify this exclusion criterion?
+   → Check Variables_Codebook_v1.X.md
+   → If NOT pre-specified: Label as exploratory
+
+3. How many observations am I dropping?
+   → Log count and percentage
+
+4. Does dropping change my main result?
+   → Run regression WITH and WITHOUT
+   → Report both in robustness appendix
+
+5. Would a skeptical referee accept this decision?
+   → If unsure: Keep observations, add robustness check instead
+
+GOLDEN RULE: When in doubt, keep observations and control for heterogeneity.
+
+================================================================================
+RESULT INTERPRETATION CHECKPOINT
+================================================================================
+
+WHEN you get unexpected results (p-value ≠ what you predicted):
+
+STEP 1: DO NOT IMMEDIATELY RERUN WITH DIFFERENT SPECIFICATION
+         → That's p-hacking instinct talking
+
+STEP 2: Check data quality
+         □ Are there outliers driving this? (Winsorize and rerun)
+         □ Is sample size too small? (Report power calculation)
+         □ Did I code variables correctly? (Inspect raw data)
+
+STEP 3: Check if result contradicts hypothesis
+         □ If YES: This is GOOD for credibility
+         □ Report as "unexpected finding" or "falsification of H3b"
+         □ Discuss why theory might be wrong or data limitation
+
+STEP 4: Consider alternate mechanisms
+         □ "H3 positive coefficient: deposits INCREASE during floods?
+            Possible explanation: Government relief transfers deposited,
+            offsetting withdrawals. This suggests...>
+
+STEP 5: Document in ResearchLog.txt
+         "2026-02-04: H3 contemporaneous effect positive (β=0.00525, p=0.012).
+          Contradicts pre-specified hypothesis (expected negative).
+          Possible explanations: [1] Relief transfers, [2] Measurement error
+          in flood timing, [3] Deposits lag lights by >1 quarter.
+          Decision: Report as-is, test with longer lags in robustness."
+
+NEVER SAY: "The results didn't work, so I'll try something else until they do."
+ALWAYS SAY: "The results contradicted my hypothesis. Let me understand why."
+
+================================================================================
+WRITING DECISION CHECKPOINT
+================================================================================
+
+BEFORE writing any claim in the paper:
+
+□ Can I cite evidence for this claim?
+   → If no: Delete or add caveat
+
+□ Am I overselling the result?
+   → Change "proves" → "suggests"
+   → Change "causes" → "is associated with" (unless true experiment/strong IV)
+
+□ Am I underselling the contribution?
+   → Don't hide novelty in footnotes
+   → State clearly: "No prior study has..."
+
+□ Have I disclosed limitations?
+   → Every paper has limitations
+   → Hiding them makes reviewers suspicious
+   → Disclosing them makes you credible
+
+QUALITY TEST:
+Read the sentence aloud. If it sounds like marketing copy ("unprecedented",
+"groundbreaking", "revolutionary"), DELETE and rewrite with precision.
+
+Top journals want ACCURACY, not HYPE.
+
+================================================================================
+ROBUSTNESS CHECK DECISION TREE
+================================================================================
+
+Q: Should I run this robustness check?
+
+START HERE:
+Is this check pre-specified in Hypotheses document? 
+   → YES: Run it (required)
+   → NO: Continue...
+
+Would a skeptical referee demand this check?
+   → YES: Run it (expected standard)
+   → NO: Continue...
+
+Does this check test an alternate explanation for my results?
+   → YES: Run it (strengthens credibility)
+   → NO: Continue...
+
+Is this check just to inflate the appendix?
+   → YES: SKIP (reviewers see through this)
+
+MINIMUM ROBUSTNESS BATTERY FOR TOP JOURNALS:
+1. Placebo test (no effect where theory predicts none)
+2. Alternate measurement of key variable
+3. Sample restrictions (exclude outliers, specific years, regions)
+4. Alternate specification (controls, fixed effects, clustering)
+5. Heterogeneity (does effect vary by observable characteristics?)
+6. Falsification test (violates identification assumption → should fail)
+
+================================================================================
+WHEN YOU FEEL STUCK
+================================================================================
+
+SYMPTOM: "I don't know what to do next"
+
+DIAGNOSTIC QUESTIONS:
+1. What was my pre-specified next step?
+   → Check project timeline in README.md
+
+2. Am I stuck because results are unexpected?
+   → See "Result Interpretation Checkpoint" above
+
+3. Am I stuck because I'm afraid results are wrong?
+   → Run diagnostic: descriptive stats, balance tables, data quality checks
+
+4. Am I stuck because the paper feels overwhelming?
+   → Break into smallest possible task
+   → Example: "Write 3 sentences describing Table 1"
+
+5. Am I stuck because I'm chasing perfection?
+   → Remember: Submit to top journal even if not perfect
+   → Reviewers will help improve it
+   → Desk reject is better than never submitting
+
+GOLDEN RULE: If stuck for >2 hours, document the problem in ResearchLog.txt
+             and move to a different task. Fresh eyes solve stuck problems.
+
+================================================================================
+END-OF-DAY CHECKPOINT
+================================================================================
+
+Before closing laptop:
+
+□ Update ResearchLog.txt with today's work
+□ Commit code/outputs to GitHub with clear message
+□ Write tomorrow's first task (so you start immediately)
+□ Review: "Did I maintain research integrity today?"
+□ Review: "Did I make progress toward 500-citation goal?"
+
+ONE SENTENCE SUMMARY OF TODAY: _______________________________________
+
+ONE THING TO DO DIFFERENTLY TOMORROW: _______________________________
+
+================================================================================
+Last Updated: February 3, 2026, 9:58 PM IST
+Reference: Consult this checklist before any major decision
+================================================================================

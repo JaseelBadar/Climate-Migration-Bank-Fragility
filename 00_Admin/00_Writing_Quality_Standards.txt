@@ -1,0 +1,285 @@
+================================================================================
+WRITING QUALITY STANDARDS
+Publication-Ready Writing Checklist
+================================================================================
+
+AUDIENCE: Reviewers at QJE, AER, RFS, Journal of Finance
+
+STANDARD: Every sentence must earn its place.
+
+================================================================================
+TITLE FORMULA
+================================================================================
+
+BAD TITLES (too vague):
+❌ "Climate Change and Banking Stability"
+❌ "An Analysis of Deposit Flows in India"
+❌ "Night Lights and Financial Outcomes"
+
+GOOD TITLES (specific + mechanism):
+✅ "Shadow Runs in the Monsoon: Climate Shocks, Migration, and Banking 
+    Fragility in India"
+✅ "Night Lights as a Migration Proxy: Evidence from Flood-Induced Deposit 
+    Withdrawals"
+✅ "Climate Shocks and Liquidity Stress: Satellite Evidence from Indian 
+    District Banks"
+
+TITLE TEST:
+- Does it tell me the WHAT (climate shocks), WHERE (India), and HOW (night lights)?
+- Does it hint at the mechanism (migration, shadow runs)?
+- Is it searchable? (Keywords: climate, banking, India, migration)
+
+================================================================================
+ABSTRACT FORMULA (150 words, 7 sentences)
+================================================================================
+
+SENTENCE 1: Big question
+"Do climate shocks trigger liquidity stress in banking systems through 
+ migration channels?"
+
+SENTENCE 2: Why this is hard
+"Migration is unobserved, and identifying causal effects on bank deposits 
+ requires addressing reverse causality and confounders."
+
+SENTENCE 3: Your innovation
+"I use VIIRS nighttime lights as a proxy for migration-driven economic activity 
+ and instrument with exogenous flood exposure from EM-DAT disaster data."
+
+SENTENCE 4: Sample description
+"Using a panel of 666 Indian districts from 2015-2024 (23,347 district-quarters), 
+ I find..."
+
+SENTENCE 5: Main result (with magnitude)
+"...that a 10% decline in nighttime lights predicts a 28% deposit withdrawal, 
+ with timing consistent with liquidity stress rather than credit deterioration."
+
+SENTENCE 6: Mechanism/heterogeneity
+"Effects are concentrated in urban districts and areas with low deposit insurance 
+ coverage, suggesting shadow-run dynamics."
+
+SENTENCE 7: Contribution/policy implication
+"Results quantify a novel climate-banking transmission channel and provide an 
+ early-warning framework using satellite data for macroprudential regulation."
+
+QUALITY CHECK:
+□ No jargon in first 3 sentences (accessible to non-specialists)
+□ Numbers are specific (not "significant effect" but "28% withdrawal")
+□ Contribution is clear (what's new? why does it matter?)
+
+================================================================================
+INTRODUCTION STRUCTURE (4-5 pages)
+================================================================================
+
+PARAGRAPH 1: Motivation with vivid example
+"In August 2018, Kerala experienced its worst floods in a century. Over 400 
+ people died, 1.4 million were displaced, and economic losses exceeded $4 billion. 
+ Less visibly, district banks reported sharp deposit withdrawals in flood-affected 
+ areas—not from bank failures, but from depositors relocating or withdrawing cash 
+ for immediate needs. This paper investigates whether such climate-induced 
+ migration triggers systematic liquidity stress in the banking system."
+
+PARAGRAPH 2: Literature gap (3-part gap)
+"Existing research documents climate impacts on agriculture (cite), migration 
+ flows (cite), and bank credit (cite), but three gaps remain. First, no study 
+ links climate shocks to bank DEPOSITS through migration channels. Second, 
+ migration data limitations have prevented causal identification. Third, the 
+ TIMING of deposit responses—immediate (liquidity) vs. delayed (credit 
+ deterioration)—remains unexamined."
+
+PARAGRAPH 3: Research question + preview of answer
+"I ask: Do climate shocks cause deposit withdrawals through migration channels? 
+ Using Indian district-level data from 2015-2024, I find that floods reduce 
+ nighttime lights by 1.25% and deposits by 28% (instrumented), with effects 
+ occurring within one quarter—a timing pattern consistent with shadow runs, 
+ not slow-moving credit losses."
+
+PARAGRAPH 4: Contribution 1 - Methodological
+"First contribution: I introduce nighttime lights as a migration proxy for 
+ financial outcomes. Unlike census data (infrequent) or mobile phone data 
+ (proprietary), VIIRS satellite imagery provides monthly, publicly available 
+ coverage at 463m resolution, enabling district-quarter panel analysis."
+
+PARAGRAPH 5: Contribution 2 - Substantive mechanism
+"Second contribution: I document a shadow-run mechanism—rapid deposit withdrawals 
+ triggered by perceived liquidity stress, not bank insolvency. This differs from 
+ classic bank runs (Diamond-Dybvig 1983) where fundamental deterioration causes 
+ panic. Here, migration ITSELF causes withdrawals, even when banks remain solvent."
+
+PARAGRAPH 6: Contribution 3 - Policy relevance
+"Third contribution: I quantify the climate-banking transmission channel for 
+ macroprudential policy. The RBI currently monitors credit risk from climate 
+ disasters but not liquidity risk from migration. My results suggest satellite 
+ data can provide early warnings of deposit stress, enabling pre-emptive liquidity 
+ injections."
+
+PARAGRAPH 7: Roadmap
+"Section 2 reviews literature. Section 3 describes data. Section 4 outlines 
+ identification strategy. Section 5 presents results. Section 6 discusses 
+ mechanisms and policy implications. Section 7 concludes."
+
+WRITING RULES FOR INTRODUCTION:
+- No equations (save for Methods section)
+- No abbreviations without definition (first mention: "VIIRS (Visible Infrared 
+  Imaging Radiometer Suite)")
+- Every claim must have citation or forward reference to your result
+- End each paragraph with transition to next ("However...", "To address this...", 
+  "Building on this...")
+
+================================================================================
+METHODS SECTION (Identification) - MOST IMPORTANT FOR REVIEWERS
+================================================================================
+
+STRUCTURE:
+
+Subsection 4.1: OLS is Biased (Why We Need IV)
+"Regressing deposits on nighttime lights yields biased estimates due to reverse 
+ causality (economic growth increases both lights and deposits) and omitted 
+ variables (urbanization affects both). To address this, I exploit exogenous 
+ variation from flood shocks."
+
+Subsection 4.2: IV Strategy
+"I instrument ΔLights with flood exposure. The identifying assumption is that 
+ floods affect deposits ONLY through their effect on lights (migration/activity), 
+ not through direct banking disruption. I test this assumption by [checking if 
+ bank branches remain operational during floods using RBI branch-level data]."
+
+Subsection 4.3: Threats to Validity + How I Address Them
+
+THREAT 1: Direct disruption (floods damage bank buildings)
+RESPONSE: "I verify that 94% of bank branches in flood-affected districts 
+           remained operational during disaster months (RBI data), suggesting 
+           direct disruption is minimal."
+
+THREAT 2: Selection (floods hit poorer districts with weaker banks)
+RESPONSE: "I control for district fixed effects, absorbing time-invariant 
+           differences. Pre-trends test shows no differential deposit growth 
+           before floods (Figure 3)."
+
+THREAT 3: Spillovers (people move TO unaffected districts, increasing deposits there)
+RESPONSE: "I test for spatial spillovers using adjacent-district exposure. 
+           Coefficients are insignificant (Table 7), suggesting localized effects."
+
+Subsection 4.4: Why Remaining Threats Don't Invalidate Results
+"Even if some direct disruption exists, it would ATTENUATE my estimates (deposits 
+ fall for reasons beyond migration), making my 28% effect a LOWER BOUND. The true 
+ migration effect may be larger."
+
+REVIEWERS WILL TRY TO KILL YOUR PAPER HERE.
+Pre-empt EVERY objection. Show you thought of it first.
+
+================================================================================
+RESULTS SECTION - TABLES TELL STORIES
+================================================================================
+
+EVERY TABLE NEEDS:
+
+1. TITLE that describes the result
+   ❌ "Table 3: Regression Results"
+   ✅ "Table 3: Nighttime Lights Decline Predicts Deposit Withdrawals (IV Estimates)"
+
+2. NOTES section explaining:
+   - Sample (N = 23,347 district-quarters, 631 districts, 2015Q1-2024Q4)
+   - Standard errors (clustered at district level)
+   - Fixed effects included (district + quarter FE in all columns)
+   - Stars (✱✱✱ p<0.01, ✱✱ p<0.05, ✱ p<0.10)
+   - Interpretation (Column 2: 10% lights decline → 28% deposit withdrawal)
+
+3. LOGICAL COLUMN PROGRESSION
+   Column 1: OLS (biased, for comparison)
+   Column 2: IV (main result)
+   Column 3: First stage (show instrument is strong, F-stat)
+   Column 4: Reduced form (floods → deposits directly)
+   Column 5: Robustness (alternate sample or controls)
+
+IN-TEXT TABLE DISCUSSION:
+❌ "Table 3 shows the results."
+✅ "Table 3 presents IV estimates. Column 2 shows that a 10% decline in nighttime 
+    lights predicts a 28% deposit withdrawal (p=0.02). The first stage (Column 3) 
+    is strong (F-stat=968), satisfying the relevance condition. The reduced form 
+    (Column 4) confirms floods directly reduce deposits, consistent with the IV 
+    mechanism."
+
+================================================================================
+DISCUSSION SECTION - ADDRESS LIMITATIONS HEAD-ON
+================================================================================
+
+SUBSECTION: "Limitations and Interpretation"
+
+"Four limitations warrant discussion. First, 49% of flood events are coded at 
+ state level (EM-DAT data constraint), creating measurement error that biases 
+ estimates toward zero. My effects are thus LOWER BOUNDS. Second, VIIRS measures 
+ economic activity, not population directly. However, the strong first stage 
+ (F=968) suggests lights capture migration-driven changes sufficient for financial 
+ outcome prediction. Third, I lack individual-level deposit data, preventing 
+ analysis of within-district heterogeneity. Fourth, I cannot distinguish temporary 
+ from permanent migration; both would reduce deposits, but policy responses differ."
+
+TURN LIMITATIONS INTO FUTURE RESEARCH:
+"Future work could combine VIIRS with mobile phone CDR data to distinguish 
+ displacement patterns, or use bank-level microdata to test heterogeneity by 
+ bank type and depositor characteristics."
+
+REVIEWERS RESPECT HONESTY.
+Hiding limitations guarantees rejection. Disclosing them invites constructive feedback.
+
+================================================================================
+WRITING QUALITY CHECKLIST (Apply to EVERY paragraph)
+================================================================================
+
+□ First sentence states the point (topic sentence)
+□ Evidence follows immediately (cite or reference table)
+□ No sentence exceeds 30 words (break into two if longer)
+□ No paragraph exceeds 6 sentences (break into two if longer)
+□ Transition to next paragraph is clear
+□ No jargon without definition (first use: spell out acronym)
+□ Active voice preferred ("I find" not "It is found that")
+□ Numbers are specific ("28% decline" not "large decline")
+□ Every claim is defensible (can cite evidence or theory)
+
+READ ALOUD TEST:
+If you stumble while reading aloud, readers will stumble too. Rewrite.
+
+================================================================================
+SENTENCE-LEVEL EDITING RULES
+================================================================================
+
+WORDINESS:
+❌ "In light of the fact that" → ✅ "Because"
+❌ "It is important to note that" → ✅ DELETE (just state the point)
+❌ "The results suggest that there may be" → ✅ "Results suggest"
+
+PRECISION:
+❌ "impacts" → ✅ "affects" or "correlates with" (depending on causality)
+❌ "significant" → ✅ "statistically significant" or "economically meaningful"
+❌ "proves" → ✅ "suggests" (unless experimental proof)
+
+CLARITY:
+❌ "The aforementioned methodology" → ✅ "This approach"
+❌ "Utilization of" → ✅ "Using"
+❌ "In order to" → ✅ "To"
+
+================================================================================
+FINAL PRE-SUBMISSION CHECKLIST
+================================================================================
+
+□ Abstract under 150 words, no abbreviations
+□ Introduction ends with clear roadmap
+□ Every table/figure cited in text in order (Table 1, then 2, then 3...)
+□ Methods section pre-empts all identification concerns
+□ Results section interprets magnitude, not just significance
+□ Discussion discloses limitations honestly
+□ Conclusion states policy implications clearly
+□ References formatted consistently (journal style)
+□ Appendix includes all robustness checks
+□ Figures are publication-ready (300dpi, clear labels, readable in grayscale)
+
+FINAL READ:
+Print the paper. Read it on paper, not screen. Mark every sentence that feels 
+unclear, defensive, or inflated. Rewrite those sentences.
+
+If you wouldn't want your name on a sentence, delete it.
+
+================================================================================
+Last Updated: February 3, 2026, 9:58 PM IST
+Reference: Use this checklist when writing any section of the paper
+================================================================================

@@ -1,0 +1,1 @@
+2026-01-28: Winsorized deposit_change_qt 1%/99%. Clipped 1.9%. Lower: -0.051, Upper: 4.071

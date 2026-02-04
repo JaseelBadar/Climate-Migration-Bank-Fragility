@@ -2,9 +2,9 @@
 
 **Empirical analysis of flood-induced migration effects on district-level banking stability in India, 2015-2024.**
 
-**Status:** Phase 4 Complete. All regressions executed (H1-H4). Results: H1 confirmed (floods reduce lights), H2 null (lights-deposits IV), H3 confirmed (1-quarter lagged effect), H4a confirmed (urban vulnerability). Data validated clean (23,347 obs, 23 variables).
+**Status:** Phase 4 Under Revision (Data Quality Issue). Critical bug discovered in RBI extraction (Script 13): Historical files (2004-2022) extracted "Number of Reporting Offices" instead of "Deposit Amount" due to column indexing error. All Phase 4 regression results invalidated pending data re-extraction. See 00_Admin/RBI_Excel_Structure_Audit.txt for technical details.
 
-**Last updated:** 2026-02-02
+**Last updated:** 2026-02-04
 **Project start:** 2025-12-30
 
 ---
@@ -12,6 +12,17 @@
 ## Research Question
 
 Do climate disasters trigger migration (proxied by nighttime-lights declines) that causes district-level deposit stress and broader banking fragility in India?
+
+## DATA QUALITY ALERT
+
+**All regression results below are INVALID due to RBI extraction bug discovered 2026-02-04.**
+
+Bug: Script 13 extracted wrong variable from historical Excel files (2004-2022 data).  
+Impact: 72 quarters of deposit data contain "Number of Reporting Offices" instead of "Deposit Amount".  
+Status: Bug documented, fix identified, re-extraction pending.  
+Documentation: See `00_Admin/RBI_Excel_Structure_Audit.txt` for complete audit trail.
+
+**Results table retained for documentation purposes only. Do not cite.**
 
 ---
 
@@ -41,7 +52,7 @@ Raw data never modified. All transformations in intermediate/clean folders.
 - **Coverage:** 762 districts, 2004-2024, quarterly
 - **Files:** RBI_Deposits_2004_2017.xlsx, RBI_Deposits_2017_2022.xlsx, RBI_Deposits_2023_2024.xlsx
 - **Variables:** Deposits by population group (Rural/Semi-urban/Urban/Metropolitan)
-- **Status:** CLEAN (forensic audit 2026-01-31, contamination false alarm resolved). Structural gap: 2016Q3, 2016Q4, 2017Q1 (RBI publication schedule, not data error)
+- **Status:** CONTAMINATED (bug discovered 2026-02-04). Script 13 extracted wrong column for 2004-2022 data. Structural gap: 2016Q3, 2016Q4, 2017Q1 (RBI publication schedule).
 - **Location:** 01_Data_Raw/RBI_Bank_Data/
 
 ### 2. EM-DAT Disaster Database
@@ -78,7 +89,7 @@ Raw data never modified. All transformations in intermediate/clean folders.
 **RBI Extraction** (Script 13)
 - 50,325 district-quarter observations (624 districts × 84 quarters, 2004Q1-2025Q3)
 - Fiscal-to-calendar conversion validated
-- Files confirmed clean via forensic audit (contamination false alarm resolved)
+- Files structure documented; critical extraction bug discovered 2026-02-04 (wrong column extracted)
 
 **Master Panel** (Script 14)
 - 26,640 rows (666 districts × 40 quarters, 2015Q1-2024Q4)
@@ -359,6 +370,16 @@ RBI contamination concern (resolved):
 - 2016-2017 gap is structural (RBI publication schedule), not data error
 - Impact: Zero (no contamination)
 
+**RBI Extraction Bug (discovered 2026-02-04, fix pending):**
+- **Bug:** Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for historical files (2017-2022, 2004-2017)
+- **Root cause:** Column indexing offset error (missing +1 for fiscal quarter label columns)
+- **Impact:** ALL 2004-2022 deposit data (72 quarters) contains wrong variable
+- **Example:** 2022Q4 median shows 162 (offices) instead of expected ~3,000 (deposits)
+- **Discovery:** Detected via anomalous 46x spike in 2023Q1 median during diagnostic analysis
+- **Fix identified:** `dep_idx = q_idx + 1` for historical files
+- **Status:** Documented in 00_Admin/RBI_Excel_Structure_Audit.txt; re-extraction pending
+- **Phase 4 impact:** All regression results invalidated pending data correction
+
 Documentation
 - Research_Log.txt: Chronological work log
 - Hypotheses_Formal_v1.7.md: H1-H4 specifications, IV strategy
@@ -378,4 +399,4 @@ University Email: jab9733@g.harvard.edu
 Institution: Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 
-Last updated: 2026-02-02 | Project initiated: December 30, 2025
+Last updated: 2026-02-04 | Project initiated: December 30, 2025

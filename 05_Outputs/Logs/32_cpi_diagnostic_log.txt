@@ -1,0 +1,18 @@
+2026-01-28 Phase 6 Step 2: Nominal growth diagnostic.
+Total obs: 23347
+Mean annualized growth: 141.9%
+Decision: Keep nominal rupees. Disclose: "Deposits in nominal INR; inflation ~6-8% confounds trends."
+
+Growth summary:
+        mean     std  count  annualized_pct
+year                                       
+2015  0.0127  0.0234   1825            5.18
+2016  0.0126  0.0293   1230            5.14
+2017  0.0148  0.0456   1868            6.05
+2018  0.0032  0.0138   2508            1.29
+2019  0.0145  0.0435   2508            5.93
+2020  0.0041  0.0138   2508            1.65
+2021  0.0037  0.0192   2512            1.49
+2022  0.0057  0.0266   2514            2.30
+2023  0.9614  1.6364   2514         1380.01
+2024  0.0240  0.0400   2516            9.95

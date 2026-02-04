@@ -1,13 +1,13 @@
-# VARIABLES CODEBOOK AND CODING PROTOCOL (v1.8)
+# VARIABLES CODEBOOK AND CODING PROTOCOL (v1.9)
 
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015-2024)
 
 **Document Type**: Variables codebook and enforceable coding protocol
-**Version**: 1.8 (Phase 4 complete; H1-H4 tested, results documented)
+**Version**: 1.9 (Phase 4 invalidated; RBI extraction bug discovered)
 
-**Status**: Phase 4 complete (2026-02-02). All hypotheses tested (H1, H3-t1, H4a confirmed; H2, H3-t0/t2, H4b/c null). VIIRS integration complete: 120 tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). RBI data forensically validated clean. Results documented in Hypotheses_Formal_v1.8.md.
+**Status**: Phase 4 INVALIDATED (data contamination discovered 2026-02-04). RBI extraction bug: Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for 2004-2022 data (72 quarters). All regression results invalid pending data re-extraction.
 
-**Date**: February 2, 2026
+**Date**: February 4, 2026
 
 ---
 
@@ -62,7 +62,7 @@ Always sort by `districtgadm`, `stategadm`, `quarternum` before constructing lag
 - Definition: Total deposits in district-quarter
 - Unit: Rupees crores (verify from RBI tables; treat as nominal unless deflated)
 - Construction: RBI extraction aggregates across population groups where needed
-- Data quality status: VALIDATED CLEAN (2026-01-31). RBI source files forensically audited via cell-level inspection; no contamination found. Fiscal-calendar conversion verified correct. Analysis sample uses deposits from 23,347 district-quarters (99.1% coverage).
+- Data quality status: CONTAMINATED (bug discovered 2026-02-04). Script 13 extracted wrong column ("Number of Reporting Offices" instead of "Deposit Amount") for historical files (2004-2022, 72 quarters). Root cause: column indexing offset error (missing +1 for fiscal quarter label columns). Impact: ALL deposit-based analyses invalid. RBI source files themselves are clean; extraction logic was faulty. See 00_Admin/RBI_Excel_Structure_Audit.txt for complete audit.
 
 **Variable**: `logdepositscrores`
 
@@ -337,32 +337,54 @@ Hypotheses not allowed to drift to match results; codebook updates must be about
 
 ## XIII. Clean Results Status
 
-#### Phase 3d Complete (2026-02-01)
+#### Phase 4 Data Contamination (2026-02-04)
 
-**VIIRS Data:**
-- 120 tiles extracted to monthly panel (79,920 obs, 666 districts × 120 months)
-- Tile overlaps resolved via pixel-weighted averaging (7 Himalayan districts)
-- Aggregated to quarterly (26,640 obs, 666 districts × 40 quarters)
-- Merged with master panel (23,347 analysis-ready obs, 100% VIIRS coverage)
+**CRITICAL ISSUE - ALL RESULTS INVALID:**
+- RBI extraction bug discovered: Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount"
+- Affected periods: ALL historical files (2004-2022, 72 quarters)
+- Root cause: Column indexing offset error in fiscal quarter processing logic
+- Example: 2022Q4 median extracted as 162 (offices) instead of ~3,000 (deposits)
+- Discovery method: Anomalous 46x spike in 2023Q1 median during diagnostic analysis
 
-**Deposit Data:**
-- RBI source files validated CLEAN (contamination false alarm resolved 2026-01-31)
-- Analysis sample: 23,347 district-quarters (99.1% deposit coverage)
-- Temporal coverage: 2015Q1-2016Q2, 2017Q2-2024Q4 (37 quarters, gap: 2016Q3-2017Q1)
-- 631 districts (35 zero-coverage excluded in Phase 3c)
+**VIIRS Data (Unaffected):**
+- 120 tiles extracted to monthly panel (79,920 obs, 666 districts × 120 months) - CLEAN
+- Tile overlaps resolved via pixel-weighted averaging (7 Himalayan districts) - CLEAN
+- Aggregated to quarterly (26,640 obs, 666 districts × 40 quarters) - CLEAN
+- Merged with master panel (23,347 analysis-ready obs, 100% VIIRS coverage) - CLEAN
 
-**Regression Variables (Script 24):**
-- 23 total variables: 11 raw + 12 engineered (logs, changes, lags L1-L4)
-- Flood treatment: 1,984 events (8.50% exposure rate)
-- Data quality: Forensically validated via Scripts 25, 26, temp.py diagnostics
+**Deposit Data (Contaminated):**
+- RBI source files are CLEAN (verified 2026-01-31)
+- Extraction logic in Script 13 is FAULTY (discovered 2026-02-04)
+- Fix identified: dep_idx = q_idx + 1 for historical files
+- Re-extraction pending next session
+- All deposit-based variables invalid: depositscrores, logdepositscrores, depositchangeqt
 
-**Status:** Phase 4 complete. All hypotheses tested. Results: H1 confirmed (floods reduce lights), H3-t1 confirmed (delayed deposit stress), H4a confirmed (urban vulnerability). H2, H3-t0/t2, H4b/c null.
+**Phase 4 Regression Status:**
+- All H1-H4 results INVALID (used contaminated deposit data)
+- Coefficients, standard errors, p-values unreliable
+- Hypothesis test conclusions premature
+- Results retained in documentation for transparency but must not be cited
+
+**Next Steps:**
+- Fix Script 13 (add +1 offset for historical files)
+- Validate fix with manual spot-checks (BALOD 2022Q3 should show 3,296 Crores not 87)
+- Re-run full pipeline (Scripts 13-31)
+- Re-run regressions (Scripts 27-30)
+- Update documentation with corrected results
 
 ---
 
 ## END OF DOCUMENT
 
-**Status**: v1.8 updated with Phase 4 completion (2026-02-02 21:30 IST). All regressions executed (H1-H4). Results: 3 hypotheses confirmed (H1, H3-t1, H4a), 5 null (H2, H3-t0/t2, H4b/c). Key findings: delayed deposit stress (1Q lag), urban vulnerability, lights-deposits IV null. All results documented in Hypotheses_Formal_v1.8.md.
+**Status**: v1.9 updated with Phase 4 invalidation (2026-02-04 23:50 IST). Critical RBI extraction bug discovered: Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for 2004-2022 data. ALL Phase 4 regression results invalid. Bug documented in 00_Admin/RBI_Excel_Structure_Audit.txt. Data re-extraction and pipeline re-run pending. Variables codebook unchanged (only data quality status flagged).
+
+---
+
+### DATA CONTAMINATION WARNING
+
+**All variable usage results below are INVALID (discovered 2026-02-04)**
+
+Deposit variables (depositscrores, logdepositscrores, depositchangeqt) contain wrong data due to Script 13 extraction bug. All regression coefficients and significance tests unreliable. Section retained for documentation transparency pending data correction.
 
 ---
 
@@ -396,13 +418,16 @@ Hypotheses not allowed to drift to match results; codebook updates must be about
 ---
 
 **Changelog (v1.7 to v1.8)**:
-- Updated version and status: Phase 3d complete, all data clean
-- Resolved Issue 4: RBI files validated clean; contamination was false alarm due to fiscal-calendar conversion misunderstanding
-- Updated VIIRS status: Phase 3d integration complete (120 tiles → regression panel)
-- Updated variable construction: log_lights_qt uses +0.01 offset (documented Script 24)
-- Updated audit checklists: VIIRS integration complete, RBI validation complete
-- Updated clean results section: Phase 3d metrics (23,347 obs, 23 vars, 100% coverage)
-- Removed "contamination" language; replaced with "validated clean"
-- Added 2016-2017 gap explanation: Structural RBI publication gap, not data quality issue
+[keep existing v1.7 to v1.8 content unchanged]
 
-**Next review trigger**: Post Phase 4 regression execution (H1-H4). Update to v1.9 with final coefficients, standard errors, and robustness checks for publication.
+**Changelog (v1.8 to v1.9)**:
+- Updated version: 1.8 → 1.9
+- Updated status: "Phase 4 complete" → "Phase 4 INVALIDATED (data contamination)"
+- Updated date: 2026-02-02 → 2026-02-04
+- Section II.A: Deposits data quality status changed from "VALIDATED CLEAN" to "CONTAMINATED"
+- Section XIII: Rewrote Clean Results Status to document contamination discovery
+- Added DATA CONTAMINATION WARNING to Variable Usage Summary
+- Updated END OF DOCUMENT status to reflect invalidation
+- All variable definitions and protocols unchanged (only data quality status flagged)
+
+**Next review trigger**: After Script 13 fix and pipeline re-run. Update to v2.0 with corrected deposit extraction and validated Phase 4 results.

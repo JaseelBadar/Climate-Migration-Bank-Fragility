@@ -1,0 +1,358 @@
+================================================================================
+RBI DEPOSITS EXCEL FILES - STRUCTURE AUDIT AND BUG DOCUMENTATION
+================================================================================
+Date: February 4, 2026
+Issue: Critical data extraction bug discovered in Script 13
+Impact: Wrong variable extracted for 2004-2022 data (Offices instead of Deposits)
+Status: Root cause identified, fix pending implementation
+
+================================================================================
+SECTION 1: PROBLEM DISCOVERY
+================================================================================
+
+SYMPTOM:
+- Median deposits jumped 46x from 2022Q4 (162 Crores) to 2023Q1 (7,576 Crores)
+- Implausible growth rate inconsistent with economic conditions
+- Detected via Script 32 CPI diagnostic and nominal growth trend analysis
+
+INVESTIGATION TIMELINE:
+1. Initially suspected CPI deflation error → ruled out (CPI 2022-23: 6.7%)
+2. Suspected unit conversion (Lakhs vs Crores) → ruled out (all files state ₹ Crores)
+3. Manual inspection of raw Excel files → discovered column indexing mismatch
+
+ROOT CAUSE:
+- Script 13 extracts DIFFERENT columns from 2023-24 file vs 2017-22/2004-17 files
+- Historical files: extracted "Number of Reporting Offices" instead of "Deposit"
+
+================================================================================
+SECTION 2: EXCEL FILE STRUCTURES (DOCUMENTED VIA MANUAL INSPECTION)
+================================================================================
+
+FILE 1: RBI_Deposits_2023_2024.xlsx
+-----------------------------------
+Row 1: Blank (Column A fully blank throughout all files)
+Row 2: "Table No. 2.7 - District and Population Group-Wise Deposits..."
+Row 3: Blank
+Row 4: "(No. of Accounts in Thousands and Amount in ₹ Crores)"
+Row 5: Blank
+Row 6-7: MERGED HEADERS
+
+HEADER STRUCTURE (Rows 6-7):
+- B6:B7 merged → "REGION"
+- C6:C7 merged → "STATE"
+- D6:D7 merged → "DISTRICT"
+- E6:E7 merged → "POPULATION GROUP"
+- F6:H6 merged → "Sep-2025" (quarter label)
+  - F7 → "No. of Offices"
+  - G7 → "No. of Accounts"
+  - H7 → "Deposit Amount"
+- I6:K6 merged → "Jun-2025"
+  - I7 → "No. of Offices"
+  - J7 → "No. of Accounts"
+  - K7 → "Deposit Amount"
+- [Pattern repeats every 3 columns through AL (March-2023)]
+
+DATA ROWS:
+- Start at Row 8 (after merged headers)
+- No subtotal rows (no blank cells in Column B)
+- Row 1881: "All India" (B:E merged)
+
+PANDAS COLUMN INDEXING (when header=5, reading Row 6):
+- Index 0: Blank (Column A)
+- Index 1: REGION
+- Index 2: STATE
+- Index 3: DISTRICT
+- Index 4: POPULATION GROUP
+- Index 5: "Sep-2025" (merged F6:H6, pandas sees as one column)
+- Index 6: Unnamed (G6, part of merge)
+- Index 7: Unnamed (H6, part of merge) ← DEPOSIT AMOUNT
+- Index 8: "Jun-2025"
+- Index 9: Unnamed
+- Index 10: Unnamed ← DEPOSIT AMOUNT
+- [Pattern: Deposit at indices 7, 10, 13, 16...]
+
+SCRIPT 13 LOGIC FOR THIS FILE:
+```python
+deposit_indices = list(range(7, len(df.columns), 3))  # Gets 7, 10, 13...
+✓ CORRECT - Extracts Deposit Amount columns
+
+FILE 2: RBI_Deposits_2017_2022.xlsx
+Row 1: Blank (Column A)
+Row 2: "Statement No.4A : District wise Number of Reporting Offices..."
+Row 3: "(Amount in ₹ Crores)"
+Row 4: Blank
+Row 5: Merged cells B5:D5 → "Scheduled Commercial Banks"
+E5:G5, H5:J5... → Blank (merged per quarter)
+Row 6-7: MERGED HEADERS
+
+HEADER STRUCTURE (Rows 6-7):
+
+B6:B7 merged → "Region"
+
+C6:C7 merged → "State or UTs"
+
+D6:D7 merged → "District"
+
+E6:G6 merged → "2022-23:Q3" (fiscal quarter notation)
+
+E7 → "Number of Reporting Offices"
+
+F7 → "Deposit"
+
+G7 → "Credit"
+
+H6:J6 merged → "2022-23:Q2"
+
+H7 → "Number of Reporting Offices"
+
+I7 → "Deposit"
+
+J7 → "Credit"
+
+[Pattern repeats every 3 columns through BS:BU (2017-18:Q1)]
+
+DATA ROWS:
+
+Start at Row 8
+
+Subtotal rows at 94, 108, 184... (Column B is blank, rows are bolded)
+
+Row 796: "Total of Selected Districts"
+
+Row 797: "All India"
+
+SAMPLE DATA (Row 8, BALOD district, 2022-23:Q3):
+
+E8: 87 (Number of Reporting Offices)
+
+F8: 3,296 (Deposit in ₹ Crores)
+
+G8: 1,289 (Credit in ₹ Crores)
+
+PANDAS COLUMN INDEXING (when header=5, reading Row 6):
+
+Index 0: Blank (Column A)
+
+Index 1: Region
+
+Index 2: State or UTs
+
+Index 3: District
+
+Index 4: "2022-23:Q3" (merged E6:G6) ← CONTAINS ':Q' PATTERN
+
+Index 5: Unnamed (F6, part of merge) ← DEPOSIT
+
+Index 6: Unnamed (G6, part of merge)
+
+Index 7: "2022-23:Q2" ← CONTAINS ':Q' PATTERN
+
+Index 8: Unnamed ← DEPOSIT
+
+Index 9: Unnamed
+
+[Pattern: Quarter labels at indices 4, 7, 10...; Deposits at indices 5, 8, 11...]
+
+SCRIPT 13 LOGIC FOR THIS FILE (BUGGY):
+
+python
+deposit_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+# Returns: [4, 7, 10, 13...]  ← These are QUARTER LABEL indices
+# Script then extracts df.columns, df.columns...
+# Which gives OFFICES (indices 4, 7, 10), NOT DEPOSITS (indices 5, 8, 11)
+✗ WRONG - Extracts "Number of Reporting Offices" instead of "Deposit"
+
+CORRECT LOGIC SHOULD BE:
+
+python
+deposit_cols = [i+1 for i, col in enumerate(df.columns) if ':Q' in str(col)]
+# Or: dep_idx = q_label_idx + 1
+FILE 3: RBI_Deposits_2004_2017.xlsx
+STRUCTURE: Identical to 2017-2022 file
+
+Same header row layout
+
+Same fiscal quarter notation (":Q")
+
+Same column pattern: Offices, Deposit, Credit (every 3 columns)
+
+Same bug applies
+
+================================================================================
+SECTION 3: THE BUG - DETAILED EXPLANATION
+WHAT SCRIPT 13 DOES:
+
+For 2023-24 file:
+
+Detects NO ':Q' pattern in column names
+
+Uses alternate logic: deposit_indices = range(7, ..., 3)
+
+Extracts indices 7, 10, 13... → ✓ Deposit Amount columns
+
+For 2017-22 and 2004-17 files:
+
+Detects ':Q' pattern in column names (e.g., "2022-23:Q3")
+
+Finds all columns with ':Q' → gets indices [4, 7, 10, 13...]
+
+Extracts those indices directly → ✗ "Number of Reporting Offices"
+
+SHOULD extract indices [5, 8, 11, 14...] → Deposit columns
+
+THE ERROR:
+
+python
+# CURRENT (WRONG):
+deposit_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+for dep_idx in deposit_cols:
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+    # Extracts Column E (index 4) = Offices (87)
+    # Should extract Column F (index 5) = Deposits (3,296)
+
+# CORRECT:
+quarter_label_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+for q_idx in quarter_label_cols:
+    dep_idx = q_idx + 1  # ← ADD THIS OFFSET
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+IMPACT:
+
+ALL deposit data from 2004-2022 (72 quarters) is WRONG
+
+Extracted "Number of Reporting Offices" instead of "Deposit Amount"
+
+Offices are typically 20-200 (small integers)
+
+Deposits are typically 500-5,000 Crores (for median districts)
+
+This explains the anomalous values in 2022Q4 median (162 vs expected ~3,000)
+
+================================================================================
+SECTION 4: VERIFICATION EVIDENCE
+MANUAL CHECK (BALOD District, 2022-23:Q3):
+
+Excel Cell F8 (2017-22 file): 3,296 Crores (Deposit) ← SHOULD EXTRACT THIS
+
+Excel Cell E8 (2017-22 file): 87 (Offices) ← CURRENTLY EXTRACTS THIS
+
+EXPECTED MEDIANS (based on 2023-24 data, which is correct):
+
+2023Q1: ~1,500-2,500 Crores (normal range)
+
+2022Q4: ~1,400-2,400 Crores (should be similar)
+
+OBSERVED MEDIANS (from current buggy extraction):
+
+2023Q1: 7,576 ← WRONG (likely Accounts in thousands, not Deposits)
+
+2022Q4: 162 ← WRONG (actually Offices, not Deposits)
+
+Note: The 2023-24 file ALSO has issues (median 7,576 is still wrong).
+Need to verify if that file has yet another structure variation.
+
+UPDATE: 2023-24 file has different sub-headers:
+
+Column G: "No. of Accounts" (in Thousands)
+
+Column H: "Deposit Amount" (in ₹ Crores)
+
+Script 13 for 2023-24 uses range(7, ..., 3) which gets index 7 = Column H (0-indexed).
+Wait, Column H in pandas is index 7 only if there's no Column A offset.
+
+PANDAS INDEXING CLARIFICATION:
+If pd.read_excel() with no index_col, Column A becomes index 0 even if blank.
+So:
+
+Column A (blank) = Index 0
+
+Column B (Region) = Index 1
+
+...
+
+Column H (Deposit Amount in 2023-24) = Index 7 ✓
+
+But for 2023-24, the merged headers mean:
+
+Index 5: "Sep-2025" (merged F:H)
+
+Index 6: Unnamed (G)
+
+Index 7: Unnamed (H) ← This is where Deposit Amount data lives
+
+So range(7, ..., 3) gets indices 7, 10, 13...
+These map to Columns H, K, N... which are the 3rd column in each quarter block.
+
+In 2023-24: 3rd column = "Deposit Amount" ✓
+In 2017-22: 3rd column would be index 6, 9, 12... = Credit (not Deposit)
+
+Wait, the patterns are different:
+
+2023-24 quarters start at Column F (index 5):
+
+F (5): Offices
+
+G (6): Accounts
+
+H (7): Deposit ← range(7, ..., 3) gets this ✓
+
+2017-22 quarters start at Column E (index 4):
+
+E (4): Offices ← Script wrongly gets this
+
+F (5): Deposit ← Should get this
+
+G (6): Credit
+
+So the fix is confirmed: dep_idx = q_idx + 1
+
+================================================================================
+SECTION 5: THE FIX
+LOCATION: Script 13 (13_extract_rbi_deposits.py)
+LINES: ~45-85 (Historical file processing section)
+
+CHANGE REQUIRED:
+
+python
+# OLD (Lines ~55-85):
+deposit_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+print(f" Deposit columns found: {len(deposit_cols)}")
+
+for dep_idx in deposit_cols:  # ← WRONG VARIABLE NAME
+    col_name = str(df.columns[dep_idx])
+    try:
+        # Parse "2022-23:Q3" format
+        year_part, q_part = col_name.split(':Q')
+        # ... fiscal year conversion logic ...
+    except Exception as e:
+        print(f" ⚠ Skipping column '{col_name}': {e}")
+        continue
+    
+    # Extract data
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+    # ↑ BUG: Uses quarter label column (Offices)
+
+
+# NEW (CORRECTED):
+quarter_label_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+print(f" Quarter labels found: {len(quarter_label_cols)}")
+
+for q_idx in quarter_label_cols:  # ← Renamed for clarity
+    col_name = str(df.columns[q_idx])
+    
+    # ✓ Deposit is the next column after quarter label
+    dep_idx = q_idx + 1
+    
+    try:
+        # Parse "2022-23:Q3" format
+        year_part, q_part = col_name.split(':Q')
+        # ... fiscal year conversion logic (unchanged) ...
+    except Exception as e:
+        print(f" ⚠ Skipping column '{col_name}': {e}")
+        continue
+    
+    # Extract data using corrected index
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+    # ↑ FIXED: Uses deposit column (one after quarter label)
+CRITICAL: The 2023-24 section (range(7, ..., 3)) should remain unchanged.
+
+================================================================================

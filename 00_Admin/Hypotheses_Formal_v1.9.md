@@ -20,6 +20,8 @@
 
 **v1.8 (2026-02-01 23:15 IST)**: RBI contamination concern RESOLVED (false alarm from fiscal-calendar conversion misunderstanding). Forensic audit confirmed all RBI source files clean. Phase 3d complete: 120 VIIRS tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). Regression variables engineered (logs, changes, lags L1-L4). Data quality validated via Scripts 25, 26, temp.py diagnostics. Analysis sample: 631 districts, 37 quarters (2015Q1-2016Q2, 2017Q2-2024Q4), 1,984 flood events (8.50% treatment rate). All hypotheses (H1-H4) ready for Phase 4 econometric testing. No hypothesis modifications; only data status updated.
 
+**v1.9 (2026-02-04 23:50 IST)**: Critical data contamination discovered in RBI extraction. Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for all historical files (2004-2022 data, 72 quarters). Root cause: column indexing offset error (missing +1 for fiscal quarter label columns). Impact: ALL Phase 4 regression results (H1-H4) invalidated. Bug documented in 00_Admin/RBI_Excel_Structure_Audit.txt. Empirical Results section retained below for documentation purposes only. Results must not be cited. Data re-extraction and pipeline re-run required. Hypotheses unchanged; only evidence status flagged as invalid.
+
 ---
 
 ### Notation and Timing
@@ -281,9 +283,36 @@ If H1 fails, displacement proxy fails and chain cannot be claimed.
 
 ---
 
-**Last updated**: 2026-02-02 21:30 IST (v1.8)
+**Last updated**: 2026-02-04 23:50 IST (v1.9)
 
-**Status**: Phase 4 complete. All hypotheses tested (H1, H3-t1, H4a confirmed; H2, H3-t0/t2, H4b/c null). Results documented below.
+**Status**: Phase 4 INVALIDATED (data contamination discovered 2026-02-04). All regression results below are based on incorrect deposit data and must not be cited. Bug: Script 13 extracted wrong column for 2004-2022 periods.
+
+---
+
+## DATA CONTAMINATION ALERT
+
+**All regression results in section below are INVALID (discovered 2026-02-04)**
+
+**Bug Summary:**
+- Script 13 (RBI extraction) extracted "Number of Reporting Offices" instead of "Deposit Amount" for historical Excel files covering 2004-2022 data (72 quarters)
+- Root cause: Column indexing offset error in historical file processing logic (missing +1 offset for fiscal quarter label columns)
+- Example: 2022Q4 median extracted as 162 (offices) instead of expected ~3,000 Crores (deposits)
+- Discovery method: Anomalous 46x spike in 2023Q1 median triggered diagnostic investigation
+
+**Impact:**
+- ALL deposit-based hypotheses (H2, H3, H4) used contaminated dependent variable
+- H1 results may also be affected if sample construction used contaminated deposit data for filtering
+- Coefficients, standard errors, and p-values below are unreliable
+- Hypothesis test conclusions (confirmed/null) are premature
+
+**Fix Status:**
+- Bug root cause identified and documented in 00_Admin/RBI_Excel_Structure_Audit.txt
+- Correction: dep_idx = q_idx + 1 for historical files
+- Re-extraction pending next session
+- Full pipeline re-run required (Scripts 13-31)
+
+**Documentation Purpose:**
+Results retained below to document the discovery process and maintain transparency. These results must not be cited in any publication or presentation. Updated results will replace this section after data correction is validated.
 
 ---
 

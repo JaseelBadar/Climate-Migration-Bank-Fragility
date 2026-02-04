@@ -2304,5 +2304,145 @@ Next:
    Option D: Begin paper drafting (Introduction, Data, Results sections)
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-03 21:40 PM IST
+2026-02-04 (Wed) 17:00-23:36 PM IST: Phase 4 Data Quality Crisis & Resolution
+======================================================================
+Goal: Investigate anomalous 46x deposit spike in 2023Q1, identify root cause, document bug for correction.
+
+Actions Completed
+
+A) Initial Spike Detection (1700-1710 PM IST)
+- Detected implausible median deposit jump: 2022Q4 (162 Crores) -> 2023Q1 (7,576 Crores)
+- 46x increase inconsistent with economic conditions (expected ~8-12% nominal growth)
+- Hypothesis 1: Outliers driving median -> Created Script 31 (winsorization test)
+- Hypothesis 2: CPI deflation error -> Created Script 32 (CPI diagnostic)
+- Hypothesis 3: Nominal spike real -> Created Script 32b (2023 district analysis)
+
+B) Winsorization Test (1706-1707 PM IST)
+- Script 31: Applied 1%/99% winsorization to deposit_change_qt
+- Output: regression_panel_final_winsor.csv (4.47 MB, 22,716 rows)
+- Log: 31_winsorize_log.txt (before: 7.576, after: 7.576 median unchanged)
+- Result: Outliers NOT the cause, spike persists after winsorization
+- Hypothesis 1 rejected
+
+C) CPI Diagnostic Analysis (1714-1718 PM IST)
+- Script 32: Checked CPI deflation logic and growth rates
+- Verified CPI series: 2015-2024 from World Bank data
+- Calculated year-over-year inflation: 2022-2023 = 6.7% (normal range)
+- Tested deflation math: Nominal 2023 / CPI_2023 * 100 = Real (correct formula)
+- Output: 32_cpi_diagnostic_log.txt (CPI growth 2022-23: 6.7%, within normal range)
+- Created figure: 32_nominal_growth_trend.png (visualized 46x spike)
+- Result: CPI deflation logic CORRECT, not the cause of spike
+- Hypothesis 2 rejected
+
+D) Nominal Growth Investigation (1716-1724 PM IST)
+- Script 32b: Analyzed 2023 spike at district level
+- Found widespread spike across all districts (not isolated to few outliers)
+- 2023Q1 median 5x higher than 2022Q4 across 500+ districts
+- Pattern consistent, not random error
+- Conclusion: Data extraction issue suspected, not economic phenomenon
+- Hypothesis 3 rejected -> New hypothesis: Source data extraction bug
+
+E) Root Cause Analysis - Excel File Inspection (1727-1758 PM IST)
+- Manually inspected all 3 RBI Excel files (2023-24, 2017-22, 2004-17)
+- Discovered DIFFERENT header structures across files:
+  
+  2023-24 file structure:
+  - Row 6: Merged headers (Sep-2025, Jun-2025, etc.)
+  - Row 7: Sub-headers (No. of Offices, No. of Accounts, Deposit Amount)
+  - Pattern: 3 columns per quarter (F-H, I-K, L-N...)
+  - Pandas index after header=5: Deposit at indices 7, 10, 13... (every 3rd)
+  - Script 13 logic: range(7, len(df.columns), 3) -> CORRECT for this file
+  
+  2017-22 file structure:
+  - Row 6: Merged headers (2022-23:Q3, 2022-23:Q2, etc.) <- FISCAL QUARTER NOTATION
+  - Row 7: Sub-headers (Number of Reporting Offices, Deposit, Credit)
+  - Pattern: 3 columns per quarter (E-G, H-J, K-M...)
+  - Pandas index after header=5: Quarter labels at indices 4, 7, 10...
+  - Deposit at indices 5, 8, 11... (quarter_label_index + 1)
+  - Script 13 logic: Finds ':Q' pattern, extracts THAT column -> WRONG
+  - BUG: Extracts "Number of Reporting Offices" instead of "Deposit"
+  
+  2004-17 file structure:
+  - Identical to 2017-22 file (same bug applies)
+
+- Verified with BALOD district sample:
+  Row 8, 2022-23:Q3: E8=87 (Offices), F8=3,296 (Deposit), G8=1,289 (Credit)
+  Script 13 extracted E8 (87 Offices) instead of F8 (3,296 Deposit)
+  This explains 2022Q4 median = 162 (should be ~3,000)
+
+F) Bug Impact Assessment (1758-1832 PM IST)
+- ALL deposit data from 2004-2022 (72 quarters) is INCORRECT
+- Script 13 extracted wrong variable: "Number of Reporting Offices" not "Deposit Amount"
+- Affected files: RBI_Deposits_2017_2022.xlsx, RBI_Deposits_2004_2017.xlsx
+- Root cause: Script finds fiscal quarter labels (":Q" in column name) but extracts
+  that column directly instead of the NEXT column (dep_idx = q_idx + 1)
+- 2023-24 data may also have issues (median 7,576 still suspicious, needs verification)
+- All regression results from Phase 4 based on contaminated data
+- Full pipeline re-run required after fix (Scripts 13-31)
+
+G) Audit Documentation (1832-2336 PM IST)
+- Created comprehensive audit: 00_Admin/RBI_Excel_Structure_Audit.txt
+- Documented complete structure of all 3 Excel files:
+  Row-by-row header analysis
+  Pandas column indexing mappings
+  Sample data verification (BALOD district as test case)
+- Documented the bug with code comparison (current vs correct):
+  CURRENT (WRONG):
+    deposit_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+  CORRECT:
+    quarter_label_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+    dep_idx = q_idx + 1  # <- ADD THIS OFFSET
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+- Documented validation plan for post-fix verification
+- Documented staged rollout plan (fix -> validate -> re-run pipeline)
+- Audit file: 7 sections, 400+ lines, complete technical specification
+
+H) Diagnostic Output Commits (2330-2336 PM IST)
+- Committed diagnostic artifacts that led to bug discovery:
+  05_Outputs/Figures/32_nominal_growth_trend.png (chart showing 46x spike)
+  05_Outputs/Logs/32_cpi_diagnostic_log.txt (CPI analysis ruling out deflation error)
+- Commit message documented chain of evidence leading to root cause
+- These outputs preserved as forensic record of discovery process
+
+Status:
+- Critical data extraction bug IDENTIFIED and DOCUMENTED
+- Root cause: Column indexing offset error in Script 13 (historical files)
+- Impact: ALL 2004-2022 deposit data (72 quarters) contains wrong variable
+- Phase 4 regression results INVALIDATED (based on contaminated data)
+- Audit documentation COMPLETE (00_Admin/RBI_Excel_Structure_Audit.txt)
+- Fix identified: dep_idx = q_idx + 1 for historical files
+- Diagnostic outputs committed as evidence trail
+- Research log updated with full crisis timeline
+
+NOT COMPLETED TODAY:
+- Script 13 fix (deferred to next session)
+- Re-extraction of RBI data (deferred)
+- Pipeline re-run (Scripts 14-31) (deferred)
+- Regression re-run (Scripts 27-30) (deferred)
+- Results validation (deferred)
+
+Next Session:
+1. Fix Script 13 with dep_idx = q_idx + 1 correction
+2. Add validation checkpoints (print sample values during extraction)
+3. Re-run Script 13 only -> generate new rbi_deposits_panel.csv
+4. Manually verify output:
+   - Check BALOD 2022Q3 = 3,296 Crores (not 87)
+   - Check 5-10 random districts against Excel source
+   - Verify 2022Q4 median in range 1,500-2,500 Crores (not 162)
+5. If validation passes -> re-run full pipeline (Scripts 14-31)
+6. Re-run regressions (Scripts 27-30) with corrected data
+7. Compare new results to Phase 4 results (document all changes)
+8. Update documentation with corrected coefficients
+9. Decide if results warrant publication or require further robustness checks
+
+Critical Lesson:
+- Always manually verify data extraction against source files
+- Anomalous summary statistics are red flags requiring investigation
+- Descriptive statistics should be validated BEFORE running regressions
+- This bug would have invalidated any paper submission
+- Rigorous data auditing saved the project from publishing false results
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-04 23:40 PM IST
 ======================================================================

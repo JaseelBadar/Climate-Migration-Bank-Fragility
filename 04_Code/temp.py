@@ -1,32 +1,21 @@
-import os
+import pandas as pd
 
-# Files to delete (all based on contaminated deposit data)
-contaminated_files = [
-    '02_Data_Intermediate/master_panel_raw.csv',
-    '03_Data_Clean/master_panel_analysis.csv',
-    '03_Data_Clean/analysis_panel_final.csv',
-    '03_Data_Clean/regression_panel_final.csv',
-    '05_Outputs/Tables/01_descriptive_stats.csv',
-    '05_Outputs/Tables/02_H1_first_stage.csv',
-    '05_Outputs/Tables/03_H2_iv2sls.csv',
-    '05_Outputs/Tables/04_H3_timing.csv',
-    '05_Outputs/Tables/05_H4_heterogeneity.csv',
-    '05_Outputs/Logs/25_descriptive_summary.txt',
-    '05_Outputs/Logs/27_H1_regression_full.txt',
-    '05_Outputs/Logs/28_H2_regression.txt',
-    '05_Outputs/Logs/29_H3_timing.txt',
-    '05_Outputs/Logs/30_H4_heterogeneity.txt'
-]
+df = pd.read_csv('02_Data_Intermediate/master_panel_raw.csv')
 
 print("="*70)
-print("DELETING CONTAMINATED FILES")
+print("MASTER PANEL RAW - VALIDATION")
 print("="*70)
+print(f"Total rows: {len(df):,}")
+print(f"Districts: {df['district_gadm'].nunique()}")
+print(f"Quarters: {df['quarter'].nunique()}")  # Changed from 'quarter_str'
+print(f"\nColumns: {df.columns.tolist()}")
 
-for filepath in contaminated_files:
-    if os.path.exists(filepath):
-        os.remove(filepath)
-        print(f"✓ Deleted: {filepath}")
-    else:
-        print(f"  (Not found: {filepath})")
+print(f"\nNon-null deposits: {df['deposits'].notna().sum():,}")  # Changed from 'deposits_crores'
+print(f"\nDeposit statistics (Crores):")
+print(df['deposits'].describe())
 
-print("\nContaminated files removed. Ready for pipeline re-run.")
+# Check 2022Q4 median (critical test)
+q4_2022 = df[(df['year']==2022) & (df['q']==4)]['deposits'].median()
+print(f"\n2022Q4 median: {q4_2022:,.0f} Crores")
+print("✓ PASS if ~7,800-8,000 Crores")
+print("✗ FAIL if 162 Crores (would indicate contamination still present)")

@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 print("="*70)
-print("RBI DEPOSITS EXTRACTION - PHASE 3d")
+print("RBI DEPOSITS EXTRACTION - Phase 3d (CORRECTED 2026-02-05)")
 print("="*70)
 
 # Input files
@@ -39,15 +39,36 @@ for file_idx, filepath in enumerate(rbi_files, 1):
     has_fiscal_quarters = any(':Q' in str(col) for col in df.columns[:20])
     
     if has_fiscal_quarters:
-        # Historical format: column names like "2022-23:Q3"
+        # ============================================================
+        # HISTORICAL FORMAT: Fiscal quarters (2017-22, 2004-17 files)
+        # ============================================================
         print(f"    Format: Historical (fiscal quarters in column names)")
         
-        # Find all columns with fiscal quarter pattern
-        deposit_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
-        print(f"    Deposit columns found: {len(deposit_cols)}")
+        # CRITICAL FIX: Find quarter LABEL columns, then extract NEXT column
+        quarter_label_cols = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+        print(f"    Quarter label columns found: {len(quarter_label_cols)}")
         
-        for dep_idx in deposit_cols:
-            col_name = str(df.columns[dep_idx])
+        # Diagnostic: Show structure for first 3 quarters
+        print(f"    File structure check (first 3 quarters):")
+        for i, q_idx in enumerate(quarter_label_cols[:3]):
+            dep_idx = q_idx + 1
+            if dep_idx < len(df.columns):
+                print(f"      [{q_idx}] {df.columns[q_idx]} → Deposit at [{dep_idx}] {df.columns[dep_idx]}")
+        
+        for q_idx in quarter_label_cols:
+            col_name = str(df.columns[q_idx])
+            
+            # CRITICAL FIX: Deposit is the NEXT column after quarter label
+            # Historical files structure:
+            #   Column q_idx: "2022-23:Q3" (quarter label)
+            #   Column q_idx+1: Deposit Amount
+            #   Column q_idx+2: Credit Amount
+            dep_idx = q_idx + 1
+            
+            # Bounds check
+            if dep_idx >= len(df.columns):
+                print(f"    ⚠ Skipping '{col_name}': No deposit column (index {dep_idx} out of range)")
+                continue
             
             try:
                 # Parse "2022-23:Q3" format
@@ -61,7 +82,6 @@ for file_idx, filepath in enumerate(rbi_files, 1):
                 # Fiscal Q2 (Jul-Sep) = Calendar Q3
                 # Fiscal Q3 (Oct-Dec) = Calendar Q4
                 # Fiscal Q4 (Jan-Mar) = Calendar Q1 of NEXT calendar year
-                
                 if fiscal_q == 4:
                     calendar_year = year_start + 1
                     calendar_q = 1
@@ -75,7 +95,7 @@ for file_idx, filepath in enumerate(rbi_files, 1):
                 print(f"    ⚠ Skipping column '{col_name}': {e}")
                 continue
             
-            # Extract data
+            # Extract data using CORRECTED index
             temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
             temp.columns = ['state_rbi', 'district_rbi', 'deposits']
             temp['quarter'] = quarter_str
@@ -87,17 +107,20 @@ for file_idx, filepath in enumerate(rbi_files, 1):
             
             # Aggregate by district-quarter (sum across population groups)
             temp_agg = temp.groupby(
-                ['state_rbi', 'district_rbi', 'quarter', 'year', 'q'], 
+                ['state_rbi', 'district_rbi', 'quarter', 'year', 'q'],
                 as_index=False
             )['deposits'].sum()
             
             all_data.append(temp_agg)
     
     else:
-        # Current format: dates in separate columns
+        # ============================================================
+        # CURRENT FORMAT: Calendar dates (2023-24 file)
+        # ============================================================
         print(f"    Format: Current (calendar dates as timestamps)")
         
         # Deposit columns at every 3rd position starting from 7
+        # NO CHANGE NEEDED FOR THIS SECTION (ALREADY CORRECT)
         deposit_indices = list(range(7, len(df.columns), 3))
         print(f"    Deposit columns found: {len(deposit_indices)}")
         
@@ -129,7 +152,7 @@ for file_idx, filepath in enumerate(rbi_files, 1):
             
             # Aggregate by district-quarter
             temp_agg = temp.groupby(
-                ['state_rbi', 'district_rbi', 'quarter', 'year', 'q'], 
+                ['state_rbi', 'district_rbi', 'quarter', 'year', 'q'],
                 as_index=False
             )['deposits'].sum()
             
@@ -157,7 +180,6 @@ print(f"    Matched: {matched_count}/{total_count} ({matched_count/total_count*1
 # Drop unmatched RBI districts
 rbi_panel = rbi_panel[rbi_panel['matched_rbi_gadm'] == True].copy()
 rbi_panel = rbi_panel.drop(columns=['matched_rbi_gadm'])
-
 print(f"    After dropping unmatched: {len(rbi_panel)} rows")
 print(f"    Unique GADM districts: {rbi_panel['district_gadm'].nunique()}")
 
@@ -169,7 +191,6 @@ rbi_panel['quarter_num'] = rbi_panel['quarter'].map(quarter_map)
 # Aggregate to GADM level (handle duplicate crosswalk matches)
 print(f"\n[4b] Aggregating to unique GADM district-state-quarters...")
 print(f"    Before aggregation: {len(rbi_panel)} rows")
-
 rbi_panel = rbi_panel.groupby(
     ['district_gadm', 'state_gadm', 'quarter', 'year', 'q', 'quarter_num'],
     as_index=False
@@ -178,7 +199,6 @@ rbi_panel = rbi_panel.groupby(
     'district_rbi': lambda x: '; '.join(sorted(set(x))),
     'state_rbi': 'first'
 })
-
 print(f"    After aggregation: {len(rbi_panel)} rows")
 print(f"    Unique GADM districts: {rbi_panel['district_gadm'].nunique()}")
 
@@ -213,5 +233,5 @@ for year in all_years:
     print(f"    {year}: Q{quarters_present}")
 
 print("="*70)
-print("RBI EXTRACTION COMPLETE")
+print("RBI EXTRACTION COMPLETE (CORRECTED VERSION 2026-02-05)")
 print("="*70)

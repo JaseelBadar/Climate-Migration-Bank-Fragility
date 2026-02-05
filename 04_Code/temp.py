@@ -1,73 +1,32 @@
-import pandas as pd
-import numpy as np
+import os
 
-# ============================================================
-# TASK 2: MANUAL VALIDATION OF CORRECTED RBI EXTRACTION
-# ============================================================
+# Files to delete (all based on contaminated deposit data)
+contaminated_files = [
+    '02_Data_Intermediate/master_panel_raw.csv',
+    '03_Data_Clean/master_panel_analysis.csv',
+    '03_Data_Clean/analysis_panel_final.csv',
+    '03_Data_Clean/regression_panel_final.csv',
+    '05_Outputs/Tables/01_descriptive_stats.csv',
+    '05_Outputs/Tables/02_H1_first_stage.csv',
+    '05_Outputs/Tables/03_H2_iv2sls.csv',
+    '05_Outputs/Tables/04_H3_timing.csv',
+    '05_Outputs/Tables/05_H4_heterogeneity.csv',
+    '05_Outputs/Logs/25_descriptive_summary.txt',
+    '05_Outputs/Logs/27_H1_regression_full.txt',
+    '05_Outputs/Logs/28_H2_regression.txt',
+    '05_Outputs/Logs/29_H3_timing.txt',
+    '05_Outputs/Logs/30_H4_heterogeneity.txt'
+]
 
-# Load corrected panel
-df = pd.read_csv('02_Data_Intermediate/rbi_deposits_panel.csv')
-
-# ============================================================
-# STEP 2.1: Basic Statistics
-# ============================================================
 print("="*70)
-print("CORRECTED PANEL - BASIC STATISTICS")
-print("="*70)
-print(f"Total rows: {len(df):,}")
-print(f"Districts: {df['district_gadm'].nunique()}")
-print(f"Quarters: {df['quarter'].nunique()}")
-print(f"\nDeposit statistics (Crores):")
-print(df['deposits'].describe())
-print(f"\nMedian by year:")
-print(df.groupby('year')['deposits'].median().sort_index())
-
-# ============================================================
-# STEP 2.2: BALOD Test Case
-# ============================================================
-balod = df[(df['district_gadm'].str.contains('Balod', case=False, na=False)) & 
-           (df['year'] == 2022) & 
-           (df['q'] == 4)]
-
-print("\n" + "="*70)
-print("BALOD DISTRICT - 2022Q4 (Fiscal 2022-23:Q3)")
-print("="*70)
-print(balod[['district_gadm', 'state_gadm', 'quarter', 'deposits', 'district_rbi']])
-print(f"\nExpected: 3,296 Crores (from audit)")
-print(f"Actual: {balod['deposits'].values[0]:,.0f} Crores" if len(balod) > 0 else "NOT FOUND")
-
-# ============================================================
-# STEP 2.3: Random Sample Validation
-# ============================================================
-np.random.seed(42)  # Reproducible random sample
-
-sample_2022q4 = df[(df['year'] == 2022) & (df['q'] == 4)].sample(5)
-
-print("\n" + "="*70)
-print("RANDOM SAMPLE - 2022Q4 (5 districts for manual verification)")
-print("="*70)
-print(sample_2022q4[['district_gadm', 'state_gadm', 'quarter', 'deposits', 'district_rbi']].to_string(index=False))
-print("\nVerify these values against Excel file: RBI_Deposits_2017_2022.xlsx")
-print("Look for fiscal quarter 2022-23:Q3 (Oct-Dec 2022)")
-
-# ============================================================
-# STEP 2.4: Check for Anomalous Spike Disappearance
-# ============================================================
-print("\n" + "="*70)
-print("MEDIAN DEPOSIT TREND (2022-2023)")
+print("DELETING CONTAMINATED FILES")
 print("="*70)
 
-trend = df[df['year'].isin([2022, 2023])].groupby('quarter')['deposits'].median().sort_index()
-print(trend)
+for filepath in contaminated_files:
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        print(f"✓ Deleted: {filepath}")
+    else:
+        print(f"  (Not found: {filepath})")
 
-print("\n2022Q4 → 2023Q1 change:")
-q4_2022 = df[(df['year']==2022) & (df['q']==4)]['deposits'].median()
-q1_2023 = df[(df['year']==2023) & (df['q']==1)]['deposits'].median()
-print(f"2022Q4: {q4_2022:,.0f} Crores")
-print(f"2023Q1: {q1_2023:,.0f} Crores")
-print(f"Growth: {(q1_2023/q4_2022 - 1)*100:.1f}%")
-print("\nExpected: Normal growth 8-12% (not 4,600%)")
-
-print("\n" + "="*70)
-print("VALIDATION COMPLETE")
-print("="*70)
+print("\nContaminated files removed. Ready for pipeline re-run.")

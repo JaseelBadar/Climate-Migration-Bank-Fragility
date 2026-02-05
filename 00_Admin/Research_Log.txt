@@ -2444,5 +2444,205 @@ Critical Lesson:
 - Rigorous data auditing saved the project from publishing false results
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-04 23:40 PM IST
+2026-02-05 (Thu) 18:30-19:32 PM IST: Script 13 Fix & Full Pipeline Re-run
+======================================================================
+Goal: Fix Script 13 deposit extraction bug, validate correction, regenerate entire data pipeline with corrected deposits.
+
+Actions Completed
+
+A) Script 13 Bug Fix Implementation (1830-1833 PM IST)
+- Updated 04_Code/13_extract_rbi_deposits.py based on yesterday's audit
+- Applied column offset fix for historical files (2004-2022):
+  OLD (WRONG):
+    dep_idx = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+  NEW (CORRECT):
+    q_idx = [i for i, col in enumerate(df.columns) if ':Q' in str(col)]
+    dep_idx = q_idx + 1  # Offset to get deposit column (next after quarter label)
+    temp = df[[state_col, district_col, df.columns[dep_idx]]].copy()
+- Added validation prints to show sample values during extraction
+- Re-ran Script 13: python 04_Code/13_extract_rbi_deposits.py
+- Output: 02_Data_Intermediate/rbi_deposits_panel.csv (3.46 MB, 50,325 rows)
+- Committed corrected script and output file
+
+B) Post-Fix Validation (1833-1842 PM IST)
+- Created validation script (temp.py) with 4 diagnostic checks:
+  1. Basic statistics (row counts, district coverage, deposit ranges)
+  2. BALOD 2022Q4 test case (expected: 3,296 Crores from audit)
+  3. Random sample validation (5 districts from 2022Q4)
+  4. Anomalous spike check (2022Q4 -> 2023Q1 growth should be 8-12%, not 4,600%)
+- Validation results:
+  Total rows: 50,325 (unchanged from before, structure correct)
+  Districts: 624
+  Deposit statistics: Mean 10,991 Crores, Median 3,399 Crores (REALISTIC)
+  BALOD 2022Q4: 3,296 Crores (EXACT MATCH to Excel source - FIX CONFIRMED)
+  2022Q4 median: 7,626 Crores (vs contaminated 162 Crores)
+  2022Q4 -> 2023Q1 growth: -7.4% seasonal variation (vs contaminated +4,600% spike)
+- All validation checks PASSED
+- Bug fix confirmed successful
+
+C) Contaminated File Deletion (1847 PM IST)
+- Identified all files downstream of contaminated rbi_deposits_panel.csv
+- Deleted 14 contaminated files across 3 directories:
+  02_Data_Intermediate/: master_panel_raw.csv, master_panel_analysis.csv
+  03_Data_Clean/: analysis_panel_final.csv, regression_panel_final.csv, regression_panel_final_winsor.csv
+  05_Outputs/Tables/: 01-05 (all regression tables H1-H4)
+  05_Outputs/Logs/: 25, 27-31 (descriptive stats, all regressions, winsorization)
+- Preserved unaffected files:
+  VIIRS data (21, 22, 26 logs - nighttime lights processing)
+  Historical record (32_cpi_diagnostic_log.txt - bug discovery evidence)
+- Committed deletions in 3 separate commits (logs, tables, data files)
+- Each commit message documented contamination characteristics and deletion rationale
+
+D) Pipeline Re-run: Data Assembly (1859-1915 PM IST)
+- Script 14 (Merge Master Panel):
+  Input: rbi_deposits_panel.csv (corrected), flood_exposure_panel.csv, district_quarter_skeleton.csv
+  Output: master_panel_raw.csv (26,640 rows)
+  Validation: 2022Q4 median = 7,865 Crores (PASS, not 162)
+  Committed with documentation of corrected deposit statistics
+  
+- Script 15 (Validate Master Panel):
+  Ran validation checks on master_panel_raw.csv
+  Output: master_panel_validation_log.txt
+  Results: Panel balanced (666x40=26,640), 2016 gap confirmed, 88.6% flood-deposit overlap
+  All checks expected, no anomalies detected
+  Committed validation log
+  
+- Script 16: SKIPPED (validation passed, no deeper diagnostics needed)
+  
+- Script 17 (Prepare Analysis Sample):
+  Applied sample restrictions (Option 3):
+    1. Drop 2016Q3-2017Q1 (structural gap)
+    2. Drop 35 zero-coverage districts
+  Output: master_panel_analysis.csv (23,347 rows, 631 districts, 37 quarters)
+  Key metric: 99.1% deposit coverage (vs 86.9% in raw)
+  100% treatment-outcome overlap (all 1,984 floods have deposit data)
+  Committed analysis sample
+
+E) Pipeline Re-run: VIIRS Integration (1919-1925 PM IST)
+- Script 22 (Aggregate VIIRS Quarterly):
+  Already completed in previous session, output unchanged
+  viirs_quarterly_panel.csv (26,640 rows, 98.5% coverage)
+  VIIRS data never contaminated (different data source)
+  
+- Script 23 (Merge VIIRS with Master):
+  Input: master_panel_analysis.csv (corrected), viirs_quarterly_panel.csv
+  Output: analysis_panel_final.csv (23,347 rows)
+  Merge result: 100% VIIRS coverage (all observations have lights data)
+  Perfect spatial-temporal overlap for all regressions
+  Committed merged panel
+  
+- Script 24 (Engineer Regression Variables):
+  Created log transforms: log_deposits, log_lights_qt
+  Created percentage changes: deposit_change_qt, lights_change_qt
+  Created flood lags: flood_ruleA_L1-L4, flood_ruleB_L1-L4
+  Output: regression_panel_final.csv (23,347 rows, 23 columns)
+  All variables now use corrected deposits (not office counts)
+  Committed regression-ready panel
+
+F) Descriptive Statistics Regeneration (1925-1932 PM IST)
+- Script 25 (Descriptive Stats):
+  Generated summary statistics from corrected regression panel
+  Key corrected statistics:
+    deposit_change_qt: Mean 2.29%, Std 8.21% (realistic banking growth)
+    OLD (contaminated): Would show office count changes (meaningless)
+  Lights statistics unchanged (VIIRS never contaminated):
+    mean_radiance: Mean 0.696, Std 1.688
+    lights_change_qt: Mean 0.54%, Std 11.14%
+  Flood exposure: 1,984 events (8.50%), 512/624 districts exposed (Rule A)
+  Output files:
+    05_Outputs/Tables/01_descriptive_stats.csv
+    05_Outputs/Logs/25_descriptive_summary.txt
+  Committed corrected descriptive statistics
+
+Files Generated (All with Corrected Data):
+- 02_Data_Intermediate/rbi_deposits_panel.csv (3.46 MB, corrected extraction)
+- 02_Data_Intermediate/master_panel_raw.csv (26,640 rows)
+- 02_Data_Intermediate/master_panel_validation_log.txt
+- 02_Data_Intermediate/master_panel_analysis.csv (23,347 rows)
+- 03_Data_Clean/analysis_panel_final.csv (VIIRS merge, 100% coverage)
+- 03_Data_Clean/regression_panel_final.csv (23 columns, lag structure)
+- 05_Outputs/Tables/01_descriptive_stats.csv (corrected summary stats)
+- 05_Outputs/Logs/25_descriptive_summary.txt (corrected diagnostics)
+
+Validation Evidence:
+- BALOD 2022Q4: 3,296 Crores (exact match to Excel source)
+- 2022Q4 median: 7,865 Crores (realistic, vs contaminated 162)
+- 46x spike eliminated: 2022Q4->2023Q1 now shows -7.4% seasonal variation
+- Deposit mean: 16,440 Crores (realistic for district-level banking)
+- All deposits in range 29-1,237,744 Crores (small rural to major urban)
+
+Commits Made:
+1. Corrected Script 13 and rbi_deposits_panel.csv (with audit-based fix)
+2. Deleted contaminated logs (6 files, forensic documentation)
+3. Deleted contaminated tables (5 files, impact assessment)
+4. Deleted contaminated data files (5 files, data genealogy traced)
+5. Regenerated master_panel_raw.csv (deposit statistics validated)
+6. Regenerated master_panel_validation_log.txt (panel structure confirmed)
+7. Regenerated master_panel_analysis.csv (99.1% coverage achieved)
+8. Regenerated analysis_panel_final.csv (100% VIIRS merge success)
+9. Regenerated regression_panel_final.csv (all variables corrected)
+10. Regenerated descriptive statistics (realistic banking metrics restored)
+
+All commit messages include:
+- Before/after comparisons (contaminated vs corrected values)
+- Data specifications (rows, columns, coverage percentages)
+- Validation results (test cases, expected vs actual)
+- Impact assessment (which hypotheses affected)
+- Justification (why these specific restrictions/choices)
+- Next steps (what depends on this file)
+
+Status:
+- Script 13 bug FIXED and VALIDATED
+- Entire data pipeline REGENERATED with corrected deposits (Scripts 13-25)
+- All 10 intermediate/final datasets now use correct deposit values
+- Descriptive statistics show realistic banking sector metrics
+- VIIRS integration confirmed at 100% coverage
+- Treatment-outcome overlap perfected (all floods have deposit data)
+- Pipeline ready for hypothesis testing (H1-H4)
+
+NOT COMPLETED TODAY:
+- Script 27: H1 regression (Floods -> Lights first stage)
+- Script 28: H2 regression (IV 2SLS: Lights -> Deposits)
+- Script 29: H3 regression (Lag structure: flood_t0, flood_t1, flood_t2)
+- Script 30: H4 regression (Heterogeneity: Urban x Flood, HighExp x Flood, Monsoon x Flood)
+- Comparison of new vs old regression results
+- Assessment of whether findings change substantively
+- Update to paper draft with corrected coefficients
+- Decision on robustness checks needed before resubmission
+
+Next Session (2026-02-06):
+1. Run Scripts 27-30 (all 4 hypothesis regressions) with corrected data
+2. Extract key results:
+   H1: Flood -> Lights coefficient (first stage)
+   H2: Predicted Lights -> Deposits coefficient (second stage, IV 2SLS)
+   H3: Lag coefficients (flood_t0, flood_t1, flood_t2)
+   H4: Interaction coefficients (Urban x Flood, HighExp x Flood, Monsoon x Flood)
+3. Compare to contaminated results from Phase 4:
+   - Which coefficients changed magnitude?
+   - Which changed sign?
+   - Which changed significance?
+   - Which hypotheses still supported vs rejected?
+4. Document all changes in comparison table
+5. Assess substantive implications:
+   - Does main story change?
+   - Are mechanisms still supported?
+   - Do policy implications change?
+6. Update 06_Manuscript/ with corrected results
+7. Create robustness appendix documenting the bug and fix
+8. Decide if additional robustness checks needed
+9. Plan next steps toward publication
+
+Critical Takeaways:
+- Rigorous validation at each pipeline stage caught the contamination
+- BALOD test case (from yesterday's audit) was the smoking gun
+- Systematic deletion and regeneration prevented propagation errors
+- Comprehensive commit messages create audit trail for reviewers
+- All 10 commits document exact changes (before/after values)
+- Data quality crisis resolved in 1 day due to yesterday's thorough audit
+- Pipeline designed for replicability (clear scripts, clean separation of stages)
+- This level of documentation would satisfy any journal's transparency requirements
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-05 17:35 PM IST
 ======================================================================

@@ -90,6 +90,6 @@ RECOMMENDATIONS:
 with open('02_Data_Intermediate/master_panel_validation_log.txt', 'w') as f:
     f.write(output)
 
-print("\n[6] VALIDATION COMPLETE")
+print("\n[6] VALIDATION COMPLETED")
 print("    Log saved: 02_Data_Intermediate/master_panel_validation_log.txt")
 print("="*70)

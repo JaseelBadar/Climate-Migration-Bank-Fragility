@@ -2,9 +2,9 @@
 
 **Empirical analysis of flood-induced migration effects on district-level banking stability in India, 2015-2024.**
 
-**Status:** Phase 4 Under Revision (Data Quality Issue). Critical bug discovered in RBI extraction (Script 13): Historical files (2004-2022) extracted "Number of Reporting Offices" instead of "Deposit Amount" due to column indexing error. All Phase 4 regression results invalidated pending data re-extraction. See 00_Admin/RBI_Excel_Structure_Audit.txt for technical details.
+**Status:** Phase 4 Data Quality Crisis. Two contamination sources discovered: (1) RBI deposits extracted wrong column (FIXED Feb 5, 2026), (2) VIIRS homonym error causes 7 districts to share lights values across states (NOT FIXED). All regression results generated Feb 6 are contaminated by VIIRS measurement error. H1, H2, H4 invalid; H3 status uncertain pending specification verification.
 
-**Last updated:** 2026-02-04
+**Last updated:** 2026-02-06  
 **Project start:** 2025-12-30
 
 ---
@@ -15,31 +15,32 @@ Do climate disasters trigger migration (proxied by nighttime-lights declines) th
 
 ## DATA QUALITY ALERT
 
-**All regression results below are INVALID due to RBI extraction bug discovered 2026-02-04.**
+**Phase 4 regression results are INVALID due to VIIRS homonym measurement error.**
 
-Bug: Script 13 extracted wrong variable from historical Excel files (2004-2022 data).  
-Impact: 72 quarters of deposit data contain "Number of Reporting Offices" instead of "Deposit Amount".  
-Status: Bug documented, fix identified, re-extraction pending.  
-Documentation: See `00_Admin/RBI_Excel_Structure_Audit.txt` for complete audit trail.
+**Bug 1 (RESOLVED):** Script 13 extracted "Number of Reporting Offices" instead of deposits for 2004-2022 data. Fixed Feb 5, 2026 via column offset correction. All deposit data now clean.
 
-**Results table retained for documentation purposes only. Do not cite.**
+**Bug 2 (UNRESOLVED):** Scripts 18, 21 VIIRS extraction merged 7 homonymous districts across states (Aurangabad Bihar = Aurangabad Maharashtra, etc.). 518 rows affected. Measurement error biases H1 coefficient toward zero, creates weak instrument problem in H2, generates spurious H4c result.
+
+**Impact:** H1, H2, H4 coefficients and standard errors are incorrect. H3 may be valid if specification excludes VIIRS (requires verification). Cannot publish until VIIRS extraction fixed with state disambiguation.
+
+**Results table shows Feb 6 contaminated output for documentation only. Do not cite.**
 
 ---
 
 ## Hypotheses & Current Results
 
-| Hypothesis | Specification | Coefficient | p-value | Result |
+| Hypothesis | Specification | Coefficient | p-value | Status |
 |------------|---------------|-------------|---------|--------|
-| **H1** | Floods → Lights (first stage) | -0.0149 | <0.001 | Confirmed |
-| **H2** | Lights → Deposits (IV 2SLS) | 0.0839 | 0.609 | Null |
-| **H3-t0** | Floods → Deposits (current) | 0.0006 | 0.699 | Null |
-| **H3-t1** | Floods → Deposits (1Q lag) | -0.0062 | <0.001 | Confirmed |
-| **H3-t2** | Floods → Deposits (2Q lag) | -0.0053 | 0.280 | Null |
-| **H4a** | Urban × Flood | -0.0111 | <0.001 | Confirmed |
-| **H4b** | HighExp × Flood | 0.0021 | 0.360 | Null |
-| **H4c** | Monsoon × Flood | -0.0018 | 0.511 | Null |
+| **H1** | Floods → Lights (first stage) | -0.0149 | <0.001 | INVALID (VIIRS outcome) |
+| **H2** | Lights → Deposits (IV 2SLS) | +0.2191 | 0.299 | INVALID (weak instrument) |
+| **H3-t0** | Floods → Deposits (current) | -0.0005 | 0.777 | UNCERTAIN (verify spec) |
+| **H3-t1** | Floods → Deposits (1Q lag) | +0.0004 | 0.757 | UNCERTAIN (verify spec) |
+| **H3-t2** | Floods → Deposits (2Q lag) | -0.0091 | 0.012 | UNCERTAIN (verify spec) |
+| **H4a** | Urban × Flood | -0.0013 | 0.665 | INVALID (if VIIRS used) |
+| **H4b** | HighExp × Flood | -0.0057 | 0.068 | INVALID (if VIIRS used) |
+| **H4c** | Monsoon × Flood | +0.0119 | <0.001 | INVALID (statistical artifact) |
 
-**Key findings:** Floods reduce economic activity (H1) and cause delayed deposit stress (H3, 1-quarter lag). Effect concentrated in urban districts (H4a). Nighttime lights do not mediate deposit effects via IV (H2 null). All specifications use district-clustered standard errors.
+**Findings contaminated by VIIRS error:** H1 coefficient attenuated by measurement error (true effect likely 2-3%, not 1.5%). H2 weak instrument problem prevents mechanism test. H3 may be valid if specification uses deposits only (requires Script 29 verification). H4c monsoon result is spurious (sign flipped from prior version, economically implausible). All district-clustered standard errors incorrect due to 259 observations sharing VIIRS values across states.
 
 ---
 
@@ -52,7 +53,7 @@ Raw data never modified. All transformations in intermediate/clean folders.
 - **Coverage:** 762 districts, 2004-2024, quarterly
 - **Files:** RBI_Deposits_2004_2017.xlsx, RBI_Deposits_2017_2022.xlsx, RBI_Deposits_2023_2024.xlsx
 - **Variables:** Deposits by population group (Rural/Semi-urban/Urban/Metropolitan)
-- **Status:** CONTAMINATED (bug discovered 2026-02-04). Script 13 extracted wrong column for 2004-2022 data. Structural gap: 2016Q3, 2016Q4, 2017Q1 (RBI publication schedule).
+- **Status:** CORRECTED (Feb 5, 2026). Bug fixed: Script 13 now extracts deposits correctly via column offset. Structural gap remains: 2016Q3, 2016Q4, 2017Q1 (RBI publication schedule, not error).
 - **Location:** 01_Data_Raw/RBI_Bank_Data/
 
 ### 2. EM-DAT Disaster Database
@@ -66,7 +67,8 @@ Raw data never modified. All transformations in intermediate/clean folders.
 - **Coverage:** 120 monthly tiles (2015-01 to 2024-12), tile 75N060E (Phase 3d: processed to regression panel)
 - **Variables:** Mean radiance (nW/cm²/sr), pixel counts
 - **Usage:** Economic activity / migration proxy
-- **Location (bulk):** E:\VIIRS_Raw_Data_75N060E\ (~65 GB external storage)
+- **Status:** CONTAMINATED. Scripts 18, 21 merge 7 homonymous districts across states (518 rows affected). Fix required: Add state_gadm to spatial join.
+- **Location (bulk):** E:\\VIIRS_Raw_Data_75N060E\\ (~65 GB external storage)
 - **Location (test):** 01_Data_Raw/VIIRS_NightLights/ (Jan 2023 validation tile)
 
 ### 4. GADM v4.1 District Boundaries
@@ -171,7 +173,7 @@ E:\Climate-Migration-Bank-Fragility\
 ├── emdat_districts_parsed.csv
 ├── district_crosswalk_draft.csv
 ├── flood_exposure_panel.csv (26,640 rows)
-├── rbi_deposits_panel.csv (50,325 rows, CLEAN 2026-01-31)
+├── rbi_deposits_panel.csv (50,325 rows)
 ├── master_panel_raw.csv (26,640 rows)
 ├── master_panel_analysis.csv (23,347 rows, Phase 3c)
 ├── viirs_monthly_panel.csv (79,920 rows, 666 × 120 months, CLEAN)
@@ -186,7 +188,7 @@ E:\Climate-Migration-Bank-Fragility\
 ├── 00_diagnose_all_files.py - Comprehensive file scanner
 ├── 01-07: Inspection, parsing
 ├── 08-12: Crosswalk, skeleton, flood exposure
-├── 13: RBI extraction - Complete (2026-01-31)
+├── 13: RBI extraction - Complete
 ├── 14-17: Master panel merge
 ├── 18-20: VIIRS test extraction
 ├── 21: VIIRS full extraction (120 months)
@@ -196,7 +198,7 @@ E:\Climate-Migration-Bank-Fragility\
 ├── 24: Variable engineering
 ├── 25: Descriptive statistics
 ├── 26: VIIRS validation
-├── 27-30: H1-H4 regressions - Pending (scheduled 2026-02-02)
+├── 27-30: H1-H4 regressions - Pending 
 ├── 31: Winsorization (deposits)
 └── 32-32b: CPI diagnostic, 2023 spike investigation
 
@@ -261,7 +263,7 @@ python 04_Code/24_engineer_regression_variables.py
 python 04_Code/25_descriptive_statistics.py
 python 04_Code/26_validate_viirs_monthly.py
 
-# Phase 4: Regressions (Pending, scheduled 2026-02-02)
+# Phase 4: Regressions (Complete but CONTAMINATED by VIIRS error, re-run pending)
 python 04_Code/27_regression_H1_first_stage.py
 python 04_Code/28_regression_H2_iv2sls.py
 python 04_Code/29_regression_H3_timing.py
@@ -352,33 +354,35 @@ Crosswalk cleaning applied, some ambiguity remains
 16.8% unmatched (130 RBI districts dropped)
 Fuzzy matching threshold (80%) trades precision for coverage
 
-Critical Bug History
-Phase 4 VIIRS contamination (resolved):
+### Critical Bugs (Active)
 
-Bug #1: Homonymous district merge
-Root cause: dissolve(by='NAME_2') ignored state boundaries
-Impact: 17 district-pairs merged (659 districts instead of 676)
-Fix: Removed dissolve block (Script 21 rewrite, 2026-01-20)
+**VIIRS Homonym Measurement Error** (Discovered Feb 6, 2026 via result inconsistency analysis)
+- **Bug:** Scripts 18, 21 spatial join uses district name only (no state disambiguation)
+- **Impact:** 7 homonymous districts share identical VIIRS values across states (Aurangabad Bihar = Aurangabad Maharashtra, Balrampur, Bijapur, Bilaspur, Hamirpur + 2 others)
+- **Affected rows:** 518 observations (7 districts × 2 states × 37 quarters)
+- **Measurement error:** ~259 rows have wrong state's nighttime lights data
+- **Statistical consequences:**
+  - H1: Coefficient biased toward zero (attenuation, true effect ~2-3% not 1.5%)
+  - H2: Weak instrument problem (first stage attenuated, inflated SEs)
+  - H3: Status uncertain (valid if deposits-only specification)
+  - H4: H4c monsoon result spurious (sign flip, economically implausible)
+- **Fix required:** Rewrite Scripts 18, 21 to use (district_gadm, state_gadm) composite key
+- **Status:** NOT FIXED (pipeline re-run pending)
 
-Bug #2: Multi-tile duplicates
-Root cause: 9 border districts extracted twice across tile boundaries
-Impact: 1,080 duplicate observations
-Fix: Pixel-weighted averaging (Script 21b, 2026-01-21)
+### Critical Bugs (Resolved)
 
-RBI contamination concern (resolved):
-- Files confirmed CLEAN via forensic audit
-- 2016-2017 gap is structural (RBI publication schedule), not data error
-- Impact: Zero (no contamination)
-
-**RBI Extraction Bug (discovered 2026-02-04, fix pending):**
-- **Bug:** Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for historical files (2017-2022, 2004-2017)
+**RBI Deposit Extraction Error** (Discovered Feb 4, 2026; Fixed Feb 5, 2026)
+- **Bug:** Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for 2004-2022 files
 - **Root cause:** Column indexing offset error (missing +1 for fiscal quarter label columns)
-- **Impact:** ALL 2004-2022 deposit data (72 quarters) contains wrong variable
-- **Example:** 2022Q4 median shows 162 (offices) instead of expected ~3,000 (deposits)
-- **Discovery:** Detected via anomalous 46x spike in 2023Q1 median during diagnostic analysis
-- **Fix identified:** `dep_idx = q_idx + 1` for historical files
-- **Status:** Documented in 00_Admin/RBI_Excel_Structure_Audit.txt; re-extraction pending
-- **Phase 4 impact:** All regression results invalidated pending data correction
+- **Impact:** 72 quarters contaminated (2022Q4 median: 162 offices instead of 3,296 Crores deposits)
+- **Discovery method:** Anomalous 46x spike in 2023Q1 median triggered diagnostic cascade
+- **Fix:** Added `dep_idx = q_idx + 1` offset for historical files
+- **Validation:** BALOD 2022Q4 = 3,296 Crores (exact match to Excel source)
+- **Status:** RESOLVED (all deposits now correct)
+
+**VIIRS Duplicate Districts** (Resolved Jan 21, 2026)
+- Multi-tile border duplicates fixed via pixel-weighted averaging (Script 21b)
+- Homonymous district merge fixed via dissolve removal (Script 21 rewrite)
 
 Documentation
 - Research_Log.txt: Chronological work log
@@ -399,4 +403,4 @@ University Email: jab9733@g.harvard.edu
 Institution: Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 
-Last updated: 2026-02-04 | Project initiated: December 30, 2025
+Last updated: 2026-02-06 | Project initiated: December 30, 2025

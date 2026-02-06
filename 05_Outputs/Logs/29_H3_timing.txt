@@ -1,0 +1,27 @@
+======================================================================
+H3: TIMING EFFECTS (District-Clustered SEs)
+======================================================================
+
+[t0] Current Quarter:
+  β̂  = -0.000489
+  SE = 0.001729 (clustered)
+  t  = -0.283
+  p  = 0.777342
+  Sig: NOT SIGNIFICANT
+
+[t-1] 1 Quarter Lag:
+  β̂  = 0.000412
+  SE = 0.001334 (clustered)
+  t  = 0.309
+  p  = 0.757180
+  Sig: NOT SIGNIFICANT
+
+[t-2] 2 Quarter Lag:
+  β̂  = -0.009052
+  SE = 0.003606 (clustered)
+  t  = -2.510
+  p  = 0.012071
+  Sig: **
+
+N = 21,912
+Districts: 624 clusters

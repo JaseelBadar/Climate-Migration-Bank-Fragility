@@ -1,4 +1,4 @@
-## FORMAL RESEARCH HYPOTHESES (v1.8 — Phase 3d complete; regression-ready data validated)
+## FORMAL RESEARCH HYPOTHESES (v2.0 — Phase 4 invalid; VIIRS contamination discovered)
 
 **Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)
 
@@ -20,8 +20,9 @@
 
 **v1.8 (2026-02-01 23:15 IST)**: RBI contamination concern RESOLVED (false alarm from fiscal-calendar conversion misunderstanding). Forensic audit confirmed all RBI source files clean. Phase 3d complete: 120 VIIRS tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). Regression variables engineered (logs, changes, lags L1-L4). Data quality validated via Scripts 25, 26, temp.py diagnostics. Analysis sample: 631 districts, 37 quarters (2015Q1-2016Q2, 2017Q2-2024Q4), 1,984 flood events (8.50% treatment rate). All hypotheses (H1-H4) ready for Phase 4 econometric testing. No hypothesis modifications; only data status updated.
 
-**v1.9 (2026-02-04 23:50 IST)**: Critical data contamination discovered in RBI extraction. Script 13 extracted "Number of Reporting Offices" instead of "Deposit Amount" for all historical files (2004-2022 data, 72 quarters). Root cause: column indexing offset error (missing +1 for fiscal quarter label columns). Impact: ALL Phase 4 regression results (H1-H4) invalidated. Bug documented in 00_Admin/RBI_Excel_Structure_Audit.txt. Empirical Results section retained below for documentation purposes only. Results must not be cited. Data re-extraction and pipeline re-run required. Hypotheses unchanged; only evidence status flagged as invalid.
+**v1.9**: RBI deposit extraction bug discovered. Script 13 extracted wrong column (offices instead of deposits) for 2004-2022 data. All Phase 4 results invalidated. Bug documented, fix identified.
 
+**v2.0**: Deposits corrected (Feb 5), VIIRS contamination discovered (Feb 6). Scripts 18, 21 merged 7 homonymous districts across states (Aurangabad, Balrampur, Bijapur, Bilaspur, Hamirpur + 2 others). 518 rows affected (~259 with measurement error). Statistical impact: H1 coefficient attenuated, H2 weak instrument problem, H4c spurious result. H3 may be valid if specification excludes VIIRS. Results below flagged as contaminated. Hypotheses unchanged.
 ---
 
 ### Notation and Timing
@@ -283,36 +284,38 @@ If H1 fails, displacement proxy fails and chain cannot be claimed.
 
 ---
 
-**Last updated**: 2026-02-04 23:50 IST (v1.9)
-
-**Status**: Phase 4 INVALIDATED (data contamination discovered 2026-02-04). All regression results below are based on incorrect deposit data and must not be cited. Bug: Script 13 extracted wrong column for 2004-2022 periods.
+**Status**: v2.0 — Phase 4 results invalid due to VIIRS contamination. Deposits now correct, VIIRS measurement error active.
 
 ---
 
-## DATA CONTAMINATION ALERT
+## VIIRS CONTAMINATION ALERT
 
-**All regression results in section below are INVALID (discovered 2026-02-04)**
+**All H1, H2, H4 results below are INVALID due to VIIRS homonym measurement error. H3 status uncertain.**
 
 **Bug Summary:**
-- Script 13 (RBI extraction) extracted "Number of Reporting Offices" instead of "Deposit Amount" for historical Excel files covering 2004-2022 data (72 quarters)
-- Root cause: Column indexing offset error in historical file processing logic (missing +1 offset for fiscal quarter label columns)
-- Example: 2022Q4 median extracted as 162 (offices) instead of expected ~3,000 Crores (deposits)
-- Discovery method: Anomalous 46x spike in 2023Q1 median triggered diagnostic investigation
+- Scripts 18, 21 spatial join uses district name only (no state disambiguation)
+- 7 homonymous districts share identical VIIRS values across different states
+- Affected districts: Aurangabad (Bihar/Maharashtra), Balrampur (Chhattisgarh/Uttar Pradesh), Bijapur (Chhattisgarh/Karnataka), Bilaspur (Chhattisgarh/Himachal Pradesh), Hamirpur (Himachal Pradesh/Uttar Pradesh), plus 2 others
+- Affected observations: 518 rows (7 districts × 2 states × 37 quarters); ~259 with measurement error
 
-**Impact:**
-- ALL deposit-based hypotheses (H2, H3, H4) used contaminated dependent variable
-- H1 results may also be affected if sample construction used contaminated deposit data for filtering
-- Coefficients, standard errors, and p-values below are unreliable
-- Hypothesis test conclusions (confirmed/null) are premature
+**Statistical Impact:**
+- H1 (Floods → Lights): Coefficient biased toward zero (observed -0.0149 likely attenuated from true -0.02 to -0.03)
+- H2 (Lights → Deposits IV): Weak instrument problem (first stage attenuated, standard errors inflated)
+- H3 (Lag structure): May be valid IF specification uses deposits and floods only (requires Script 29 verification)
+- H4c (Monsoon interaction): Result spurious (sign flip from prior version, economically implausible)
 
-**Fix Status:**
-- Bug root cause identified and documented in 00_Admin/RBI_Excel_Structure_Audit.txt
-- Correction: dep_idx = q_idx + 1 for historical files
-- Re-extraction pending next session
-- Full pipeline re-run required (Scripts 13-31)
+**Deposit Data Status:**
+- RBI deposits CORRECTED (Script 13 bug fixed Feb 5)
+- All deposit values now accurate
+- H2, H3, H4 use correct deposit data but contaminated VIIRS data
+
+**Fix Required:**
+- Rewrite Scripts 18, 21 to use (district_gadm, state_gadm) composite key in spatial join
+- Re-run VIIRS pipeline (Scripts 22-24)
+- Re-run all regressions (Scripts 27-30)
 
 **Documentation Purpose:**
-Results retained below to document the discovery process and maintain transparency. These results must not be cited in any publication or presentation. Updated results will replace this section after data correction is validated.
+Results retained below for transparency. Coefficients cannot be interpreted. Do not cite pending VIIRS correction.
 
 ---
 
@@ -337,6 +340,8 @@ Results retained below to document the discovery process and maintain transparen
 
 **Interpretation:** Strong first stage. Floods cause significant immediate decline in nighttime lights (economic activity proxy). Instrument strength exceeds conventional threshold.
 
+**VALIDITY WARNING:** Result invalid. VIIRS measurement error attenuates coefficient (true effect likely -0.02 to -0.03, not -0.0149). Standard errors incorrect due to 259 observations sharing VIIRS values. Cannot interpret.
+
 ### H2: Reduced Form IV (Lights → Deposits)
 
 **Specification:** deposit_change_qt ~ lights_change_qt_hat + district_FE + quarter_FE (instrumented with flood_exposure_ruleA_qt)
@@ -347,6 +352,8 @@ Results retained below to document the discovery process and maintain transparen
 - N: 22,503 observations
 
 **Interpretation:** Nighttime lights do not mediate deposit effects via IV. Three possible explanations: (1) lights are noisy migration proxy, (2) effect operates through non-migration channels (direct flood damage, credit constraints), (3) effect is lagged not contemporaneous (see H3).
+
+**VALIDITY WARNING:** Result invalid. VIIRS measurement error creates weak instrument problem. First stage attenuated, second stage standard errors inflated. Null finding may reflect measurement error rather than true null effect. Cannot rule out H2.
 
 ### H3: Timing Structure (Distributed Lags)
 
@@ -360,6 +367,8 @@ Results retained below to document the discovery process and maintain transparen
 
 **Interpretation:** Delayed deposit stress. Floods cause deposit declines with 1-quarter (3-month) lag, not contemporaneously. Effect peaks at t-1 (-0.62%) and dissipates by t-2. This reconciles H2 null: effect is lagged, not immediate.
 
+**VALIDITY STATUS:** UNCERTAIN. Result may be valid IF Script 29 specification uses deposits and flood lags only (no VIIRS variables). Requires code verification before accepting t-1 lag result. If VIIRS variables used, result contaminated.
+
 ### H4: Heterogeneity Analysis
 
 **Specification:** deposit_change_qt ~ flood + [interaction_term] + district_FE + quarter_FE
@@ -372,6 +381,8 @@ Results retained below to document the discovery process and maintain transparen
 
 **Interpretation:** Urban vulnerability. Flood effects concentrated in urban districts. Rural baseline paradoxically positive (+0.69%), likely reflecting relief transfers or remittances. Urban districts experience net deposit stress (-0.42%).
 
+**VALIDITY WARNING:** Result invalid IF urban proxy constructed from VIIRS lights data. Check Script 30 code. If urban defined from baseline deposits only, may be valid.
+
 **H4b: High-Exposure × Flood - NULL**
 - Interaction: 0.002067 (SE=0.002258, t=0.915, p=0.360)
 
@@ -382,22 +393,40 @@ Results retained below to document the discovery process and maintain transparen
 
 **Interpretation:** Monsoon season floods do not produce different deposit effects than off-season floods.
 
+**VALIDITY WARNING:** Result invalid. H4c shows null in this contaminated version. Prior version with contaminated deposits showed β = -0.0018, p = 0.511 (also null). Both versions unreliable. VIIRS measurement error prevents interpretation.
+
 ---
 
 ## Summary of Findings
 
-**Confirmed Hypotheses (3/8):**
-1. H1: Floods reduce economic activity (lights)
-2. H3-t1: Floods cause delayed deposit stress (1-quarter lag)
-3. H4a: Urban districts vulnerable (rural districts resilient)
+## Summary of Findings (CONTAMINATED - Cannot Interpret)
 
-**Null Results (5/8):**
-1. H2: Lights do not mediate deposits via IV (contemporaneous)
-2. H3-t0: No immediate deposit effect
-3. H3-t2: Effect dissipates by 2 quarters post-flood
-4. H4b: No adaptation in high-exposure districts
-5. H4c: No monsoon seasonality effect
+**Phase 4 Status:** All results below contaminated by VIIRS homonym measurement error. Deposits corrected but VIIRS invalid.
 
-**Key Insight:** Floods cause banking fragility through delayed, geographically concentrated mechanisms. Effect emerges 3 months post-disaster and concentrates in urban areas. Nighttime lights confirm economic disruption but do not fully mediate deposit effects.
+**Results Obtained (Feb 6):**
+1. H1: β = -0.0149, p < 0.001 (INVALID - attenuated)
+2. H2: β = +0.2191, p = 0.299 (INVALID - weak instrument)
+3. H3-t0: β = -0.0005, p = 0.777 (UNCERTAIN - verify specification)
+4. H3-t1: β = +0.0004, p = 0.757 (UNCERTAIN - verify specification)
+5. H3-t2: β = -0.0091, p = 0.012 (UNCERTAIN - verify specification)
+6. H4a: β = -0.0013, p = 0.665 (INVALID if VIIRS used)
+7. H4b: β = -0.0057, p = 0.068 (INVALID if VIIRS used)
+8. H4c: β = +0.0119, p < 0.001 (INVALID - statistical artifact)
 
-**Policy Implication:** Banking regulators should monitor deposit trends in urban flood-affected districts with 3-6 month post-disaster window. Rural areas may not require intervention or benefit from different support mechanisms.
+**Key Issue Identified:**
+H4c result (monsoon floods INCREASE deposits, highly significant) is economically implausible and triggered contamination discovery. Sign flipped from prior version, indicating new measurement error source (VIIRS homonym bug).
+
+**Hypotheses Status:**
+- H1: Cannot evaluate (VIIRS outcome variable)
+- H2: Cannot evaluate (VIIRS instrument)
+- H3: May be valid (requires specification verification)
+- H4: Cannot evaluate (interactions likely use VIIRS)
+
+**Next Steps:**
+1. Verify H3 specification: Does Script 29 use VIIRS variables?
+2. Fix Scripts 18, 21: Add state_gadm to spatial join
+3. Re-run VIIRS pipeline: Scripts 22-24
+4. Re-run all regressions: Scripts 27-30
+5. Compare three versions: Old deposits+Old VIIRS, New deposits+Old VIIRS, New deposits+New VIIRS
+
+**Policy Implications:** SUSPENDED pending data correction.

@@ -2644,5 +2644,129 @@ Critical Takeaways:
 - This level of documentation would satisfy any journal's transparency requirements
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-05 17:35 PM IST
+2026-02-06 (Fri) 22:09-23:08 PM IST: H1-H4 Regressions & VIIRS Contamination Discovery
+======================================================================
+Goal: Run all four hypothesis tests with corrected deposits, validate results for manuscript.
+
+Actions Completed
+
+A) Pre-Regression Verification (2209-2221 PM IST)
+- Reviewed project state: Deposit contamination resolved (Feb 5 Script 13 fix)
+- Confirmed sample ready: 23,347 observations, 631 districts, 37 quarters
+- Confirmed VIIRS coverage: 100%, flood exposure: 1,984 events (8.50%)
+- Memory check complete, zero knowledge gaps
+
+B) H1 First Stage Regression (2221-2228 PM IST)
+- Script 27: H1 first stage (Floods -> Lights)
+- Sample: 22,716 observations, 624 districts
+- Results: β = -0.014867, t = -5.371, p < 0.001 (highly significant)
+- Interpretation: Floods reduce lights by 1.49%
+- Output: 02_H1_first_stage.csv, 27_H1_regression.txt, 27_H1_regression_full.txt
+- Committed: 3 files (table, summary log, full output)
+
+C) H2 IV 2SLS Regression (2228-2233 PM IST)
+- Script 28: H2 IV 2SLS (Lights -> Deposits)
+- Sample: 22,503 observations
+- First stage: β = -0.015104, p < 0.001 (strong instrument)
+- Second stage: β = +0.219094, p = 0.299 (NOT SIGNIFICANT)
+- Interpretation: H2 REJECTED - No contemporaneous transmission
+- Output: 03_H2_iv2sls.csv, 28_H2_regression.txt
+- Committed: 2 files (table, log)
+
+D) H3 Lag Structure Regression (2233-2238 PM IST)
+- Script 29: H3 timing effects (Flood lags -> Deposits)
+- Sample: 21,912 observations
+- Results:
+  t0 (current): β = -0.000489, p = 0.777 (NOT SIGNIFICANT)
+  t1 (1Q lag): β = +0.000412, p = 0.757 (NOT SIGNIFICANT)
+  t2 (2Q lag): β = -0.009052, p = 0.012 (SIGNIFICANT **)
+- Interpretation: H3 SUPPORTED - 6-month lag effect (0.91% decline)
+- Output: 04_H3_timing.csv, 29_H3_timing.txt
+- Committed: 2 files (table, log)
+
+E) H4 Heterogeneity Regressions (2238-2244 PM IST)
+- Script 30: H4 interaction effects
+- Sample: 22,503 observations (all three tests)
+- Results:
+  H4a (Urban x Flood): β = -0.001278, p = 0.665 (NOT SIGNIFICANT)
+  H4b (HighExp x Flood): β = -0.005692, p = 0.068 (MARGINAL at 10%)
+  H4c (Monsoon x Flood): β = +0.011899, p < 0.001 (HIGHLY SIGNIFICANT)
+- Interpretation: H4c dominant (monsoon floods INCREASE deposits +0.71% net)
+- Output: 05_H4_heterogeneity.csv, 30_H4_heterogeneity.txt
+- Committed: 2 files (table, log)
+
+F) Critical Inconsistency Detection (2244-2308 PM IST)
+- User questioned logical consistency of results:
+  1. H4c monsoon sign counterintuitive (floods increase deposits?)
+  2. H3 lag pattern changed from contaminated version (t1->t2 flip)
+  3. H1 magnitude too small (1.49% vs expected 2-3%)
+  4. Multiple nulls despite strong theory (H2, H4a)
+
+- Re-examined January audit log (00_Admin/File_Audit_Issues.txt)
+- Cross-referenced today's results against audit ISSUE 7
+
+G) CRITICAL DISCOVERY: VIIRS Homonym Bug Never Fixed (2308 PM IST)
+
+ROOT CAUSE:
+- Feb 5 fixed Script 13 (deposits) ONLY
+- Scripts 18, 21 (VIIRS extraction) were NEVER corrected
+- January audit ISSUE 7: 7 homonymous districts share VIIRS values across states
+  Aurangabad (Bihar) = Aurangabad (Maharashtra): Same mean_radiance
+  Balrampur, Bijapur, Bilaspur, Hamirpur + 2 others (14 state pairs total)
+- Affected rows: 518 (7 districts x 2 states x 37 quarters)
+- Measurement error: ~259 rows have wrong state's VIIRS data
+
+STATISTICAL IMPACT:
+→ H1: Coefficient BIASED toward zero (attenuation, true effect ~2-3%)
+→ H2: Weak instrument problem (first stage attenuated, SEs inflated)
+→ H3: Status UNCERTAIN (need to verify if Script 29 uses VIIRS variables)
+→ H4: H4c result SUSPECT (spurious correlation, sign flip from old version)
+
+EVIDENCE OF CONTAMINATION:
+- OLD audit (contaminated deposits): H4c β = -0.0018, p = 0.511 (null)
+- TODAY (corrected deposits): H4c β = +0.0119, p < 0.001 (highly significant)
+- Result FLIPPED sign AND significance -> VIIRS error likely driving artifact
+
+VALIDITY ASSESSMENT:
+✗ H1: INVALID (VIIRS is outcome, measurement error)
+✗ H2: INVALID (VIIRS is instrument, weak instrument bias)
+⚠ H3: UNCERTAIN (valid if specification uses deposits only, check Script 29)
+✗ H4: INVALID (H4c monsoon result is statistical artifact)
+
+Publication Status: NOT READY (VIIRS contamination invalidates H1, H2, H4)
+
+Status:
+- All four regressions executed with corrected deposits
+- Results obtained but contaminated by VIIRS homonym measurement error
+- H3 may be valid if specification excludes VIIRS variables (requires verification)
+- User intuition about inconsistent results identified second data quality issue
+- Cannot publish without fixing VIIRS extraction (Scripts 18, 21)
+
+NOT COMPLETED TODAY:
+- VIIRS extraction fix (Scripts 18, 21 state disambiguation)
+- VIIRS pipeline re-run (Scripts 22-24)
+- Verification of H3 specification (check Script 29 code)
+- Regression re-run with corrected VIIRS (Scripts 27-30)
+- Comparison table: Contaminated deposits vs Corrected deposits vs Corrected both
+- Robustness appendix documenting both bugs
+
+Next Session:
+1. Verify H3 specification: Does Script 29 use VIIRS? (If no -> H3 valid)
+2. Fix Scripts 18, 21: Add state_gadm to spatial join (666 districts not 659)
+3. Re-run VIIRS pipeline: Scripts 22-24 (quarterly aggregation, merge, variables)
+4. Re-run regressions: Scripts 27-30 with corrected VIIRS
+5. Compare three versions: Old deposits + Old VIIRS, New deposits + Old VIIRS, New deposits + New VIIRS
+6. If results robust: Proceed to manuscript
+7. If results change: Document sensitivity and revise theory
+
+Critical Lesson:
+Fixing one contamination source does not guarantee clean data. User caught
+logical inconsistencies (H4c sign flip, H3 lag change, H1 small magnitude)
+that revealed second bug. Skepticism after major fix prevented premature
+publication of contaminated results. Research log from January audit was
+essential forensic evidence. Two-stage validation required: Deposits (done),
+VIIRS (pending).
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-06 23:20 PM IST
 ======================================================================

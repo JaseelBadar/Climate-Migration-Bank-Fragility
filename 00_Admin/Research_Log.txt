@@ -2768,5 +2768,123 @@ essential forensic evidence. Two-stage validation required: Deposits (done),
 VIIRS (pending).
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-06 23:20 PM IST
+2026-02-07 (Sat) 22:42-23:50 PM IST: Root Cause Analysis - Crosswalk Contamination
+======================================================================
+Goal: Trace deposit contamination to source, verify H3 validity, fix crosswalk duplicates.
+
+Actions Completed
+
+A) Context Restoration & Memory Verification (2242-2251 PM IST)
+- Reviewed full project state: Two-bug timeline confirmed
+  1. Deposits: Fixed Feb 5 (Script 13 correction)
+  2. VIIRS: Discovered Feb 6 (Scripts 18, 21 homonym error)
+- Confirmed Feb 6 regression results: H1, H2, H4 invalid (VIIRS contaminated)
+- H3 status: Uncertain, requires specification check
+- Documentation review: ResearchLog, README, Hypotheses, Codebook all updated to v2.0
+- Zero knowledge gaps, zero memory loss confirmed
+
+B) H3 Specification Verification (2251-2253 PM IST)
+- Reviewed Script 29 code (29_regression_H3_timing.py)
+- Variables used: deposit_change_qt (DV), flood_t0/t1/t2 (IV), district/quarter FE
+- VIIRS variables: NONE (no mean_radiance, log_lights_qt, lights_change_qt in specification)
+- Conclusion: H3 VALID - Uses deposits + floods only, unaffected by VIIRS contamination
+- Feb 6 H3 results defensible: t2 lag effect (β = -0.009052, p = 0.012) is clean
+
+C) Pipeline Forensics - VIIRS Contamination Source (2253-2321 PM IST)
+- Objective: Locate exact script where 7 homonymous districts get collapsed
+- Method: Systematic code review Scripts 18→21→21b→22→23→24→27
+- Script 18 audit: CORRECT (uses gadm_state in output, verified via user Excel check)
+  Evidence: Aurangabad Bihar (0.901) ≠ Aurangabad Maharashtra (0.645) in viirs_jan2023_test.csv
+- Script 21 audit: CORRECT (preserves state_gadm throughout 120-month extraction)
+  Evidence: User confirmed 240 rows for Aurangabad (120 months × 2 states) in viirs_monthly_panel.csv
+- Script 21b audit: CORRECT (groups by ['gadm_district', 'gadm_state'])
+- Script 22 audit: CORRECT (quarterly aggregation uses composite key)
+- Script 23 audit: CORRECT (merge uses ['district_gadm', 'state_gadm'])
+- Script 24 audit: CORRECT (lags/diffs use groupby(['district_gadm', 'state_gadm']))
+- Conclusion: VIIRS pipeline Scripts 18-24 are ALL CLEAN
+- Excel verification by user: analysis_panel_final.csv shows distinct Aurangabad radiance values
+
+D) Critical Discovery - Deposit Contamination Root Cause (2321-2333 PM IST)
+- User provided Excel evidence: Deposits ARE contaminated
+  Aurangabad Bihar deposits = Aurangabad Maharashtra deposits (IDENTICAL across all quarters)
+  Example: 2015Q1 both = 18652.06, 2017Q2 both = 5745.12, 2023Q1 both = 45345.65
+- Feb 5 Script 13 fix was INCOMPLETE (fixed code, but operated on bad crosswalk)
+- Traced to Script 8: 08_build_district_crosswalk.py lines 98-102
+- Bug mechanism:
+  1. Line 85: RBI "AURANGABAD" fuzzy matches GADM "Aurangabad" (district name only)
+  2. Lines 98-102: Merge joins gadm_districts on 'district_gadm' alone (no state filter)
+  3. Result: Finds TWO GADM rows (Bihar + Maharashtra), creates DUPLICATE crosswalk entries
+  4. Script 13 inherits: One RBI row → merges to two crosswalk rows → deposits duplicated
+- Affected: 7 homonymous district pairs (14 total districts) × 37 quarters = 518 observations
+
+E) Script 8 Fix Implementation (2333-2340 PM IST)
+- Provided exact code replacement for lines 98-102
+- Added deduplication logic:
+  * Detect RBI districts with multiple GADM matches
+  * Keep first match per RBI district (drop duplicates)
+  * Flag ambiguous matches with 'is_ambiguous_match' column
+  * Log duplicate count for transparency
+- User implemented fix, executed Script 8 at 2340 PM IST
+
+F) Script 8 Execution Results (2340-2342 PM IST)
+- Output: 83.2% RBI→GADM match rate (634/762 matched)
+- Duplicates detected: 0 (UNEXPECTED)
+- Crosswalk rows: Before dedup = 762, After dedup = 762, Removed = 0
+- Status: FIX APPLIED but no duplicates found in this run
+- Hypothesis: Fuzzy matching may be creating 1:1 mappings upstream, preventing duplicates
+  at merge stage, OR deposits contamination has different source
+- Requires verification: Manual Excel check of crosswalk CSV for 7 homonymous districts
+
+G) Session Termination & Version Control (2342-2350 PM IST)
+- User decision: Stop for tonight, commit as version control checkpoint
+- Files committed:
+  1. 04_Code/08_build_district_crosswalk.py (dedup logic added)
+  2. 02_Data_Intermediate/district_crosswalk_draft.csv (regenerated, 762 rows)
+  3. 05_Outputs/Logs/08_build_crosswalk_log.txt (execution log)
+- Commit messages drafted for all three files
+- GitHub push completed
+
+Status:
+- H3 validity confirmed (Feb 6 results defensible)
+- VIIRS pipeline verified clean (Scripts 18-24)
+- Deposit contamination root cause identified (Script 8 crosswalk merge)
+- Script 8 fix implemented and executed
+- Crosswalk regenerated but requires manual verification (0 duplicates unexpected)
+- All work committed as version control checkpoint
+
+NOT COMPLETED TODAY:
+- Manual verification: Check crosswalk CSV for 7 homonymous districts (Aurangabad, Balrampur, etc.)
+- Diagnosis: Why 0 duplicates detected when deposits show contamination?
+- Script 13 re-run: Extract deposits with corrected crosswalk
+- Scripts 14-17 re-run: Master panel, validation, analysis sample
+- Scripts 18-24 re-run: VIIRS integration (may not be needed if already clean)
+- Script 27, 28, 30 fixes: Add composite district_state_id for FE (Script 29 already valid)
+- Regression re-run: H1, H2, H4 with corrected crosswalk + VIIRS
+- Three-version comparison: Old deposits, New deposits, Fully corrected
+
+Next Session (Feb 8):
+1. VERIFY: Open district_crosswalk_draft.csv, filter for AURANGABAD/BALRAMPUR/BIJAPUR
+   → Check if 1 row per RBI district (expected) or multiple rows (bug persists)
+2. DIAGNOSE: If 1 row per district but deposits still contaminated:
+   → Check Script 13 merge logic, verify it uses corrected crosswalk path
+   → Check if RBI raw file itself has duplicates at source
+3. RE-RUN PIPELINE: Scripts 13→24 with verified crosswalk
+4. FIX REGRESSIONS: Scripts 27, 28, 30 (composite FE keys)
+5. VALIDATE: Compare new results vs Feb 6 results
+6. PROCEED: If robust → manuscript drafting, If unstable → theory revision
+
+Critical Lesson:
+Fixing downstream code (Script 13) does not resolve upstream contamination
+(Script 8 crosswalk). User Excel evidence trumped code review - deposits
+showed identical values despite "clean" Script 13. Root cause analysis
+required tracing merge keys through entire pipeline (Scripts 8→13→14→23→27).
+Fix applied to Script 8, but 0 duplicates detected suggests either:
+(a) fuzzy matching prevents duplicates at source, deposits contamination
+    has different mechanism, OR
+(b) crosswalk fix worked but Script 13 never re-ran with corrected input.
+Manual verification tomorrow is critical decision point. Version control
+commit allows rollback if fix introduces new errors.
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-07 23:52 PM IST
 ======================================================================

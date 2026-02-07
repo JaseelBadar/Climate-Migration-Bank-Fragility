@@ -115,12 +115,35 @@ if match_rate_rbi_gadm < 80:
     print("Review unmatched districts before proceeding.")
     print("!"*70)
 
-    # Join state names from GADM
-df_crosswalk = df_crosswalk.merge(
+    # Join state names from GADM - WITH DEDUPLICATION TO PREVENT HOMONYM DUPLICATES
+# Problem: Some RBI districts (e.g., AURANGABAD) match multiple GADM districts across different states
+# Solution: Keep only the first match per RBI district
+
+# First, identify which RBI districts have multiple GADM matches
+district_match_counts = df_crosswalk.groupby('district_rbi')['district_gadm'].nunique()
+ambiguous_rbi_districts = district_match_counts[district_match_counts > 1].index.tolist()
+
+print(f"\n   WARNING: {len(ambiguous_rbi_districts)} RBI districts match multiple GADM districts:")
+for rbi_dist in ambiguous_rbi_districts:
+    matches = df_crosswalk[df_crosswalk['district_rbi'] == rbi_dist]['district_gadm'].tolist()
+    print(f"      {rbi_dist} → {matches}")
+
+# Deduplicate: Keep ONLY the first match per RBI district
+df_crosswalk_dedup = df_crosswalk.drop_duplicates(subset=['district_rbi'], keep='first')
+
+print(f"\n   Before dedup: {len(df_crosswalk)} rows")
+print(f"   After dedup: {len(df_crosswalk_dedup)} rows")
+print(f"   Removed: {len(df_crosswalk) - len(df_crosswalk_dedup)} duplicate mappings")
+
+# Now add state info
+df_crosswalk = df_crosswalk_dedup.merge(
     gadm_districts[['district_gadm', 'state_gadm']],
     on='district_gadm',
     how='left'
 )
+
+# Add ambiguity flag for documentation
+df_crosswalk['is_ambiguous_match'] = df_crosswalk['district_rbi'].isin(ambiguous_rbi_districts)
 
 print("\n[5/5] MATCHING EM-DAT DISTRICTS (informational)...")
 

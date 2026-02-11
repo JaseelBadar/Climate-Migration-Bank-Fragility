@@ -167,11 +167,58 @@ print(f"    Quarters range: {rbi_panel['quarter'].min()} to {rbi_panel['quarter'
 
 # Map RBI districts to GADM using crosswalk
 print(f"\n[4] Mapping RBI → GADM districts...")
+
+# TEMPORARY FIX: Manual state mapping for 7 homonymous districts
+# This prevents Bihar AURANGABAD deposits from being assigned to Maharashtra, etc.
+state_mapping_rbi_to_gadm = {
+    ('AURANGABAD', 'BIHAR'): 'Bihar',
+    ('AURANGABAD', 'MAHARASHTRA'): 'Maharashtra',
+    ('BALRAMPUR', 'CHHATTISGARH'): 'Chhattisgarh',
+    ('BALRAMPUR', 'UTTAR PRADESH'): 'Uttar Pradesh',
+    ('BIJAPUR', 'CHHATTISGARH'): 'Chhattisgarh',
+    ('BIJAPUR', 'KARNATAKA'): 'Karnataka',
+    ('BILASPUR', 'CHHATTISGARH'): 'Chhattisgarh',
+    ('BILASPUR', 'HIMACHAL PRADESH'): 'Himachal Pradesh',
+    ('HAMIRPUR', 'HIMACHAL PRADESH'): 'Himachal Pradesh',
+    ('HAMIRPUR', 'UTTAR PRADESH'): 'Uttar Pradesh',
+    ('PRATAPGARH', 'RAJASTHAN'): 'Rajasthan',
+    ('PRATAPGARH', 'UTTAR PRADESH'): 'Uttar Pradesh',
+    ('RAIGARH', 'CHHATTISGARH'): 'Chhattisgarh',
+    ('RAIGARH', 'MAHARASHTRA'): 'Maharashtra'
+}
+
+# Add expected GADM state based on RBI state
+rbi_panel['state_gadm_expected'] = rbi_panel.apply(
+    lambda row: state_mapping_rbi_to_gadm.get(
+        (row['district_rbi'], row['state_rbi'].upper().strip()), 
+        None
+    ), 
+    axis=1
+)
+
+# Merge with crosswalk
 rbi_panel = rbi_panel.merge(
     crosswalk[['district_rbi', 'district_gadm', 'state_gadm', 'matched_rbi_gadm']],
     on='district_rbi',
     how='left'
 )
+
+# FILTER: For homonymous districts, keep only rows where state_gadm matches expected state
+homonymous_districts = ['AURANGABAD', 'BALRAMPUR', 'BIJAPUR', 'BILASPUR', 'HAMIRPUR', 'PRATAPGARH', 'RAIGARH']
+is_homonymous = rbi_panel['district_rbi'].isin(homonymous_districts)
+has_expected_state = rbi_panel['state_gadm_expected'].notna()
+
+# For homonymous districts: keep only if state matches
+# For non-homonymous: keep all matches
+rbi_panel = rbi_panel[
+    (~is_homonymous) |  # Non-homonymous districts: keep all
+    (is_homonymous & has_expected_state & (rbi_panel['state_gadm'] == rbi_panel['state_gadm_expected']))  # Homonymous: filter by state
+]
+
+# Drop temporary column
+rbi_panel = rbi_panel.drop(columns=['state_gadm_expected'])
+
+print(f"    After state filtering for homonymous districts:")
 
 matched_count = rbi_panel['matched_rbi_gadm'].sum()
 total_count = len(rbi_panel)

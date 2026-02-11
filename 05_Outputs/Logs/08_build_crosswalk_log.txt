@@ -2,9 +2,9 @@
 DISTRICT CROSSWALK BUILD LOG
 ======================================================================
 Script: 08_build_district_crosswalk.py
-Start: 2026-02-07 23:40:58
-End: 2026-02-07 23:41:00
-Duration: 1 seconds
+Start: 2026-02-11 21:27:59
+End: 2026-02-11 21:28:00
+Duration: 0 seconds
 
 INPUTS:
   - GADM: 01_Data_Raw/District_Boundaries/gadm41_IND_2.shp (666 unique districts)
@@ -12,7 +12,7 @@ INPUTS:
   - EM-DAT: 02_Data_Intermediate/emdat_districts_parsed.csv (209 unique districts)
 
 OUTPUTS:
-  - Crosswalk: 02_Data_Intermediate/district_crosswalk_draft.csv (769 rows)
+  - Crosswalk: 02_Data_Intermediate/district_crosswalk_draft.csv (762 rows)
   - EM-DAT matches: 02_Data_Intermediate/emdat_district_matches.csv (209 rows)
 
 MATCH RATES:

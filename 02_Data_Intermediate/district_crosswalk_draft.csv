@@ -35,8 +35,7 @@ ARIYALUR,Ariyalur,100.0,True,Tamil Nadu,False
 ARWAL,Arwal,100.0,True,Bihar,False
 ASHOKNAGAR,Ashoknagar,100.0,True,Madhya Pradesh,False
 AURAIYA,Auraiya,100.0,True,Uttar Pradesh,False
-AURANGABAD,Aurangabad,100.0,True,Bihar,False
-AURANGABAD,Aurangabad,100.0,True,Maharashtra,False
+AURANGABAD,Aurangabad,100.0,True,Bihar,True
 AYODHYA,,61.53846153846154,False,,False
 AZAMGARH,Azamgarh,100.0,True,Uttar Pradesh,False
 BADGAM,Badgam,100.0,True,Jammu and Kashmir,False
@@ -54,8 +53,7 @@ BALLIA,Ballia,100.0,True,Uttar Pradesh,False
 BALOD,Balod,100.0,True,Chhattisgarh,False
 BALODABAZAR,Baloda Bazar,95.65217391304348,True,Chhattisgarh,False
 BALOTRA,,76.92307692307692,False,,False
-BALRAMPUR,Balrampur,100.0,True,Chhattisgarh,False
-BALRAMPUR,Balrampur,100.0,True,Uttar Pradesh,False
+BALRAMPUR,Balrampur,100.0,True,Chhattisgarh,True
 BANAS KANTHA,Banas Kantha,100.0,True,Gujarat,False
 BANDA,Banda,100.0,True,Uttar Pradesh,False
 BANDIPORA,Bandipore,88.88888888888889,True,Jammu and Kashmir,False
@@ -96,12 +94,10 @@ BHOJPUR,Bhojpur,100.0,True,Bihar,False
 BHOPAL,Bhopal,100.0,True,Madhya Pradesh,False
 BID,Bid,100.0,True,Maharashtra,False
 BIDAR,Bidar,100.0,True,Karnataka,False
-BIJAPUR,Bijapur,100.0,True,Chhattisgarh,False
-BIJAPUR,Bijapur,100.0,True,Karnataka,False
+BIJAPUR,Bijapur,100.0,True,Chhattisgarh,True
 BIJNOR,Bijnor,100.0,True,Uttar Pradesh,False
 BIKANER,Bikaner,100.0,True,Rajasthan,False
-BILASPUR,Bilaspur,100.0,True,Chhattisgarh,False
-BILASPUR,Bilaspur,100.0,True,Himachal Pradesh,False
+BILASPUR,Bilaspur,100.0,True,Chhattisgarh,True
 BIRBHUM,Birbhum,100.0,True,West Bengal,False
 BISHENPUR,Bishnupur,88.88888888888889,True,Manipur,False
 BISWANATH,,62.5,False,,False
@@ -253,8 +249,7 @@ GURUGRAM,,66.66666666666667,False,,False
 GWALIOR,Gwalior,100.0,True,Madhya Pradesh,False
 GYALSHING,,60.0,False,,False
 HAILAKANDI,Hailakandi,100.0,True,Assam,False
-HAMIRPUR,Hamirpur,100.0,True,Himachal Pradesh,False
-HAMIRPUR,Hamirpur,100.0,True,Uttar Pradesh,False
+HAMIRPUR,Hamirpur,100.0,True,Himachal Pradesh,True
 HANUMAKONDA,,72.72727272727273,False,,False
 HANUMANGARH,Hanumangarh,100.0,True,Rajasthan,False
 HAORA,Haora,100.0,True,West Bengal,False
@@ -550,8 +545,7 @@ PITHORAGARH,Pithoragarh,100.0,True,Uttarakhand,False
 POONCH,Poonch,100.0,True,Jammu and Kashmir,False
 PORBANDAR,Porbandar,100.0,True,Gujarat,False
 PRAKASAM,Prakasam,100.0,True,Andhra Pradesh,False
-PRATAPGARH,Pratapgarh,100.0,True,Rajasthan,False
-PRATAPGARH,Pratapgarh,100.0,True,Uttar Pradesh,False
+PRATAPGARH,Pratapgarh,100.0,True,Rajasthan,True
 PRAYAGRAJ,,70.58823529411764,False,,False
 PUDUCHERRY,Puducherry,100.0,True,Puducherry,False
 PUDUKKOTTAI,Pudukkottai,100.0,True,Tamil Nadu,False
@@ -567,8 +561,7 @@ PURULIYA,Puruliya,100.0,True,West Bengal,False
 RAI BARELI,Rae Bareli,90.0,True,Uttar Pradesh,False
 RAICHUR,Raichur,100.0,True,Karnataka,False
 RAIGAD,,76.92307692307692,False,,False
-RAIGARH,Raigarh,100.0,True,Chhattisgarh,False
-RAIGARH,Raigarh,100.0,True,Maharashtra,False
+RAIGARH,Raigarh,100.0,True,Chhattisgarh,True
 RAIPUR,Raipur,100.0,True,Chhattisgarh,False
 RAISEN,Raisen,100.0,True,Madhya Pradesh,False
 RAJANNA(SIRCILLA),,53.84615384615385,False,,False

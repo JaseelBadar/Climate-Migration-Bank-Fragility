@@ -8,7 +8,7 @@ STRUCTURE:
 - Balanced: True
 
 DATA AVAILABILITY:
-- Deposits: 23139 / 26640 (86.9%)
+- Deposits: 22880 / 26640 (85.9%)
 - Floods (Rule A): 2220 events
 - Floods (Rule B): 272 events
 

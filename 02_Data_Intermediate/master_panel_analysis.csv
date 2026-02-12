@@ -1183,12 +1183,12 @@ Auraiya,Uttar Pradesh,2024,1,2024Q1,37,0,0,5191.5149
 Auraiya,Uttar Pradesh,2024,2,2024Q2,38,0,0,5259.4074
 Auraiya,Uttar Pradesh,2024,3,2024Q3,39,1,1,5482.784900000001
 Auraiya,Uttar Pradesh,2024,4,2024Q4,40,0,0,5543.4458
-Aurangabad,Bihar,2015,1,2015Q1,1,0,0,18652.0593
-Aurangabad,Bihar,2015,2,2015Q2,2,0,0,17827.7286
-Aurangabad,Bihar,2015,3,2015Q3,3,0,0,18455.4976
-Aurangabad,Bihar,2015,4,2015Q4,4,0,0,18763.9486
-Aurangabad,Bihar,2016,1,2016Q1,5,0,0,21069.7473
-Aurangabad,Bihar,2016,2,2016Q2,6,0,0,20673.7593
+Aurangabad,Bihar,2015,1,2015Q1,1,0,0,4422.4491
+Aurangabad,Bihar,2015,2,2015Q2,2,0,0,4110.6064
+Aurangabad,Bihar,2015,3,2015Q3,3,0,0,4350.1426
+Aurangabad,Bihar,2015,4,2015Q4,4,0,0,4332.5081
+Aurangabad,Bihar,2016,1,2016Q1,5,0,0,5335.1953
+Aurangabad,Bihar,2016,2,2016Q2,6,0,0,5083.3013
 Aurangabad,Bihar,2017,2,2017Q2,10,0,0,5745.1197
 Aurangabad,Bihar,2017,3,2017Q3,11,0,0,5749.9929
 Aurangabad,Bihar,2017,4,2017Q4,12,0,0,5894.0738
@@ -1212,51 +1212,14 @@ Aurangabad,Bihar,2022,1,2022Q1,29,0,0,8462.748
 Aurangabad,Bihar,2022,2,2022Q2,30,0,0,8378.9421
 Aurangabad,Bihar,2022,3,2022Q3,31,0,0,8335.3928
 Aurangabad,Bihar,2022,4,2022Q4,32,0,0,8526.1764
-Aurangabad,Bihar,2023,1,2023Q1,33,0,0,45345.6501
-Aurangabad,Bihar,2023,2,2023Q2,34,1,0,46537.1735
+Aurangabad,Bihar,2023,1,2023Q1,33,0,0,7673.2585
+Aurangabad,Bihar,2023,2,2023Q2,34,1,0,7644.5334
 Aurangabad,Bihar,2023,3,2023Q3,35,0,0,7782.622000000001
 Aurangabad,Bihar,2023,4,2023Q4,36,0,0,7886.942199999999
 Aurangabad,Bihar,2024,1,2024Q1,37,0,0,8551.0625
 Aurangabad,Bihar,2024,2,2024Q2,38,0,0,8405.0682
 Aurangabad,Bihar,2024,3,2024Q3,39,1,0,8537.393900000001
 Aurangabad,Bihar,2024,4,2024Q4,40,0,0,8697.169600000001
-Aurangabad,Maharashtra,2015,1,2015Q1,1,0,0,18652.0593
-Aurangabad,Maharashtra,2015,2,2015Q2,2,0,0,17827.7286
-Aurangabad,Maharashtra,2015,3,2015Q3,3,0,0,18455.4976
-Aurangabad,Maharashtra,2015,4,2015Q4,4,0,0,18763.9486
-Aurangabad,Maharashtra,2016,1,2016Q1,5,0,0,21069.7473
-Aurangabad,Maharashtra,2016,2,2016Q2,6,0,0,20673.7593
-Aurangabad,Maharashtra,2017,2,2017Q2,10,0,0,5745.1197
-Aurangabad,Maharashtra,2017,3,2017Q3,11,0,0,5749.9929
-Aurangabad,Maharashtra,2017,4,2017Q4,12,0,0,5894.0738
-Aurangabad,Maharashtra,2018,1,2018Q1,13,0,0,6038.2505
-Aurangabad,Maharashtra,2018,2,2018Q2,14,1,0,5975.1342
-Aurangabad,Maharashtra,2018,3,2018Q3,15,0,0,5949.0322
-Aurangabad,Maharashtra,2018,4,2018Q4,16,0,0,6243.7318
-Aurangabad,Maharashtra,2019,1,2019Q1,17,0,0,6798.8069
-Aurangabad,Maharashtra,2019,2,2019Q2,18,0,0,6639.9781
-Aurangabad,Maharashtra,2019,3,2019Q3,19,1,0,7101.7897
-Aurangabad,Maharashtra,2019,4,2019Q4,20,0,0,7125.5267
-Aurangabad,Maharashtra,2020,1,2020Q1,21,0,0,7453.3692
-Aurangabad,Maharashtra,2020,2,2020Q2,22,1,0,7429.6755
-Aurangabad,Maharashtra,2020,3,2020Q3,23,0,0,7598.0346
-Aurangabad,Maharashtra,2020,4,2020Q4,24,0,0,7582.5576
-Aurangabad,Maharashtra,2021,1,2021Q1,25,0,0,7910.8931
-Aurangabad,Maharashtra,2021,2,2021Q2,26,1,0,7693.8278
-Aurangabad,Maharashtra,2021,3,2021Q3,27,0,0,7699.7942
-Aurangabad,Maharashtra,2021,4,2021Q4,28,0,0,7718.8624
-Aurangabad,Maharashtra,2022,1,2022Q1,29,0,0,8462.748
-Aurangabad,Maharashtra,2022,2,2022Q2,30,0,0,8378.9421
-Aurangabad,Maharashtra,2022,3,2022Q3,31,0,0,8335.3928
-Aurangabad,Maharashtra,2022,4,2022Q4,32,0,0,8526.1764
-Aurangabad,Maharashtra,2023,1,2023Q1,33,0,0,45345.6501
-Aurangabad,Maharashtra,2023,2,2023Q2,34,1,0,46537.1735
-Aurangabad,Maharashtra,2023,3,2023Q3,35,0,0,7782.622000000001
-Aurangabad,Maharashtra,2023,4,2023Q4,36,0,0,7886.942199999999
-Aurangabad,Maharashtra,2024,1,2024Q1,37,0,0,8551.0625
-Aurangabad,Maharashtra,2024,2,2024Q2,38,0,0,8405.0682
-Aurangabad,Maharashtra,2024,3,2024Q3,39,1,0,8537.393900000001
-Aurangabad,Maharashtra,2024,4,2024Q4,40,0,0,8697.169600000001
 Azamgarh,Uttar Pradesh,2015,1,2015Q1,1,0,0,9919.3057
 Azamgarh,Uttar Pradesh,2015,2,2015Q2,2,0,0,9762.4683
 Azamgarh,Uttar Pradesh,2015,3,2015Q3,3,1,0,10585.855
@@ -1738,80 +1701,43 @@ Baloda Bazar,Chhattisgarh,2024,1,2024Q1,37,0,0,4971.546399999999
 Baloda Bazar,Chhattisgarh,2024,2,2024Q2,38,0,0,5017.8356
 Baloda Bazar,Chhattisgarh,2024,3,2024Q3,39,0,0,5142.5651
 Baloda Bazar,Chhattisgarh,2024,4,2024Q4,40,0,0,5173.92
-Balrampur,Chhattisgarh,2015,1,2015Q1,1,0,0,3680.202
-Balrampur,Chhattisgarh,2015,2,2015Q2,2,0,0,3461.603
-Balrampur,Chhattisgarh,2015,3,2015Q3,3,1,0,3636.3106
-Balrampur,Chhattisgarh,2015,4,2015Q4,4,0,0,3630.8238
-Balrampur,Chhattisgarh,2016,1,2016Q1,5,0,0,4185.7906
-Balrampur,Chhattisgarh,2016,2,2016Q2,6,0,0,4010.7963
-Balrampur,Chhattisgarh,2017,2,2017Q2,10,0,0,4939.3513
-Balrampur,Chhattisgarh,2017,3,2017Q3,11,1,1,5013.9474
-Balrampur,Chhattisgarh,2017,4,2017Q4,12,0,0,5151.1606
-Balrampur,Chhattisgarh,2018,1,2018Q1,13,0,0,5474.646
-Balrampur,Chhattisgarh,2018,2,2018Q2,14,0,0,5414.563
-Balrampur,Chhattisgarh,2018,3,2018Q3,15,1,0,5617.6633
-Balrampur,Chhattisgarh,2018,4,2018Q4,16,0,0,5702.4347
-Balrampur,Chhattisgarh,2019,1,2019Q1,17,0,0,6006.0628
-Balrampur,Chhattisgarh,2019,2,2019Q2,18,0,0,5920.1885
-Balrampur,Chhattisgarh,2019,3,2019Q3,19,0,0,5998.5249
-Balrampur,Chhattisgarh,2019,4,2019Q4,20,0,0,6140.87
-Balrampur,Chhattisgarh,2020,1,2020Q1,21,0,0,6523.0425
-Balrampur,Chhattisgarh,2020,2,2020Q2,22,1,0,6616.819
-Balrampur,Chhattisgarh,2020,3,2020Q3,23,0,0,6691.5823
-Balrampur,Chhattisgarh,2020,4,2020Q4,24,0,0,6644.726299999999
-Balrampur,Chhattisgarh,2021,1,2021Q1,25,0,0,7111.8196
-Balrampur,Chhattisgarh,2021,2,2021Q2,26,1,0,6844.905000000001
-Balrampur,Chhattisgarh,2021,3,2021Q3,27,0,0,6897.7742
-Balrampur,Chhattisgarh,2021,4,2021Q4,28,0,0,6964.6221
-Balrampur,Chhattisgarh,2022,1,2022Q1,29,0,0,7514.8177
-Balrampur,Chhattisgarh,2022,2,2022Q2,30,0,0,7107.903
-Balrampur,Chhattisgarh,2022,3,2022Q3,31,1,0,7218.396799999999
-Balrampur,Chhattisgarh,2022,4,2022Q4,32,0,0,7381.590599999999
-Balrampur,Chhattisgarh,2023,1,2023Q1,33,0,0,5766.9287
-Balrampur,Chhattisgarh,2023,2,2023Q2,34,1,0,5630.4572
-Balrampur,Chhattisgarh,2023,3,2023Q3,35,0,0,5851.976000000001
-Balrampur,Chhattisgarh,2023,4,2023Q4,36,0,0,6123.5585
-Balrampur,Chhattisgarh,2024,1,2024Q1,37,0,0,6703.4749
-Balrampur,Chhattisgarh,2024,2,2024Q2,38,0,0,6556.3468
-Balrampur,Chhattisgarh,2024,3,2024Q3,39,0,0,6751.483899999999
-Balrampur,Chhattisgarh,2024,4,2024Q4,40,0,0,6891.7913
-Balrampur,Uttar Pradesh,2015,1,2015Q1,1,0,0,3680.202
-Balrampur,Uttar Pradesh,2015,2,2015Q2,2,0,0,3461.603
-Balrampur,Uttar Pradesh,2015,3,2015Q3,3,1,0,3636.3106
-Balrampur,Uttar Pradesh,2015,4,2015Q4,4,0,0,3630.8238
-Balrampur,Uttar Pradesh,2016,1,2016Q1,5,0,0,4185.7906
-Balrampur,Uttar Pradesh,2016,2,2016Q2,6,0,0,4010.7963
-Balrampur,Uttar Pradesh,2017,2,2017Q2,10,0,0,4939.3513
-Balrampur,Uttar Pradesh,2017,3,2017Q3,11,1,1,5013.9474
-Balrampur,Uttar Pradesh,2017,4,2017Q4,12,0,0,5151.1606
-Balrampur,Uttar Pradesh,2018,1,2018Q1,13,0,0,5474.646
-Balrampur,Uttar Pradesh,2018,2,2018Q2,14,0,0,5414.563
-Balrampur,Uttar Pradesh,2018,3,2018Q3,15,1,0,5617.6633
-Balrampur,Uttar Pradesh,2018,4,2018Q4,16,0,0,5702.4347
-Balrampur,Uttar Pradesh,2019,1,2019Q1,17,0,0,6006.0628
-Balrampur,Uttar Pradesh,2019,2,2019Q2,18,0,0,5920.1885
-Balrampur,Uttar Pradesh,2019,3,2019Q3,19,0,0,5998.5249
-Balrampur,Uttar Pradesh,2019,4,2019Q4,20,0,0,6140.87
-Balrampur,Uttar Pradesh,2020,1,2020Q1,21,0,0,6523.0425
-Balrampur,Uttar Pradesh,2020,2,2020Q2,22,1,0,6616.819
-Balrampur,Uttar Pradesh,2020,3,2020Q3,23,0,0,6691.5823
-Balrampur,Uttar Pradesh,2020,4,2020Q4,24,0,0,6644.726299999999
-Balrampur,Uttar Pradesh,2021,1,2021Q1,25,0,0,7111.8196
-Balrampur,Uttar Pradesh,2021,2,2021Q2,26,1,0,6844.905000000001
-Balrampur,Uttar Pradesh,2021,3,2021Q3,27,0,0,6897.7742
-Balrampur,Uttar Pradesh,2021,4,2021Q4,28,0,0,6964.6221
-Balrampur,Uttar Pradesh,2022,1,2022Q1,29,0,0,7514.8177
-Balrampur,Uttar Pradesh,2022,2,2022Q2,30,0,0,7107.903
-Balrampur,Uttar Pradesh,2022,3,2022Q3,31,1,0,7218.396799999999
-Balrampur,Uttar Pradesh,2022,4,2022Q4,32,0,0,7381.590599999999
-Balrampur,Uttar Pradesh,2023,1,2023Q1,33,0,0,5766.9287
-Balrampur,Uttar Pradesh,2023,2,2023Q2,34,1,0,5630.4572
-Balrampur,Uttar Pradesh,2023,3,2023Q3,35,0,0,5851.976000000001
-Balrampur,Uttar Pradesh,2023,4,2023Q4,36,0,0,6123.5585
-Balrampur,Uttar Pradesh,2024,1,2024Q1,37,0,0,6703.4749
-Balrampur,Uttar Pradesh,2024,2,2024Q2,38,0,0,6556.3468
-Balrampur,Uttar Pradesh,2024,3,2024Q3,39,0,0,6751.483899999999
-Balrampur,Uttar Pradesh,2024,4,2024Q4,40,0,0,6891.7913
+Balrampur,Chhattisgarh,2015,1,2015Q1,1,0,0,839.2294
+Balrampur,Chhattisgarh,2015,2,2015Q2,2,0,0,829.0609
+Balrampur,Chhattisgarh,2015,3,2015Q3,3,1,0,827.5065
+Balrampur,Chhattisgarh,2015,4,2015Q4,4,0,0,843.7382
+Balrampur,Chhattisgarh,2016,1,2016Q1,5,0,0,937.3755
+Balrampur,Chhattisgarh,2016,2,2016Q2,6,0,0,974.5935
+Balrampur,Chhattisgarh,2017,2,2017Q2,10,0,0,1323.0811
+Balrampur,Chhattisgarh,2017,3,2017Q3,11,1,1,1316.8626
+Balrampur,Chhattisgarh,2017,4,2017Q4,12,0,0,1368.5395
+Balrampur,Chhattisgarh,2018,1,2018Q1,13,0,0,1436.9252
+Balrampur,Chhattisgarh,2018,2,2018Q2,14,0,0,1448.0663
+Balrampur,Chhattisgarh,2018,3,2018Q3,15,1,0,1473.8009
+Balrampur,Chhattisgarh,2018,4,2018Q4,16,0,0,1488.9277
+Balrampur,Chhattisgarh,2019,1,2019Q1,17,0,0,1507.7453
+Balrampur,Chhattisgarh,2019,2,2019Q2,18,0,0,1603.1107
+Balrampur,Chhattisgarh,2019,3,2019Q3,19,0,0,1596.7098
+Balrampur,Chhattisgarh,2019,4,2019Q4,20,0,0,1663.608
+Balrampur,Chhattisgarh,2020,1,2020Q1,21,0,0,1779.444
+Balrampur,Chhattisgarh,2020,2,2020Q2,22,1,0,1904.3407
+Balrampur,Chhattisgarh,2020,3,2020Q3,23,0,0,1897.256
+Balrampur,Chhattisgarh,2020,4,2020Q4,24,0,0,1837.4441
+Balrampur,Chhattisgarh,2021,1,2021Q1,25,0,0,1883.4506
+Balrampur,Chhattisgarh,2021,2,2021Q2,26,1,0,1902.015
+Balrampur,Chhattisgarh,2021,3,2021Q3,27,0,0,1848.1415
+Balrampur,Chhattisgarh,2021,4,2021Q4,28,0,0,1878.2175
+Balrampur,Chhattisgarh,2022,1,2022Q1,29,0,0,2000.5466
+Balrampur,Chhattisgarh,2022,2,2022Q2,30,0,0,1974.3953
+Balrampur,Chhattisgarh,2022,3,2022Q3,31,1,0,1966.941
+Balrampur,Chhattisgarh,2022,4,2022Q4,32,0,0,2057.3096
+Balrampur,Chhattisgarh,2023,1,2023Q1,33,0,0,1549.4997999999998
+Balrampur,Chhattisgarh,2023,2,2023Q2,34,1,0,1522.7914
+Balrampur,Chhattisgarh,2023,3,2023Q3,35,0,0,1630.6633
+Balrampur,Chhattisgarh,2023,4,2023Q4,36,0,0,1689.4106
+Balrampur,Chhattisgarh,2024,1,2024Q1,37,0,0,1894.4672
+Balrampur,Chhattisgarh,2024,2,2024Q2,38,0,0,1899.5115
+Balrampur,Chhattisgarh,2024,3,2024Q3,39,0,0,1980.5996
+Balrampur,Chhattisgarh,2024,4,2024Q4,40,0,0,2022.6506
 Banas Kantha,Gujarat,2015,1,2015Q1,1,0,0,4781.1517
 Banas Kantha,Gujarat,2015,2,2015Q2,2,0,0,4775.7732
 Banas Kantha,Gujarat,2015,3,2015Q3,3,1,1,4508.583
@@ -3107,12 +3033,12 @@ Bidar,Karnataka,2024,1,2024Q1,37,0,0,6324.2945
 Bidar,Karnataka,2024,2,2024Q2,38,0,0,6278.6455
 Bidar,Karnataka,2024,3,2024Q3,39,0,0,6302.962
 Bidar,Karnataka,2024,4,2024Q4,40,0,0,6373.2606
-Bijapur,Chhattisgarh,2015,1,2015Q1,1,0,0,5886.4314
-Bijapur,Chhattisgarh,2015,2,2015Q2,2,0,0,5681.6947
-Bijapur,Chhattisgarh,2015,3,2015Q3,3,0,0,5690.5612
-Bijapur,Chhattisgarh,2015,4,2015Q4,4,0,0,5588.8995
-Bijapur,Chhattisgarh,2016,1,2016Q1,5,0,0,6337.0373
-Bijapur,Chhattisgarh,2016,2,2016Q2,6,0,0,6112.4503
+Bijapur,Chhattisgarh,2015,1,2015Q1,1,0,0,463.1514
+Bijapur,Chhattisgarh,2015,2,2015Q2,2,0,0,435.075
+Bijapur,Chhattisgarh,2015,3,2015Q3,3,0,0,449.7697
+Bijapur,Chhattisgarh,2015,4,2015Q4,4,0,0,456.6747
+Bijapur,Chhattisgarh,2016,1,2016Q1,5,0,0,471.1295
+Bijapur,Chhattisgarh,2016,2,2016Q2,6,0,0,449.4045
 Bijapur,Chhattisgarh,2017,2,2017Q2,10,0,0,524.7253
 Bijapur,Chhattisgarh,2017,3,2017Q3,11,0,0,549.7932
 Bijapur,Chhattisgarh,2017,4,2017Q4,12,0,0,543.4463
@@ -3144,43 +3070,6 @@ Bijapur,Chhattisgarh,2024,1,2024Q1,37,0,0,858.8838999999999
 Bijapur,Chhattisgarh,2024,2,2024Q2,38,0,0,867.0163
 Bijapur,Chhattisgarh,2024,3,2024Q3,39,0,0,905.0384
 Bijapur,Chhattisgarh,2024,4,2024Q4,40,0,0,863.951
-Bijapur,Karnataka,2015,1,2015Q1,1,0,0,5886.4314
-Bijapur,Karnataka,2015,2,2015Q2,2,0,0,5681.6947
-Bijapur,Karnataka,2015,3,2015Q3,3,0,0,5690.5612
-Bijapur,Karnataka,2015,4,2015Q4,4,0,0,5588.8995
-Bijapur,Karnataka,2016,1,2016Q1,5,0,0,6337.0373
-Bijapur,Karnataka,2016,2,2016Q2,6,0,0,6112.4503
-Bijapur,Karnataka,2017,2,2017Q2,10,0,0,524.7253
-Bijapur,Karnataka,2017,3,2017Q3,11,0,0,549.7932
-Bijapur,Karnataka,2017,4,2017Q4,12,0,0,543.4463
-Bijapur,Karnataka,2018,1,2018Q1,13,0,0,576.4648
-Bijapur,Karnataka,2018,2,2018Q2,14,0,0,584.1133
-Bijapur,Karnataka,2018,3,2018Q3,15,0,0,653.7846
-Bijapur,Karnataka,2018,4,2018Q4,16,0,0,643.5275
-Bijapur,Karnataka,2019,1,2019Q1,17,0,0,643.0957
-Bijapur,Karnataka,2019,2,2019Q2,18,0,0,711.0097
-Bijapur,Karnataka,2019,3,2019Q3,19,0,0,727.7804
-Bijapur,Karnataka,2019,4,2019Q4,20,0,0,792.8547
-Bijapur,Karnataka,2020,1,2020Q1,21,0,0,838.7338
-Bijapur,Karnataka,2020,2,2020Q2,22,1,0,896.3736
-Bijapur,Karnataka,2020,3,2020Q3,23,0,0,875.1499
-Bijapur,Karnataka,2020,4,2020Q4,24,0,0,846.0033
-Bijapur,Karnataka,2021,1,2021Q1,25,0,0,865.8751
-Bijapur,Karnataka,2021,2,2021Q2,26,1,0,892.336
-Bijapur,Karnataka,2021,3,2021Q3,27,0,0,888.4158
-Bijapur,Karnataka,2021,4,2021Q4,28,0,0,801.5511
-Bijapur,Karnataka,2022,1,2022Q1,29,0,0,874.6222
-Bijapur,Karnataka,2022,2,2022Q2,30,0,0,799.5845
-Bijapur,Karnataka,2022,3,2022Q3,31,0,0,858.5512
-Bijapur,Karnataka,2022,4,2022Q4,32,0,0,843.4558
-Bijapur,Karnataka,2023,1,2023Q1,33,0,0,755.3474
-Bijapur,Karnataka,2023,2,2023Q2,34,1,0,751.7674999999999
-Bijapur,Karnataka,2023,3,2023Q3,35,0,0,800.9758999999999
-Bijapur,Karnataka,2023,4,2023Q4,36,0,0,758.917
-Bijapur,Karnataka,2024,1,2024Q1,37,0,0,858.8838999999999
-Bijapur,Karnataka,2024,2,2024Q2,38,0,0,867.0163
-Bijapur,Karnataka,2024,3,2024Q3,39,0,0,905.0384
-Bijapur,Karnataka,2024,4,2024Q4,40,0,0,863.951
 Bijnor,Uttar Pradesh,2015,1,2015Q1,1,0,0,6958.8238
 Bijnor,Uttar Pradesh,2015,2,2015Q2,2,0,0,6568.2316
 Bijnor,Uttar Pradesh,2015,3,2015Q3,3,1,0,6851.6887
@@ -3255,80 +3144,43 @@ Bikaner,Rajasthan,2024,1,2024Q1,37,0,0,20986.1613
 Bikaner,Rajasthan,2024,2,2024Q2,38,0,0,20924.266
 Bikaner,Rajasthan,2024,3,2024Q3,39,0,0,21378.867700000003
 Bikaner,Rajasthan,2024,4,2024Q4,40,0,0,21502.3543
-Bilaspur,Chhattisgarh,2015,1,2015Q1,1,0,0,21021.9934
-Bilaspur,Chhattisgarh,2015,2,2015Q2,2,0,0,21097.1722
-Bilaspur,Chhattisgarh,2015,3,2015Q3,3,1,0,21730.1276
-Bilaspur,Chhattisgarh,2015,4,2015Q4,4,0,0,22816.3869
-Bilaspur,Chhattisgarh,2016,1,2016Q1,5,0,0,17619.448800000002
-Bilaspur,Chhattisgarh,2016,2,2016Q2,6,0,0,16251.4051
-Bilaspur,Chhattisgarh,2017,2,2017Q2,10,0,0,20329.3862
-Bilaspur,Chhattisgarh,2017,3,2017Q3,11,0,0,20408.7537
-Bilaspur,Chhattisgarh,2017,4,2017Q4,12,0,0,22494.1723
-Bilaspur,Chhattisgarh,2018,1,2018Q1,13,0,0,20811.8417
-Bilaspur,Chhattisgarh,2018,2,2018Q2,14,0,0,22133.1034
-Bilaspur,Chhattisgarh,2018,3,2018Q3,15,0,0,22607.146
-Bilaspur,Chhattisgarh,2018,4,2018Q4,16,0,0,22457.6985
-Bilaspur,Chhattisgarh,2019,1,2019Q1,17,0,0,23478.9441
-Bilaspur,Chhattisgarh,2019,2,2019Q2,18,0,0,22508.7485
-Bilaspur,Chhattisgarh,2019,3,2019Q3,19,0,0,23833.6596
-Bilaspur,Chhattisgarh,2019,4,2019Q4,20,0,0,24175.9993
-Bilaspur,Chhattisgarh,2020,1,2020Q1,21,0,0,23543.017
-Bilaspur,Chhattisgarh,2020,2,2020Q2,22,1,0,23569.18
-Bilaspur,Chhattisgarh,2020,3,2020Q3,23,0,0,23047.1423
-Bilaspur,Chhattisgarh,2020,4,2020Q4,24,0,0,22645.1327
-Bilaspur,Chhattisgarh,2021,1,2021Q1,25,0,0,23922.6595
-Bilaspur,Chhattisgarh,2021,2,2021Q2,26,1,0,25334.9336
-Bilaspur,Chhattisgarh,2021,3,2021Q3,27,1,0,24802.823
-Bilaspur,Chhattisgarh,2021,4,2021Q4,28,0,0,26032.5352
-Bilaspur,Chhattisgarh,2022,1,2022Q1,29,0,0,28400.4683
-Bilaspur,Chhattisgarh,2022,2,2022Q2,30,1,0,29759.5598
-Bilaspur,Chhattisgarh,2022,3,2022Q3,31,1,0,30057.3304
-Bilaspur,Chhattisgarh,2022,4,2022Q4,32,0,0,30749.8572
-Bilaspur,Chhattisgarh,2023,1,2023Q1,33,0,0,29653.4627
-Bilaspur,Chhattisgarh,2023,2,2023Q2,34,1,0,30723.1585
-Bilaspur,Chhattisgarh,2023,3,2023Q3,35,0,0,30946.007100000003
-Bilaspur,Chhattisgarh,2023,4,2023Q4,36,0,0,30942.8428
-Bilaspur,Chhattisgarh,2024,1,2024Q1,37,0,0,32260.239500000003
-Bilaspur,Chhattisgarh,2024,2,2024Q2,38,0,0,33227.5239
-Bilaspur,Chhattisgarh,2024,3,2024Q3,39,0,0,33406.3739
-Bilaspur,Chhattisgarh,2024,4,2024Q4,40,0,0,32907.8409
-Bilaspur,Himachal Pradesh,2015,1,2015Q1,1,0,0,21021.9934
-Bilaspur,Himachal Pradesh,2015,2,2015Q2,2,0,0,21097.1722
-Bilaspur,Himachal Pradesh,2015,3,2015Q3,3,1,0,21730.1276
-Bilaspur,Himachal Pradesh,2015,4,2015Q4,4,0,0,22816.3869
-Bilaspur,Himachal Pradesh,2016,1,2016Q1,5,0,0,17619.448800000002
-Bilaspur,Himachal Pradesh,2016,2,2016Q2,6,0,0,16251.4051
-Bilaspur,Himachal Pradesh,2017,2,2017Q2,10,0,0,20329.3862
-Bilaspur,Himachal Pradesh,2017,3,2017Q3,11,0,0,20408.7537
-Bilaspur,Himachal Pradesh,2017,4,2017Q4,12,0,0,22494.1723
-Bilaspur,Himachal Pradesh,2018,1,2018Q1,13,0,0,20811.8417
-Bilaspur,Himachal Pradesh,2018,2,2018Q2,14,0,0,22133.1034
-Bilaspur,Himachal Pradesh,2018,3,2018Q3,15,0,0,22607.146
-Bilaspur,Himachal Pradesh,2018,4,2018Q4,16,0,0,22457.6985
-Bilaspur,Himachal Pradesh,2019,1,2019Q1,17,0,0,23478.9441
-Bilaspur,Himachal Pradesh,2019,2,2019Q2,18,0,0,22508.7485
-Bilaspur,Himachal Pradesh,2019,3,2019Q3,19,0,0,23833.6596
-Bilaspur,Himachal Pradesh,2019,4,2019Q4,20,0,0,24175.9993
-Bilaspur,Himachal Pradesh,2020,1,2020Q1,21,0,0,23543.017
-Bilaspur,Himachal Pradesh,2020,2,2020Q2,22,1,0,23569.18
-Bilaspur,Himachal Pradesh,2020,3,2020Q3,23,0,0,23047.1423
-Bilaspur,Himachal Pradesh,2020,4,2020Q4,24,0,0,22645.1327
-Bilaspur,Himachal Pradesh,2021,1,2021Q1,25,0,0,23922.6595
-Bilaspur,Himachal Pradesh,2021,2,2021Q2,26,1,0,25334.9336
-Bilaspur,Himachal Pradesh,2021,3,2021Q3,27,1,0,24802.823
-Bilaspur,Himachal Pradesh,2021,4,2021Q4,28,0,0,26032.5352
-Bilaspur,Himachal Pradesh,2022,1,2022Q1,29,0,0,28400.4683
-Bilaspur,Himachal Pradesh,2022,2,2022Q2,30,1,0,29759.5598
-Bilaspur,Himachal Pradesh,2022,3,2022Q3,31,1,0,30057.3304
-Bilaspur,Himachal Pradesh,2022,4,2022Q4,32,0,0,30749.8572
-Bilaspur,Himachal Pradesh,2023,1,2023Q1,33,0,0,29653.4627
-Bilaspur,Himachal Pradesh,2023,2,2023Q2,34,1,0,30723.1585
-Bilaspur,Himachal Pradesh,2023,3,2023Q3,35,0,0,30946.007100000003
-Bilaspur,Himachal Pradesh,2023,4,2023Q4,36,0,0,30942.8428
-Bilaspur,Himachal Pradesh,2024,1,2024Q1,37,0,0,32260.239500000003
-Bilaspur,Himachal Pradesh,2024,2,2024Q2,38,0,0,33227.5239
-Bilaspur,Himachal Pradesh,2024,3,2024Q3,39,0,0,33406.3739
-Bilaspur,Himachal Pradesh,2024,4,2024Q4,40,0,0,32907.8409
+Bilaspur,Chhattisgarh,2015,1,2015Q1,1,0,0,18437.0163
+Bilaspur,Chhattisgarh,2015,2,2015Q2,2,0,0,18582.3669
+Bilaspur,Chhattisgarh,2015,3,2015Q3,3,1,0,18960.5478
+Bilaspur,Chhattisgarh,2015,4,2015Q4,4,0,0,20022.0625
+Bilaspur,Chhattisgarh,2016,1,2016Q1,5,0,0,14657.1396
+Bilaspur,Chhattisgarh,2016,2,2016Q2,6,0,0,13227.5852
+Bilaspur,Chhattisgarh,2017,2,2017Q2,10,0,0,16798.1994
+Bilaspur,Chhattisgarh,2017,3,2017Q3,11,0,0,16686.3317
+Bilaspur,Chhattisgarh,2017,4,2017Q4,12,0,0,18786.1304
+Bilaspur,Chhattisgarh,2018,1,2018Q1,13,0,0,17082.7699
+Bilaspur,Chhattisgarh,2018,2,2018Q2,14,0,0,18264.8581
+Bilaspur,Chhattisgarh,2018,3,2018Q3,15,0,0,18665.5475
+Bilaspur,Chhattisgarh,2018,4,2018Q4,16,0,0,18371.5559
+Bilaspur,Chhattisgarh,2019,1,2019Q1,17,0,0,19322.0235
+Bilaspur,Chhattisgarh,2019,2,2019Q2,18,0,0,18242.8616
+Bilaspur,Chhattisgarh,2019,3,2019Q3,19,0,0,19418.8845
+Bilaspur,Chhattisgarh,2019,4,2019Q4,20,0,0,19701.9925
+Bilaspur,Chhattisgarh,2020,1,2020Q1,21,0,0,18943.7574
+Bilaspur,Chhattisgarh,2020,2,2020Q2,22,1,0,18798.7108
+Bilaspur,Chhattisgarh,2020,3,2020Q3,23,0,0,18139.0083
+Bilaspur,Chhattisgarh,2020,4,2020Q4,24,0,0,17704.5635
+Bilaspur,Chhattisgarh,2021,1,2021Q1,25,0,0,18934.8789
+Bilaspur,Chhattisgarh,2021,2,2021Q2,26,1,0,20238.8502
+Bilaspur,Chhattisgarh,2021,3,2021Q3,27,1,0,19630.1876
+Bilaspur,Chhattisgarh,2021,4,2021Q4,28,0,0,20489.9507
+Bilaspur,Chhattisgarh,2022,1,2022Q1,29,0,0,22865.5668
+Bilaspur,Chhattisgarh,2022,2,2022Q2,30,1,0,24073.5827
+Bilaspur,Chhattisgarh,2022,3,2022Q3,31,1,0,24258.0259
+Bilaspur,Chhattisgarh,2022,4,2022Q4,32,0,0,24567.6307
+Bilaspur,Chhattisgarh,2023,1,2023Q1,33,0,0,23591.5111
+Bilaspur,Chhattisgarh,2023,2,2023Q2,34,1,0,24424.7003
+Bilaspur,Chhattisgarh,2023,3,2023Q3,35,0,0,24466.0026
+Bilaspur,Chhattisgarh,2023,4,2023Q4,36,0,0,24418.8019
+Bilaspur,Chhattisgarh,2024,1,2024Q1,37,0,0,25533.777
+Bilaspur,Chhattisgarh,2024,2,2024Q2,38,0,0,26341.4268
+Bilaspur,Chhattisgarh,2024,3,2024Q3,39,0,0,26312.2705
+Bilaspur,Chhattisgarh,2024,4,2024Q4,40,0,0,25767.5712
 Birbhum,West Bengal,2015,1,2015Q1,1,0,0,8976.9004
 Birbhum,West Bengal,2015,2,2015Q2,2,0,0,9134.0775
 Birbhum,West Bengal,2015,3,2015Q3,3,0,0,9478.2529
@@ -7954,80 +7806,43 @@ Hailakandi,Assam,2024,1,2024Q1,37,0,0,1884.5458
 Hailakandi,Assam,2024,2,2024Q2,38,1,0,1890.7663
 Hailakandi,Assam,2024,3,2024Q3,39,1,0,1935.0064
 Hailakandi,Assam,2024,4,2024Q4,40,0,0,1929.9077
-Hamirpur,Himachal Pradesh,2015,1,2015Q1,1,0,0,6305.007799999999
-Hamirpur,Himachal Pradesh,2015,2,2015Q2,2,0,0,6265.3261
-Hamirpur,Himachal Pradesh,2015,3,2015Q3,3,1,0,6477.5062
-Hamirpur,Himachal Pradesh,2015,4,2015Q4,4,0,0,6577.263499999999
-Hamirpur,Himachal Pradesh,2016,1,2016Q1,5,0,0,7080.616
-Hamirpur,Himachal Pradesh,2016,2,2016Q2,6,0,0,7156.423000000001
-Hamirpur,Himachal Pradesh,2017,2,2017Q2,10,0,0,8783.7974
-Hamirpur,Himachal Pradesh,2017,3,2017Q3,11,0,0,9063.586
-Hamirpur,Himachal Pradesh,2017,4,2017Q4,12,0,0,9202.0202
-Hamirpur,Himachal Pradesh,2018,1,2018Q1,13,0,0,9439.8076
-Hamirpur,Himachal Pradesh,2018,2,2018Q2,14,0,0,9701.6988
-Hamirpur,Himachal Pradesh,2018,3,2018Q3,15,1,0,10065.5874
-Hamirpur,Himachal Pradesh,2018,4,2018Q4,16,0,0,10269.1488
-Hamirpur,Himachal Pradesh,2019,1,2019Q1,17,0,0,10576.3906
-Hamirpur,Himachal Pradesh,2019,2,2019Q2,18,0,0,10953.8795
-Hamirpur,Himachal Pradesh,2019,3,2019Q3,19,0,0,11385.7862
-Hamirpur,Himachal Pradesh,2019,4,2019Q4,20,0,0,11529.6928
-Hamirpur,Himachal Pradesh,2020,1,2020Q1,21,0,0,11712.3601
-Hamirpur,Himachal Pradesh,2020,2,2020Q2,22,1,0,12215.2464
-Hamirpur,Himachal Pradesh,2020,3,2020Q3,23,0,0,12477.3245
-Hamirpur,Himachal Pradesh,2020,4,2020Q4,24,0,0,12529.1696
-Hamirpur,Himachal Pradesh,2021,1,2021Q1,25,0,0,12708.7578
-Hamirpur,Himachal Pradesh,2021,2,2021Q2,26,1,0,12888.4909
-Hamirpur,Himachal Pradesh,2021,3,2021Q3,27,1,0,13182.4707
-Hamirpur,Himachal Pradesh,2021,4,2021Q4,28,0,0,13185.803
-Hamirpur,Himachal Pradesh,2022,1,2022Q1,29,0,0,13327.5061
-Hamirpur,Himachal Pradesh,2022,2,2022Q2,30,1,0,13503.058
-Hamirpur,Himachal Pradesh,2022,3,2022Q3,31,1,0,13978.3309
-Hamirpur,Himachal Pradesh,2022,4,2022Q4,32,0,0,14207.8031
-Hamirpur,Himachal Pradesh,2023,1,2023Q1,33,0,0,13828.4893
-Hamirpur,Himachal Pradesh,2023,2,2023Q2,34,1,1,14295.7524
-Hamirpur,Himachal Pradesh,2023,3,2023Q3,35,0,0,14851.0944
-Hamirpur,Himachal Pradesh,2023,4,2023Q4,36,0,0,15046.5883
-Hamirpur,Himachal Pradesh,2024,1,2024Q1,37,0,0,15613.0525
-Hamirpur,Himachal Pradesh,2024,2,2024Q2,38,0,0,15912.2913
-Hamirpur,Himachal Pradesh,2024,3,2024Q3,39,0,0,16409.716
-Hamirpur,Himachal Pradesh,2024,4,2024Q4,40,0,0,16551.6363
-Hamirpur,Uttar Pradesh,2015,1,2015Q1,1,0,0,6305.007799999999
-Hamirpur,Uttar Pradesh,2015,2,2015Q2,2,0,0,6265.3261
-Hamirpur,Uttar Pradesh,2015,3,2015Q3,3,1,0,6477.5062
-Hamirpur,Uttar Pradesh,2015,4,2015Q4,4,0,0,6577.263499999999
-Hamirpur,Uttar Pradesh,2016,1,2016Q1,5,0,0,7080.616
-Hamirpur,Uttar Pradesh,2016,2,2016Q2,6,0,0,7156.423000000001
-Hamirpur,Uttar Pradesh,2017,2,2017Q2,10,0,0,8783.7974
-Hamirpur,Uttar Pradesh,2017,3,2017Q3,11,0,0,9063.586
-Hamirpur,Uttar Pradesh,2017,4,2017Q4,12,0,0,9202.0202
-Hamirpur,Uttar Pradesh,2018,1,2018Q1,13,0,0,9439.8076
-Hamirpur,Uttar Pradesh,2018,2,2018Q2,14,0,0,9701.6988
-Hamirpur,Uttar Pradesh,2018,3,2018Q3,15,1,0,10065.5874
-Hamirpur,Uttar Pradesh,2018,4,2018Q4,16,0,0,10269.1488
-Hamirpur,Uttar Pradesh,2019,1,2019Q1,17,0,0,10576.3906
-Hamirpur,Uttar Pradesh,2019,2,2019Q2,18,0,0,10953.8795
-Hamirpur,Uttar Pradesh,2019,3,2019Q3,19,0,0,11385.7862
-Hamirpur,Uttar Pradesh,2019,4,2019Q4,20,0,0,11529.6928
-Hamirpur,Uttar Pradesh,2020,1,2020Q1,21,0,0,11712.3601
-Hamirpur,Uttar Pradesh,2020,2,2020Q2,22,1,0,12215.2464
-Hamirpur,Uttar Pradesh,2020,3,2020Q3,23,0,0,12477.3245
-Hamirpur,Uttar Pradesh,2020,4,2020Q4,24,0,0,12529.1696
-Hamirpur,Uttar Pradesh,2021,1,2021Q1,25,0,0,12708.7578
-Hamirpur,Uttar Pradesh,2021,2,2021Q2,26,1,0,12888.4909
-Hamirpur,Uttar Pradesh,2021,3,2021Q3,27,1,0,13182.4707
-Hamirpur,Uttar Pradesh,2021,4,2021Q4,28,0,0,13185.803
-Hamirpur,Uttar Pradesh,2022,1,2022Q1,29,0,0,13327.5061
-Hamirpur,Uttar Pradesh,2022,2,2022Q2,30,1,0,13503.058
-Hamirpur,Uttar Pradesh,2022,3,2022Q3,31,1,0,13978.3309
-Hamirpur,Uttar Pradesh,2022,4,2022Q4,32,0,0,14207.8031
-Hamirpur,Uttar Pradesh,2023,1,2023Q1,33,0,0,13828.4893
-Hamirpur,Uttar Pradesh,2023,2,2023Q2,34,1,1,14295.7524
-Hamirpur,Uttar Pradesh,2023,3,2023Q3,35,0,0,14851.0944
-Hamirpur,Uttar Pradesh,2023,4,2023Q4,36,0,0,15046.5883
-Hamirpur,Uttar Pradesh,2024,1,2024Q1,37,0,0,15613.0525
-Hamirpur,Uttar Pradesh,2024,2,2024Q2,38,0,0,15912.2913
-Hamirpur,Uttar Pradesh,2024,3,2024Q3,39,0,0,16409.716
-Hamirpur,Uttar Pradesh,2024,4,2024Q4,40,0,0,16551.6363
+Hamirpur,Himachal Pradesh,2015,1,2015Q1,1,0,0,4421.7468
+Hamirpur,Himachal Pradesh,2015,2,2015Q2,2,0,0,4344.3272
+Hamirpur,Himachal Pradesh,2015,3,2015Q3,3,1,0,4554.079
+Hamirpur,Himachal Pradesh,2015,4,2015Q4,4,0,0,4657.7179
+Hamirpur,Himachal Pradesh,2016,1,2016Q1,5,0,0,5001.7263
+Hamirpur,Himachal Pradesh,2016,2,2016Q2,6,0,0,5073.8446
+Hamirpur,Himachal Pradesh,2017,2,2017Q2,10,0,0,6246.2829
+Hamirpur,Himachal Pradesh,2017,3,2017Q3,11,0,0,6452.1122
+Hamirpur,Himachal Pradesh,2017,4,2017Q4,12,0,0,6533.3388
+Hamirpur,Himachal Pradesh,2018,1,2018Q1,13,0,0,6601.5468
+Hamirpur,Himachal Pradesh,2018,2,2018Q2,14,0,0,6855.9965
+Hamirpur,Himachal Pradesh,2018,3,2018Q3,15,1,0,7107.5213
+Hamirpur,Himachal Pradesh,2018,4,2018Q4,16,0,0,7268.2184
+Hamirpur,Himachal Pradesh,2019,1,2019Q1,17,0,0,7427.5792
+Hamirpur,Himachal Pradesh,2019,2,2019Q2,18,0,0,7688.2232
+Hamirpur,Himachal Pradesh,2019,3,2019Q3,19,0,0,7985.6176
+Hamirpur,Himachal Pradesh,2019,4,2019Q4,20,0,0,8067.5089
+Hamirpur,Himachal Pradesh,2020,1,2020Q1,21,0,0,8181.9449
+Hamirpur,Himachal Pradesh,2020,2,2020Q2,22,1,0,8602.5387
+Hamirpur,Himachal Pradesh,2020,3,2020Q3,23,0,0,8784.936
+Hamirpur,Himachal Pradesh,2020,4,2020Q4,24,0,0,8859.7368
+Hamirpur,Himachal Pradesh,2021,1,2021Q1,25,0,0,8820.7519
+Hamirpur,Himachal Pradesh,2021,2,2021Q2,26,1,0,9132.5569
+Hamirpur,Himachal Pradesh,2021,3,2021Q3,27,1,0,9310.06
+Hamirpur,Himachal Pradesh,2021,4,2021Q4,28,0,0,9340.0876
+Hamirpur,Himachal Pradesh,2022,1,2022Q1,29,0,0,9389.842
+Hamirpur,Himachal Pradesh,2022,2,2022Q2,30,1,0,9651.4616
+Hamirpur,Himachal Pradesh,2022,3,2022Q3,31,1,0,9984.1387
+Hamirpur,Himachal Pradesh,2022,4,2022Q4,32,0,0,10153.101
+Hamirpur,Himachal Pradesh,2023,1,2023Q1,33,0,0,10256.3925
+Hamirpur,Himachal Pradesh,2023,2,2023Q2,34,1,1,10712.3996
+Hamirpur,Himachal Pradesh,2023,3,2023Q3,35,0,0,11100.2358
+Hamirpur,Himachal Pradesh,2023,4,2023Q4,36,0,0,11228.7739
+Hamirpur,Himachal Pradesh,2024,1,2024Q1,37,0,0,11588.1417
+Hamirpur,Himachal Pradesh,2024,2,2024Q2,38,0,0,11929.5005
+Hamirpur,Himachal Pradesh,2024,3,2024Q3,39,0,0,12293.044
+Hamirpur,Himachal Pradesh,2024,4,2024Q4,40,0,0,12386.275
 Hanumangarh,Rajasthan,2015,1,2015Q1,1,0,0,3065.2421
 Hanumangarh,Rajasthan,2015,2,2015Q2,2,0,0,3003.6805
 Hanumangarh,Rajasthan,2015,3,2015Q3,3,1,0,3031.4148
@@ -16575,80 +16390,43 @@ Prakasam,Andhra Pradesh,2024,1,2024Q1,37,0,0,12060.3951
 Prakasam,Andhra Pradesh,2024,2,2024Q2,38,0,0,12344.6392
 Prakasam,Andhra Pradesh,2024,3,2024Q3,39,0,0,12350.9387
 Prakasam,Andhra Pradesh,2024,4,2024Q4,40,0,0,12092.7378
-Pratapgarh,Rajasthan,2015,1,2015Q1,1,0,0,7446.2604
-Pratapgarh,Rajasthan,2015,2,2015Q2,2,0,0,7303.356400000001
-Pratapgarh,Rajasthan,2015,3,2015Q3,3,1,0,7592.0895
-Pratapgarh,Rajasthan,2015,4,2015Q4,4,0,0,7809.4454
-Pratapgarh,Rajasthan,2016,1,2016Q1,5,0,0,8290.6757
-Pratapgarh,Rajasthan,2016,2,2016Q2,6,0,0,8246.6031
-Pratapgarh,Rajasthan,2017,2,2017Q2,10,0,0,9754.1809
-Pratapgarh,Rajasthan,2017,3,2017Q3,11,0,0,10136.1233
-Pratapgarh,Rajasthan,2017,4,2017Q4,12,0,0,10292.4678
-Pratapgarh,Rajasthan,2018,1,2018Q1,13,0,0,10674.4973
-Pratapgarh,Rajasthan,2018,2,2018Q2,14,0,0,10623.6924
-Pratapgarh,Rajasthan,2018,3,2018Q3,15,1,0,11225.411
-Pratapgarh,Rajasthan,2018,4,2018Q4,16,0,0,11333.5504
-Pratapgarh,Rajasthan,2019,1,2019Q1,17,0,0,11707.2228
-Pratapgarh,Rajasthan,2019,2,2019Q2,18,0,0,11663.9749
-Pratapgarh,Rajasthan,2019,3,2019Q3,19,0,0,12177.7811
-Pratapgarh,Rajasthan,2019,4,2019Q4,20,0,0,12262.8804
-Pratapgarh,Rajasthan,2020,1,2020Q1,21,0,0,13210.1018
-Pratapgarh,Rajasthan,2020,2,2020Q2,22,1,0,13026.0505
-Pratapgarh,Rajasthan,2020,3,2020Q3,23,0,0,13321.84
-Pratapgarh,Rajasthan,2020,4,2020Q4,24,0,0,13176.5263
-Pratapgarh,Rajasthan,2021,1,2021Q1,25,0,0,13909.9503
-Pratapgarh,Rajasthan,2021,2,2021Q2,26,1,0,13948.952
-Pratapgarh,Rajasthan,2021,3,2021Q3,27,0,0,14384.5741
-Pratapgarh,Rajasthan,2021,4,2021Q4,28,0,0,14349.1418
-Pratapgarh,Rajasthan,2022,1,2022Q1,29,0,0,14857.168
-Pratapgarh,Rajasthan,2022,2,2022Q2,30,0,0,14706.3483
-Pratapgarh,Rajasthan,2022,3,2022Q3,31,1,0,15016.9447
-Pratapgarh,Rajasthan,2022,4,2022Q4,32,0,0,15170.0581
-Pratapgarh,Rajasthan,2023,1,2023Q1,33,0,0,12558.268300000002
-Pratapgarh,Rajasthan,2023,2,2023Q2,34,0,0,12700.0811
-Pratapgarh,Rajasthan,2023,3,2023Q3,35,0,0,13078.6305
-Pratapgarh,Rajasthan,2023,4,2023Q4,36,0,0,13372.418
-Pratapgarh,Rajasthan,2024,1,2024Q1,37,0,0,14116.4114
-Pratapgarh,Rajasthan,2024,2,2024Q2,38,0,0,14084.864699999998
-Pratapgarh,Rajasthan,2024,3,2024Q3,39,1,1,14494.8163
-Pratapgarh,Rajasthan,2024,4,2024Q4,40,0,0,14626.130099999998
-Pratapgarh,Uttar Pradesh,2015,1,2015Q1,1,0,0,7446.2604
-Pratapgarh,Uttar Pradesh,2015,2,2015Q2,2,0,0,7303.356400000001
-Pratapgarh,Uttar Pradesh,2015,3,2015Q3,3,1,0,7592.0895
-Pratapgarh,Uttar Pradesh,2015,4,2015Q4,4,0,0,7809.4454
-Pratapgarh,Uttar Pradesh,2016,1,2016Q1,5,0,0,8290.6757
-Pratapgarh,Uttar Pradesh,2016,2,2016Q2,6,0,0,8246.6031
-Pratapgarh,Uttar Pradesh,2017,2,2017Q2,10,0,0,9754.1809
-Pratapgarh,Uttar Pradesh,2017,3,2017Q3,11,0,0,10136.1233
-Pratapgarh,Uttar Pradesh,2017,4,2017Q4,12,0,0,10292.4678
-Pratapgarh,Uttar Pradesh,2018,1,2018Q1,13,0,0,10674.4973
-Pratapgarh,Uttar Pradesh,2018,2,2018Q2,14,0,0,10623.6924
-Pratapgarh,Uttar Pradesh,2018,3,2018Q3,15,1,0,11225.411
-Pratapgarh,Uttar Pradesh,2018,4,2018Q4,16,0,0,11333.5504
-Pratapgarh,Uttar Pradesh,2019,1,2019Q1,17,0,0,11707.2228
-Pratapgarh,Uttar Pradesh,2019,2,2019Q2,18,0,0,11663.9749
-Pratapgarh,Uttar Pradesh,2019,3,2019Q3,19,0,0,12177.7811
-Pratapgarh,Uttar Pradesh,2019,4,2019Q4,20,0,0,12262.8804
-Pratapgarh,Uttar Pradesh,2020,1,2020Q1,21,0,0,13210.1018
-Pratapgarh,Uttar Pradesh,2020,2,2020Q2,22,1,0,13026.0505
-Pratapgarh,Uttar Pradesh,2020,3,2020Q3,23,0,0,13321.84
-Pratapgarh,Uttar Pradesh,2020,4,2020Q4,24,0,0,13176.5263
-Pratapgarh,Uttar Pradesh,2021,1,2021Q1,25,0,0,13909.9503
-Pratapgarh,Uttar Pradesh,2021,2,2021Q2,26,1,0,13948.952
-Pratapgarh,Uttar Pradesh,2021,3,2021Q3,27,0,0,14384.5741
-Pratapgarh,Uttar Pradesh,2021,4,2021Q4,28,0,0,14349.1418
-Pratapgarh,Uttar Pradesh,2022,1,2022Q1,29,0,0,14857.168
-Pratapgarh,Uttar Pradesh,2022,2,2022Q2,30,0,0,14706.3483
-Pratapgarh,Uttar Pradesh,2022,3,2022Q3,31,1,0,15016.9447
-Pratapgarh,Uttar Pradesh,2022,4,2022Q4,32,0,0,15170.0581
-Pratapgarh,Uttar Pradesh,2023,1,2023Q1,33,0,0,12558.268300000002
-Pratapgarh,Uttar Pradesh,2023,2,2023Q2,34,0,0,12700.0811
-Pratapgarh,Uttar Pradesh,2023,3,2023Q3,35,0,0,13078.6305
-Pratapgarh,Uttar Pradesh,2023,4,2023Q4,36,0,0,13372.418
-Pratapgarh,Uttar Pradesh,2024,1,2024Q1,37,0,0,14116.4114
-Pratapgarh,Uttar Pradesh,2024,2,2024Q2,38,0,0,14084.864699999998
-Pratapgarh,Uttar Pradesh,2024,3,2024Q3,39,1,1,14494.8163
-Pratapgarh,Uttar Pradesh,2024,4,2024Q4,40,0,0,14626.130099999998
+Pratapgarh,Rajasthan,2015,1,2015Q1,1,0,0,1217.161
+Pratapgarh,Rajasthan,2015,2,2015Q2,2,0,0,1196.6113
+Pratapgarh,Rajasthan,2015,3,2015Q3,3,1,0,1224.3536
+Pratapgarh,Rajasthan,2015,4,2015Q4,4,0,0,1266.1515
+Pratapgarh,Rajasthan,2016,1,2016Q1,5,0,0,1319.4904
+Pratapgarh,Rajasthan,2016,2,2016Q2,6,0,0,1285.9866
+Pratapgarh,Rajasthan,2017,2,2017Q2,10,0,0,1513.8948
+Pratapgarh,Rajasthan,2017,3,2017Q3,11,0,0,1583.5466
+Pratapgarh,Rajasthan,2017,4,2017Q4,12,0,0,1589.0125
+Pratapgarh,Rajasthan,2018,1,2018Q1,13,0,0,1666.8279
+Pratapgarh,Rajasthan,2018,2,2018Q2,14,0,0,1635.9373
+Pratapgarh,Rajasthan,2018,3,2018Q3,15,1,0,1742.2398
+Pratapgarh,Rajasthan,2018,4,2018Q4,16,0,0,1728.5121
+Pratapgarh,Rajasthan,2019,1,2019Q1,17,0,0,1802.721
+Pratapgarh,Rajasthan,2019,2,2019Q2,18,0,0,1797.9994
+Pratapgarh,Rajasthan,2019,3,2019Q3,19,0,0,1897.1209
+Pratapgarh,Rajasthan,2019,4,2019Q4,20,0,0,1859.886
+Pratapgarh,Rajasthan,2020,1,2020Q1,21,0,0,1994.3968
+Pratapgarh,Rajasthan,2020,2,2020Q2,22,1,0,2034.4952
+Pratapgarh,Rajasthan,2020,3,2020Q3,23,0,0,2081.44
+Pratapgarh,Rajasthan,2020,4,2020Q4,24,0,0,2088.6376
+Pratapgarh,Rajasthan,2021,1,2021Q1,25,0,0,2186.4034
+Pratapgarh,Rajasthan,2021,2,2021Q2,26,1,0,2174.7419
+Pratapgarh,Rajasthan,2021,3,2021Q3,27,0,0,2222.3824
+Pratapgarh,Rajasthan,2021,4,2021Q4,28,0,0,2202.4305
+Pratapgarh,Rajasthan,2022,1,2022Q1,29,0,0,2274.9841
+Pratapgarh,Rajasthan,2022,2,2022Q2,30,0,0,2248.6256
+Pratapgarh,Rajasthan,2022,3,2022Q3,31,1,0,2257.2111
+Pratapgarh,Rajasthan,2022,4,2022Q4,32,0,0,2281.3716
+Pratapgarh,Rajasthan,2023,1,2023Q1,33,0,0,2107.0146
+Pratapgarh,Rajasthan,2023,2,2023Q2,34,0,0,2138.4324
+Pratapgarh,Rajasthan,2023,3,2023Q3,35,0,0,2153.7599
+Pratapgarh,Rajasthan,2023,4,2023Q4,36,0,0,2160.1169
+Pratapgarh,Rajasthan,2024,1,2024Q1,37,0,0,2349.1673
+Pratapgarh,Rajasthan,2024,2,2024Q2,38,0,0,2272.3128
+Pratapgarh,Rajasthan,2024,3,2024Q3,39,1,1,2313.289
+Pratapgarh,Rajasthan,2024,4,2024Q4,40,0,0,2314.2807
 Puducherry,Puducherry,2015,1,2015Q1,1,0,0,8899.2988
 Puducherry,Puducherry,2015,2,2015Q2,2,0,0,9277.9249
 Puducherry,Puducherry,2015,3,2015Q3,3,0,0,9734.8715
@@ -17130,43 +16908,6 @@ Raigarh,Chhattisgarh,2024,1,2024Q1,37,0,0,8794.147
 Raigarh,Chhattisgarh,2024,2,2024Q2,38,0,0,8910.9027
 Raigarh,Chhattisgarh,2024,3,2024Q3,39,1,0,9166.7396
 Raigarh,Chhattisgarh,2024,4,2024Q4,40,0,0,9324.7982
-Raigarh,Maharashtra,2015,1,2015Q1,1,0,0,3959.8944
-Raigarh,Maharashtra,2015,2,2015Q2,2,0,0,3931.9928
-Raigarh,Maharashtra,2015,3,2015Q3,3,0,0,4057.9982
-Raigarh,Maharashtra,2015,4,2015Q4,4,0,0,4224.8176
-Raigarh,Maharashtra,2016,1,2016Q1,5,0,0,4385.2967
-Raigarh,Maharashtra,2016,2,2016Q2,6,0,0,4330.6452
-Raigarh,Maharashtra,2017,2,2017Q2,10,0,0,5585.7594
-Raigarh,Maharashtra,2017,3,2017Q3,11,0,0,5711.3758
-Raigarh,Maharashtra,2017,4,2017Q4,12,0,0,6057.7972
-Raigarh,Maharashtra,2018,1,2018Q1,13,0,0,6053.0567
-Raigarh,Maharashtra,2018,2,2018Q2,14,1,0,6118.4524
-Raigarh,Maharashtra,2018,3,2018Q3,15,0,0,6307.9623
-Raigarh,Maharashtra,2018,4,2018Q4,16,0,0,6597.3655
-Raigarh,Maharashtra,2019,1,2019Q1,17,0,0,6825.8665
-Raigarh,Maharashtra,2019,2,2019Q2,18,0,0,6924.5588
-Raigarh,Maharashtra,2019,3,2019Q3,19,1,0,7136.0612
-Raigarh,Maharashtra,2019,4,2019Q4,20,0,0,7368.8236
-Raigarh,Maharashtra,2020,1,2020Q1,21,0,0,7701.8233
-Raigarh,Maharashtra,2020,2,2020Q2,22,1,0,8027.0449
-Raigarh,Maharashtra,2020,3,2020Q3,23,0,0,8268.4316
-Raigarh,Maharashtra,2020,4,2020Q4,24,0,0,8371.5272
-Raigarh,Maharashtra,2021,1,2021Q1,25,0,0,8552.111
-Raigarh,Maharashtra,2021,2,2021Q2,26,1,1,8603.0298
-Raigarh,Maharashtra,2021,3,2021Q3,27,0,0,8908.2474
-Raigarh,Maharashtra,2021,4,2021Q4,28,0,0,9028.7658
-Raigarh,Maharashtra,2022,1,2022Q1,29,0,0,9331.9967
-Raigarh,Maharashtra,2022,2,2022Q2,30,0,0,9408.5921
-Raigarh,Maharashtra,2022,3,2022Q3,31,0,0,9544.8775
-Raigarh,Maharashtra,2022,4,2022Q4,32,0,0,8570.3845
-Raigarh,Maharashtra,2023,1,2023Q1,33,0,0,7928.155299999999
-Raigarh,Maharashtra,2023,2,2023Q2,34,1,0,8006.4444
-Raigarh,Maharashtra,2023,3,2023Q3,35,0,0,8348.3973
-Raigarh,Maharashtra,2023,4,2023Q4,36,0,0,8416.7459
-Raigarh,Maharashtra,2024,1,2024Q1,37,0,0,8794.147
-Raigarh,Maharashtra,2024,2,2024Q2,38,0,0,8910.9027
-Raigarh,Maharashtra,2024,3,2024Q3,39,1,0,9166.7396
-Raigarh,Maharashtra,2024,4,2024Q4,40,0,0,9324.7982
 Raipur,Chhattisgarh,2015,1,2015Q1,1,0,0,28192.4238
 Raipur,Chhattisgarh,2015,2,2015Q2,2,0,0,26510.7772
 Raipur,Chhattisgarh,2015,3,2015Q3,3,0,0,27086.304

@@ -63,7 +63,7 @@ print(f"    Mean coverage: {district_stats['coverage_pct'].mean():.1f}%")
 
 # 6. Save validation log
 output = f"""MASTER PANEL VALIDATION REPORT
-Generated: 2026-01-12
+Generated: 2026-02-12
 
 STRUCTURE:
 - Rows: {len(df)}

@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 print("="*70)
-print("RBI DEPOSITS EXTRACTION - Phase 3d (CORRECTED 2026-02-05)")
+print("RBI DEPOSITS EXTRACTION - Phase 3d (CORRECTED 2026-02-11 - Two-Bug Cascade Fix)")
 print("="*70)
 
 # Input files
@@ -280,5 +280,5 @@ for year in all_years:
     print(f"    {year}: Q{quarters_present}")
 
 print("="*70)
-print("RBI EXTRACTION COMPLETE (CORRECTED VERSION 2026-02-05)")
+print("RBI EXTRACTION COMPLETE (CORRECTED VERSION 2026-02-11)")
 print("="*70)

@@ -3029,5 +3029,117 @@ Critical Lessons:
    document limitation and plan proper solution (Script 8 state_rbi integration).
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-11 20:22 PM IST
+2026-02-12 (Thu) 20:30-21:15 PM IST: Master Panel Reconstruction - Clean Deposits
+======================================================================
+Goal: Re-run Scripts 13-17 with clean deposits from Feb 11 fix, verify data integrity
+      throughout pipeline, test VIIRS extraction, prepare for full VIIRS integration.
+
+Actions Completed
+
+A) Pre-Execution Verification (2030-2035 PM IST)
+- Confirmed environment: research_env (conda)
+- Verified rbi_deposits_panel.csv: 49,670 rows, last modified Feb 11, 3.3MB
+- Confirmed master_panel_raw.csv exists: dated 05-02-2026 (pre-clean deposits)
+- Confirmed Scripts 14-17 exist: all present in 04_Code folder
+- Deleted contaminated backup folders: cleaned project structure
+
+B) Script 13 Re-execution - Deposits Verified Clean (2035-2038 PM IST)
+- Re-ran Script 13 with Feb 11 corrected crosswalk (762 rows, state filtering active)
+- Output: 49,670 rows, 624 districts, 84 quarters, 546.9B total deposits
+- State filtering: 67 duplicate rows removed (homonymous districts)
+- Verification check: Aurangabad Bihar 2015Q1=4422.45, 2017Q2=5745.12, 2023Q1=7673.26
+- Status: CONFIRMED CLEAN (matches Feb 11 output exactly)
+- Committed: 04_Code/13_extract_rbi_deposits.py (comment updated to Feb 11 date)
+
+C) Script 14 Execution - Master Panel Merge (2038-2041 PM IST)
+- Merged skeleton (26,640 rows) + floods (2,220 Rule A events) + deposits (49,670 rows)
+- Output: master_panel_raw.csv, 26,640 rows (666 districts x 40 quarters, balanced)
+- Deposit coverage: 22,880/26,640 (85.9%)
+- Flood-deposit overlap: 1,924/2,220 (86.7%)
+- Temporal gaps confirmed: 2016Q3-Q4 (100% missing), 2017 (30.1% missing)
+- Verification check: Aurangabad Bihar deposits unchanged (4422, 5745, 7673)
+- Committed: 02_Data_Intermediate/master_panel_raw.csv
+
+D) Script 15 Execution - Panel Validation (2041-2043 PM IST)
+- Validation results: Panel balanced (666 x 40 = 26,640), no duplicate keys
+- Zero-coverage districts: 42 (not 35 as previously estimated)
+- 2016 breakdown: Q1-Q2 (8.7% missing), Q3-Q4 (100% missing, RBI gap)
+- Flood-deposit overlap: 1,924/2,220 (86.7%, sufficient for IV)
+- Committed: 02_Data_Intermediate/master_panel_validation_log.txt
+
+E) Script 17 Execution - Analysis Sample Construction (2043-2046 PM IST)
+- Applied restrictions: Drop 2016Q3-Q4, 2017Q1 + Drop 42 zero-coverage districts
+- Output: master_panel_analysis.csv, 23,088 rows (624 districts x 37 quarters)
+- Deposit coverage: 99.1% (22,880/23,088)
+- Flood events: 1,941 (Rule A), 8.4% treatment rate
+- Panel balance: Perfect (no missing district-quarter combinations)
+- Verification check: Aurangabad Bihar deposits still clean (4422, 5745, 7673)
+- District count discrepancy resolved: 624 vs 631 (Feb 11 log was intermediate state)
+  → Two-bug fix revealed 7 additional zero-coverage districts when deposits correctly
+    assigned by state (expected and correct)
+- Committed: 02_Data_Intermediate/master_panel_analysis.csv
+
+F) Script 18 Execution - VIIRS Test Extraction (2046-2050 PM IST)
+- Test extraction: Jan 2023 tile, 676 GADM districts
+- Column names corrected: gadm_district → district_gadm, gadm_state → state_gadm
+  (ensures merge compatibility with master_panel_analysis.csv)
+- Success rate: 100% (676/676 districts with valid data)
+- Mean radiance: 0.85 nW/cm²/sr, range: 0.0006 to 29.1
+- Top districts: Hyderabad (29.1), Kolkata (21.6), Chennai (21.5), Mumbai (18.4)
+- Geographic validation: Major metros correctly identified as brightest
+- Output: 02_Data_Intermediate/viirs_jan2023_test.csv (676 rows)
+- Committed: 04_Code/18_extract_viirs_district_means.py, viirs_jan2023_test.csv
+
+G) Existing VIIRS Files Status Check (2050-2052 PM IST)
+- Found viirs_monthly_panel.csv: dated 01-02-2026 (BEFORE Feb 11 deposit fix)
+- Found viirs_quarterly_panel.csv: dated 05-02-2026 (BEFORE Feb 11 deposit fix)
+- Not found: analysis_panel_final.csv (does not exist)
+- Scripts 21-24: dated 20-01-2026 to 01-02-2026 (PRE-CLEAN DEPOSITS)
+- Assessment: Existing VIIRS files incompatible with new 624-district sample
+  → Based on old 631-district contaminated deposits
+  → Merge will fail or produce misaligned data
+- Decision: Must regenerate entire VIIRS pipeline (Scripts 21-24) with clean deposits
+
+Status:
+- Scripts 13-17 pipeline: COMPLETE with clean deposits
+- Master panel: 26,640 rows (666 districts), deposits 85.9% coverage
+- Analysis sample: 23,088 rows (624 districts x 37 quarters), deposits 99.1% coverage
+- Final district count: 624 (7 fewer than Feb 11 intermediate estimate, correct)
+- VIIRS test extraction: SUCCESSFUL (676/676 districts, 100% success rate)
+- Data integrity: Verified clean deposits throughout pipeline (Aurangabad litmus test passed)
+
+NOT COMPLETED TODAY:
+- Script 21: Full VIIRS extraction (120 months, 2015-2024) - requires 6-8 hour runtime
+- Scripts 22-24: VIIRS quarterly aggregation, master merge, regression variables
+- Scripts 27-30: Regression execution with composite district_state_id FE corrections
+- Results comparison: Feb 6 (contaminated) vs Feb 12+ (clean)
+
+Next Session (Feb 13):
+1. VERIFY: E:\RawData\75N060E\ folder accessible with 120 VIIRS tiles
+2. EXECUTE: Script 21 (full 120-month VIIRS extraction, overnight run recommended)
+3. EXECUTE: Scripts 22-24 (quarterly aggregation, master merge, regression variables)
+4. FIX: Scripts 27, 28, 30 (composite district_state_id for fixed effects)
+5. RE-RUN: Regressions H1, H2, H4 with corrected data
+6. VALIDATE: H3 results unchanged (uses deposits+floods only, no VIIRS)
+7. COMPARE: Contaminated vs clean results, document coefficient changes
+
+Critical Lessons:
+1. Column name consistency critical for merge operations: Script 18 initially used
+   gadm_district/gadm_state (wrong), corrected to district_gadm/state_gadm to match
+   master panel format before execution.
+2. Pre-execution verification prevents wasted runtime: Manual checks of existing VIIRS
+   files (dates, row counts) revealed incompatibility with new 624-district sample,
+   avoiding 6-8 hour extraction with wrong inputs.
+3. Litmus test strategy validates data integrity across pipeline: Aurangabad Bihar
+   deposits (4422, 5745, 7673) verified at each step (Scripts 13, 14, 17) confirms
+   clean data propagated correctly through merges.
+4. Balanced panel arithmetic exposes hidden data quality issues: Expected 631x37=23,347
+   but got 624x37=23,088. Discrepancy revealed 7 additional zero-coverage districts
+   only detectable after state-correct deposit assignment.
+5. Test-before-scale methodology prevents large-scale errors: Script 18 single-month
+   test (3 minutes) validated extraction logic, column names, and merge compatibility
+   before committing to 120-month production run (6-8 hours).
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-12 21:25 PM IST
 ======================================================================

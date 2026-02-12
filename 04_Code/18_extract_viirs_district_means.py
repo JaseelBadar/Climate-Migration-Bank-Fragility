@@ -2,7 +2,7 @@
 18_extract_viirs_district_means.py - Phase 3d VIIRS Integration
 Extract mean nighttime radiance per GADM district from VIIRS monthly tiles
 Test version: Jan 2023 tile only (will scale to 120 tiles after validation)
-Success: 666 districts with non-zero urban radiance values
+Success: 676 districts with valid extraction
 """
 import geopandas as gpd
 import rasterio
@@ -13,6 +13,7 @@ import logging
 import os
 from pathlib import Path
 
+
 # Setup logging
 os.makedirs('05_Outputs/Logs', exist_ok=True)
 logging.basicConfig(
@@ -22,14 +23,17 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+
 print("="*70)
-print("PHASE 3d: VIIRS District-Level Extraction (Test)")
+print("PHASE 3d: VIIRS District-Level Extraction (Test - Jan 2023)")
 print("="*70)
 log.info("Starting 18_extract_viirs_district_means.py")
+
 
 # === INPUT PATHS ===
 gadm_path = '01_Data_Raw/District_Boundaries/gadm41_IND_2.shp'
 viirs_test = '01_Data_Raw/VIIRS_NightLights/SVDNB_npp_20230101-20230131_75N060E_vcmcfg_v10_c202302080600.avg_rade9h.tif'
+
 
 # Load GADM districts
 print(f"\n[1/4] Loading GADM districts...")
@@ -37,8 +41,10 @@ districts_gdf = gpd.read_file(gadm_path)
 print(f"   Loaded: {len(districts_gdf)} districts")
 log.info(f"GADM districts loaded: {len(districts_gdf)}")
 
+
 # Verify CRS match
 print(f"   GADM CRS: {districts_gdf.crs}")
+
 
 # === EXTRACT MEAN RADIANCE PER DISTRICT ===
 print(f"\n[2/4] Opening VIIRS tile: Jan 2023...")
@@ -88,8 +94,8 @@ with rasterio.open(viirs_test) as src:
                 pixel_count = 0
             
             results.append({
-                'gadm_district': district_name,
-                'gadm_state': state_name,
+                'district_gadm': district_name,
+                'state_gadm': state_name,
                 'year': 2023,
                 'month': 1,
                 'mean_radiance': mean_radiance,
@@ -99,17 +105,19 @@ with rasterio.open(viirs_test) as src:
         except Exception as e:
             log.warning(f"Failed to extract {district_name}, {state_name}: {e}")
             results.append({
-                'gadm_district': district_name,
-                'gadm_state': state_name,
+                'district_gadm': district_name,
+                'state_gadm': state_name,
                 'year': 2023,
                 'month': 1,
                 'mean_radiance': np.nan,
                 'pixel_count': 0
             })
 
+
 # === SAVE OUTPUT ===
 print(f"\n[4/4] Saving results...")
 df = pd.DataFrame(results)
+
 
 # Summary statistics
 print(f"\n{'='*70}")
@@ -126,9 +134,11 @@ print(f"  Median: {valid_df['mean_radiance'].median():.4f}")
 print(f"  Min: {valid_df['mean_radiance'].min():.4f}")
 print(f"  Max: {valid_df['mean_radiance'].max():.4f}")
 
+
 print(f"\nTop 10 brightest districts (Jan 2023):")
-top10 = df.nlargest(10, 'mean_radiance')[['gadm_district', 'gadm_state', 'mean_radiance']]
+top10 = df.nlargest(10, 'mean_radiance')[['district_gadm', 'state_gadm', 'mean_radiance']]
 print(top10.to_string(index=False))
+
 
 # Save to intermediate
 os.makedirs('02_Data_Intermediate', exist_ok=True)
@@ -137,7 +147,8 @@ df.to_csv(output_path, index=False)
 print(f"\nOutput saved: {output_path}")
 log.info(f"Extraction complete. {len(df)} districts, {(df['mean_radiance'] > 0).sum()} with data")
 
+
 print(f"\n{'='*70}")
-print("NEXT STEP: Validate output")
-print("Run: python 04_Code/19_validate_viirs_extraction.py")
+print("NEXT STEP: Run Script 21 (full 120-month extraction)")
+print("Skip Scripts 19-20 (validation only, optional)")
 print(f"{'='*70}")

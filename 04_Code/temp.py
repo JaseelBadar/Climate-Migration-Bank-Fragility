@@ -1,21 +1,22 @@
 import pandas as pd
+df = pd.read_csv('02_Data_Intermediate/master_panel_analysis.csv')
 
-df = pd.read_csv('02_Data_Intermediate/master_panel_raw.csv')
+# Check 1: Aurangabad Bihar deposits
+aur = df[(df['district_gadm'] == 'Aurangabad') & (df['state_gadm'] == 'Bihar') & (df['quarter'].isin(['2015Q1', '2017Q2', '2023Q1']))]
+print("=== AURANGABAD BIHAR CHECK ===")
+print(aur[['district_gadm', 'state_gadm', 'quarter', 'deposits']].sort_values('quarter'))
 
-print("="*70)
-print("MASTER PANEL RAW - VALIDATION")
-print("="*70)
-print(f"Total rows: {len(df):,}")
-print(f"Districts: {df['district_gadm'].nunique()}")
-print(f"Quarters: {df['quarter'].nunique()}")  # Changed from 'quarter_str'
-print(f"\nColumns: {df.columns.tolist()}")
+# Check 2: Total counts
+print(f"\n=== SAMPLE COUNTS ===")
+print(f"Total rows: {len(df)}")
+print(f"Unique (district, state) pairs: {df[['district_gadm', 'state_gadm']].drop_duplicates().shape[0]}")
+print(f"Unique quarters: {df['quarter'].nunique()}")
+print(f"Expected rows (districts × quarters): {df[['district_gadm', 'state_gadm']].drop_duplicates().shape[0] * df['quarter'].nunique()}")
 
-print(f"\nNon-null deposits: {df['deposits'].notna().sum():,}")  # Changed from 'deposits_crores'
-print(f"\nDeposit statistics (Crores):")
-print(df['deposits'].describe())
+# Check 3: Missing rows diagnostic
+print(f"\n=== BALANCE CHECK ===")
+print(f"Actual rows: {len(df)}")
+print(f"Expected (if balanced): {df[['district_gadm', 'state_gadm']].drop_duplicates().shape[0] * 37}")
+print(f"Missing: {(df[['district_gadm', 'state_gadm']].drop_duplicates().shape[0] * 37) - len(df)}")
 
-# Check 2022Q4 median (critical test)
-q4_2022 = df[(df['year']==2022) & (df['q']==4)]['deposits'].median()
-print(f"\n2022Q4 median: {q4_2022:,.0f} Crores")
-print("✓ PASS if ~7,800-8,000 Crores")
-print("✗ FAIL if 162 Crores (would indicate contamination still present)")
+exit()

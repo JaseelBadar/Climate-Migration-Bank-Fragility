@@ -1,4 +1,4 @@
-gadm_district,gadm_state,year,month,mean_radiance,pixel_count
+district_gadm,state_gadm,year,month,mean_radiance,pixel_count
 Nicobar Islands,Andaman and Nicobar,2023,1,0.006282529328018427,177298
 North and Middle Andaman,Andaman and Nicobar,2023,1,0.010402754880487919,274186
 South Andaman,Andaman and Nicobar,2023,1,0.023390058428049088,174575

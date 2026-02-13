@@ -2,9 +2,9 @@
 
 **Empirical analysis of flood-induced migration effects on district-level banking stability in India, 2015-2024.**
 
-**Status:** Phase 3d master panel reconstruction complete (Feb 12, 2026). Scripts 13-17 re-run with clean deposits verified. Analysis sample finalized: 23,088 observations (624 districts). VIIRS test extraction successful (Script 18). Ready for full VIIRS integration (Scripts 21-24, 6-8 hour runtime). Regression pipeline pending (Scripts 27-30 require FE corrections).
+**Status:** Phase 3d VIIRS integration complete. Analysis panel finalized: 23,088 observations (624 districts × 37 quarters) with 100% VIIRS coverage. Regression panel ready: 23 variables engineered. Pending: Scripts 27-30 require FE corrections (composite district_state_id) before execution.
 
-**Last updated:** 2026-02-12
+**Last updated:** 2026-02-13
 **Project start:** 2025-12-30
 
 ---
@@ -17,9 +17,9 @@ Do climate disasters trigger migration (proxied by nighttime-lights declines) th
 
 **All data sources verified clean as of Feb 11, 2026.**
 
-**Deposit contamination (RESOLVED Feb 11-12):** Two-bug cascade identified and fixed. (1) Script 8 crosswalk duplicates: 7 homonymous districts (Aurangabad, Balrampur, etc.) mapped to multiple states. Fixed via deduplication keeping first match per district (769→762 rows). (2) Script 13 merge logic: State-blind merge caused Bihar and Maharashtra AURANGABAD deposits to sum. Fixed via state filtering for homonymous districts. Verification: Aurangabad Bihar 2015Q1 changed from 18652 (contaminated sum) to 4422 (Bihar only, 76% drop). Scripts 13-17 pipeline re-run complete.
+**Deposit contamination (RESOLVED):** Two-bug cascade identified and fixed. (1) Script 8 crosswalk duplicates: 7 homonymous districts (Aurangabad, Balrampur, etc.) mapped to multiple states. Fixed via deduplication keeping first match per district (769→762 rows). (2) Script 13 merge logic: State-blind merge caused Bihar and Maharashtra AURANGABAD deposits to sum. Fixed via state filtering for homonymous districts. Verification: Aurangabad Bihar 2015Q1 changed from 18652 (contaminated sum) to 4422 (Bihar only, 76% drop). Full pipeline re-run complete: Scripts 13-17, 22b-24 with clean deposits.
 
-**VIIRS pipeline (VERIFIED CLEAN):** Scripts 18-24 use composite (district_gadm, state_gadm) keys throughout. Excel verification confirms distinct radiance values for homonymous districts. No contamination found.
+**VIIRS pipeline (COMPLETE):** Scripts 18-24 use composite (district_gadm, state_gadm) keys throughout. Forensic validation (Aurangabad Bihar vs Maharashtra radiance comparison) confirms no contamination. Feb 1 VIIRS data reused after alignment via Script 22b. 100% coverage achieved in final analysis panel.
 
 **Regression fixed effects (FIX PENDING):** Scripts 27, 28, 30 create district FE using district name only, collapsing 7 homonymous pairs. Requires composite district_state_id before re-run.
 
@@ -84,7 +84,7 @@ Raw data never modified. All transformations in intermediate/clean folders.
 **Panel skeleton:** GADM districts (not RBI) for spatial precision in flood matching.
 **Temporal coverage:** 2015Q1-2024Q4 (40 quarters) → 37 quarters after dropping 2016Q3-Q4, 2017Q1 (RBI data blackout).
 **Spatial coverage:** 666 districts (10 missing from 676 GADM baseline).
-**Final N:** 23,088 observations (624 districts × 37 quarters with complete deposit-flood coverage). VIIRS integration pending (Scripts 21-24).
+**Final N:** 23,088 observations (624 districts × 37 quarters) with complete deposit-flood-VIIRS coverage (100% VIIRS coverage achieved).
 
 ### Phase 3c: Master Panel Construction (Complete 2026-01-31)
 
@@ -106,26 +106,34 @@ Raw data never modified. All transformations in intermediate/clean folders.
 - Flood-deposit overlap: 100% (1,941 flood events)
 - Treatment rate: 8.41%
 
-### Phase 3d: VIIRS Integration (In Progress)
+### Phase 3d: VIIRS Integration (Complete)
 
-**VIIRS Test Extraction** (Script 18, Complete Feb 12)
+**VIIRS Test Extraction** (Script 18)
 - Test tile: Jan 2023, 676 districts processed
 - Success rate: 100% (676/676 districts with valid data)
 - Mean radiance: 0.85 nW/cm²/sr (range: 0.0006 to 29.1)
 - Top districts: Hyderabad (29.1), Kolkata (21.6), Chennai (21.5)
 - Geographic validation: Major metros correctly identified
-- Column names corrected: district_gadm, state_gadm (matches master panel)
-- Status: Test successful, ready for full extraction
+- Column names: district_gadm, state_gadm (matches master panel)
 
-**VIIRS Full Extraction** (Scripts 21-24, Pending)
-- Target: 120 monthly tiles (2015-01 to 2024-12)
-- Expected output: 79,920 rows (666 districts × 120 months)
-- Quarterly aggregation: 26,640 rows (666 × 40 quarters)
-- Master merge target: 23,088 rows (matches analysis sample)
-- Estimated runtime: 6-8 hours (Script 21)
-- Status: Awaiting execution (Feb 13)
+**VIIRS Data Reuse** (Script 22b)
+- Reused Feb 1 VIIRS files after forensic validation (Aurangabad litmus test passed)
+- Column name correction: gadm_district → district_gadm, gadm_state → state_gadm
+- Filtered to 624 districts (dropped 42 zero-coverage, aligned with clean master panel)
+- Output: viirs_quarterly_panel_clean.csv (24,960 rows, 624 districts × 40 quarters)
+- Time savings: 8-10 hours vs full re-extraction
 
-**Note:** Previous VIIRS files (dated Feb 1-5) incompatible with new 624-district sample (based on contaminated deposits). Must regenerate entire pipeline.
+**VIIRS-Master Merge** (Script 23)
+- Merged VIIRS with master_panel_analysis.csv (left join on composite keys)
+- VIIRS coverage: 100% (23,088/23,088 observations, zero missing)
+- Master 37 quarters are subset of VIIRS 40 quarters (perfect overlap)
+- Output: analysis_panel_final.csv (23,088 rows, deposits + floods + VIIRS)
+
+**Regression Variables** (Script 24)
+- Engineered 12 variables: logs, changes, lags (L1-L4)
+- All time-series operations use composite keys (district_gadm + state_gadm)
+- Output: regression_panel_final.csv (23,088 rows, 23 variables)
+- Lag missing values: L1=624, L2=1248, L3=1872, L4=2496 (mathematically perfect)
 
 **District crosswalk:**
 - RBI ↔ GADM: 83.2% fuzzy match (passed 80% threshold)
@@ -165,32 +173,31 @@ E:\Climate-Migration-Bank-Fragility\
 
 02_Data_Intermediate/
 ├── emdat_districts_parsed.csv
-├── district_crosswalk_draft.csv (762 rows, Feb 11 dedup)
+├── district_crosswalk_draft.csv (762 rows, clean)
 ├── flood_exposure_panel.csv (26,640 rows)
-├── rbi_deposits_panel.csv (49,670 rows, clean Feb 12)
+├── rbi_deposits_panel.csv (49,670 rows, clean)
 ├── master_panel_raw.csv (26,640 rows, 666 districts × 40 quarters)
 ├── master_panel_analysis.csv (23,088 rows, 624 districts × 37 quarters)
 ├── viirs_jan2023_test.csv (676 rows, test extraction)
-├── master_panel_validation_log.txt
-└── [viirs_monthly_panel.csv - pending regeneration]
+├── viirs_quarterly_panel_clean.csv (24,960 rows, 624 districts × 40 quarters)
+└── master_panel_validation_log.txt
 
 03_Data_Clean/
-├── analysis_panel_final.csv (23,347 rows, Phase 3d VIIRS merged)
-└── regression_panel_final.csv (23,347 rows, 23 variables, regression-ready)
+├── analysis_panel_final.csv (23,088 rows, deposits + floods + VIIRS)
+└── regression_panel_final.csv (23,088 rows, 23 variables, regression-ready)
 
 04_Code/
 ├── 00_diagnose_all_files.py - Comprehensive file scanner
 ├── 01-07: Inspection, parsing
 ├── 08-12: Crosswalk, skeleton, flood exposure
-├── 13: RBI extraction - Complete (clean deposits, Feb 12)
-├── 14-17: Master panel merge - Complete (Feb 12)
-├── 18: VIIRS test extraction - Complete (Feb 12)
+├── 13: RBI extraction - Complete (clean deposits)
+├── 14-17: Master panel merge - Complete
+├── 18: VIIRS test extraction - Complete
 ├── 19-20: VIIRS validation (optional, skipped)
-├── 21: VIIRS full extraction (120 months) - Pending
-├── 21b: Multi-tile deduplication fix
-├── 22: Quarterly aggregation
-├── 23: VIIRS-master merge
-├── 24: Variable engineering
+├── 21, 21b, 22: VIIRS extraction (Feb 1, reused after validation)
+├── 22b: VIIRS alignment with clean deposits - Complete
+├── 23: VIIRS-master merge - Complete
+├── 24: Variable engineering - Complete
 ├── 25: Descriptive statistics
 ├── 26: VIIRS validation
 ├── 27-30: H1-H4 regressions - Pending 
@@ -244,20 +251,16 @@ python 04_Code/08_build_district_crosswalk.py
 python 04_Code/09_build_quarterly_skeleton.py
 python 04_Code/10_build_flood_exposure.py
 
-# Phase 3c: RBI extraction and master panel (Complete Feb 12)
+# Phase 3c: RBI extraction and master panel
 python 04_Code/13_extract_rbi_deposits.py  # Clean deposits: 49,670 rows
 python 04_Code/14_merge_master_panel.py     # Master panel: 26,640 rows
 python 04_Code/15_validate_master_panel.py  # Validation (optional)
 python 04_Code/17_prepare_analysis_sample.py # Analysis sample: 23,088 rows
 
-# Phase 3d: VIIRS integration
-python 04_Code/21_extract_viirs_full_panel.py
-python 04_Code/21b_fix_duplicate_districts.py
-python 04_Code/22_aggregate_viirs_quarterly.py
-python 04_Code/23_merge_viirs_master.py
-python 04_Code/24_engineer_regression_variables.py
-python 04_Code/25_descriptive_statistics.py
-python 04_Code/26_validate_viirs_monthly.py
+# Phase 3d: VIIRS integration (Complete)
+python 04_Code/22b_align_with_clean_deposits.py  # Align Feb 1 VIIRS with clean sample
+python 04_Code/23_merge_viirs_master.py          # Merge VIIRS with master panel
+python 04_Code/24_engineer_regression_variables.py # Engineer 23 variables
 
 # Phase 4: Regressions (Complete but CONTAMINATED by VIIRS error, re-run pending)
 python 04_Code/27_regression_H1_first_stage.py
@@ -270,10 +273,9 @@ Expected outputs:
 Expected outputs:
 
 Phase 3d:
-- 02_Data_Intermediate/viirs_monthly_panel.csv (79,920 rows)
-- 02_Data_Intermediate/viirs_quarterly_panel.csv (26,640 rows)
-- 03_Data_Clean/analysis_panel_final.csv (23,347 rows)
-- 03_Data_Clean/regression_panel_final.csv (23,347 rows, 23 variables)
+- 02_Data_Intermediate/viirs_quarterly_panel_clean.csv (24,960 rows, 624 districts × 40 quarters)
+- 03_Data_Clean/analysis_panel_final.csv (23,088 rows, 100% VIIRS coverage)
+- 03_Data_Clean/regression_panel_final.csv (23,088 rows, 23 variables)
 
 Phase 4:
 - 05_Outputs/Tables/01_descriptive_stats.csv
@@ -297,18 +299,18 @@ Consequence: 130 unmatched RBI districts dropped
 Trade-off: Higher coverage (8.67% vs 1.02%) with measurement error
 Robustness: Rule B (district-only) as sensitivity check
 
-3. VIIRS extraction protocol (Phase 3d complete, 2026-02-01):
+3. VIIRS integration strategy:
 
-Removed dissolve(by='NAME_2') to prevent homonymous district merges (Script 21)
-Pixel-weighted averaging for 7 Himalayan districts across tile boundaries (Script 21b)
-Monthly to quarterly aggregation (Script 22)
-100% VIIRS-deposit overlap in analysis sample (Script 23)
-Result: 666 districts extracted, 23,347 regression-ready observations
+Reused Feb 1 extraction (Scripts 21-22 output) after forensic validation
+Aurangabad litmus test: Bihar 0.681 != Maharashtra 0.433 (no contamination)
+Alignment via Script 22b: Column name fix + filter to 624 districts
+Composite keys throughout: district_gadm + state_gadm (prevents homonym collapse)
+Result: 100% VIIRS coverage (23,088/23,088 observations), 8-10 hour time savings
 
 4. Sample restrictions:
 
 Dropped 2016Q3-Q4, 2017Q1 (RBI blackout: 100% missing)
-Dropped 35 districts with zero deposit coverage
+Dropped 42 districts with zero deposit coverage
 Growth variables lose first quarter per district (lag construction)
 
 5. Standard errors: District-clustered in all regressions (serial correlation)
@@ -374,19 +376,12 @@ Bug 2: State-Blind Merge (Script 13)
 
 ### Pending Work
 
-**VIIRS Full Integration** (Scripts 21-24, Est. 8-10 hours total)
-- Script 21: Full 120-month extraction (6-8 hours, requires E:\RawData\75N060E\ access)
-- Script 21b: Multi-tile deduplication (if needed)
-- Script 22: Quarterly aggregation
-- Script 23: VIIRS-master merge (target: 23,088 rows)
-- Script 24: Regression variable engineering
-
 **Regression Fixed Effects Correction** (Scripts 27-30)
 - **Issue:** District FE uses district_gadm only, collapsing 7 homonymous pairs (617 FE instead of 624)
-- **Fix required:** Composite district_state_id for fixed effects
+- **Fix required:** Composite district_state_id = district_gadm + '_' + state_gadm
 - **Impact:** H1, H2, H4 results from Feb 6 invalid (contaminated deposits + wrong FE)
-- **H3 status:** Feb 6 results VALID (specification uses deposits+floods only, no FE)
-- **Timeline:** VIIRS integration first (Feb 13), then regressions (Feb 14-15)
+- **H3 status:** Feb 6 results potentially valid (specification uses deposits+floods only, no district FE, but verify time FE)
+- **Timeline:** FE correction, then full regression pipeline execution
 
 Documentation
 - Research_Log.txt: Chronological work log
@@ -407,4 +402,4 @@ University Email: jab9733@g.harvard.edu
 Institution: Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 
-Last updated: 2026-02-12 | Project initiated: December 30, 2025
+Last updated: 2026-02-13 | Project initiated: December 30, 2025

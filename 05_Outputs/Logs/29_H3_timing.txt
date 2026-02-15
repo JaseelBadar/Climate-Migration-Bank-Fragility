@@ -1,27 +1,33 @@
 ======================================================================
 H3: TIMING EFFECTS (District-Clustered SEs)
+Composite district_state_id used for FE and clustering
 ======================================================================
 
 [t0] Current Quarter:
-  β̂  = -0.000489
-  SE = 0.001729 (clustered)
-  t  = -0.283
-  p  = 0.777342
+  Beta = -0.001723
+  SE   = 0.001603 (clustered by district_state_id)
+  t    = -1.075
+  p    = 0.282213
   Sig: NOT SIGNIFICANT
 
 [t-1] 1 Quarter Lag:
-  β̂  = 0.000412
-  SE = 0.001334 (clustered)
-  t  = 0.309
-  p  = 0.757180
+  Beta = 0.000046
+  SE   = 0.001192 (clustered by district_state_id)
+  t    = 0.039
+  p    = 0.968947
   Sig: NOT SIGNIFICANT
 
 [t-2] 2 Quarter Lag:
-  β̂  = -0.009052
-  SE = 0.003606 (clustered)
-  t  = -2.510
-  p  = 0.012071
-  Sig: **
+  Beta = -0.007267
+  SE   = 0.001766 (clustered by district_state_id)
+  t    = -4.114
+  p    = 0.000039
+  Sig: ***
 
-N = 21,912
-Districts: 624 clusters
+N = 21,653
+Districts: 624 clusters (composite district_state_id)
+
+[FE SPECIFICATION]
+  District FE: 623 (composite district_state_id)
+  Quarter FE: 34
+  Clusters: 624

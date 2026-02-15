@@ -56,3 +56,73 @@ Districts ever exposed:
 ======================================================================
 END OF SUMMARY
 ======================================================================
+======================================================================
+DESCRIPTIVE STATISTICS SUMMARY
+======================================================================
+Panel loaded: 23,088 rows
+Districts: 624
+Quarters: 37
+
+PANEL STRUCTURE
+--------------------------------------------------
+Time period: 2015-2024
+Quarters: 37 (2015Q1 to 2024Q4)
+Obs per district: min=37, max=37, mean=37.0
+
+VARIABLE COVERAGE
+--------------------------------------------------
+deposits                      :  99.1%
+log_deposits                  :  99.1%
+mean_radiance                 : 100.0%
+log_lights_qt                 : 100.0%
+lights_change_qt              :  97.3%
+deposit_change_qt             :  96.4%
+flood_exposure_ruleA_qt       : 100.0%
+flood_exposure_ruleB_qt       : 100.0%
+
+SUMMARY STATISTICS
+--------------------------------------------------
+
+deposits:
+  Mean: 16459.6075, Std: 47701.6638
+  Min: 28.9979, Max: 1237744.3404
+  N: 22,880
+
+log_deposits:
+  Mean: 8.7054, Std: 1.3738
+  Min: 3.4011, Max: 14.0288
+  N: 22,880
+
+mean_radiance:
+  Mean: 0.6976, Std: 1.6975
+  Min: 0.0003, Max: 35.0199
+  N: 23,088
+
+log_lights_qt:
+  Mean: 0.4279, Std: 0.3342
+  Min: 0.0003, Max: 3.5841
+  N: 23,088
+
+lights_change_qt:
+  Mean: 0.0054, Std: 0.1114
+  Min: -1.1722, Max: 1.1241
+  N: 22,464
+
+deposit_change_qt:
+  Mean: 0.0233, Std: 0.0745
+  Min: -1.9322, Max: 2.0251
+  N: 22,251
+
+FLOOD EXPOSURE SUMMARY
+--------------------------------------------------
+Rule A (state fallback):
+  Exposed obs: 1,941 (8.41%)
+Rule B (district-only):
+  Exposed obs: 221 (0.96%)
+Districts ever exposed:
+  Rule A: 512
+  Rule B: 143
+
+======================================================================
+END OF SUMMARY
+======================================================================

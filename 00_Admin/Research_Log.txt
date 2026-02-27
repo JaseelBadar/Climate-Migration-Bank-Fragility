@@ -3448,9 +3448,229 @@ Critical Lessons:
    null result suggests economic activity channel weak or confounded by offsetting mechanisms 
    (e.g., remittances, informal credit).
 
-16-02-2026
-Read
+======================================================================
+2026-02-16 (Mon): Literature Reading — IV Identification + Delayed Effects
+======================================================================
+Goal: Deepen theoretical grounding for H2 null result and H3 delayed
+      deposit effect; identify comparable IV designs and timing patterns
+      in the climate-finance literature.
+
+Actions Completed
+
+A) IV Identification Literature (Re-read + Annotated)
+- Re-read Angrist & Pischke (2009), Ch. 4: IV logic under heterogeneous
+  treatment effects; reinforced interpretation of H2 null as LATE for
+  flood-exposed compliers, not ATE for full population.
+- Re-read Nunn & Qian (2014, AER): rainfall IV for aid shipments; noted
+  that strong first stage (F >> 10) does not preclude null second stage
+  when treatment effect is genuinely zero for complier subpopulation.
+- Key takeaway: H2 null is a defensible finding, not a failure of
+  identification. Must be presented as "no detectable causal effect via
+  economic activity channel" with explicit LATE qualifier.
+
+B) Delayed Effects Literature (New Reading)
+- Read Deryugina (2017, AEJ:Applied): hurricane effects on government
+  transfers; peak fiscal response occurs 2-3 years post-event, not in
+  impact quarter. Parallel to H3 t-2 finding (6-month delay).
+- Read Rao (2019, JDE): flood effects on rural credit in Bangladesh;
+  deposit withdrawal peaks in recovery phase, not disaster phase, as
+  households liquidate savings to fund rebuilding. Supports behavioral
+  interpretation of H3.
+- Key takeaway: H3 t-2 result has theoretical backing. Frame as
+  "recovery-phase liquidity demand" rather than "disaster panic."
+  Must note that t-2 is 2 quarters (6 months), not 2 years.
+
+C) Mechanism Literature (Remittances + Informal Credit)
+- Skimmed Yang (2008, QJE): remittance response to income shocks;
+  remittances increase post-disaster, potentially offsetting deposit
+  outflows. Candidate explanation for H2 null.
+- Skimmed Dupas & Robinson (2013, AER): savings constraints in rural
+  Kenya; formal deposit behavior driven by access frictions, not
+  income shocks alone. Supports null if rural districts dominate sample.
+
+D) Notes Produced
+- Created 00_Admin/Reading_Notes_Feb16.txt with annotated citations
+  and connections to H1-H3 findings.
+- Updated LiteratureTracker.xlsx: added Deryugina (2017) and Rao (2019)
+  as supporting references for H3 interpretation.
+
+Status:
+- Theoretical grounding for H2 null and H3 delayed effect: COMPLETE
+- No code executed. No data modified.
+
+Next Session (Feb 27):
+1. Execute Script 27 (H1: Floods → Lights baseline)
+2. Execute Script 30 (H4: Heterogeneity)
+3. Compare all H1-H4 results
+
+Feb 16 Log Entry
+text
+======================================================================
+2026-02-16 (Mon): Literature Reading — IV Identification + Delayed Effects
+======================================================================
+Goal: Deepen theoretical grounding for H2 null result and H3 delayed
+      deposit effect; identify comparable IV designs and timing patterns
+      in the climate-finance literature.
+
+Actions Completed
+
+A) IV Identification Literature (Re-read + Annotated)
+- Re-read Angrist & Pischke (2009), Ch. 4: IV logic under heterogeneous
+  treatment effects; reinforced interpretation of H2 null as LATE for
+  flood-exposed compliers, not ATE for full population.
+- Re-read Nunn & Qian (2014, AER): rainfall IV for aid shipments; noted
+  that strong first stage (F >> 10) does not preclude null second stage
+  when treatment effect is genuinely zero for complier subpopulation.
+- Key takeaway: H2 null is a defensible finding, not a failure of
+  identification. Must be presented as "no detectable causal effect via
+  economic activity channel" with explicit LATE qualifier.
+
+B) Delayed Effects Literature (New Reading)
+- Read Deryugina (2017, AEJ:Applied): hurricane effects on government
+  transfers; peak fiscal response occurs 2-3 years post-event, not in
+  impact quarter. Parallel to H3 t-2 finding (6-month delay).
+- Read Rao (2019, JDE): flood effects on rural credit in Bangladesh;
+  deposit withdrawal peaks in recovery phase, not disaster phase, as
+  households liquidate savings to fund rebuilding. Supports behavioral
+  interpretation of H3.
+- Key takeaway: H3 t-2 result has theoretical backing. Frame as
+  "recovery-phase liquidity demand" rather than "disaster panic."
+  Must note that t-2 is 2 quarters (6 months), not 2 years.
+
+C) Mechanism Literature (Remittances + Informal Credit)
+- Skimmed Yang (2008, QJE): remittance response to income shocks;
+  remittances increase post-disaster, potentially offsetting deposit
+  outflows. Candidate explanation for H2 null.
+- Skimmed Dupas & Robinson (2013, AER): savings constraints in rural
+  Kenya; formal deposit behavior driven by access frictions, not
+  income shocks alone. Supports null if rural districts dominate sample.
+
+D) Notes Produced
+- Created 00_Admin/Reading_Notes_Feb16.txt with annotated citations
+  and connections to H1-H3 findings.
+- Updated LiteratureTracker.xlsx: added Deryugina (2017) and Rao (2019)
+  as supporting references for H3 interpretation.
+
+Status:
+- Theoretical grounding for H2 null and H3 delayed effect: COMPLETE
+- No code executed. No data modified.
+
+Next Session (Feb 27):
+1. Execute Script 27 (H1: Floods → Lights baseline)
+2. Execute Script 30 (H4: Heterogeneity)
+3. Compare all H1-H4 results
+======================================================================
+Feb 27 Log Entry
+text
+======================================================================
+2026-02-27 (Fri) 22:45-23:55 PM IST: Phase 4 — Script 27 Execution +
+                                       Homonymous District Root Cause Fix
+======================================================================
+Goal: Execute Script 27 (H1: Floods → Lights), validate output, then
+      commit clean regression results. Identified and fixed root cause
+      of persistent 624-district panel instead of correct 631.
+
+Actions Completed
+
+A) Script 27 Rewrite + Execution (2245-2300 PM IST)
+- Rewrote Script 27 with composite district_state_id FE key (district_gadm
+  + '_' + state_gadm), consistent with Scripts 26, 28, 29.
+- Added: required column presence check, hard-stop FE count validation
+  [620,640] for districts / [35,40] for quarters, 95% CI extraction,
+  R²-adjusted, enriched output CSV (16 columns vs old 6), filemode='w'
+  on logger, pre-committed interpretation block in log.
+- Removed: dead summary_col import.
+- Executed: Script 27 ran successfully.
+- Output:
+  * β = -0.014896, SE = 0.002806, t = -5.309, p < 0.001 ***
+  * N = 22,464, R² = 0.5549, R²-adj = 0.5415
+
+B) Output Anomaly Detection (2300-2310 PM IST)
+- Expected district FE: 631. Got: 624. Hard-stop guard passed (threshold
+  set to [620,640]) — did not catch this deviation. Guard tightened in
+  next fix session.
+- Expected quarter FE: 37. Got: 36. One additional quarter dropped due
+  to missing lights_change_qt observations.
+- Expected N: ~22,716. Got: 22,464. Difference = 252 = 7 pairs × 36
+  quarters — confirmed composite key silently failing.
+- ValueWarning fired: "covariance of constraints does not have full rank.
+  Number of constraints = 659, rank = 36." Direct symptom of FE collapse.
+- Diagnosis: composite key construction was correct in Script 27; problem
+  was upstream. regression_panel_final.csv itself contained only 624
+  unique districts. Script 27 cannot fix what the panel does not contain.
+
+C) Pipeline Trace — Root Cause Identification (2310-2330 PM IST)
+- Ran stage-by-stage diagnostic across all intermediate files:
+  * rbi_deposits_panel:   624 districts (1 copy per homonymous name)
+  * master_panel_raw:     666 districts (both copies present — skeleton
+                          carries both, deposits merge by name alone)
+  * master_panel_analysis: 624 districts (second copy dropped)
+  * regression_panel_final: 624 districts (inherits damage)
+- Drop point: master_panel_raw → master_panel_analysis transition
+  (Script 17). Second copy of each homonymous pair had 0 deposits in
+  rbi_deposits_panel → flagged as zero-coverage district → dropped.
+- Upstream cause: rbi_deposits_panel had 624 instead of 631 because
+  district_crosswalk_draft.csv had only 1 row per homonymous name.
+- Root cause confirmed: Script 08, line:
+    df_crosswalk = df_crosswalk.drop_duplicates(subset=['district_rbi'], keep='first')
+  This line correctly detected homonymous duplicates, warned about them,
+  then immediately destroyed them. Script 13's state-filter logic was
+  written to handle two crosswalk rows per homonymous district — but
+  those rows were never delivered by Script 08.
+
+D) Script 08 Fix + Re-run (2330-2345 PM IST)
+- Removed drop_duplicates call entirely.
+- Added is_ambiguous_match flag (count > 1 per district_rbi).
+- Added homonymous district verification block at load time.
+- Added explicit log section documenting all 14 retained rows (7 pairs × 2).
+- Re-ran Script 08.
+- Output: 769 crosswalk rows (762 unique + 7 extra for homonymous pairs).
+  All 7 pairs confirmed with correct state pairs:
+  Aurangabad: Bihar, Maharashtra
+  Balrampur: Chhattisgarh, Uttar Pradesh
+  Bijapur: Chhattisgarh, Karnataka
+  Bilaspur: Chhattisgarh, Himachal Pradesh
+  Hamirpur: Himachal Pradesh, Uttar Pradesh
+  Pratapgarh: Rajasthan, Uttar Pradesh
+  Raigarh: Chhattisgarh, Maharashtra
+
+E) Script 13 Re-run — Fix Incomplete (2345-2355 PM IST)
+- Re-ran Script 13 against corrected crosswalk (769 rows).
+- Output: 624 unique GADM districts (unchanged). Fix did not propagate.
+- Diagnosis: Script 13's state_gadm_expected filter maps
+  (district_rbi, state_rbi.upper().strip()) → GADM state. Exact string
+  from RBI Excel files for homonymous district rows not confirmed to
+  match dict keys. state_rbi format mismatch (case/whitespace) suspected.
+- Diagnostic script prepared to print exact state_rbi strings from Excel
+  for all 7 homonymous pairs. Deferred to next session.
+- All H1 outputs (02_H1_first_stage.csv, 27_H1_regression.txt,
+  27_H1_regression_full.txt) committed as STALE with explicit warning
+  in commit descriptions.
+
+Status:
+- Script 08 fix: COMPLETE AND COMMITTED
+- Script 13 state-filter bug: IDENTIFIED, NOT YET RESOLVED
+- H1 regression outputs: STALE (624-district panel, rank deficiency warning)
+- H1 results directionally consistent (β < 0, p < 0.001) but numerically
+  unreliable. Do not cite.
+- Cascade re-run (Scripts 13→14→17→22→23→24→25→26→27→28→29→30): PENDING
+
+NOT COMPLETED TODAY:
+- Script 13 state_rbi string match diagnostic
+- Full pipeline cascade re-run
+- Clean H1 regression outputs
+- Script 30 (H4 heterogeneity)
+- README update
+
+Next Session:
+1. Run state_rbi diagnostic on RBI Excel homonymous rows
+2. Fix Script 13 state-filter if string mismatch confirmed
+3. Re-run Scripts 13→14→17→22→23→24→25→26→27→28→29→30 in order
+4. Verify Script 17 output shows 631 districts before running regressions
+5. Commit all clean outputs after 631-district confirmation
+6. Execute Script 30 (H4)
+7. Update README with Phase 4 complete status
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-16 23:20 PM IST
+END OF LOG - Last Updated: 2026-02-27 23:55 PM IST
 ======================================================================

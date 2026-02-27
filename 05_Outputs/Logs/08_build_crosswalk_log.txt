@@ -1,18 +1,26 @@
 ======================================================================
-DISTRICT CROSSWALK BUILD LOG
+DISTRICT CROSSWALK BUILD LOG (CORRECTED 2026-02-28)
 ======================================================================
 Script: 08_build_district_crosswalk.py
-Start: 2026-02-11 21:27:59
-End: 2026-02-11 21:28:00
+Start: 2026-02-27 23:27:32
+End: 2026-02-27 23:27:33
 Duration: 0 seconds
 
+CRITICAL FIX APPLIED:
+  Old behaviour: drop_duplicates(subset=['district_rbi'], keep='first')
+  This silently dropped the second state row for all 7 homonymous pairs,
+  causing Maharashtra/UP/Karnataka/HP copies to have 0 deposits in
+  rbi_deposits_panel → dropped by Script 17 → only 624 districts in panel.
+  New behaviour: retain ALL rows; flag with is_ambiguous_match=True.
+  Script 13 resolves ambiguity via state_rbi column.
+
 INPUTS:
-  - GADM: 01_Data_Raw/District_Boundaries/gadm41_IND_2.shp (666 unique districts)
+  - GADM: 01_Data_Raw/District_Boundaries/gadm41_IND_2.shp (666 unique district-state pairs)
   - RBI: 01_Data_Raw/RBI_Bank_Data/RBI_Deposits_2023_2024.xlsx (762 unique districts)
   - EM-DAT: 02_Data_Intermediate/emdat_districts_parsed.csv (209 unique districts)
 
 OUTPUTS:
-  - Crosswalk: 02_Data_Intermediate/district_crosswalk_draft.csv (762 rows)
+  - Crosswalk: 02_Data_Intermediate/district_crosswalk_draft.csv (769 rows)
   - EM-DAT matches: 02_Data_Intermediate/emdat_district_matches.csv (209 rows)
 
 MATCH RATES:
@@ -21,6 +29,22 @@ MATCH RATES:
 
 STOP CONDITION:
   - PASSED - RBI match rate ≥ 80%
+
+HOMONYMOUS DISTRICTS (2 rows each — intentional):
+  - AURANGABAD → Aurangabad, Bihar
+  - AURANGABAD → Aurangabad, Maharashtra
+  - BALRAMPUR → Balrampur, Chhattisgarh
+  - BALRAMPUR → Balrampur, Uttar Pradesh
+  - BIJAPUR → Bijapur, Chhattisgarh
+  - BIJAPUR → Bijapur, Karnataka
+  - BILASPUR → Bilaspur, Chhattisgarh
+  - BILASPUR → Bilaspur, Himachal Pradesh
+  - HAMIRPUR → Hamirpur, Himachal Pradesh
+  - HAMIRPUR → Hamirpur, Uttar Pradesh
+  - PRATAPGARH → Pratapgarh, Rajasthan
+  - PRATAPGARH → Pratapgarh, Uttar Pradesh
+  - RAIGARH → Raigarh, Chhattisgarh
+  - RAIGARH → Raigarh, Maharashtra
 
 UNMATCHED DISTRICTS (RBI → GADM):
   - SRI POTTI SRIRAMULU NELLORE (score: 42.10526315789473)

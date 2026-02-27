@@ -3,8 +3,8 @@
 Dep. Variable:       lights_change_qt   R-squared:                       0.555
 Model:                            OLS   Adj. R-squared:                  0.541
 Method:                 Least Squares   F-statistic:                     258.2
-Date:                Sun, 15 Feb 2026   Prob (F-statistic):               0.00
-Time:                        20:28:53   Log-Likelihood:                 26510.
+Date:                Fri, 27 Feb 2026   Prob (F-statistic):               0.00
+Time:                        23:17:08   Log-Likelihood:                 26510.
 No. Observations:               22464   AIC:                        -5.170e+04
 Df Residuals:                   21804   BIC:                        -4.641e+04
 Df Model:                         659                                         

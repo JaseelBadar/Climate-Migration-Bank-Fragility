@@ -214,9 +214,7 @@ log_lines = [
     "",
     "STOP CONDITION:",
     f"  - {'PASSED' if match_rate_rbi_gadm >= 80 else 'FAILED'} - "
-    f"RBI match rate {'>=': '>='} 80%"
-    if match_rate_rbi_gadm >= 80 else
-    f"  - FAILED - RBI match rate < 80%",
+    f"RBI match rate {'at least' if match_rate_rbi_gadm >= 80 else 'below'} 80%",
     "",
     "HOMONYMOUS DISTRICTS (2 rows each -- intentional):",
 ]

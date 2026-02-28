@@ -18,7 +18,11 @@ log_lines.append("=" * 70)
 # [1] PANEL DIMENSIONS
 log_lines.append("\n[1] PANEL DIMENSIONS")
 log_lines.append(f"   Total district-quarters: {len(df):,}")
-log_lines.append(f"   Districts: {df['district_gadm'].nunique()}")
+gadm_name_count  = df['district_gadm'].nunique()
+gadm_pair_count  = df[['district_gadm', 'state_gadm']].drop_duplicates().shape[0]
+log_lines.append(f"   Districts (unique names): {gadm_name_count} "
+                 f"({gadm_pair_count} unique district-state pairs; "
+                 f"7 names appear in 2 states)")
 log_lines.append(f"   Quarters: {df['quarter'].nunique()}")
 log_lines.append(f"   Date range: {df['quarter'].min()} to {df['quarter'].max()}")
 

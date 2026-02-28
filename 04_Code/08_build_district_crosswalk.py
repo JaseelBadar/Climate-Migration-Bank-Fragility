@@ -23,13 +23,12 @@ gadm_districts.columns = ['district_gadm', 'state_gadm']
 gadm_districts = gadm_districts.sort_values(['state_gadm', 'district_gadm']).reset_index(drop=True)
 print(f"   Unique GADM district-state pairs: {len(gadm_districts)}")
 
-# Verify homonymous pairs are present in GADM
 homonyms = ['Aurangabad', 'Balrampur', 'Bijapur', 'Bilaspur', 'Hamirpur', 'Pratapgarh', 'Raigarh']
 print(f"\n   Homonymous district check in GADM:")
 for d in homonyms:
     rows = gadm_districts[gadm_districts['district_gadm'] == d]
     states = rows['state_gadm'].tolist()
-    print(f"      {d}: {len(rows)} row(s) → {states}")
+    print(f"      {d}: {len(rows)} row(s) -> {states}")
 
 
 # === [2/5] RBI DISTRICTS ===
@@ -47,16 +46,15 @@ else:
     print(f"   Available columns: {list(rbi.columns)}")
     rbi_unique = []
 
-# Also extract RBI state column to carry forward for state-aware matching
 if 'STATE' in rbi.columns:
     rbi_district_state = rbi[['STATE', 'DISTRICT']].dropna().drop_duplicates().copy()
     rbi_district_state.columns = ['state_rbi', 'district_rbi']
     rbi_district_state['district_rbi'] = rbi_district_state['district_rbi'].str.strip().str.upper()
-    rbi_district_state['state_rbi'] = rbi_district_state['state_rbi'].str.strip().str.upper()
+    rbi_district_state['state_rbi']    = rbi_district_state['state_rbi'].str.strip().str.upper()
     print(f"   RBI district-state pairs extracted: {len(rbi_district_state)}")
 else:
     rbi_district_state = None
-    print("   WARNING: 'STATE' column not found — state-aware matching unavailable")
+    print("   WARNING: 'STATE' column not found -- state-aware matching unavailable")
 
 
 # === [3/5] EM-DAT DISTRICTS ===
@@ -76,8 +74,8 @@ emdat_unique = sorted(emdat_all_districts)
 print(f"   Unique EM-DAT districts: {len(emdat_unique)}")
 
 
-# === [4/5] FUZZY MATCH RBI → GADM ===
-print("\n[4/5] FUZZY MATCHING RBI → GADM...")
+# === [4/5] FUZZY MATCH RBI -> GADM ===
+print("\n[4/5] FUZZY MATCHING RBI -> GADM...")
 
 
 def fuzzy_match_best(query, choices, threshold=80):
@@ -101,16 +99,17 @@ rbi_gadm_matches = []
 for rbi_dist in rbi_unique:
     best_match, score, matched = fuzzy_match_best(rbi_dist, gadm_choices, threshold=80)
     rbi_gadm_matches.append({
-        'district_rbi': rbi_dist,
-        'district_gadm': best_match,
+        'district_rbi':        rbi_dist,
+        'district_gadm':       best_match,
         'match_score_rbi_gadm': score,
-        'matched_rbi_gadm': matched
+        'matched_rbi_gadm':    matched
     })
 
 df_crosswalk = pd.DataFrame(rbi_gadm_matches)
 
 match_rate_rbi_gadm = (df_crosswalk['matched_rbi_gadm'].sum() / len(df_crosswalk)) * 100
-print(f"   RBI → GADM match rate: {match_rate_rbi_gadm:.1f}% ({df_crosswalk['matched_rbi_gadm'].sum()}/{len(df_crosswalk)})")
+print(f"   RBI -> GADM match rate: {match_rate_rbi_gadm:.1f}% "
+      f"({df_crosswalk['matched_rbi_gadm'].sum()}/{len(df_crosswalk)})")
 
 if match_rate_rbi_gadm < 80:
     print("\n" + "!" * 70)
@@ -118,33 +117,31 @@ if match_rate_rbi_gadm < 80:
     print(f"Match rate ({match_rate_rbi_gadm:.1f}%) is below 80% threshold.")
     print("!" * 70)
 
-
-# Join ALL GADM state rows (one per district-state pair).
-# CRITICAL FIX: Do NOT deduplicate here.
-# Homonymous districts (e.g. AURANGABAD) will correctly produce 2 rows:
-#   one for Bihar, one for Maharashtra.
-# Script 13 uses the RBI state column to filter to the correct row.
+# Join ALL GADM state rows — do NOT deduplicate.
+# Homonymous districts produce 2 rows (one per state).
+# Script 13 resolves ambiguity via state_rbi column.
 df_crosswalk = df_crosswalk.merge(
     gadm_districts[['district_gadm', 'state_gadm']],
     on='district_gadm',
     how='left'
 )
 
-# Flag ambiguous (homonymous) matches — rows with multiple state options
 ambiguity_counts = df_crosswalk.groupby('district_rbi')['state_gadm'].transform('count')
 df_crosswalk['is_ambiguous_match'] = ambiguity_counts > 1
 
-# Report homonymous districts (informational — do NOT remove)
 duplicate_check = df_crosswalk.groupby('district_rbi').size()
 duplicates_found = duplicate_check[duplicate_check > 1]
 
 if len(duplicates_found) > 0:
-    print(f"\n   INFO: {len(duplicates_found)} homonymous RBI districts have multiple GADM state rows:")
-    print(f"   These are KEPT — Script 13 resolves them via RBI state column.")
+    print(f"\n   INFO: {len(duplicates_found)} homonymous RBI districts "
+          f"have multiple GADM state rows:")
+    print(f"   These are KEPT -- Script 13 resolves them via RBI state column.")
     for rbi_dist in duplicates_found.index:
-        matches = df_crosswalk[df_crosswalk['district_rbi'] == rbi_dist][['district_gadm', 'state_gadm']]
+        matches = df_crosswalk[
+            df_crosswalk['district_rbi'] == rbi_dist
+        ][['district_gadm', 'state_gadm']]
         states = matches['state_gadm'].tolist()
-        print(f"      {rbi_dist}: {len(matches)} rows → {states}")
+        print(f"      {rbi_dist}: {len(matches)} rows -> {states}")
 else:
     print(f"\n   No homonymous districts detected")
 
@@ -159,25 +156,28 @@ emdat_gadm_matches = []
 for emdat_dist in emdat_unique:
     best_match, score, matched = fuzzy_match_best(emdat_dist, gadm_choices, threshold=75)
     emdat_gadm_matches.append({
-        'district_emdat': emdat_dist,
-        'district_gadm_match': best_match,
+        'district_emdat':        emdat_dist,
+        'district_gadm_match':   best_match,
         'match_score_emdat_gadm': score,
-        'matched_emdat_gadm': matched
+        'matched_emdat_gadm':    matched
     })
 
 df_emdat_matches = pd.DataFrame(emdat_gadm_matches)
-match_rate_emdat = (df_emdat_matches['matched_emdat_gadm'].sum() / len(df_emdat_matches)) * 100
-print(f"   EM-DAT → GADM match rate: {match_rate_emdat:.1f}% ({df_emdat_matches['matched_emdat_gadm'].sum()}/{len(df_emdat_matches)})")
+match_rate_emdat = (
+    df_emdat_matches['matched_emdat_gadm'].sum() / len(df_emdat_matches)
+) * 100
+print(f"   EM-DAT -> GADM match rate: {match_rate_emdat:.1f}% "
+      f"({df_emdat_matches['matched_emdat_gadm'].sum()}/{len(df_emdat_matches)})")
 
 
 # === SAVE OUTPUTS ===
 output_path = '02_Data_Intermediate/district_crosswalk_draft.csv'
 df_crosswalk.to_csv(output_path, index=False)
-print(f"\n✓ Crosswalk saved: {output_path} ({len(df_crosswalk)} rows)")
+print(f"\nCrosswalk saved: {output_path} ({len(df_crosswalk)} rows)")
 
 emdat_output_path = '02_Data_Intermediate/emdat_district_matches.csv'
 df_emdat_matches.to_csv(emdat_output_path, index=False)
-print(f"✓ EM-DAT matches saved: {emdat_output_path}")
+print(f"EM-DAT matches saved: {emdat_output_path}")
 
 
 # === LOG ===
@@ -195,7 +195,7 @@ log_lines = [
     "  Old behaviour: drop_duplicates(subset=['district_rbi'], keep='first')",
     "  This silently dropped the second state row for all 7 homonymous pairs,",
     "  causing Maharashtra/UP/Karnataka/HP copies to have 0 deposits in",
-    "  rbi_deposits_panel → dropped by Script 17 → only 624 districts in panel.",
+    "  rbi_deposits_panel -> dropped by Script 17 -> only 624 districts in panel.",
     "  New behaviour: retain ALL rows; flag with is_ambiguous_match=True.",
     "  Script 13 resolves ambiguity via state_rbi column.",
     "",
@@ -209,27 +209,40 @@ log_lines = [
     f"  - EM-DAT matches: {emdat_output_path} ({len(df_emdat_matches)} rows)",
     "",
     "MATCH RATES:",
-    f"  - RBI → GADM: {match_rate_rbi_gadm:.1f}% (threshold: 80%)",
-    f"  - EM-DAT → GADM: {match_rate_emdat:.1f}% (informational, threshold: 75%)",
+    f"  - RBI -> GADM: {match_rate_rbi_gadm:.1f}% (threshold: 80%)",
+    f"  - EM-DAT -> GADM: {match_rate_emdat:.1f}% (informational, threshold: 75%)",
     "",
     "STOP CONDITION:",
-    f"  - {'PASSED' if match_rate_rbi_gadm >= 80 else 'FAILED'} - RBI match rate {'≥' if match_rate_rbi_gadm >= 80 else '<'} 80%",
+    f"  - {'PASSED' if match_rate_rbi_gadm >= 80 else 'FAILED'} - "
+    f"RBI match rate {'>=': '>='} 80%"
+    if match_rate_rbi_gadm >= 80 else
+    f"  - FAILED - RBI match rate < 80%",
     "",
-    "HOMONYMOUS DISTRICTS (2 rows each — intentional):",
+    "HOMONYMOUS DISTRICTS (2 rows each -- intentional):",
 ]
 
 for rbi_dist in duplicates_found.index:
-    matches = df_crosswalk[df_crosswalk['district_rbi'] == rbi_dist][['district_gadm', 'state_gadm']]
+    matches = df_crosswalk[
+        df_crosswalk['district_rbi'] == rbi_dist
+    ][['district_gadm', 'state_gadm']]
     for _, row in matches.iterrows():
-        log_lines.append(f"  - {rbi_dist} → {row['district_gadm']}, {row['state_gadm']}")
+        log_lines.append(
+            f"  - {rbi_dist} -> {row['district_gadm']}, {row['state_gadm']}"
+        )
 
 log_lines += [
     "",
-    "UNMATCHED DISTRICTS (RBI → GADM):",
+    "UNMATCHED DISTRICTS (RBI -> GADM):",
 ]
-unmatched = df_crosswalk[~df_crosswalk['matched_rbi_gadm']].drop_duplicates('district_rbi').sort_values('match_score_rbi_gadm')
+unmatched = (
+    df_crosswalk[~df_crosswalk['matched_rbi_gadm']]
+    .drop_duplicates('district_rbi')
+    .sort_values('match_score_rbi_gadm')
+)
 for _, row in unmatched.iterrows():
-    log_lines.append(f"  - {row['district_rbi']} (score: {row['match_score_rbi_gadm']})")
+    log_lines.append(
+        f"  - {row['district_rbi']} (score: {row['match_score_rbi_gadm']})"
+    )
 
 log_lines.append("")
 log_lines.append("=" * 70)
@@ -238,7 +251,7 @@ log_path = '05_Outputs/Logs/08_build_crosswalk_log.txt'
 os.makedirs('05_Outputs/Logs', exist_ok=True)
 with open(log_path, 'w', encoding='utf-8') as f:
     f.write('\n'.join(log_lines))
-print(f"✓ Log saved: {log_path}")
+print(f"Log saved: {log_path}")
 
 print("\n" + "=" * 70)
 print("CROSSWALK BUILD COMPLETE (CORRECTED 2026-02-28)")

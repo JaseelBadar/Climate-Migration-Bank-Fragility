@@ -3559,16 +3559,11 @@ Next Session (Feb 27):
 1. Execute Script 27 (H1: Floods → Lights baseline)
 2. Execute Script 30 (H4: Heterogeneity)
 3. Compare all H1-H4 results
+
 ======================================================================
-Feb 27 Log Entry
-text
+2026-02-27 (Fri) 22:45-23:55 PM IST: Phase 4 — Script 27 Execution + Homonymous District Root Cause Fix
 ======================================================================
-2026-02-27 (Fri) 22:45-23:55 PM IST: Phase 4 — Script 27 Execution +
-                                       Homonymous District Root Cause Fix
-======================================================================
-Goal: Execute Script 27 (H1: Floods → Lights), validate output, then
-      commit clean regression results. Identified and fixed root cause
-      of persistent 624-district panel instead of correct 631.
+Goal: Execute Script 27 (H1: Floods → Lights), validate output, then commit clean regression results. Identified and fixed root cause of persistent 624-district panel instead of correct 631.
 
 Actions Completed
 
@@ -3671,6 +3666,105 @@ Next Session:
 6. Execute Script 30 (H4)
 7. Update README with Phase 4 complete status
 
+
 ======================================================================
-END OF LOG - Last Updated: 2026-02-27 23:55 PM IST
+2026-02-28 (Sat) 21:00-22:15 PM IST: Script Quality Audit + Full Code Review from Script 01
+======================================================================
+Goal: Audit yesterday's Script 08 fix against manual Excel inspection records, then review all scripts sequentially from Script 01 for correctness, quality, and consistency with verified data structure.
+
+Actions Completed
+
+A) RBI Excel Structure Audit Review (2100-2115 PM IST)
+- Re-read RBI_Excel_Structure_Audit.txt (Feb 4 2026) line by line.
+- Confirmed audit documents the dep_idx bug (offices extracted instead
+  of deposits from 2004-2022 files) already fixed in Script 13
+  "CORRECTED 2026-02-11". Audit does not address homonymous districts.
+- Confirmed audit-verified column indices:
+  * 2023-24 file: deposit at indices 7, 10, 13... (range(7,...,3)) correct
+  * 2017-22 and 2004-17 files: deposit at q_idx+1 (not q_idx) correct
+  * Scripts load by column name (DISTRICT, STATE), not index — audit
+    findings on index structure are informational only for Script 08
+- Noted: Feb 15 session explicitly validated 624 districts, accepted 0
+  homonymous pairs as consequence of zero-coverage filter in Script 17,
+  and committed all scripts on that basis. Whether 631 is the correct
+  target remains unresolved pending Script 13 diagnostic.
+
+B) Sequential Script Review: Scripts 01-12 (2115-2215 PM IST)
+Issues found and fixed across all scripts:
+
+  Script 01 (VIIRS placeholder): No changes. Correct as-is.
+
+  Script 02 (RBI 2023-24 inspection): Emoji removed (checkmarks,
+    warning symbols). exit() -> raise SystemExit(1). Output confirmed
+    correct: 762 unique districts, column indices match audit.
+
+  Script 03 (EM-DAT inspection): Emoji removed. Both exit() calls
+    replaced with raise SystemExit(1). Output confirmed: 69 events,
+    35 district-level, 34 state-level, 147 unique districts.
+
+  Script 04 (VIIRS tile inspection): Emoji removed. Both exit() calls
+    replaced. Multiplication symbol removed. width/height variables
+    stored explicitly before rasterio context manager closes to prevent
+    UnboundLocalError in summary block.
+
+  Scripts 05-06 (VIIRS extraction): Skipped — already verified.
+
+  Script 07 (EM-DAT parse check): No changes. Output confirmed: 69
+    events, all 69 have non-empty districts_final_str.
+
+  Script 08 (crosswalk build): Unicode arrows (→) replaced with (->).
+    Checkmarks removed. Broken f-string in log generation fixed
+    (dict literal {'>=': '>='} caused ValueError on first run).
+    Re-run confirmed: 769 rows, 7 homonymous pairs retained with
+    correct state assignments, match rate 83.2% (634/762), PASSED.
+
+  Script 09 (skeleton build): Removed redundant filter condition
+    (year < 2024 | q <= 4) that was always True. Added .copy() after
+    drop_duplicates. Added row count assertion. Output confirmed:
+    666 pairs x 40 quarters = 26,640 rows.
+
+  Script 10 (flood exposure build): Added .copy() on state_districts.
+    Added summary statistics block (Rule A/B counts, validation check).
+    Unmatched tokens collected as batch, not inline. Added homonymous
+    district limitation note (emdat_matches has no state column; both
+    copies of 7 homonymous pairs coded flooded if either appears in
+    EM-DAT — conservative bias). Output confirmed: Rule A 2,230
+    (8.37%), Rule B 272 (1.02%), Rule B <= Rule A: PASS.
+
+  Script 11 (flood validation): Emoji removed from 3 PASS criterion
+    print lines. Criterion 2 caveat added: Rule B = 9 in 2023Q2
+    reflects other events in that quarter (e.g. 2023-0330-IND), not
+    event 2023-0428-IND which contributed 0 to Rule B (state-only).
+
+  Script 12 (exposure summary log): Emoji removed. Hardcoded date
+    replaced with datetime.now(). os.makedirs added. Unmatched token
+    count corrected from 46 to 44 (matches Script 10 output). District
+    count line updated to distinguish 659 unique names from 666
+    district-state pairs. Output confirmed: all numbers consistent
+    with Scripts 09, 10, 11.
+
+Status:
+- Scripts 01-12: reviewed, corrected, re-run, outputs confirmed
+- Script 08 homonymous fix: retained (769-row crosswalk committed)
+- 631 vs 624 district target: unresolved — requires Script 13 run
+  and state_rbi string diagnostic to confirm whether homonymous fix
+  propagates correctly through deposit extraction
+- Scripts 13 onwards: not yet reviewed
+
+NOT COMPLETED TODAY:
+- Scripts 13-30 review
+- Script 13 state_rbi string diagnostic
+- Pipeline cascade re-run confirmation (631 vs 624)
+- Script 30 (H4 heterogeneity)
+- README update
+
+Next Session:
+1. Paste and review Script 13 — verify dep_idx fix and state filter
+2. Run state_rbi diagnostic for 7 homonymous pairs
+3. Fix state filter if string mismatch confirmed, re-run Script 13
+4. Verify rbi_deposits_panel shows correct district count before continuing
+5. Continue sequential review: Scripts 14 onwards
+
+======================================================================
+END OF LOG - Last Updated: 2026-02-28 22:15 PM IST
 ======================================================================

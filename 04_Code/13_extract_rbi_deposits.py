@@ -147,7 +147,7 @@ for file_idx, filepath in enumerate(rbi_files, 1):
             quarter_date = df.columns[date_idx]
 
             try:
-                dt           = pd.to_datetime(quarter_date)
+                dt            = pd.to_datetime(quarter_date)
                 calendar_year = dt.year
                 calendar_q    = (dt.month - 1) // 3 + 1
                 quarter_str   = f"{calendar_year}Q{calendar_q}"
@@ -177,6 +177,38 @@ print(f"    Total rows before crosswalk: {len(rbi_panel)}")
 print(f"    Unique district names: {rbi_panel['district_rbi'].nunique()}")
 print(f"    Quarters range: {rbi_panel['quarter'].min()} to {rbi_panel['quarter'].max()}")
 
+
+# [3b] HOMONYMOUS DISTRICT DIAGNOSTIC
+# Print exact state_rbi values present in RBI data for each of the 7 pairs.
+# Identifies any name mismatch between RBI data and state_mapping_rbi_to_gadm keys.
+print(f"\n[3b] HOMONYMOUS DISTRICT DIAGNOSTIC")
+for d in ['AURANGABAD', 'BALRAMPUR', 'BIJAPUR', 'BILASPUR',
+          'HAMIRPUR', 'PRATAPGARH', 'RAIGARH']:
+    rows   = rbi_panel[rbi_panel['district_rbi'] == d]
+    states = sorted(rows['state_rbi'].str.upper().str.strip().unique().tolist())
+    print(f"    {d}: {states}")
+
+# Check known rename aliases that RBI may use instead of the homonymous name
+for alias in ['RAIGAD', 'VIJAYAPURA', 'VIJAYAPURAM']:
+    rows = rbi_panel[rbi_panel['district_rbi'] == alias]
+    if len(rows) > 0:
+        states = sorted(rows['state_rbi'].str.upper().str.strip().unique().tolist())
+        print(f"    {alias} (alias): {states}")
+
+# RBI uses "RAIGAD" for the Maharashtra district that GADM names "Raigarh".
+# Normalise to RAIGARH so the crosswalk merge and state filter resolve correctly.
+# All other district names match between RBI and GADM without normalisation.
+rbi_name_normalise = {
+    ('RAIGAD', 'MAHARASHTRA'): 'RAIGARH',
+}
+rbi_panel['district_rbi'] = rbi_panel.apply(
+    lambda row: rbi_name_normalise.get(
+        (row['district_rbi'], row['state_rbi'].upper().strip()),
+        row['district_rbi']
+    ),
+    axis=1
+)
+print(f"    Name normalisation applied: RAIGAD/MAHARASHTRA -> RAIGARH/MAHARASHTRA")
 
 # Map RBI districts to GADM using crosswalk
 print(f"\n[4] Mapping RBI -> GADM districts...")
@@ -242,15 +274,16 @@ total_count   = len(rbi_panel)
 print(f"    Matched: {matched_count}/{total_count} "
       f"({matched_count / total_count * 100:.1f}%)")
 
-# Drop unmatched RBI districts
-rbi_panel = rbi_panel[rbi_panel['matched_rbi_gadm']].copy()
-rbi_panel = rbi_panel.drop(columns=['matched_rbi_gadm'])
+# Drop unmatched — replace fillna(False) to avoid FutureWarning
+matched_mask = rbi_panel['matched_rbi_gadm'].notna() & rbi_panel['matched_rbi_gadm'].astype(bool)
+rbi_panel    = rbi_panel[matched_mask].copy()
+rbi_panel    = rbi_panel.drop(columns=['matched_rbi_gadm'])
 print(f"    After dropping unmatched: {len(rbi_panel)} rows")
 
 # DIAGNOSTIC: count both unique names AND unique district-state pairs.
 # Unique names will be 624 (7 homonymous names counted once each).
-# Unique pairs should be 631 (7 homonymous names x 2 states = 14 pairs,
-# plus 617 non-homonymous = 631). If pairs = 624, homonymous fix failed.
+# Unique pairs should be 631 (617 non-homonymous + 7 pairs x 2 states = 631).
+# If pairs = 630, exactly one homonymous pair has only 1 state in RBI data.
 unique_names = rbi_panel['district_gadm'].nunique()
 unique_pairs = rbi_panel[['district_gadm', 'state_gadm']].drop_duplicates().shape[0]
 print(f"    Unique GADM district names:        {unique_names}")
@@ -259,8 +292,8 @@ print(f"    Unique GADM district-state pairs:  {unique_pairs}  "
 
 # Add quarter_num (sequential index)
 rbi_panel = rbi_panel.sort_values(['district_gadm', 'year', 'q'])
-quarter_map           = {q: i + 1 for i, q in
-                         enumerate(sorted(rbi_panel['quarter'].unique()))}
+quarter_map              = {q: i + 1 for i, q in
+                            enumerate(sorted(rbi_panel['quarter'].unique()))}
 rbi_panel['quarter_num'] = rbi_panel['quarter'].map(quarter_map)
 
 
@@ -271,9 +304,9 @@ rbi_panel = rbi_panel.groupby(
     ['district_gadm', 'state_gadm', 'quarter', 'year', 'q', 'quarter_num'],
     as_index=False
 ).agg({
-    'deposits':    'sum',
+    'deposits':     'sum',
     'district_rbi': lambda x: '; '.join(sorted(set(x))),
-    'state_rbi':   'first'
+    'state_rbi':    'first'
 })
 print(f"    After aggregation: {len(rbi_panel)} rows")
 
@@ -285,7 +318,7 @@ print(f"    Unique GADM district-state pairs:  {unique_pairs_post}  "
 
 if unique_pairs_post < 631:
     print(f"    WARNING: Expected 631 pairs, got {unique_pairs_post}. "
-          f"Homonymous fix may not have propagated. Check state_rbi values.")
+          f"Check [3b] diagnostic for which pair is missing.")
 elif unique_pairs_post == 631:
     print(f"    PASS: 631 district-state pairs confirmed.")
 else:
@@ -312,11 +345,11 @@ print(f"    Columns: {rbi_panel.columns.tolist()}")
 
 # [6] SUMMARY STATISTICS
 print(f"\n[6] SUMMARY STATISTICS")
-print(f"    District names:   {rbi_panel['district_gadm'].nunique()}")
-print(f"    District-state pairs: "
+print(f"    District names:        {rbi_panel['district_gadm'].nunique()}")
+print(f"    District-state pairs:  "
       f"{rbi_panel[['district_gadm', 'state_gadm']].drop_duplicates().shape[0]}")
-print(f"    Quarters:         {rbi_panel['quarter'].nunique()}")
-print(f"    Date range:       {rbi_panel['year'].min()}-{rbi_panel['year'].max()}")
+print(f"    Quarters:              {rbi_panel['quarter'].nunique()}")
+print(f"    Date range:            {rbi_panel['year'].min()}-{rbi_panel['year'].max()}")
 print(f"    Total deposits (Rs Crores): {rbi_panel['deposits'].sum():,.0f}")
 print(f"    Mean deposits per district-quarter: "
       f"{rbi_panel['deposits'].mean():,.0f}")
@@ -326,7 +359,7 @@ print(f"    Mean deposits per district-quarter: "
 print(f"\n[7] TEMPORAL COVERAGE CHECK")
 for year in sorted(rbi_panel['year'].unique()):
     quarters_present = sorted(rbi_panel[rbi_panel['year'] == year]['q'].unique())
-    print(f"    {year}: Q{quarters_present}")
+    print(f"    {int(year)}: Q{[int(q) for q in quarters_present]}")
 
 
 print("=" * 70)

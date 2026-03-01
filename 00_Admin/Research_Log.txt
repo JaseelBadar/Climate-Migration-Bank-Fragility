@@ -3766,5 +3766,89 @@ Next Session:
 5. Continue sequential review: Scripts 14 onwards
 
 ======================================================================
-END OF LOG - Last Updated: 2026-02-28 22:15 PM IST
+2026-03-01 (Sun) 23:00-23:20 PM IST: Script 20 Bug Triage and Fix
+======================================================================
+Goal: Identify and resolve Script 20 failures blocking VIIRS test merge, confirm master_panel_viirs_test.csv is clean before proceeding to Scripts 21 onwards.
+
+Actions Completed
+
+A) First Run - KeyError on groupby (2300-2305 PM IST)
+- Executed Script 20 as committed. Script failed at Step 3 with:
+  KeyError: 'gadm_district'
+- Root cause: groupby referenced gadm_district and gadm_state, but
+  viirs_jan2023_test.csv uses district_gadm and state_gadm throughout
+  (confirmed in Step 1 output: column list printed before crash).
+- Secondary bug identified simultaneously: Lines 61-64 contained a
+  rename block attempting gadm_district -> district_gadm. Block was
+  both wrong and redundant given the groupby fix.
+- Fix applied:
+    Line 49: groupby(['gadm_district', 'gadm_state', ...])
+             -> groupby(['district_gadm', 'state_gadm', ...])
+    Lines 61-64: Rename block deleted entirely.
+
+B) Second Run - 0% Merge Coverage (2305-2312 PM IST)
+- Script ran without error. Step 3 aggregated correctly: 666 quarterly
+  records. Step 4 merge returned 0 matched observations.
+- Merge statistics: matched 0, master-only 23,347, VIIRS-only 0.
+- Diagnostic block added to print actual sample values from both
+  master_panel_analysis.csv and viirs_jan2023_test.csv before merge.
+- Root cause confirmed on re-run:
+    master_panel_analysis.csv: district_gadm UPPERCASE ('ADILABAD')
+    viirs_jan2023_test.csv:    district_gadm Title Case ('Adilabad')
+  Same mismatch in state_gadm column.
+- Cause traced to pipeline history: master panel inherits UPPERCASE
+  naming from RBI source via crosswalk (Script 08 -> Script 13 ->
+  Script 17). VIIRS extraction (Script 18) pulls directly from GADM
+  NAME_2/NAME_1, which uses Title Case. Convention diverged at source,
+  never reconciled downstream.
+- Fix applied: temporary normalisation keys (_dist_key, _state_key)
+  created via .str.strip().str.upper() on both sides before merge.
+  Original column values preserved in output. Keys dropped post-merge.
+
+C) Third Run - Confirmed Clean Output (2312-2317 PM IST)
+- Script executed successfully end-to-end.
+- Output verified:
+    Quarterly records:       666 (10 districts absent from master
+                             panel after zero-coverage filter - expected)
+    Matched (both):          631
+    Master only (no VIIRS):  22,716
+    VIIRS only (no master):  0
+    Coverage:                2.70% (631/23,347)
+    Radiance stats:          mean 0.8023, median 0.4935,
+                             min 0.0006, max 29.1043 nW/cm2/sr
+- 2.70% coverage confirmed as expected: Jan 2023 maps to 2023Q1 only,
+  one quarter out of 37 in analysis sample. Full coverage requires
+  all 120 tiles (Script 21).
+- VIIRS-only unmatched: 0. All 666 VIIRS records either matched or
+  correctly absent from the analysis sample. No rogue joins.
+- Composite key (district_gadm + state_gadm + year + q) preserved
+  throughout. Homonymous district separation intact.
+- Saved: 02_Data_Intermediate/master_panel_viirs_test.csv
+- Committed: Script 20 (corrected), master_panel_viirs_test.csv.
+
+Status:
+- Script 20: reviewed, three bugs fixed, re-run, output confirmed
+- master_panel_viirs_test.csv: clean baseline for downstream scripts
+- VIIRS test pipeline end-to-end: extract (18) -> validate (19) ->
+  aggregate (20) -> test merge all functioning correctly
+- Case normalisation approach documented; same fix will be required
+  in Script 23 (full VIIRS-master merge) if not already present
+
+NOT COMPLETED TODAY:
+- Scripts 13 onwards: sequential review not reached (session limited
+  to Script 20 triage only)
+- Script 13 state_rbi string diagnostic
+- Pipeline cascade re-run confirmation (624 vs 631 district resolution)
+- Scripts 21-30 review and re-execution
+- README update
+
+Next Session:
+1. Resume sequential review at Script 13 -- verify dep_idx fix and state filter string matching (staterbi format against hardcoded mapping keys)
+2. Run state_rbi diagnostic for 7 homonymous pairs, confirm strings match mapping dictionary exactly
+3. Continue sequential review: Scripts 14 onwards
+4. Verify Script 23 merge key convention -- confirm case normalisation already applied or apply same _dist_key/_state_key fix
+5. Execute Scripts 21-24 if Scripts 13-17 review passes without issues
+
+======================================================================
+END OF LOG - Last Updated: 2026-03-01 23:20 PM IST
 ======================================================================

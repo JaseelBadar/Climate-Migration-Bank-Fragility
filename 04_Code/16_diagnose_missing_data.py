@@ -47,5 +47,5 @@ state_overall = state_overall.sort_values('coverage_pct')
 print(state_overall.to_string(index=False))
 
 print("\n" + "="*70)
-print("DIAGNOSIS COMPLETED")
+print("DIAGNOSIS COMPLETE")
 print("="*70)

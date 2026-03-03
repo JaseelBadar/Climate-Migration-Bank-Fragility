@@ -3849,9 +3849,83 @@ Next Session:
 4. Verify Script 23 merge key convention -- confirm case normalisation already applied or apply same _dist_key/_state_key fix
 5. Execute Scripts 21-24 if Scripts 13-17 review passes without issues
 
-02-03-2026
-Read papers
+======================================================================
+2026-03-03 (Tue) 2200-2307 PM IST: Script 22b - VIIRS Alignment
+Bug Discovery and Fix
+======================================================================
+Goal: Review and execute Script 22b to produce viirs_quarterly_panel_clean.csv
+aligned with clean deposits sample, prepare VIIRS panel for Script 23 merge.
+
+Actions Completed
+
+A) Code Review - Hardcoded District Count (2200-2210 PM IST)
+- Reviewed 22b_align_with_clean_deposits.py before execution.
+- Identified hardcoded literal 624 in summary block:
+    print(f"    Expected rows (624 x 40): {624 * 40}")
+    print(f"    Panel balanced: {len(viirs_quarterly_clean) == 624 * 40}")
+  Same class of error as Script 22 hardcoded 676. Silent failure if
+  district count shifts between pipeline runs.
+- Fix applied: replaced with dynamic variables n_after and n_quarters,
+  computed from actual output via groupby composite key.
+- assert statement added for hard stop on unbalanced panel, consistent
+  with Script 22 defensive pattern.
+- Litmus test strings updated to UPPERCASE in advance of case
+  normalization fix (Aurangabad -> AURANGABAD, Bihar -> BIHAR).
+
+B) First Run - Zero Rows After Merge (2210-2230 PM IST)
+- Executed corrected script. Merge returned 0 rows.
+  Before: 666 districts. After: 0. Rows: 26,640 -> 0.
+- Diagnostic block added to print actual key values from both
+  files before merge. Re-run with diagnostic:
+    VIIRS (after rename):  district_gadm = "Adilabad"  state_gadm = "Telangana"
+    Master panel:          district_gadm = "ADILABAD"  state_gadm = "TELANGANA"
+    Overlapping keys: 0. VIIRS only: 666. Master only: 631.
+- Root cause confirmed: VIIRS extraction reads directly from GADM
+  NAME_2/NAME_1 columns (Title Case). Master panel inherits UPPERCASE
+  naming from RBI source via crosswalk chain Script 08 -> Script 13
+  -> Script 17. Convention diverged at source, never reconciled
+  downstream. Structurally identical to Script 20 case mismatch
+  documented 2026-03-01.
+
+C) Fix and Confirmed Clean Output (2230-2307 PM IST)
+- Fix applied: .str.upper().str.strip() on district_gadm and
+  state_gadm in VIIRS panel immediately after rename, before merge.
+  Values normalized to UPPERCASE throughout, consistent with all
+  downstream scripts and master panel convention.
+- Defensive .str.strip() also applied to master valid_districts keys.
+- Final output verified:
+    Districts:      631  (666 VIIRS -> 35 zero-coverage dropped via inner merge)
+    Quarters:       40   (2015Q1-2024Q4, all quarters retained)
+    Rows:           25,240 (631 x 40, perfectly balanced)
+    Panel balanced: True
+    Mean radiance:  0.6879 nW/cm2/sr
+    Aurangabad Bihar 2020Q1 radiance: 0.836089 -- homonym separation intact
+- Saved: 02_Data_Intermediate/viirs_quarterly_panel_clean.csv
+- Committed: Script 22b corrected, viirs_quarterly_panel_clean.csv.
+
+Status:
+- Script 22b: reviewed, two bugs fixed, re-run, output confirmed
+- viirs_quarterly_panel_clean.csv: clean, 25,240 rows, ready for Script 23
+- Case mismatch pattern now documented at two pipeline stages:
+  Script 20 (VIIRS test merge, Mar 1) and Script 22b (production VIIRS
+  alignment, Mar 3). Root cause identical in both cases. VIIRS is always
+  Title Case at extraction; UPPERCASE required for all downstream merges.
+  Script 23 must not introduce redundant column renaming.
+
+NOT COMPLETED TODAY:
+- Sequential review from Script 13 (carried from Mar 1 next session)
+- Scripts 23-30 review, FE composite key verification, re-execution
+- Results comparison Feb contaminated vs clean regressions
+
+Next Session:
+1. Script 23 -- verify input path reads viirs_quarterly_panel_clean.csv,
+   confirm merge produces 23,088 rows, 100 VIIRS coverage
+2. Sequential review Scripts 24-26 variable engineering and validation
+3. FE composite key fix Scripts 27, 28, 30 (districtgadm -> districtstateid)
+4. Re-run regressions H1-H4 with fully clean data pipeline
+5. Compare Feb 6 contaminated vs current clean results, document
+   coefficient changes by hypothesis
 
 ======================================================================
-END OF LOG - Last Updated: 2026-03-01 23:20 PM IST
+END OF LOG - Last Updated: 2026-03-03 23:20 PM IST
 ======================================================================

@@ -1,14 +1,13 @@
-import pandas as pd
+print("\n[DIAGNOSTIC] Comparing merge key values...")
+print("VIIRS sample (after rename):")
+print(viirs_quarterly[['district_gadm', 'state_gadm']].head(5).to_string(index=False))
+print("\nMaster panel sample:")
+print(valid_districts.head(5).to_string(index=False))
 
-crosswalk = pd.read_csv('02_Data_Intermediate/district_crosswalk_draft.csv')
-
-homonyms = ['AURANGABAD', 'BALRAMPUR', 'BIJAPUR', 'BILASPUR', 'HAMIRPUR', 'PRATAPGARH', 'RAIGARH']
-
-print("=== CROSSWALK ROWS FOR HOMONYMOUS DISTRICTS ===")
-print(f"Crosswalk columns: {list(crosswalk.columns)}\n")
-
-for d in homonyms:
-    subset = crosswalk[crosswalk['district_rbi'].str.upper().str.strip() == d]
-    print(f"{d}: {len(subset)} row(s)")
-    print(subset[['district_rbi', 'district_gadm', 'state_gadm', 'matched_rbi_gadm']].to_string())
-    print()
+# Check overlap manually
+viirs_keys  = set(zip(viirs_quarterly['district_gadm'], viirs_quarterly['state_gadm']))
+master_keys = set(zip(valid_districts['district_gadm'], valid_districts['state_gadm']))
+overlap     = viirs_keys & master_keys
+print(f"\nOverlapping keys: {len(overlap)}")
+print(f"VIIRS only: {len(viirs_keys - master_keys)}")
+print(f"Master only: {len(master_keys - viirs_keys)}")

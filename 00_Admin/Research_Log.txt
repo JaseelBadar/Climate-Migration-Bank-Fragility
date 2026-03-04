@@ -3927,5 +3927,183 @@ Next Session:
    coefficient changes by hypothesis
 
 ======================================================================
-END OF LOG - Last Updated: 2026-03-03 23:20 PM IST
+2026-03-04 (Wed) 1800-2120 IST: Scripts 23-25 Verification,
+Pipeline Contamination Discovery, Documentation Updates
+======================================================================
+Goal: Verify Script 23 output, review and execute Scripts 24-25,
+investigate anomalous descriptive statistics, update all core documents.
+
+Actions Completed
+
+A) Script 23 Verification - Microscopic Check (1800-1830 IST)
+- Verified analysis_panel_final.csv against research log and manual
+  Excel check file. All checks passed:
+    Rows:           23,347 (631 x 37, exact)
+    Districts:      631 composite pairs (groupby district_gadm + state_gadm)
+    VIIRS coverage: 100.0% (23,347 / 23,347), zero missing
+    Columns:        11 confirmed
+    Litmus test:    ADILABAD TELANGANA 2015Q1
+                    deposits = 6762.0646 -- exact match to audit
+                    radiance = 0.245293  -- exact match to audit
+    Merge keys:     district_gadm, state_gadm, year, quarter -- all present
+- Row count preserved confirmed: left join introduced no fan-out, no drops.
+- Commit issued: Script 23 and analysis_panel_final.csv separately.
+
+B) Script 24 Review - Log Offset Bug Identified (1830-1900 IST)
+- Reviewed 24_engineer_regression_variables.py before execution.
+- Identified critical log offset error:
+    WRONG:   log_lights_qt = np.log(mean_radiance + 1)
+    CORRECT: log_lights_qt = np.log(mean_radiance + 0.001)
+  Root cause: +1 offset copied from deposits formula. VIIRS mean_radiance
+  is < 1 for ~80% of sample (rural/semi-urban districts). In this range
+  log(x + 1) approximates x -- the transform is linear, not logarithmic.
+  Destroys log-scale compression for the majority of observations.
+  lights_change_qt becomes delta_x instead of delta_x/x: growth rate
+  interpretation lost for all rural and semi-urban districts.
+  Codebook v1.8 specifies +0.001. +1 was never the intended offset.
+- Fix applied: single line change, rationale documented in script comments.
+- Three additions made:
+    1. assert len(df) == 23347 and assert len(df.columns) == 23 at load/save
+    2. diagnostic prints for change variable missing counts (expected 631)
+    3. lag construction converted to loop (range 1-4) -- eliminates
+       8 near-identical code blocks, no logic change
+
+C) Script 24 Execution and Output Verification (1900-1930 IST)
+- Executed corrected script. Output:
+    log_deposits:      min=3.4011, max=14.0288, mean=8.7075
+    log_lights_qt:     min=-6.6447, max=3.5559, mean=-0.8326
+    lights_change_qt:  missing=631  (expected 631, 100% VIIRS confirmed)
+    deposit_change_qt: missing=905  (expected > 631)
+    Lag L1-L4:         631, 1262, 1893, 2524 (exact arithmetic progression)
+    Columns:           23  assert passed
+- deposit_change_qt 905 missing: 631 first-obs NaNs + 274 from 0.9% missing
+  deposits. Each interior NaN propagates to current and following row in
+  .diff(). Asymmetry with lights (631 only) confirms 100% VIIRS vs 99.1%
+  deposit coverage. Not a bug.
+- log_lights_qt mean -0.8326 confirmed correct: back-calculated median
+  radiance ~0.43 nW/cm2/sr consistent with Script 25 mean radiance 0.696
+  under right-skewed distribution. Prior stated expectation of -1.3 to -1.5
+  was imprecise -- -0.8326 is the correct value.
+- Commits issued: Script 24 and regression_panel_final.csv separately.
+
+D) Script 25 Review - Four Issues Identified (1930-1950 IST)
+- Reviewed 25_descriptive_statistics.py before execution.
+- Issue 1 (silent bug): quarters[0] / quarters[-1] used .unique() insertion
+  order, not sorted order. Silently reports wrong time range in console and
+  log file. Fix: quarters_sorted = sorted(df['quarter'].unique()).
+- Issue 2 (log discipline): logging.basicConfig default filemode='a' causes
+  log duplication on every re-run. Fix: filemode='w' added.
+- Issue 3 (style): emoji checkmarks throughout. Removed per project standard.
+- Issue 4 (defensive coding): no input asserts at load. Added row count and
+  column count asserts consistent with Scripts 23 and 24.
+
+E) Script 25 Execution - Anomalous Flood Count Detected (1950-2030 IST)
+- Executed corrected script. Core statistics confirmed clean:
+    Rows:              23,347
+    Districts:         631
+    Panel balance:     min=max=mean=37.0 (perfectly balanced)
+    Time range:        2015Q1 to 2024Q4 (correct after sort fix)
+    mean_radiance:     mean=0.6955, SD=1.6884 -- matches Script 25 Feb audit
+    log_deposits:      min=3.4011, max=14.0288 -- exact match to Feb 11 audit
+    deposit_change_qt: N=22,442 (consistent with 905 missing confirmed above)
+    lights_change_qt:  N=22,716 (consistent with 631 missing confirmed above)
+- Anomaly detected:
+    Rule A exposed obs: 1,994 (8.54%) -- expected 1,984 (8.50%)
+    Deposit coverage:   98.9%          -- expected 99.1%
+    Districts ever hit: 519            -- expected 512 (name-only count)
+  Districts ever hit discrepancy: composite key correctly counts 519 vs
+  512 name-only count from Feb session. Not a bug.
+  Flood events +10 and deposit coverage -0.25%: upstream contamination.
+
+F) Pipeline Contamination Investigation (2030-2100 IST)
+- Ran diagnostic on master_panel_analysis.csv:
+    Rule A events: 1,994 (should be 1,984) -- contaminated
+    Deposit coverage: 98.85%              -- contaminated
+- Traced upstream to master_panel_raw.csv:
+    Rows: 26,640, Districts: 666 -- correct dimensions
+    Rule A events: 2,230                  -- contaminated
+    Deposit coverage: 86.63%             -- below Feb 5 baseline
+- Checked rbi_deposits_panel.csv:
+    Aurangabad Bihar 2015Q1: 4,422.45 Crores -- CLEAN, Feb 11 fix intact
+    Rows: 50,192 (in-window: 23,079) -- extra 522 rows are 2025Q1-Q3,
+    outside analysis window, confirmed harmless
+- Checked flood_exposure_panel.csv:
+    Rule A events: 2,230 (should be 2,220) -- +10 events
+    Rule B events: 272
+    Last modified: 2026-02-28 21:45 -- never committed at that state
+- Git log for flood_exposure_panel.csv:
+    f287cf5 2026-02-28 21:51 -- bad version committed
+    1beeae9 2026-01-11 21:07 -- pre-crosswalk-fix version
+    No clean committed version exists between Feb 11 and Feb 28.
+- Checked district_crosswalk_draft.csv on disk:
+    Rows: 769, unique district_rbi: 762 -- 7 duplicate entries present
+    Confirmed pre-dedup state.
+- Git log for district_crosswalk_draft.csv:
+    7dc0dc1 2026-02-11 21:32 -- CORRECT 762-row version (clean)
+    c4b7946 2026-02-27 23:38 -- 769-row regression committed
+- Root cause confirmed: Script 8 re-run Feb 27 with incorrect dedup
+  logic (.nunique() on district names -- homonymous districts share names,
+  so duplicates reported zero while 7 duplicate rows persisted). Crosswalk
+  committed at 769 rows Feb 27. Script 12 re-run Feb 28 using contaminated
+  crosswalk, producing 10 artificial flood matches. Bad flood panel committed
+  Feb 28. All downstream files (Scripts 14-17, 23-25) inherit the error.
+- Isolation confirmed: RBI deposit values are clean throughout. Only flood
+  exposure and crosswalk files are contaminated.
+- Decision: Script 8 permanent rewrite Mar 5 with hard assert
+  len(output) == 762 and row-level deduplication (not name-level).
+  Manual row deletion rejected -- fixes symptom, not cause.
+  All contaminated downstream files to be regenerated after Script 8 fix.
+
+G) Documentation Updates (2100-2120 IST)
+- README.md: full rewrite. District count corrected to 631 throughout.
+  Sample corrected to 23,347 obs. VIIRS panel corrected to 25,240 rows.
+  Contamination documented with root cause. File checksums table added.
+  Results table updated: H3 validated, H1/H2/H4 labeled pending re-run.
+  Log offset rationale added. Version: Feb 13 -> Mar 4.
+- Hypotheses_Formal_v2.3.md: sample corrected throughout. Log offset
+  corrected. Contamination status added to flood variable entries.
+  Pending actions section updated with Mar 5 exact execution sequence.
+  H3 validated results preserved. Version: v2.2 -> v2.3.
+- Variables_Codebook_v2.3.md: all sample figures corrected. Log offset
+  entry corrected (+0.001, not +0.01 as stated in v2.2). Composite key
+  principle elevated to non-negotiable. Script contract updated with
+  assert-before-save requirement. Contamination documented.
+  Version: v2.2 -> v2.3.
+- Commits issued for all six files (Scripts 23-25 outputs and
+  three documentation files) with contamination status noted explicitly
+  in commit descriptions where applicable.
+
+Status:
+- Scripts 23, 24, 25: corrected and clean. Outputs valid except
+  flood-derived statistics (1,994 events, 519 districts) which will
+  update after pipeline fix.
+- Pipeline contamination: root cause confirmed. Two files on disk
+  are bad: district_crosswalk_draft.csv (769 rows) and
+  flood_exposure_panel.csv (2,230 Rule A events).
+- RBI deposits: clean throughout. Contamination is flood-only.
+- Documentation: README, Hypotheses, Codebook all updated to v2.3
+  with correct figures and accurate pipeline state.
+
+NOT COMPLETED TODAY:
+- Script 8 permanent rewrite (deferred to Mar 5)
+- Re-run Scripts 12 -> 14 -> 15 -> 17 -> 23 -> 24 -> 25
+- FE composite key fix in Scripts 27, 28, 30
+- H1, H2, H4 regression re-run with clean pipeline
+- H3 re-run with full 23,347-observation clean sample
+
+Next Session:
+1. Script 8 permanent rewrite: row-level dedup, hard assert len == 762,
+   validation prints showing all 7 homonymous pairs and their single
+   retained state
+2. Verify crosswalk output before touching anything downstream
+3. Re-run Script 12 -- verify Rule A events == 2,220
+4. Re-run Scripts 14 -> 15 -> 17 sequentially, verify at each stage
+5. Re-run Scripts 23 -> 24 -> 25 with clean master panel
+6. Fix FE specification Scripts 27, 28, 30: composite district_state_id
+7. Execute H1, H2, H4 regressions
+8. Re-run H3 with full 23,347-observation clean sample
+9. Document all coefficient changes from Feb 6 contaminated run
+
+======================================================================
+END OF LOG - Last Updated: 2026-03-04 21:20 PM IST
 ======================================================================

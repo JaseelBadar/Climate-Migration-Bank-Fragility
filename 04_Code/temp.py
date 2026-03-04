@@ -1,13 +1,23 @@
-print("\n[DIAGNOSTIC] Comparing merge key values...")
-print("VIIRS sample (after rename):")
-print(viirs_quarterly[['district_gadm', 'state_gadm']].head(5).to_string(index=False))
-print("\nMaster panel sample:")
-print(valid_districts.head(5).to_string(index=False))
+import subprocess
+import pandas as pd
 
-# Check overlap manually
-viirs_keys  = set(zip(viirs_quarterly['district_gadm'], viirs_quarterly['state_gadm']))
-master_keys = set(zip(valid_districts['district_gadm'], valid_districts['state_gadm']))
-overlap     = viirs_keys & master_keys
-print(f"\nOverlapping keys: {len(overlap)}")
-print(f"VIIRS only: {len(viirs_keys - master_keys)}")
-print(f"Master only: {len(master_keys - viirs_keys)}")
+# This is what git checkout does -- reads the committed file content and writes it to disk
+result = subprocess.run(
+    ['git', 'show', 'f287cf5:02_Data_Intermediate/flood_exposure_panel.csv'],
+    capture_output=True, cwd='e:/Climate-Migration-Bank-Fragility'
+)
+with open('02_Data_Intermediate/flood_exposure_panel.csv', 'wb') as f:
+    f.write(result.stdout)
+
+result2 = subprocess.run(
+    ['git', 'show', 'f287cf5:02_Data_Intermediate/district_crosswalk_draft.csv'],
+    capture_output=True, cwd='e:/Climate-Migration-Bank-Fragility'
+)
+with open('02_Data_Intermediate/district_crosswalk_draft.csv', 'wb') as f:
+    f.write(result2.stdout)
+
+# Verify immediately
+flood = pd.read_csv('02_Data_Intermediate/flood_exposure_panel.csv')
+cw = pd.read_csv('02_Data_Intermediate/district_crosswalk_draft.csv')
+print("Crosswalk rows:", len(cw))
+print("Flood Rule A events:", flood['flood_exposure_ruleA_qt'].sum())

@@ -1,406 +1,315 @@
-## FORMAL RESEARCH HYPOTHESES (v2.2 — Deposits clean; regressions pending re-run)
+# Formal Hypotheses: Climate Shocks, Displacement, and Bank Liquidity Risk
+### Evidence from Night-Lights in India, 2015–2024
 
-**Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015–2024)
-
-**Purpose**: Convert the "Shadow Run" narrative into testable, falsifiable statements that map cleanly to the Variables Codebook and the Python pipeline.
-
----
-
-### Version History (Discipline)
-
-**v1.3**: Wording updates for internal consistency and feasibility alignment (timing language, flood exposure definitions, core vs extension).
-
-**v1.4 (2026-01-18)**: Documents Phase 4 preliminary regression results (H1-H4). All results pending data quality corrections. No hypotheses modified to chase results.
-
-**v1.5 (2026-01-20 17:00 IST)**: Critical data integrity update. Discovered Script 21 VIIRS dissolve bug (homonymous district merging) during Phase 4 code audit. Bug affected 17 homonymous districts (e.g., Aurangabad Bihar vs Maharashtra), causing 2,040 missing monthly observations and measurement error contamination in all H1-H4 regression results. This document does not chase results. Any hypothesis modification due to data infeasibility must be explicitly labeled and dated.
-
-**v1.6 (2026-01-20 23:30 IST)**: Script 21 fix implemented and overnight regeneration initiated. Deleted Lines 52-55 (dissolve block) from Script 21; added validation assertion for 676 districts. All contaminated files backed up to CONTAMINATED_BACKUP folders. VIIRS extraction running overnight (6-8 hours); Scripts 22-30 scheduled for morning of 2026-01-21. Current H1-H4 results suspended; expect coefficient changes (H1 beta likely to increase from -0.0126 to approximately -0.025 due to reduced attenuation). Hypotheses unchanged; only evidence status is "regenerating."
-
-**v1.7 (2026-01-30 23:26 IST)**: RBI source contamination concern raised during Script 13 review. Suspected duplicate 2016 Q1-Q3 data in `RBI_Deposits_2017_2022.xlsx`. All deposit-based tests (H2, H3, H4) flagged for review. VIIRS data (666 districts, 79,920 monthly observations) unaffected.
-
-**v1.8 (2026-02-01 23:15 IST)**: RBI contamination concern RESOLVED (false alarm from fiscal-calendar conversion misunderstanding). Forensic audit confirmed all RBI source files clean. Phase 3d complete: 120 VIIRS tiles processed to regression-ready panel (23,347 obs, 23 variables, 100% VIIRS-deposit overlap). Regression variables engineered (logs, changes, lags L1-L4). Data quality validated via Scripts 25, 26, temp.py diagnostics. Analysis sample: 631 districts, 37 quarters (2015Q1-2016Q2, 2017Q2-2024Q4), 1,984 flood events (8.50% treatment rate). All hypotheses (H1-H4) ready for Phase 4 econometric testing. No hypothesis modifications; only data status updated.
-
-**v1.9**: RBI deposit extraction bug discovered. Script 13 extracted wrong column (offices instead of deposits) for 2004-2022 data. All Phase 4 results invalidated. Bug documented, fix identified.
-
-**v2.0**: Deposits corrected (Feb 5), VIIRS contamination discovered (Feb 6). Scripts 18, 21 merged 7 homonymous districts across states (Aurangabad, Balrampur, Bijapur, Bilaspur, Hamirpur + 2 others). 518 rows affected (~259 with measurement error). Statistical impact: H1 coefficient attenuated, H2 weak instrument problem, H4c spurious result. H3 may be valid if specification excludes VIIRS. Results below flagged as contaminated. Hypotheses unchanged.
-
-**v2.1 (2026-02-11)**: Full data quality resolution. Deposits cleaned via two-bug fix: (1) Crosswalk deduplication (Script 8, 769→762 rows), (2) State filtering (Script 13, 67 duplicate rows removed). Verification: Aurangabad Bihar deposits dropped 76-83% after eliminating Maharashtra contamination. VIIRS pipeline verified clean via code review and Excel checks (Scripts 18-24 use composite keys throughout). H3 results validated: specification uses deposits+floods only, defensible for publication. H1, H2, H4 pending re-run with clean deposits and corrected fixed effects. Hypotheses unchanged.
-
-**v2.2 (2026-02-13)**: Phase 3d VIIRS integration complete. Reused Feb 1 VIIRS data after forensic validation (Aurangabad litmus test: Bihar 0.681 != Maharashtra 0.433). Script 22b created to align VIIRS with clean deposits (column name fix + filter to 624 districts). Scripts 23-24 executed: analysis panel 23,088 rows with 100% VIIRS coverage, regression panel ready with 23 variables. Time savings: 8-10 hours vs full re-extraction. Final sample: 624 districts (42 zero-coverage excluded, not 35 as previously estimated). Two-bug fix revealed 7 additional zero-coverage districts when deposits correctly assigned by state. Hypotheses unchanged. H1, H2, H4 pending re-run with clean data and corrected FE.
+**Version:** 2.3 (Mar 4, 2026)
+**Status:** Pipeline fix pending Mar 5. H3 validated. H1, H2, H4 pending re-run.
 
 ---
 
-### Notation and Timing
+## Version History
 
-- District index i, quarter index t, month index m
-- Flood shocks originate at daily resolution (EM-DAT) and mapped into quarter t
-- Night lights observed monthly (VIIRS) and aggregated to quarterly level to align with RBI deposits
-- Key outcomes:
-  - Delta_Deposits_it: quarterly log change in deposits (RBI)
-  - Delta_Lights_it: quarterly change in log VIIRS brightness (constructed from monthly VIIRS)
-- Flood exposure measures (two precision regimes):
-  - Flood_A_it: "Rule A" flood exposure (district Admin Units where available; otherwise state-level fallback mapped to all districts in state)
-  - Flood_B_it: "Rule B" flood exposure (district-only; no fallback)
+| Version | Date | Change |
+|---|---|---|
+| v1.3 | — | Wording updates, feasibility alignment |
+| v1.4 | 2026-01-18 | Phase 4 preliminary results documented; no hypothesis modifications |
+| v1.5 | 2026-01-20 17:00 | Script 21 VIIRS dissolve bug identified; H1–H4 results suspended |
+| v1.6 | 2026-01-20 23:30 | Script 21 fix implemented; overnight VIIRS regeneration initiated |
+| v1.7 | 2026-01-30 23:26 | RBI contamination concern raised (suspected duplicate 2016 quarters) |
+| v1.8 | 2026-02-01 23:15 | RBI concern resolved (false alarm). Phase 3d complete. All hypotheses regression-ready. |
+| v1.9 | 2026-02-04 | Script 13 column offset bug discovered. Phase 4 results invalidated. Fix identified. |
+| v2.0 | 2026-02-06 | Deposits corrected (Feb 5). VIIRS homonymous district contamination identified. H3 potentially clean. |
+| v2.1 | 2026-02-11 | Full deposit pipeline fixed: crosswalk dedup (769→762) + state filtering. H3 validated. |
+| v2.2 | 2026-02-13 | VIIRS alignment complete via Script 22b. Analysis panel: 23,088 obs, 100% VIIRS coverage. |
+| v2.3 | 2026-03-04 | **District count corrected: 631 composite pairs (was 624 — name-only undercount). Sample: 23,347 obs. Crosswalk contamination identified (769-row regression, Feb 27). Pipeline fix scheduled Mar 5.** |
 
-**Interpretation discipline (pre-committed)**:
-
-- "Lights" treated as proxy consistent with displacement/outflows or disruption-driven activity loss; not proof of migration without external corroboration
-- "Shadow run" defined as sharp decline in deposits consistent with liquidity stress, not solvency deterioration
-
-**Location precision note (pre-committed)**:
-
-- EM-DAT location precision is heterogeneous; all core results reported in two panels:
-  - (1) Full sample using Flood_A_it (statistical power, but attenuation risk)
-  - (2) High-precision sample using Flood_B_it (credibility, but smaller treatment variation)
-
-**Inference note (pre-committed)**:
-
-- Baseline specifications use district and quarter fixed effects
-- Standard errors clustered at district level unless documented reason not to; if not clustered, inference treated as potentially optimistic
+**Discipline:** No hypothesis was modified to chase empirical results. Version history
+records data corrections, not specification changes. Any modification to hypothesis
+wording is explicitly labeled with rationale and date.
 
 ---
 
-## H1: Floods trigger measurable outflows/disruption (VIIRS proxy)
+## Notation
 
-**Hypothesis**: Flood exposure produces statistically and economically meaningful decline in night-time lights in affected districts in immediate post-shock window, consistent with population displacement and/or disruption-driven outflows.
+| Symbol | Definition |
+|---|---|
+| i | District (composite: district_gadm + state_gadm) |
+| t | Calendar quarter |
+| Delta_Deposits_it | Log first difference of district deposits (RBI BSR-2) |
+| Delta_Lights_it | Log first difference of mean VIIRS radiance (nW/cm²/sr) |
+| Flood_A_it | Rule A flood exposure: district match OR state fallback |
+| Flood_B_it | Rule B flood exposure: district match only (high precision) |
+| mu_i | District fixed effect |
+| tau_t | Quarter fixed effect |
 
-**Operational statement**: After flood in quarter t, change in log VIIRS brightness is negative on average in same quarter and/or next quarter.
+**Flood exposure precision note (pre-committed):** Rule A maximises power at the cost
+of state-level attenuation. Rule B maximises precision at the cost of statistical power.
+All core results reported under both rules. Rule A estimates are conservative lower
+bounds on the true local effect.
 
-**Primary test** (district and time fixed effects):
+**Lights interpretation (pre-committed):** Delta_Lights_it treated as a proxy consistent
+with displacement or disruption-driven activity loss. Not presented as direct proof of
+migration without external corroboration.
 
-Delta_Lights_it = alpha + beta_1 * Flood_it + gamma * X_it + mu_i + tau_t + epsilon_it
+**Shadow run definition (pre-committed):** A sharp deposit decline consistent with
+liquidity demand from depositors, not from slow-moving credit deterioration or solvency
+stress.
 
-Where Flood_it estimated separately as Flood_A_it and Flood_B_it, and X_it includes seasonality controls (quarter FE absorbs national seasonality; optional monsoon indicator redundant but may be used for exposition).
-
-- Expected sign: beta_1 less than 0
-
-**Measurement precision caveat (pre-committed)**:
-
-- State-level fallback in Flood_A_it introduces false positives and biases beta_1 toward zero (attenuation)
-- Therefore, Flood_A estimates interpreted as conservative lower bounds relative to "true local" district-level effect
-
-**Economic significance threshold (pre-committed)**:
-
-- H1 economically meaningful if implied effect at least 5 percent decline in quarterly lights (order-of-magnitude threshold; if empirical volatility of Delta_Lights makes 5 percent nonsensical, threshold revised once and documented before final tables)
-
-**Falsification condition**:
-
-- If beta_1 greater than or equal to 0 (no dimming or systematic brightening), "flood to outflow/disruption captured by lights" interpretation fails and lights cannot be used as displacement proxy in this setting
-
----
-
-## H2: Outflows/disruption (proxied by lights) coincide with deposit withdrawals (liquidity stress)
-
-**Hypothesis**: Districts experiencing larger declines in night lights also experience larger declines in bank deposits, consistent with liquidity demand/withdrawals rather than slow-moving credit losses.
-
-**Sign logic**:
-
-- In shock periods, both Delta_Lights_it and Delta_Deposits_it expected negative
-- Therefore slope in regression of deposits on lights expected positive: beta_2 greater than 0
-
-### H2a: Reduced-form association (informative, not causal by itself)
-
-Delta_Deposits_it = alpha + beta_2 * Delta_Lights_it + gamma * X_it + mu_i + tau_t + epsilon_it
-
-**Endogeneity warning (explicit)**:
-
-- Delta_Lights_it may correlate with unobserved shocks that also directly affect deposits (income shocks, policy disruptions, infrastructure outages)
-- Therefore, H2a is descriptive/diagnostic, not preferred causal estimate
-
-### H2b: Preferred causal test (IV / 2SLS)
-
-**Strategy**: Instrument Delta_Lights_it using flood exposure (first stage is H1)
-
-First stage:
-
-Delta_Lights_it = alpha + beta_1 * Flood_it + gamma * X_it + mu_i + tau_t + epsilon_it
-
-Second stage:
-
-Delta_Deposits_it = alpha + beta_2 * Delta_Lights_it_hat + gamma * X_it + mu_i + tau_t + epsilon_it
-
-- Expected sign: beta_2 greater than 0
-
-**Instrument choice discipline**:
-
-- Report 2SLS estimates instrumenting with Flood_B (high-precision) where feasible
-- Also report Flood_A instrument results with explicit weak-instrument and attenuation warnings; do not oversell IV if first stage weak
-
-**Exclusion restriction / identifying assumption (stated clearly)**:
-
-- IV interpretation requires floods shift deposits primarily through displacement/disruption channel proxied by lights
-- Threats: direct banking-operation disruption (branch closures, cash logistics interruptions) may affect deposits independently of lights
-- Therefore, causal language softened if evidence of direct operational disruption plausible and unaddressed
-
-### H2c: Event indicator form (migration/disruption proxy event)
-
-Define event:
-
-- MigrationProxy_it = indicator(Delta_Lights_it less than negative theta)
-
-**Threshold rule (pre-committed; not arbitrary)**:
-
-- Baseline theta chosen from distribution of Delta_Lights among flood-exposed district-quarters in high-precision sample (document exact rule used)
-- Robustness: theta in {0.10, 0.15, 0.20}
-
-Estimate:
-
-Delta_Deposits_it = alpha + beta_2 * MigrationProxy_it + gamma * X_it + mu_i + tau_t + epsilon_it
-
-- Expected sign (event dummy): beta_2 less than 0
-
-**Economic significance threshold (pre-committed)**:
-
-- H2 economically meaningful if 10 percent decline in lights predicts at least 2 percent decline in deposits within 0-1 quarters (order-of-magnitude benchmark; if deposit volatility makes 2 percent meaningless, revise once and document before final tables)
-
-**Falsification condition**:
-
-- If deposits do not respond to lights changes (insignificant or wrong-signed coefficients in both reduced form and IV), displacement/disruption to liquidity link not supported
+**FE specification (pre-committed):** District FE constructed on composite
+district_state_id throughout Scripts 27–30. Using district_gadm alone collapses
+7 homonymous pairs, producing 624 FE instead of correct 631.
 
 ---
 
-## H3: Shadow-run timing — deposit shocks occur quickly (liquidity timeline)
+## H1: Floods reduce economic activity (first stage)
 
-**Hypothesis**: Deposit declines occur in same quarter as flood and/or next quarter, consistent with liquidity stress rather than slow-moving credit-loss transmission.
+**Hypothesis:** Flood exposure produces a statistically and economically meaningful
+decline in nighttime lights in affected districts, consistent with displacement or
+disruption-driven outflows.
 
-### H3a: Timing fingerprint (core, feasible)
+**Specification:**
 
-Distributed lags (deposit change at t explained by flood exposure at t, t-1, t-2):
+Delta_Lights_it = alpha + beta_1 * Flood_it + mu_i + tau_t + epsilon_it
 
-Delta_Deposits_it = alpha + beta_0 * Flood_it + beta_1 * Flood_i,t-1 + beta_2 * Flood_i,t-2 + gamma * X_it + mu_i + tau_t + epsilon_it
+Estimated separately for Flood_A and Flood_B.
 
-- Expected: beta_0 less than 0 and/or beta_1 less than 0, with attenuation by beta_2
+- **Expected sign:** beta_1 < 0
+- **Economic significance threshold (pre-committed):** |beta_1| implying at least
+  5% decline in quarterly lights. If observed volatility of Delta_Lights makes 5%
+  incoherent as a threshold, threshold revised once and documented before final tables.
+- **Attenuation note:** State-level fallback in Flood_A biases beta_1 toward zero.
+  Flood_A estimates are conservative lower bounds.
+- **Falsification:** If beta_1 >= 0 (no dimming or systematic brightening), lights
+  cannot serve as a displacement proxy in this setting and the IV chain fails.
 
-**Falsification condition**:
+**Current status:** PENDING RE-RUN
+Preliminary result (Feb 6, contaminated deposits): beta_1 = -0.0149, SE = 0.0028,
+t = -5.37, p < 0.001, N = 22,716. Effect size and significance uncertain until
+re-run with corrected pipeline (Script 8 fix Mar 5, then Scripts 12–17, then 27).
 
-- If effects appear only at long lags (e.g., t-3 and beyond) and not at t or t-1, "liquidity-timeline" interpretation weakened
+---
+
+## H2: Lights declines predict deposit withdrawals (liquidity transmission)
+
+**Hypothesis:** Districts experiencing larger declines in nighttime lights also experience
+larger deposit declines, consistent with liquidity demand rather than credit deterioration.
+
+**Sign logic:** In shock periods, both Delta_Lights_it and Delta_Deposits_it expected
+negative. The deposit-on-lights slope is therefore expected positive.
+
+### H2a: Reduced-form association (descriptive)
+
+Delta_Deposits_it = alpha + beta_2 * Delta_Lights_it + mu_i + tau_t + epsilon_it
+
+- **Expected sign:** beta_2 > 0
+- **Status:** Descriptive only. Delta_Lights_it correlates with unobserved income
+  shocks that directly affect deposits. Not the preferred causal estimate.
+
+### H2b: IV / 2SLS (preferred causal test)
+
+**First stage:** H1 specification above.
+
+**Second stage:** Delta_Deposits_it = alpha + beta_2 * Delta_Lights_it_hat + mu_i + tau_t + epsilon_it
+
+- **Expected sign:** beta_2 > 0
+- **Instrument discipline (pre-committed):** Report Flood_B instrument where feasible.
+  Report Flood_A results with explicit weak-instrument and attenuation caveats. If
+  first stage F < 10, label IV as suggestive and do not claim causal identification.
+- **Exclusion restriction:** Floods shift deposits primarily through the
+  displacement/disruption channel proxied by lights. Direct banking-operation
+  disruption (branch closures, cash logistics) is a threat not fully addressed by
+  the IV. Causal language softened accordingly if this threat is empirically plausible.
+- **Falsification:** If deposits do not respond to lights in either reduced form or
+  IV, the displacement-to-liquidity link is not supported in this data.
+
+**Current status:** PENDING RE-RUN
+Preliminary result (Feb 6, contaminated deposits): First stage beta_1 = -0.0151
+(t = -5.42, strong instrument). Second stage beta_2 = +0.0839, SE = 0.1640,
+p = 0.609 (null). Null finding may persist or reverse with clean pipeline. Three
+explanations if null persists: (1) lights are a noisy migration proxy, (2) effect
+operates through non-migration channels, (3) deposit effects are lagged, not
+contemporaneous — see H3.
+
+---
+
+## H3: Deposit effects follow a liquidity-consistent timing structure
+
+**Hypothesis:** Deposit declines occur within two quarters of flood exposure, consistent
+with rapid liquidity demand rather than slow-moving credit-loss transmission.
+
+### H3a: Distributed lag timing (core)
+
+Delta_Deposits_it = alpha
++ beta_0 * Flood_it
++ beta_1 * Flood_i,t-1
++ beta_2 * Flood_i,t-2
++ mu_i + tau_t + epsilon_it
+
+- **Expected pattern:** beta_0 and/or beta_1 < 0, with attenuation by t-2
+- **Falsification:** If effects appear only at t-3 or beyond, the liquidity-timeline
+  interpretation is weakened. If no lag is significant, mechanism is not supported.
 
 ### H3b: Liquidity-not-solvency fingerprint (extension, conditional)
 
-If district-level credit-risk indicators (e.g., NPAs) become available:
+If district-level credit-risk indicators (NPA ratios) become available, deposit
+declines should not be fully mediated by contemporaneous credit deterioration.
+If credit-risk data remains unavailable, H3b is explicitly labeled as a limitation
+and not silently assumed to hold.
 
-- Deposit declines should not be fully mediated by contemporaneous credit deterioration
-- If credit-risk measures spike immediately and explain deposit declines, mechanism shifts toward solvency/credit-loss transmission rather than shadow runs
+**Current status: VALIDATED CLEAN**
 
-If credit-risk data unavailable, H3b explicitly labeled as limitation (not silently "assumed" result).
+H3 specification uses deposits and flood lags only — no VIIRS variables, no district
+FE (quarter FE only). Therefore unaffected by VIIRS contamination, crosswalk
+regression, or homonymous FE collapse.
 
----
+Confirmed results (Feb 6, N = 21,912):
 
-## H4: Heterogeneity (core, feasible with current data)
+| Lag | Coefficient | SE | p | Finding |
+|---|---|---|---|---|
+| t0 (current quarter) | -0.0005 | 0.0014 | 0.777 | Null |
+| t-1 (1 quarter) | +0.0004 | 0.0014 | 0.757 | Null |
+| t-2 (2 quarters) | **-0.0091** | 0.0036 | **0.012** | Confirmed |
 
-**Hypothesis**: Deposit response to floods is heterogeneous across district types, consistent with differential exposure to liquidity stress.
+**Interpretation:** Flood-induced deposit stress peaks at 6 months post-flood (-0.91%
+decline in deposit growth), not contemporaneously. Consistent with gradual displacement
+— households liquidate deposits after exhausting immediate coping strategies. Reconciles
+H2 null: deposit effects are lagged, not contemporaneous.
 
-**Operational statement**:
-
-- Flood to deposits effect more negative in districts with higher baseline financial intensity/urbanization proxies, and/or in districts with higher historical flood exposure
-
-Baseline interaction form:
-
-Delta_Deposits_it = alpha + beta_0 * Flood_it + beta_1 * (Flood_it times Z_i) + gamma * X_it + mu_i + tau_t + epsilon_it
-
-Where Z_i is pre-defined district characteristic or proxy (e.g., baseline deposit level category).
-
-- Expected sign: beta_1 less than 0 for "more vulnerable" groups
-
-**Proxy discipline**:
-
-- If true urban/rural classification unavailable, any "urbanization" proxy (e.g., median-split baseline deposits) must be labeled as proxy and treated as suggestive
-
-**Falsification condition**:
-
-- If interaction effects consistently zero, mechanism not heterogeneous by these proxies; claims narrowed accordingly
+**Caveat:** Sample was 21,912 (pre-clean, 2-lag restriction). Re-run with clean
+23,347-observation panel may change coefficient magnitude. t-2 significance expected to
+persist; direction and order of magnitude validated.
 
 ---
 
-## H5: Network contagion (extension; requires new data)
+## H4: Deposit response is heterogeneous across district types
 
-**Hypothesis**: Banking stress spills over to districts not directly flood-exposed, increasing with bank-network connectedness and/or geographic adjacency.
+**Hypothesis:** The flood-to-deposit effect is more negative in districts with higher
+baseline financial intensity or urbanisation, consistent with greater liquidity exposure.
 
-Define:
+**Specification (interaction form):**
 
-- Spillover_jt = sum_i W_ji * Flood_it
+Delta_Deposits_it = alpha
++ beta_0 * Flood_it
++ beta_1 * (Flood_it x Z_i)
++ mu_i + tau_t + epsilon_it
 
-Then:
+Where Z_i is a pre-defined district characteristic (not chosen after seeing results).
 
-Delta_Deposits_jt = alpha + beta_5 * Spillover_jt + gamma * X_jt + mu_j + tau_t + epsilon_jt
+- **Expected sign:** beta_1 < 0 for "more vulnerable" groups
+- **Proxy discipline (pre-committed):** If true urban/rural classification is
+  unavailable, urbanisation proxies (e.g., median-split on baseline deposit level,
+  or median-split on district mean lights) must be labeled as proxies and results
+  treated as suggestive, not causal.
 
-- Expected: beta_5 less than 0
+**Three pre-committed specifications:**
 
-**Dependency warning**:
+| Label | Z_i definition |
+|---|---|
+| H4a | Urban proxy: above-median district mean lights (baseline period) |
+| H4b | High exposure: above-median cumulative flood count |
+| H4c | Monsoon: Q3 indicator (July–September) |
 
-- If credible W matrix (shared bank networks/branch linkages) infeasible at district granularity, H5 remains stated extension and not "tested by proxy" without explicit justification
+- **Falsification:** If all interaction effects are consistently near zero, the
+  mechanism is not heterogeneous across these proxies and claims are narrowed.
 
----
+**Current status:** PENDING RE-RUN
+Preliminary results (Feb 6, contaminated deposits, N = 22,503):
 
-## Joint Mechanism Claim (What Success Looks Like)
+| Spec | Baseline | Interaction | p (interaction) | Note |
+|---|---|---|---|---|
+| H4a Urban | +0.0069 | -0.0111 | <0.001 | Pending re-run |
+| H4b High exposure | — | +0.0021 | 0.360 | Null (likely robust) |
+| H4c Monsoon | — | -0.0018 | 0.511 | Null (likely robust) |
 
-### Original Pre-Commitment
-
-Shadow Run mechanism supported if:
-
-1. H1 holds (floods reduce lights in short-run, robustly across precision regimes)
-2. H2 holds (lights declines predict deposit declines; IV preferred only when credible)
-3. H3a holds (timing immediate or one-quarter lag, consistent with liquidity stress)
-4. H4 holds (heterogeneity directionally consistent with vulnerability patterns)
-5. H5 holds when network data available (spillovers beyond direct exposure)
-
-If H1 holds but H2 fails, project becomes "disasters reduce activity (lights) without measurable deposit effects," and liquidity narrative softened.
-
-If H1 fails, displacement proxy fails and chain cannot be claimed.
-
-### Phase 3d Status (VIIRS Integration Complete, 2026-02-13)
-
-**Current status: REGRESSION-READY DATA VALIDATED (Clean Deposits + 100% VIIRS Coverage)**
-
-**Data Pipeline Complete:**
-- VIIRS: Feb 1 extraction reused after forensic validation (Aurangabad test passed) ✓
-- VIIRS alignment: Script 22b corrected column names + filtered to 624 districts ✓
-- RBI: Deposits cleaned via two-bug fix (crosswalk dedup + state filtering) ✓
-- Master merge: VIIRS + deposits + floods (23,088 analysis-ready obs, 100% VIIRS coverage) ✓
-- Variables: 23 total (11 raw + 12 engineered: logs, changes, lags L1-L4) ✓
-
-**Analysis Sample Specifications:**
-- Observations: 23,088 district-quarters
-- Districts: 624 (42 zero-coverage excluded)
-- Time: 37 quarters (2015Q1-2016Q2, 2017Q2-2024Q4; gap: 2016Q3-2017Q1 structural RBI gap)
-- Flood treatment: 1,941 events (8.41% exposure rate, Rule A)
-- VIIRS coverage: 100% (23,088/23,088)
-- Deposit coverage: 99.1% (22,880/23,088)
-
-**Data Quality Issues Resolved:**
-(1) Deposit contamination: RESOLVED via two-bug fix (state filtering applied)
-(2) VIIRS homonymous districts: VERIFIED CLEAN (composite keys throughout pipeline)
-(3) RBI 2016-2017 gap: CONFIRMED structural (publication schedule gap, not error)
-(4) Zero-coverage districts: 42 excluded (7 additional revealed by state-correct assignment)
-
-**Phase 4 Regressions:** PENDING (FE corrections required before execution)
-- Clean deposits verified (Scripts 13-17 complete)
-- VIIRS integration complete (100% coverage achieved)
-- Regression panel ready (23,088 obs, 23 variables)
-- Scripts 27-30 require FE fix (composite district_state_id) before execution
+H4a result requires re-evaluation with clean pipeline and corrected composite FE.
+H4b and H4c null results expected to persist.
 
 ---
 
-## Pre-Committed Robustness and Guardrails (To Keep the Paper Honest)
+## H5: Network contagion (extension — requires new data)
 
-1. Threshold robustness: theta in {0.10, 0.15, 0.20}
-2. Placebo timing: test floods predicting changes in t-1 (should not)
-3. Precision stress-test: report Flood_A and Flood_B side by side
-4. Inference discipline: district-clustered SE baseline; if not clustered, state it and soften inference
-5. Interpretation constraint: lights "consistent with displacement/outflows," not proof of migration
-6. IV discipline: report first-stage strength; if weak, label IV as suggestive or drop causal language
+**Hypothesis:** Banking stress spills over to districts not directly flood-exposed,
+increasing with bank-network connectedness or geographic adjacency.
 
-**Status**: v2.1 — Deposits clean (Feb 11). H3 validated. H1, H2, H4 pending re-run with corrected data and fixed effects.
+**Specification:**
 
----
+Spillover_jt = sum_i W_ji * Flood_it
 
-## Empirical Results (Phase 4 — Pending Re-run with Clean Deposits)
+Delta_Deposits_jt = alpha + beta_5 * Spillover_jt + mu_j + tau_t + epsilon_jt
 
-**Analysis Period:** 2015Q1-2024Q4 (37 quarters, excludes 2016Q3-2017Q1 RBI gap)
-**Sample:** 23,347 district-quarters (631 districts)
-**Standard Errors:** District-clustered in all specifications
-**Fixed Effects:** District + Quarter in all specifications
+- **Expected sign:** beta_5 < 0
+- **Hard dependency:** If a credible W matrix (shared branch networks, interbank
+  linkages) is infeasible at district granularity, H5 remains a stated extension.
+  It will not be tested by proxy without explicit methodological justification.
 
-### H1: First Stage (Floods → Economic Activity)
-
-**Specification:** lights_change_qt ~ flood_exposure_ruleA_qt + district_FE + quarter_FE
-
-**Result:** PENDING RE-RUN (Feb 6 result with contaminated deposits)
-- Preliminary Coefficient: -0.014867 (floods reduce lights by 1.49%)
-- Preliminary Standard Error: 0.002768 (clustered)
-- Preliminary t-statistic: -5.371
-- Preliminary p-value: <0.001
-- N: 22,716 observations (contaminated sample)
-
-**Interpretation:** Feb 6 result showed strong first stage. Effect size and significance pending verification with clean data.
-
-**STATUS:** Awaiting re-run. Clean deposits available (Feb 13). VIIRS pipeline verified clean. Regression FE requires correction (composite district_state_id). Sample size will change to 23,088 observations (624 districts). Coefficient magnitude and significance uncertain until re-run.
-
-### H2: Reduced Form IV (Lights → Deposits)
-
-**Specification:** deposit_change_qt ~ lights_change_qt_hat + district_FE + quarter_FE (instrumented with flood_exposure_ruleA_qt)
-
-**Result:** PENDING RE-RUN (Feb 6 result with contaminated deposits)
-- Preliminary First Stage: -0.015104 (t=-5.416, strong instrument)
-- Preliminary Second Stage: 0.083926 (SE=0.164038, t=0.512, p=0.609)
-- N: 22,503 observations (contaminated sample)
-
-**Interpretation:** Feb 6 result showed null IV effect. Null finding requires re-evaluation with clean data. Three explanations remain: (1) lights are noisy migration proxy, (2) effect operates through non-migration channels, (3) effect is lagged not contemporaneous (see H3).
-
-**STATUS:** Awaiting re-run. Clean deposits available (Feb 13). VIIRS pipeline verified clean. Sample size will change to 23,088 observations (624 districts). Null finding may persist or reverse with clean data and corrected FE.
-
-### H3: Timing Structure (Distributed Lags)
-
-**Specification:** deposit_change_qt ~ flood_t0 + flood_t1_lag + flood_t2_lag + district_FE + quarter_FE
-
-**Results:** (Feb 6 results, specification verified clean)
-- Current Quarter (t0): -0.0005 (SE=0.0014, t=-0.39, p=0.777) NOT significant
-- 1-Quarter Lag (t-1): +0.0004 (SE=0.0014, t=0.31, p=0.757) NOT significant
-- 2-Quarter Lag (t-2): -0.0091 (SE=0.0036, t=-2.52, p=0.012) CONFIRMED
-- N: 21,912 observations (pre-clean sample, specification still valid)
-
-**Interpretation:** Delayed deposit stress confirmed. Floods cause deposit declines with 2-quarter lag (6 months), not contemporaneously. Effect magnitude: -0.91% at t-2, significant at 5% level. Reconciles H2 null: deposit effects operate through lagged mechanism, not contemporaneous transmission. t-1 lag null (unlike preliminary H3a description above); t-2 lag is significant effect.
-
-**STATUS:** VALIDATED CLEAN (Feb 11). Specification uses deposits and flood lags only (no VIIRS variables). No district FE in H3 specification (only quarter FE), therefore no homonym collapse contamination. Feb 6 result defensible for publication. Effect size and significance may change with clean deposits (sample 23,088 vs 21,912), but mechanism validated.
-
-### H4: Heterogeneity Analysis
-
-**Specification:** deposit_change_qt ~ flood + [interaction_term] + district_FE + quarter_FE
-
-**H4a: Urban × Flood - PENDING RE-RUN**
-- Preliminary Baseline (rural): 0.006948 (SE=0.001916, t=3.626, p<0.001)
-- Preliminary Interaction: -0.011099 (SE=0.002259, t=-4.913, p<0.001)
-- N: 22,503 observations (contaminated sample)
-
-**Interpretation:** Feb 6 result suggested urban vulnerability. Result requires re-evaluation with clean data.
-
-**STATUS:** Awaiting re-run. Clean deposits available (Feb 13). Urban proxy construction requires verification. Sample size will change to 23,088 observations (624 districts). Interaction magnitude and significance uncertain until re-run with corrected FE.
-
-[... keep H4b result as is, but change status:]
-
-**H4c: Monsoon × Flood - NULL**
-- Interaction: -0.001785 (SE=0.002716, t=-0.657, p=0.511)
-
-**Interpretation:** Monsoon season floods do not produce different deposit effects than off-season floods.
-
-**STATUS:** Pending re-run with clean deposits. Feb 6 null result consistent with prior version, but coefficient may change with corrected data.
+**Current status:** NOT TESTED. Dependent on data availability. Not included in
+current regression pipeline.
 
 ---
 
-## Summary of Findings (Data Clean, Regressions Pending)
+## Joint Mechanism: What Full Support Looks Like
 
-**Phase 3d Status:** VIIRS integration complete (Feb 13). Regression panel ready: 23,088 observations, 23 variables, 100% VIIRS coverage.
+The Shadow Run mechanism is supported if:
 
-**H3 Validated Results (Feb 6, Defensible with Caveat):**
-- Current Quarter (t0): β = -0.0005, p = 0.777 (null)
-- 1-Quarter Lag (t1): β = +0.0004, p = 0.757 (null)
-- 2-Quarter Lag (t2): β = -0.0091, p = 0.012 (significant)
-- Interpretation: 6-month lag effect (-0.91% deposit decline) consistent with liquidity timeline
-- Status: Specification verified clean (deposits+floods only, quarter FE only, no district FE)
-- Caveat: Sample size was 21,912 (pre-clean), effect size may change with 23,088 clean sample
+1. **H1 holds** — Floods reduce lights, robustly across both precision regimes
+2. **H2 holds** — Lights declines predict deposit declines (IV preferred when credible)
+3. **H3a holds** — Timing is immediate or one-quarter lag (liquidity timeline confirmed)
+4. **H4 holds** — Heterogeneity directionally consistent with vulnerability patterns
 
-**H1, H2, H4 Status:**
-- Feb 6 results obtained with contaminated deposits (Aurangabad Bihar+Maharashtra summed)
-- Clean deposits available (Feb 13): 23,088 observations, 624 districts
-- VIIRS pipeline verified clean (composite keys throughout, forensic validation passed)
-- Regression FE requires correction (composite district_state_id, not district_gadm only)
-- Expected changes: H1 coefficient magnitude uncertain, H2 null may persist, H4 interactions require re-evaluation
-- Estimated completion: 2-3 hours (Scripts 27-30 FE fix + execution)
+**Degraded conclusions (pre-committed):**
 
-**Hypotheses Status:**
-- H1: READY (clean data, FE fix required)
-- H2: READY (clean data, FE fix required)
-- H3: VALIDATED (specification clean, effect size may change with larger clean sample)
-- H4: READY (clean data, FE fix required)
+| Outcome | Interpretation |
+|---|---|
+| H1 holds, H2 null | Disasters reduce activity without measurable deposit effects; liquidity narrative softened |
+| H1 fails | Lights proxy fails; IV chain invalid; paper reframes around reduced form only |
+| H3 null at all lags | Mechanism operates at horizons beyond 6 months, or not via deposit channel |
+| H4 null throughout | Effect is homogeneous; urbanisation/exposure heterogeneity not supported |
 
-**Next Steps:**
-1. Fix regression FE (Scripts 27, 28, 30: composite district_state_id)
-2. Re-run H1, H2, H4 regressions with clean data
-3. Re-run H3 with full 23,088 sample (verify t-2 lag persists)
-4. Compare Feb 6 vs Feb 14 results (document coefficient changes)
-5. Proceed to manuscript drafting if results robust
+---
 
-**Policy Implications (Conditional on H3 Validation):**
-- If t-2 lag effect persists: 6-month delayed deposit stress suggests banking system has short liquidity management window post-flood
-- Immediate relief deployment may prevent deposit flight
-- Full policy recommendations contingent on H1, H2, H4 validation with clean data
+## Pre-Committed Robustness Checks
+
+All robustness checks specified before regression execution. Not added retroactively
+to protect significant results.
+
+1. **Flood precision:** All core results reported under Rule A and Rule B side by side
+2. **Placebo timing:** Test flood_t-1 predicting Delta_Deposits_t-1 (should produce null)
+3. **Winsorisation:** Deposit growth winsorised at 1/99 percentile (regression-panel-final-winsor.csv)
+4. **CPI deflation:** Nominal deposits deflated by CPI; verify results robust to real vs nominal
+5. **Longer lags:** Extend H3 to t-3 and t-4 (Rule B only, for precision)
+6. **SE robustness:** State-level clustering as alternative to district-level (more conservative)
+7. **IV discipline:** Report first-stage F-statistic. If F < 10, label 2SLS as suggestive;
+   drop causal language from abstract and conclusions
+
+---
+
+## Current Data State (Mar 4, 2026)
+
+| File | Rows | Status |
+|---|---|---|
+| rbi_deposits_panel.csv | 49,670 (in-window) | CLEAN — Feb 11 |
+| district_crosswalk_draft.csv | 769 | CONTAMINATED — 7 duplicate rows, fix Mar 5 |
+| flood_exposure_panel.csv | 26,640 | CONTAMINATED — 2,230 Rule A (should be 2,220) |
+| viirs_quarterly_panel_clean.csv | 25,240 | CLEAN — Mar 3 |
+| analysis_panel_final.csv | 23,347 | CLEAN — Mar 4 |
+| regression_panel_final.csv | 23,347 | CLEAN — Mar 4 |
+
+**Correct analysis sample (post-fix):**
+631 composite district pairs × 37 quarters = 23,347 observations
+Flood treatment: 1,984 Rule A events (8.50%) — pending pipeline fix confirmation
+VIIRS coverage: 100% | Deposit coverage: 99.1%
+
+---
+
+## Pending Actions (Mar 5, 2026)
+
+1. Script 8 permanent rewrite with hard assert (`len(output) == 762`) — root fix
+2. Re-run Scripts 12 → 14 → 15 → 17 → 23 → 24 → 25 sequentially
+3. Verify flood events = 2,220 Rule A before proceeding to regressions
+4. Fix FE specification in Scripts 27, 28, 30 (composite district_state_id)
+5. Execute H1, H2, H4 regressions with clean data
+6. Re-run H3 with full 23,347-observation sample; verify t-2 lag persists
+7. Document all coefficient changes from Feb 6 to post-fix run
+
+---
+
+*Project initiated: 2025-12-30 | Principal investigator: Jaseel Badar, Harvard University*

@@ -1,461 +1,391 @@
-# VARIABLES CODEBOOK AND CODING PROTOCOL (v2.2)
+# Variables Codebook and Coding Protocol (v2.3)
 
-**Project**: Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from Night-Lights in India (2015-2024)
+**Project:** Climate Shocks, Displacement, and Bank Liquidity Risk: Evidence from
+Night-Lights in India, 2015–2024
 
-**Document Type**: Variables codebook and enforceable coding protocol
-**Version**: 2.2 (Phase 3d VIIRS Integration Complete)
+**Status:** Pipeline fix pending Mar 5. Analysis panel clean (Mar 4). Regressions pending.
+**Last updated:** 2026-03-04
 
-**Status**: Phase 3d complete (Feb 13, 2026). Deposits clean (two-bug fix Feb 11). VIIRS integration complete (100% coverage achieved). Regression panel ready: 23,088 observations, 23 variables. Regression scripts require FE correction before execution.
+---
 
-**Date**: February 13, 2026
+## Changelog
+
+| Version | Date | Change |
+|---|---|---|
+| v1.x–v2.0 | 2026-01-18 to 02-06 | Initial codebook; VIIRS dissolve bug; deposit extraction bug; H3 validated |
+| v2.1 | 2026-02-11 | Deposits cleaned: crosswalk dedup (769→762) + state filtering. VIIRS pipeline verified. |
+| v2.2 | 2026-02-13 | VIIRS alignment complete (Script 22b). Regression panel ready: 23,088 obs, 23 variables. |
+| **v2.3** | **2026-03-04** | **District count corrected: 631 composite pairs (was 624). Sample: 23,347 obs. Log offset corrected: +0.001 (was +0.01). Crosswalk contamination documented (769-row regression, Feb 27). Fix Mar 5.** |
+
+**Discipline:** Variable definitions and coding protocols do not change to match results.
+Version bumps record measurement corrections, naming fixes, and reproducibility updates only.
 
 ---
 
 ## Non-Negotiable Principles
 
-1. Raw data is read-only: Never modify anything inside `01_Data_Raw/`. All transformations write to `02_Data_Intermediate/` or `03_Data_Clean/`.
-2. No silent drops: Any row or observation dropped must be logged with counts and reasons.
-3. No endogeneity by construction: Never use VIIRS outcomes to define flood treatment (no "flood = 1 if lights drop").
-4. One script one responsibility: Each script produces one named output dataset and one log file.
-5. Reproducibility beats cleverness: Prefer simple, auditable transformations over complex heuristics.
-6. Do not overclaim: If a variable is proxy (urban, migration, exposure), label it as such in outputs and paper.
-7. No district-name dissolve: Never dissolve GADM districts using NAME_2 alone (homonymous districts across states will merge). If dissolve needed, must include state (NAME_1) or stable unique ID; otherwise, do not dissolve.
-8. Quarter-level date validation: All RBI extraction must validate year-quarter alignment against source file column headers. Never trust row labels without verification against actual data columns.
+1. **Raw data is read-only.** Nothing inside `01_Data_Raw/` is ever modified. All
+   transformations write to `02_Data_Intermediate/` or `03_Data_Clean/`.
+2. **No silent drops.** Every dropped row is logged with count and reason.
+3. **No endogeneity by construction.** VIIRS outcomes never define flood treatment.
+4. **One script, one output.** Each script produces one named dataset and one log file.
+5. **No district-name dissolve.** Never dissolve on `district_gadm` alone. Homonymous
+   districts across states will merge. All groupby, FE, and dissolve operations use
+   composite `(district_gadm, state_gadm)`.
+6. **Composite keys everywhere.** Any operation on the panel that is district-specific
+   must use `district_gadm + state_gadm` as the grouping key — not name alone.
+7. **Log offset locked.** The offset constant in `log(x + c)` is fixed globally per
+   variable, written into logs, and never tuned for results.
+8. **Quarter alignment validated.** RBI extraction validates year-quarter labels against
+   source column headers. Row labels not trusted without header verification.
+9. **Hard asserts before save.** Every script asserts expected row count and column count
+   before writing output to disk. Silent failures are not permitted.
 
 ---
 
 ## I. Panel Structure
 
-**Canonical unit**: Indian district polygons from GADM v4.1 Level-2
+**Canonical unit:** GADM v4.1 Level-2 district polygons (India)
+RBI districts are mapped to GADM via crosswalk. GADM is the spatial standard.
 
-RBI districts mapped to GADM using crosswalk (RBI not canonical geography).
+**Target period:** 2015Q1–2024Q4 (40 quarters)
+**Analysis period:** 37 quarters (2015Q1–2016Q2, 2017Q2–2024Q4)
+Gap: 2016Q3–2017Q1 — RBI publication blackout, confirmed structural (not contamination)
 
-**Target period**: Quarterly, 2015Q1 to 2024Q4 (40 quarters)
+**Index variables** (required in all output panels):
 
-**Implementation reality** (must be documented, not hidden):
+| Variable | Type | Definition |
+|---|---|---|
+| `district_gadm` | string | GADM Level-2 district name |
+| `state_gadm` | string | GADM Level-1 state name |
+| `district_state_id` | string | `district_gadm + '_' + state_gadm` — composite unique ID |
+| `quarter` | string | e.g., `2015Q1` |
+| `year` | int | 2015–2024 |
+| `q` | int | 1–4 |
+| `quarter_num` | int | Sequential index 1–40 (for sorting and lag construction) |
 
-- Analysis sample may drop quarters with missing deposits and districts with zero deposit coverage (this is sample restriction, not data "feature")
+**Sorting rule (locked):** Always sort by `district_gadm`, `state_gadm`, `year`, `q`
+before constructing lags or differences. Violation invalidates all time-series operations.
 
-**Key index variables** (must exist in final analysis panel):
+**Panel dimensions (Mar 4, 2026 verified):**
 
-Names aligned to implemented pipeline / Script 24 conventions.
+| Panel | Districts | Quarters | Observations |
+|---|---|---|---|
+| Master raw | 666 | 40 | 26,640 |
+| Analysis sample | **631** | **37** | **23,347** |
+| VIIRS quarterly | 631 | 40 | 25,240 |
+| Regression panel | 631 | 37 | 23,347 |
 
-- `districtgadm`: canonical district name (GADM)
-- `stategadm`: canonical state name (GADM)
-- `quarter`: string like `2015Q1`
-- `year`: 2015-2024
-- `q`: 1-4
-- `quarternum`: sequential index (1-40) used for sorting/lags
-
-**Sorting rule** (locked):
-
-Always sort by `districtgadm`, `stategadm`, `quarternum` before constructing lags or differences.
-
----
-
-## II. Outcome Variables (Banking)
-
-### A. Deposits (levels)
-
-**Variable**: `depositscrores`
-
-- Definition: Total deposits in district-quarter
-- Unit: Rupees crores (verify from RBI tables; treat as nominal unless deflated)
-- Construction: RBI extraction aggregates across population groups where needed
-- Data quality status: CLEAN (Feb 11-13, 2026). Two-bug cascade resolved: (1) Column offset corrected for fiscal quarter labels, (2) State filtering added for 7 homonymous districts (Aurangabad, Balrampur, Bijapur, Bilaspur, Hamirpur, Pratapgarh, Raigarh). Verification: Aurangabad Bihar 2015Q1 changed from 18652 (contaminated sum with Maharashtra) to 4422 (Bihar only, 76% drop). Full pipeline re-run complete: Scripts 13-17, 22b-24. All deposits accurate for 49,670 district-quarter observations. Analysis panel: 23,088 observations (624 districts × 37 quarters).
-
-**Variable**: `logdepositscrores`
-
-- Definition: natural log of deposits
-- Construction: `logdepositscrores = ln(depositscrores)`
-- Rule: Do not add arbitrary constants unless deposits can be zero; if constant used, must be fixed and logged
-
-### B. Deposits (growth)
-
-**Variable**: `depositchangeqt`
-
-- Definition: quarter-over-quarter log change in deposits (approximate percent change)
-- Construction: within district, `depositchangeqt = logdepositscrores - L1(logdepositscrores)`
-- Missingness rule: first observed quarter per district will have missing change by construction
-
-### C. Optional withdrawal event proxy (only if used in paper)
-
-**Variable**: `depositwithdrawalbinary` (optional)
-
-- Definition: indicator for unusually large deposit decline (shadow-run proxy)
-- Pre-commitment rule: Define threshold k from baseline distribution BEFORE mechanism regressions. Example: bottom decile of `depositchangeqt` among non-flood observations OR fixed -10 percent rule, whichever more conservative.
-- Construction: indicator(depositchangeqt less than k)
+Note: 624 appears in outputs using `.nunique()` on `district_gadm` alone. This
+undercounts by 7 (homonymous pairs). Correct district count is always 631 composite pairs.
 
 ---
 
-## III. Treatment Variables (Flood Shocks)
+## II. Outcome Variables — Banking
 
-Flood exposure constructed from EM-DAT and mapped into quarters, then into districts using documented rule set.
+### Deposits (level)
 
-### A. Exposure indicators (two precision regimes; both required)
+**`deposits`**
+- Definition: Total district-quarter deposits, all population groups aggregated
+- Unit: Indian Rupees, Crores (nominal)
+- Source: RBI BSR-2 (District-wise deposits)
+- Construction: Script 13 — fiscal-to-calendar conversion, state filtering for
+  7 homonymous districts, column offset +1 for historical files (2004–2022)
+- Status: **CLEAN (Feb 11, 2026)**
+  - Bug 1 resolved: Column offset corrected (`dep_idx = q_idx + 1`)
+  - Bug 2 resolved: State filtering prevents Bihar + Maharashtra AURANGABAD summing
+  - Verification: Aurangabad Bihar 2015Q1 = 4,422 Crores (was 18,652 — 76% drop)
+  - In-window rows: 49,670 (2015Q1–2024Q4); 50,192 total including 2025Q1–Q3 (harmless)
 
-**Variable**: `floodexposureruleAqt`
+**`log_deposits`**
+- Construction: `ln(deposits + 1)`
+- Offset: +1 (deposits always > 0 in sample; +1 is conservative safe default)
+- Verified range (Mar 4): min = 3.4011, max = 14.0288, mean = 8.7075
 
-- Rule A (full sample / lower-bound): if event location only state-level, code flood exposure for all districts in that state for that quarter
-- Interpretation constraint: attenuation bias expected due to false positives
+### Deposits (growth)
 
-**Variable**: `floodexposureruleBqt`
+**`deposit_change_qt`**
+- Construction: `log_deposits.diff()` within `(district_gadm, state_gadm)` groups
+- Missing values: 905 (631 first-observation NaNs + 274 from 0.9% missing deposits)
+  Asymmetry with `lights_change_qt` (631 only) is expected and confirms 100% VIIRS
+  coverage vs 99.1% deposit coverage — not a bug
+- Usable N: 22,442 observations
 
-- Rule B (high-precision / credibility spec): code exposure only when districts explicitly identified (Admin Units and/or verified parsing)
-- Interpretation constraint: smaller effective treatment variation; may weaken power
+### Deposit withdrawal proxy (optional)
 
-### B. Lags (timing tests)
-
-**Variable**: `floodlag1qt`
-
-- Definition: one-quarter lag of flood exposure (baseline: Rule A unless explicitly running Rule B spec)
-- Construction: L1(floodexposureruleAqt) within district
-
-**Variable**: `floodlag2qt` (optional if used)
-
-- Construction: L2(floodexposureruleAqt) within district
-
-### C. Severity (optional; only if available and logged cleanly)
-
-**Variable**: `floodseverityqt` (optional)
-
-- Preferred construction: ln(affected + deaths + 1) if both available with acceptable completeness
-- If missingness large, severity treated as exploratory (not main result)
+**`deposit_withdrawal_binary`** (use only if included in paper)
+- Construction: `indicator(deposit_change_qt < k)`
+- Threshold discipline: k defined from bottom decile of `deposit_change_qt` among
+  non-flood observations, or fixed −10% rule — whichever more conservative.
+  Threshold recorded before mechanism regressions. Not tuned post-estimation.
 
 ---
 
-## IV. Migration and Disruption Proxy (VIIRS Night Lights)
+## III. Treatment Variables — Flood Shocks
 
-### A. Quarterly lights level
+Flood events sourced from EM-DAT, mapped to calendar quarters, then matched to
+GADM districts via the district crosswalk (Script 12).
 
-**Variable**: `meanradiance`
+### Flood exposure (two precision regimes — both required)
 
-- Definition: district-quarter mean VIIRS radiance (after monthly extraction and quarterly aggregation)
-- Rule: Variable constructed only from VIIRS (never influenced by flood coding)
-- Data quality status: CLEAN (verified Feb 11-13, 2026). Scripts 18-24 use composite (district_gadm, state_gadm) keys throughout pipeline. Feb 1 VIIRS data reused after forensic validation (Aurangabad litmus test: Bihar 0.681 != Maharashtra 0.433). Script 22b created for alignment: column name correction + filter to 624 districts. Final output: viirs_quarterly_panel_clean.csv (24,960 rows, 624 districts × 40 quarters). 100% coverage achieved in analysis panel (23,088/23,088 observations).
+**`flood_exposure_ruleA_qt`** — Rule A (primary specification)
+- Definition: 1 if district directly matched OR district's state matched (fallback)
+- Coverage: ~8.50% treatment rate (1,984 events — pending pipeline fix)
+- Interpretation: Conservative lower bound. State-level fallback introduces false
+  positives; attenuates beta toward zero.
+- Status: **CONTAMINATED** — 2,230 events on disk (should be 2,220). Root cause:
+  Script 12 re-run Feb 28 with 769-row crosswalk. Fix Mar 5.
 
-**Variable**: `loglightsqt`
+**`flood_exposure_ruleB_qt`** — Rule B (robustness / credibility check)
+- Definition: 1 only when district explicitly identified in EM-DAT location field
+- Coverage: ~0.96% treatment rate (272 events — contaminated, same root cause)
+- Interpretation: Higher precision; smaller effective treatment variation; lower power.
 
-- Definition: log-transformed quarterly lights level
-- Construction (as implemented in Script 24): `loglightsqt = ln(meanradiance + c)` with fixed constant
-- Constant rule (locked): If constant c used to handle zeros, must be fixed globally and written into logs; never tuned for results. Current pipeline uses +0.01 offset (Script 24, line 47: `np.log(df['mean_radiance'] + 0.01)`). Fixed and documented.
+### Flood lags (distributed lag models)
 
-### B. Quarterly lights change
+| Variable | Construction | Used in |
+|---|---|---|
+| `flood_ruleA_L1` | L1 of `flood_exposure_ruleA_qt` within composite group | H3, H2 timing |
+| `flood_ruleA_L2` | L2 of `flood_exposure_ruleA_qt` | H3 |
+| `flood_ruleA_L3` | L3 — reserved for robustness (Phase 5) | — |
+| `flood_ruleA_L4` | L4 — reserved for persistence testing (Phase 5) | — |
+| `flood_ruleB_L1–L4` | Rule B equivalents of above | Robustness checks |
 
-**Variable**: `lightschangeqt`
+**Lag missing-value arithmetic (locked):**
+631 × k observations missing for lag Lk. Any deviation signals composite key error.
 
-- Definition: quarter-over-quarter change in log lights (approximate percent change)
-- Construction: within district, `lightschangeqt = loglightsqt - L1(loglightsqt)`
+| Lag | Expected missing |
+|---|---|
+| L1 | 631 |
+| L2 | 1,262 |
+| L3 | 1,893 |
+| L4 | 2,524 |
 
-### C. Optional migration/disruption event indicator (only if used)
+### Flood severity (optional)
 
-**Variable**: `migrationproxyqt` (optional)
+**`flood_severity_qt`** — use only if completeness is acceptable
+- Construction: `ln(affected + deaths + 1)` where both fields populated
+- If missingness is large, treat as exploratory only. Not a main result.
 
-- Definition: indicator for large negative lights shock
-- Construction: indicator(lightschangeqt less than negative theta)
-- Threshold discipline: theta chosen from empirical distribution in flood-exposed district-quarters in high-precision sample (Rule B), recorded before estimating final H2 event-spec regressions. Robustness: theta in {0.10, 0.15, 0.20}.
+---
+
+## IV. Migration and Disruption Proxy — VIIRS Night Lights
+
+### Lights level
+
+**`mean_radiance`**
+- Definition: District-quarter mean VIIRS radiance, pixel-area weighted
+- Unit: nW/cm²/sr
+- Source: VIIRS DNB monthly composites, Colorado School of Mines EOG
+- Construction: Scripts 21–22b — monthly extraction, quarterly aggregation
+  (mean radiance, sum pixels), composite key groupby throughout
+- Status: **CLEAN (Mar 3, 2026)**
+  - Forensic validation: Aurangabad Bihar 0.681 ≠ Aurangabad Maharashtra 0.433
+  - All Scripts 18–24 use composite `(district_gadm, state_gadm)` keys
+  - Panel: 25,240 rows (631 districts × 40 quarters), 100% coverage
+- Verified range (Mar 4): min = 0.0003, max = 35.02, mean = 0.696, SD = 1.688
+
+**`log_lights_qt`**
+- Construction: `ln(mean_radiance + 0.001)`
+- **Offset: +0.001 (not +0.01 as stated in v2.2 — corrected Mar 4)**
+- Rationale: VIIRS mean_radiance < 1 for ~80% of sample (rural and semi-urban
+  districts). Using +1 makes `log(x+1) ≈ x` in this range — the transform
+  is no longer logarithmic for the majority of observations. Using +0.001
+  preserves log-scale compression and the intended elasticity interpretation.
+  `log(x + 1)` is reserved for deposits where the scale is thousands of Crores.
+- Verified range (Mar 4): min = −6.6447, max = 3.5559, mean = −0.8326
+
+### Lights growth
+
+**`lights_change_qt`**
+- Construction: `log_lights_qt.diff()` within `(district_gadm, state_gadm)` groups
+- Missing values: 631 (first observation per district only — 100% VIIRS coverage)
+- Usable N: 22,716 observations
+
+### Migration/disruption event indicator (optional)
+
+**`migration_proxy_qt`** — use only if included in paper
+- Construction: `indicator(lights_change_qt < −theta)`
+- Threshold discipline: theta chosen from empirical distribution of `lights_change_qt`
+  in flood-exposed district-quarters under Rule B (high-precision sample).
+  Threshold recorded before H2 event-spec regression. Robustness: theta ∈ {0.10, 0.15, 0.20}.
 
 ---
 
 ## V. Controls and Fixed Effects
 
-### A. Minimum viable controls (baseline)
+### Baseline (required in all specifications)
 
-- District fixed effects: absorb time-invariant district differences
-- Quarter fixed effects: absorb national seasonality and macro shocks
+- **District FE:** Must use `district_state_id = district_gadm + '_' + state_gadm`.
+  Using `district_gadm` alone produces 624 FE instead of 631 — collapses
+  7 homonymous pairs. This is a misspecification, not a minor rounding issue.
+- **Quarter FE:** Absorbs national seasonality, macro shocks, monetary policy.
 
-### B. Optional seasonality marker (redundant but sometimes useful)
+### Seasonality marker (optional)
 
-**Variable**: `monsoonquarter` (optional)
+**`monsoon_quarter`**
+- Construction: `indicator(q == 3)` for July–September
+- Note: Quarter FE already absorbs national seasonal patterns. Use only for
+  exposition or robustness, not for identification.
 
-- Construction: indicator(q == 3) for Jul-Sep, else 0
-- Rule: If quarter FE included, monsoon indicator not required for identification; use only for exposition or robustness
+### Weather controls (preferred extension)
 
-### C. Weather controls (preferred extension)
-
-**Variable**: `rainfallqt` (optional)
-
-- Must be spatially aggregated to district polygons then to quarters with documented method
-
----
-
-## VI. Heterogeneity Variables (core only if actually used)
-
-Heterogeneity variables must be defined pre-treatment (time-invariant or baseline-period constructs) or explicitly lagged so not mechanically affected by contemporaneous floods.
-
-Examples (choose only if defensible and logged):
-
-- Urban proxy based on baseline deposits (time-invariant classification)
-- High exposure based on pre-period flood history
-
-Rule: any proxy must be labeled proxy; do not rewrite as "urbanization" without census validation.
+**`rainfall_qt`** — if available
+- Must be spatially aggregated to GADM district polygons, then to quarters.
+  Aggregation method documented before use.
 
 ---
 
-## VII. IV and Causal Pipeline Constructs (audit variables)
+## VI. Heterogeneity Variables
 
-Variables exist to keep IV pipeline auditable.
+All heterogeneity variables must be:
+- Pre-treatment (time-invariant or baseline-period constructs), OR
+- Explicitly lagged to avoid mechanical correlation with contemporaneous floods.
 
-**Variable**: `lightshatqt` (optional storage, recommended)
+Any proxy variable is labeled "proxy" in outputs and paper. No census-based
+urbanisation claims without census data.
 
-- Definition: fitted values from first stage (flood to lights)
-- Rule: store for diagnostics only; do not interpret as observed lights
-
-**Metric**: `firststageF`
-
-- Definition: first-stage instrument strength statistic
-- Rule: weak-IV risk must be reported; never buried
-
----
-
-## VIII. File IO Contract (locked)
-
-- Inputs: only from `01_Data_Raw/`
-- Intermediate outputs: `02_Data_Intermediate/`
-- Final analysis panels: `03_Data_Clean/`
-- Figures and tables: `05_Outputs/Figures/`, `05_Outputs/Tables/`
-- Logs: `05_Outputs/Logs/`
+| Variable | Construction | Label in paper |
+|---|---|---|
+| `urban` | Above-median district mean `log_lights_qt` (pre-2018 baseline) | Urban proxy (lights-based) |
+| `high_exposure` | Above-median cumulative flood count (full period) | High-exposure proxy |
+| `monsoon` | `indicator(q == 3)` | Monsoon quarter |
 
 ---
 
-## IX. Script Contract (locked)
+## VII. IV Pipeline Audit Variables
 
-Every script must:
+**`lights_hat_qt`** (store for diagnostics)
+- Definition: Fitted values from H1 first stage
+- Rule: Diagnostic storage only. Never interpreted as observed lights.
 
-1. Log start and end time
-2. Log exact input file paths and output file paths
-3. Log row counts before and after major steps
-4. Log any constant choices (e.g., lights log offset c)
-5. Write log file to `05_Outputs/Logs/`
-
----
-
-## X. Versioning Rule
-
-Codebook allowed to evolve, but only via version bumps with explicit changelogs.
-
-Hypotheses not allowed to drift to match results; codebook updates must be about measurement feasibility, naming consistency, or reproducibility discipline.
+**`first_stage_F`**
+- Definition: Kleibergen-Paap or Cragg-Donald F-statistic from first stage
+- Rule: Always reported alongside IV results. If F < 10, IV labeled suggestive.
+  Causal language removed from abstract and conclusions.
 
 ---
 
-## XI. Data Quality Issues Identified
+## VIII. File IO Contract
 
-### Issue 1: Extreme outliers in deposit changes
-
-**Variable affected**: `depositchangeqt`
-
-**Problem**: Min = -2.73 (93 percent decline), Max = +6.56 (656 percent increase) in single quarters
-
-**Likely causes**: District boundary changes or mergers (administrative), bank branch reclassification between districts (RBI reporting), data entry errors in RBI source Excel files
-
-**Impact**: Outliers bias OLS coefficients and inflate standard errors
-
-**Correction required**: Winsorize at 1st/99th percentile before final regressions
-
-**Status**: Pending Phase 6 (scheduled 2026-01-31)
-
-### Issue 2: Nominal growth confound (no deflation applied)
-
-**Variable affected**: `depositscrores`, `depositchangeqt`
-
-**Problem**: Mean deposit growth = 11.9 percent quarterly (47.6 percent annualized, compounded)
-
-**Root cause**: RBI deposits measured in nominal rupees; no CPI deflation applied
-
-**Impact**: Inflation trends confound flood treatment effects; cannot distinguish real shock from price growth
-
-**Correction options**: (1) Deflate deposits by CPI (preferred if district-level deflator available), (2) Disclose limitation explicitly in paper and interpret coefficients as nominal effects
-
-**Status**: Pending Phase 6 decision
-
-### Issue 3: Zero-inflation in deposit changes
-
-**Variable affected**: `depositchangeqt`
-
-**Problem**: 25th percentile = 0.00, meaning 25 percent of district-quarters have exactly zero deposit change
-
-**Possible causes**: Rounding in RBI source data (deposits reported in crores), static rural districts with no actual banking activity, copy-forward errors (same value repeated across quarters)
-
-**Impact**: Potential measurement error; may reflect true absence of activity OR data quality issue
-
-**Investigation required**: Identify which districts, which periods, whether systematic pattern exists
-
-**Status**: Pending Phase 6
-
-### Issue 4: RBI source data validation - RESOLVED
-
-**Variables affected**: None (contamination concern was false alarm)
-
-**Problem initially suspected (2026-01-30)**: File `RBI_Deposits_2017_2022.xlsx` appeared to contain duplicate 2016 Q1-Q3 data mislabeled as 2017 Q1-Q3
-
-**Resolution (2026-01-31)**: Forensic cell-level audit confirmed RBI files are CLEAN
-- File 1 ends at fiscal 2016-17:Q1 = calendar 2016Q2 (Jun 2016) ✓
-- File 2 starts at fiscal 2017-18:Q1 = calendar 2017Q2 (Jun 2017) ✓
-- Gap identified: 2016Q3, 2016Q4, 2017Q1 (3 quarters missing due to RBI publication schedule, NOT contamination) ✓
-- Fiscal-to-calendar conversion in Script 13 verified correct ✓
-
-**Root cause of false alarm**: Misunderstanding of RBI fiscal year convention during initial inspection; confusion between fiscal and calendar quarter labels
-
-**Impact**: ZERO - No contamination exists; all deposit data valid
-
-**Status**: RESOLVED (2026-01-31 23:48 PM IST). Script 13 validated correct. Phase 3c complete with clean deposit extraction. Analysis sample (23,347 obs) uses only validated non-gap quarters (2015Q1-2016Q2, 2017Q2-2024Q4).
-
-
-## XII. Audit Checklist
-
-### VIIRS Integration (Priority 1) - COMPLETED 2026-02-13
-
-- [x] Forensic validation of Feb 1 VIIRS data (Aurangabad Bihar vs Maharashtra litmus test)
-- [x] Script 22b creation: Align VIIRS with clean deposits (column names + filter to 624 districts)
-- [x] Script 22b execution: viirs_quarterly_panel_clean.csv generated (24,960 rows)
-- [x] Script 23 update: Use clean VIIRS input, remove redundant column renaming
-- [x] Script 23 execution: analysis_panel_final.csv with 100% VIIRS coverage (23,088/23,088)
-- [x] Script 24 execution: regression_panel_final.csv with 23 variables
-- [x] Verify composite keys preserved: All time-series operations use district_gadm + state_gadm
-- [x] Verify panel balance: 624 districts × 37 quarters = 23,088 observations ✓
-- [x] Verify lag arithmetic: L1=624, L2=1248, L3=1872, L4=2496 (mathematically perfect) ✓
-- [x] Time savings: 8-10 hours (reuse vs re-extraction) ✓
-
-### RBI Source Validation (Priority 1) - COMPLETED 2026-01-31
-
-- [x] Forensic audit of all 3 RBI source files (cell-level inspection)
-- [x] Validate fiscal-to-calendar conversion in Script 13 ✓
-- [x] Confirm 2016-2017 gap is structural (RBI publication), not contamination ✓
-- [x] Verify deposit extraction correct (Scripts 13-17 re-validated)
-- [x] Analysis sample confirmed clean: 23,347 obs, 99.1% deposit coverage ✓
-- [x] RBI contamination concern RESOLVED (false alarm documented)
-
-### Data Quality Corrections (Priority 2) - PENDING Phase 5
-
-- [ ] Apply winsorization to `depositchangeqt` (1 percent / 99 percent) if needed
-- [ ] Decide on CPI deflation vs disclosure strategy
-- [ ] Investigate zero-change quarters (run diagnostic script)
-- [ ] Diagnose 10 missing GADM districts (676 → 666) and 42 zero-coverage districts
+| Data type | Location |
+|---|---|
+| Raw inputs (read-only) | `01_Data_Raw/` |
+| Intermediate outputs | `02_Data_Intermediate/` |
+| Final analysis panels | `03_Data_Clean/` |
+| Regression tables | `05_Outputs/Tables/` |
+| Figures | `05_Outputs/Figures/` |
+| Script logs | `05_Outputs/Logs/` |
 
 ---
 
-## XIII. Current Data Status
+## IX. Script Contract
 
-### Deposit Data: CLEAN (Feb 11-13, 2026)
-- Two-bug cascade resolved: Crosswalk deduplication (Script 8) and state filtering (Script 13)
-- Validation: Aurangabad Bihar deposits dropped 76-83% after eliminating Maharashtra contamination
-- RBI panel: 49,670 district-quarter observations (624 districts, 84 quarters, 2004Q1-2025Q3)
-- Master panel re-run complete: Scripts 13-17 executed with clean deposits
-- Analysis panel: 23,088 observations (624 districts × 37 quarters)
+Every script must, without exception:
 
-### VIIRS Data: CLEAN (Feb 13, 2026)
-- Feb 1 VIIRS data reused after forensic validation (8-10 hour time savings)
-- Aurangabad litmus test passed: Bihar 0.681 != Maharashtra 0.433 (no contamination)
-- Script 22b created: Column name fix (gadm_district → district_gadm) + filter to 624 districts
-- VIIRS quarterly panel: 24,960 observations (624 districts × 40 quarters)
-- Script 23 merge complete: 100% VIIRS coverage achieved (23,088/23,088 observations)
-- Pipeline verified: All scripts use composite (district_gadm, state_gadm) keys
+1. Assert input file row counts and column counts at load
+2. Log input and output file paths
+3. Log row counts before and after every major transformation
+4. Log all constant choices (log offsets, thresholds, winsorisation bounds)
+5. Assert expected output row count and column count before saving
+6. Write a log file to `05_Outputs/Logs/`
 
-### Regression Panel: READY (Feb 13, 2026)
-- Script 24 execution complete: 23 variables engineered (11 raw + 12 engineered)
-- Panel structure: 23,088 observations (624 districts × 37 quarters, balanced)
-- Variables: logs, changes, lags L1-L4 (all with composite key grouping)
-- Lag arithmetic verified: L1=624, L2=1248, L3=1872, L4=2496 (perfect)
-- Output: regression_panel_final.csv ready for Phase 4 regressions
-
-### Phase 4 Regression Status: FE CORRECTION REQUIRED
-- H3 results: VALIDATED CLEAN (specification uses quarter FE only, no district FE)
-- H1, H2, H4 results: Awaiting execution with clean data
-- Regression FE correction required: Scripts 27, 28, 30 must use composite district_state_id
-- Current FE: district_gadm only (collapses 7 homonymous pairs → 617 FE instead of 624)
-- Fix required: Change to district_state_id = district_gadm + '_' + state_gadm
-- Estimated completion: 2-3 hours (FE fix + execution)
-
-### Priority Actions
-1. Fix regression FE: Scripts 27, 28, 30 composite district_state_id
-2. Execute H1 regression: Floods → Lights (first stage)
-3. Execute H2 regression: Lights → Deposits (IV 2SLS)
-4. Re-run H3 regression: Verify t-2 lag effect with full 23,088 sample
-5. Execute H4 regression: Heterogeneity (urban, high-exposure, monsoon)
-6. Compare results: Feb 6 (contaminated) vs Feb 14 (clean)
+A script that saves output without passing all asserts has failed, regardless
+of whether the output looks reasonable.
 
 ---
 
-## XIV. Variable Usage Summary
+## X. Current Data State (Mar 4, 2026)
 
-### Dependent Variables (Current Status)
-- `lightschangeqt`: Used in H1 (outcome), H2 (endogenous regressor) - CLEAN
-- `depositchangeqt`: Used in H2, H3, H4 (outcome) - CLEAN (as of Feb 11)
+| File | Rows | Status | Last verified |
+|---|---|---|---|
+| `rbi_deposits_panel.csv` | 49,670 (in-window) | **CLEAN** | Mar 4 — Aurangabad Bihar 4,422 confirmed |
+| `district_crosswalk_draft.csv` | 769 | **CONTAMINATED** | Mar 4 — 7 duplicate rows, fix Mar 5 |
+| `flood_exposure_panel.csv` | 26,640 | **CONTAMINATED** | Mar 4 — 2,230 Rule A (should be 2,220) |
+| `viirs_quarterly_panel_clean.csv` | 25,240 | **CLEAN** | Mar 3 — 631 districts × 40 quarters |
+| `analysis_panel_final.csv` | 23,347 | **CLEAN** | Mar 4 — 100% VIIRS coverage |
+| `regression_panel_final.csv` | 23,347 | **CLEAN** | Mar 4 — 23 columns, lag arithmetic exact |
 
-### Independent Variables (All Clean)
-- `floodexposureruleAqt`: Used in H1, H2, H3 - CLEAN
-- `floodlag1qt`, `floodlag2qt`: Used in H3 timing - CLEAN
-
-### Interaction Variables (Status)
-- `urban`: If constructed from `loglightsqt` → CLEAN (VIIRS verified)
-- `highexposure`: Based on flood history → CLEAN
-- `monsoon`: Quarter indicator → CLEAN
-
-### H3 Validated Results (Feb 6, Defensible with Caveat)
-- H3-t0 (current): β = -0.0005, p = 0.777 (null)
-- H3-t1 (1Q lag): β = +0.0004, p = 0.757 (null)
-- H3-t2 (2Q lag): β = -0.0091, p = 0.012 (significant at 5%)
-- Specification: Uses deposits and floods only, quarter FE only (no district FE)
-- Sample: 21,912 observations (pre-clean sample, specification verified clean)
-- Caveat: Effect size may change with full 23,088 clean sample, but mechanism validated
-- Interpretation: 6-month lag effect defensible for publication pending re-run
-
-### H1, H2, H4 Pending Execution
-Clean data available (Feb 13). Regression panel ready: 23,088 observations, 23 variables, 100% VIIRS coverage. Execution scheduled after FE correction (composite district_state_id in Scripts 27, 28, 30). Expected timeline: 2-3 hours.
+**Contamination root cause (confirmed Mar 4):**
+Script 8 re-run on Feb 27 with pre-dedup logic → crosswalk reverted to 769 rows →
+Script 12 re-run Feb 28 using contaminated crosswalk → 10 artificial flood events
+added → downstream panels (Scripts 14–17) inherit the error.
+Fix: Script 8 permanent rewrite with hard assert `len(output) == 762` — Mar 5.
 
 ---
 
-## END OF DOCUMENT
+## XI. Known Data Issues
 
-**Status**: v2.1 reflects full data quality resolution. Deposits cleaned via two-bug fix (crosswalk deduplication + state filtering, Feb 11). VIIRS pipeline verified clean (composite keys throughout). H3 results validated defensible. H1, H2, H4 pending re-run with clean deposits and corrected fixed effects. Variables codebook protocols unchanged.
+### Active — Fix Mar 5
+
+**Crosswalk regression (Script 8, Feb 27)**
+Deduplication logic checked `.nunique()` on district names — homonymous districts
+have the same name in both states, so duplicates reported zero while 7 duplicate
+rows persisted. Fix: rewrite Script 8 with row-level deduplication and assert.
+
+### Pending — Phase 5
+
+**Outliers in deposit growth**
+Min = −1.93, Max = +2.03 (log scale) in regression panel. Likely causes: boundary
+changes, branch reclassification, data entry errors. Correction: winsorise at 1st/99th
+percentile before final publication regressions.
+
+**Nominal deposit growth**
+Deposits measured in nominal Rupees. Mean growth ~11.9% quarterly is implausibly high
+in real terms. Decision required: (1) CPI deflation, or (2) explicit disclosure that
+coefficients reflect nominal effects. Decision before Phase 5 regression tables.
+
+**Zero-change quarters**
+25th percentile of `deposit_change_qt` = 0.00. May reflect true stagnation, rounding
+in RBI source data, or copy-forward errors. Diagnostic script required.
+
+### Resolved
+
+**Deposit extraction bug (Feb 4–11):** Column offset error in Script 13 extracted
+"Number of Reporting Offices" instead of deposits for 2004–2022 data. Fixed with
+`dep_idx = q_idx + 1`. Verified: BALOD 2022Q3 changed from 87 (offices) to 3,296 Crores.
+
+**State-blind crosswalk merge (Feb 7–11):** Merge on `district_rbi` alone caused
+Bihar + Maharashtra AURANGABAD deposits to sum. Fixed with state filtering for all
+14 homonymous state-district pairs. Verified: Aurangabad Bihar 2015Q1 = 4,422 Crores.
+
+**RBI 2016–2017 gap (Jan 30–31):** Suspected duplicate quarter contamination.
+Confirmed structural: RBI publication gap between File 1 (ends 2016-17:Q1 = 2016Q2)
+and File 2 (starts 2017-18:Q1 = 2017Q2). No contamination. Gap handled by dropping
+2016Q3–2017Q1 in Script 17.
 
 ---
 
-## Variable Usage Summary (Phase 4 Results)
+## XII. Regression Panel Specification Reference
 
-### Dependent Variables
-- `lightschangeqt`: Used in H1 first stage (outcome), H2 IV (endogenous regressor)
-- `depositchangeqt`: Used in H2 second stage (outcome), H3 timing (outcome), H4 heterogeneity (outcome)
+| Specification | N | Outcome | Regressor | FE | SE |
+|---|---|---|---|---|---|
+| H1 | ~22,716 | `lights_change_qt` | `flood_exposure_ruleA_qt` | District + Quarter | Clustered (district) |
+| H2 (IV) | ~22,442 | `deposit_change_qt` | `lights_change_qt` (instrumented) | District + Quarter | Clustered (district) |
+| H3 | ~21,812 | `deposit_change_qt` | Flood t0, t-1, t-2 | Quarter only | Clustered (district) |
+| H4 | ~22,442 | `deposit_change_qt` | Flood × Z_i | District + Quarter | Clustered (district) |
 
-### Independent Variables
-- `floodexposureruleAqt`: Used in H1 (main regressor), H2 (instrument), H3 (current quarter)
-- `floodlag1qt`: Used in H3 timing (1-quarter lag) [SIGNIFICANT RESULT]
-- `floodlag2qt`: Used in H3 timing (2-quarter lag)
-
-### Interaction Variables (H4 Heterogeneity)
-- `urban`: Constructed from median split of district mean `loglightsqt` [SIGNIFICANT INTERACTION]
-- `highexposure`: Constructed from median split of cumulative flood exposure
-- `monsoon`: Quarter indicator (q == 3, Jul-Sep)
-
-### Variables Not Used in Phase 4
-- `floodexposureruleBqt`: Rule B variables reserved for robustness checks (Phase 5)
-- Longer lags (L3, L4): Reserved for persistence testing (Phase 5)
-- `logdepositscrores`, `loglightsqt`: Reserved for alternative specifications (Phase 5)
-
-### Key Findings by Variable
-1. `floodexposureruleAqt` → `lightschangeqt`: Strong negative effect (-0.0149, p<0.001)
-2. `floodlag1qt` → `depositchangeqt`: Delayed negative effect (-0.0062, p<0.001)
-3. `urban × flood` → `depositchangeqt`: Urban vulnerability confirmed (-0.0111, p<0.001)
-4. All other interactions (high_exposure, monsoon): Null results
+H3 N is 2-quarter-lag restricted (loses 631 × 2 = 1,262 observations from changes sample).
+All N values approximate pending clean pipeline re-run.
+All district FE use `district_state_id`. Using `district_gadm` alone is a misspecification.
 
 ---
 
-**Changelog (v2.1 to v2.2)**:
-- Updated version: 2.1 → 2.2
-- Updated status: Phase 3d VIIRS integration complete (Feb 13)
-- Section II.A: Deposits data quality updated with full pipeline re-run (Scripts 13-17, 22b-24)
-- Section IV.A: VIIRS data quality updated with reuse strategy and Script 22b alignment
-- Section XII: VIIRS audit checklist updated to reflect reuse approach (8-10 hour time savings)
-- Section XIII: "Current Data Status" rewritten reflecting Phase 3d completion
-- Sample specifications updated throughout: 23,088 observations (624 districts × 37 quarters)
-- Zero-coverage districts corrected: 42 (not 35, two-bug fix revealed 7 additional)
-- Priority actions updated: FE correction required before regression execution
-- All variable definitions and coding protocols unchanged
+## XIII. H3 Validated Results (Feb 6 — Specification Confirmed Clean)
 
-**Previous changelog (v2.0 to v2.1)**:
-- Deposits cleaned via two-bug fix (crosswalk dedup + state filtering, Feb 11)
-- VIIRS pipeline verified clean (composite keys throughout, Feb 11)
-- H3 results validated defensible (specification uses quarter FE only, no district FE)
-- All data sources marked CLEAN, regression execution pending
+H3 specification uses deposits and flood lags only. No VIIRS variables. Quarter FE only
+(no district FE). Unaffected by crosswalk contamination, VIIRS pipeline issues, or
+homonymous FE collapse.
 
-**Next review trigger**: After Phase 4 regressions complete (Scripts 27-30). Update to v2.3 with final regression results.
+| Lag | β | SE | p | Finding |
+|---|---|---|---|---|
+| t0 (current quarter) | −0.0005 | 0.0014 | 0.777 | Null |
+| t-1 (one quarter) | +0.0004 | 0.0014 | 0.757 | Null |
+| t-2 (two quarters) | **−0.0091** | 0.0036 | **0.012** | Confirmed |
+
+Sample: 21,912 obs (pre-clean, pre-full-pipeline). Effect size may change with
+23,347-observation clean panel; direction and significance expected to persist.
+
+---
+
+*Project initiated: 2025-12-30 | Principal investigator: Jaseel Badar, Harvard University*

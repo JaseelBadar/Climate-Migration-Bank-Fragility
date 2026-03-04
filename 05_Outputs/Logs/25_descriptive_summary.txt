@@ -1,66 +1,10 @@
 ======================================================================
 DESCRIPTIVE STATISTICS SUMMARY
+Generated: 2026-03-04 18:55 IST
 ======================================================================
+
 Panel loaded: 23,347 rows
-Districts: 624
-Quarters: 37
-
-PANEL STRUCTURE
---------------------------------------------------
-Time period: 2015-2024
-Quarters: 37 (2015Q1 to 2024Q4)
-Obs per district: min=37, max=74, mean=37.4
-
-VARIABLE COVERAGE
---------------------------------------------------
-mean_radiance                 : 100.0%
-log_lights_qt                 : 100.0%
-lights_change_qt              :  97.3%
-deposit_change_qt             :  96.4%
-flood_exposure_ruleA_qt       : 100.0%
-flood_exposure_ruleB_qt       : 100.0%
-
-SUMMARY STATISTICS
---------------------------------------------------
-
-mean_radiance:
-  Mean: 0.6955, Std: 1.6884
-  Min: 0.0003, Max: 35.0199
-  N: 23,347
-
-log_lights_qt:
-  Mean: 0.4277, Std: 0.3327
-  Min: 0.0003, Max: 3.5841
-  N: 23,347
-
-lights_change_qt:
-  Mean: 0.0054, Std: 0.1114
-  Min: -1.1722, Max: 1.1241
-  N: 22,716
-
-deposit_change_qt:
-  Mean: 0.0229, Std: 0.0821
-  Min: -2.4535, Max: 2.0251
-  N: 22,503
-
-FLOOD EXPOSURE SUMMARY
---------------------------------------------------
-Rule A (state fallback):
-  Exposed obs: 1,984 (8.50%)
-Rule B (district-only):
-  Exposed obs: 225 (0.96%)
-Districts ever exposed:
-  Rule A: 512
-  Rule B: 143
-
-======================================================================
-END OF SUMMARY
-======================================================================
-======================================================================
-DESCRIPTIVE STATISTICS SUMMARY
-======================================================================
-Panel loaded: 23,088 rows
-Districts: 624
+Districts: 631
 Quarters: 37
 
 PANEL STRUCTURE
@@ -71,12 +15,12 @@ Obs per district: min=37, max=37, mean=37.0
 
 VARIABLE COVERAGE
 --------------------------------------------------
-deposits                      :  99.1%
-log_deposits                  :  99.1%
+deposits                      :  98.9%
+log_deposits                  :  98.9%
 mean_radiance                 : 100.0%
 log_lights_qt                 : 100.0%
 lights_change_qt              :  97.3%
-deposit_change_qt             :  96.4%
+deposit_change_qt             :  96.1%
 flood_exposure_ruleA_qt       : 100.0%
 flood_exposure_ruleB_qt       : 100.0%
 
@@ -84,44 +28,43 @@ SUMMARY STATISTICS
 --------------------------------------------------
 
 deposits:
-  Mean: 16459.6075, Std: 47701.6638
-  Min: 28.9979, Max: 1237744.3404
-  N: 22,880
+  N:    23,079
+  Mean: 16425.7323,  Std: 47516.2349
+  Min:  28.9979,  p50: 6135.5813,  Max: 1237744.3404
 
 log_deposits:
-  Mean: 8.7054, Std: 1.3738
-  Min: 3.4011, Max: 14.0288
-  N: 22,880
+  N:    23,079
+  Mean: 8.7075,  Std: 1.3707
+  Min:  3.4011,  p50: 8.7220,  Max: 14.0288
 
 mean_radiance:
-  Mean: 0.6976, Std: 1.6975
-  Min: 0.0003, Max: 35.0199
-  N: 23,088
+  N:    23,347
+  Mean: 0.6955,  Std: 1.6884
+  Min:  0.0003,  p50: 0.4266,  Max: 35.0199
 
 log_lights_qt:
-  Mean: 0.4279, Std: 0.3342
-  Min: 0.0003, Max: 3.5841
-  N: 23,088
+  N:    23,347
+  Mean: -0.8326,  Std: 0.8377
+  Min:  -6.6447,  p50: -0.8497,  Max: 3.5559
 
 lights_change_qt:
-  Mean: 0.0054, Std: 0.1114
-  Min: -1.1722, Max: 1.1241
-  N: 22,464
+  N:    22,716
+  Mean: 0.0170,  Std: 0.3530
+  Min:  -2.2385,  p50: 0.0013,  Max: 1.6938
 
 deposit_change_qt:
-  Mean: 0.0233, Std: 0.0745
-  Min: -1.9322, Max: 2.0251
-  N: 22,251
+  N:    22,442
+  Mean: 0.0233,  Std: 0.0743
+  Min:  -1.9322,  p50: 0.0210,  Max: 2.0251
 
 FLOOD EXPOSURE SUMMARY
 --------------------------------------------------
 Rule A (state fallback):
-  Exposed obs: 1,941 (8.41%)
+  Exposed obs: 1,994 (8.54%)
+  Districts ever exposed: 519
 Rule B (district-only):
-  Exposed obs: 221 (0.96%)
-Districts ever exposed:
-  Rule A: 512
-  Rule B: 143
+  Exposed obs: 225 (0.96%)
+  Districts ever exposed: 147
 
 ======================================================================
 END OF SUMMARY

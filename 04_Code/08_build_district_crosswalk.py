@@ -5,32 +5,42 @@ import os
 from datetime import datetime
 
 
+
 start_time = datetime.now()
 print("=" * 70)
-print("DISTRICT CROSSWALK BUILD - Phase 3c (PERMANENT FIX 2026-03-05)")
+print("DISTRICT CROSSWALK BUILD - Phase 3c (PERMANENT FIX 2026-03-05 v2)")
 print("=" * 70)
 print(f"Start time: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
 
+
 # ============================================================
-# DESIGN NOTE (2026-03-05 permanent fix)
+# DESIGN NOTE (2026-03-05 permanent fix v2)
 # ============================================================
-# Feb 28 rewrite changed design to retain 769 rows, relying on
-# Script 13 state filtering to resolve homonyms downstream.
-# This broke Script 12 (flood exposure), which has no state
-# filtering and produced 10 artificial flood matches.
+# Fix 1 (Mar 05 v1): Crosswalk dedup
+#   Feb 28 retained 769 rows -> broke Script 12 (flood exposure).
+#   Reverted to 762 rows. Hard assert added before save.
+#   Script 13 state filtering (Feb 11) handles deposit disambiguation.
 #
-# Correct design (restores Feb 11 intent):
-#   Script 8  -> outputs EXACTLY 762 rows (one row per RBI district)
-#   Script 13 -> state filtering resolves deposit assignment for
-#                7 homonymous pairs (already implemented Feb 11)
-#   Script 12 -> sees 762 rows, no duplicates, no artificial matches
+# Fix 2 (Mar 05 v2): EM-DAT state name exclusion
+#   State name tokens (Bihar, Manipur, Nagaland, Tripura, Uttarakhand)
+#   were fuzzy-matching to wrong districts at threshold 75%:
+#     Bihar -> Bidar (80.0%)
+#     Manipur -> Mainpuri (80.0%)
+#     Nagaland -> Nalanda (80.0%)
+#     Tripura -> Raipur (76.9%)
+#     Uttarakhand -> Uttara Kannada (80.0%)
+#     East Imphal -> East Nimar (76.2%)
+#     West Imphal -> West Nimar (76.2%)
+#   This bypassed Script 10 state fallback, replacing correct
+#   all-state-district Rule A assignment with one wrong district.
+#   Produced 10 artificial Rule A flood events.
+#   Fix: INDIA_STATE_NAMES exclusion set + threshold raised 75->80.
 #
-# Detection fix (Feb 28 already correct):
-#   Use .groupby('district_rbi').size() to count ROWS per district.
-#   Never use .nunique() on district_gadm names -- homonyms share
-#   the same name in both states, so nunique=1 and detection fails.
+# Detection rule (locked):
+#   Use .groupby('district_rbi').size() not .nunique() on names.
 # ============================================================
+
 
 
 # === [1/5] GADM DISTRICTS ===
@@ -39,12 +49,14 @@ gadm_path = '01_Data_Raw/District_Boundaries/gadm41_IND_2.shp'
 gadm = gpd.read_file(gadm_path)
 print(f"   GADM rows loaded: {len(gadm)}")
 
+
 gadm_districts = gadm[['NAME_2', 'NAME_1']].drop_duplicates().copy()
 gadm_districts.columns = ['district_gadm', 'state_gadm']
 gadm_districts = gadm_districts.sort_values(
     ['state_gadm', 'district_gadm']
 ).reset_index(drop=True)
 print(f"   Unique GADM district-state pairs: {len(gadm_districts)}")
+
 
 homonyms_expected = [
     'Aurangabad', 'Balrampur', 'Bijapur',
@@ -57,11 +69,13 @@ for d in homonyms_expected:
     print(f"      {d}: {len(rows)} row(s) -> {states}")
 
 
+
 # === [2/5] RBI DISTRICTS ===
 print("\n[2/5] LOADING RBI DISTRICT NAMES...")
 rbi_path = '01_Data_Raw/RBI_Bank_Data/RBI_Deposits_2023_2024.xlsx'
 rbi = pd.read_excel(rbi_path, sheet_name=0, skiprows=5)
 print(f"   RBI file loaded: {rbi.shape}")
+
 
 if 'DISTRICT' in rbi.columns:
     rbi_districts_raw = rbi['DISTRICT'].dropna().astype(str).unique()
@@ -75,6 +89,7 @@ else:
     print("   ERROR: 'DISTRICT' column not found!")
     print(f"   Available columns: {list(rbi.columns)}")
     rbi_unique = []
+
 
 if 'STATE' in rbi.columns:
     rbi_district_state = rbi[['STATE', 'DISTRICT']].dropna().drop_duplicates().copy()
@@ -91,11 +106,13 @@ else:
     print("   WARNING: 'STATE' column not found -- state-aware matching unavailable")
 
 
+
 # === [3/5] EM-DAT DISTRICTS ===
 print("\n[3/5] LOADING EM-DAT PARSED DISTRICTS...")
 emdat_path = '02_Data_Intermediate/emdat_districts_parsed.csv'
 emdat = pd.read_csv(emdat_path)
 print(f"   EM-DAT events loaded: {len(emdat)}")
+
 
 emdat_all_districts = set()
 for districts_str in emdat['districts_final_str'].dropna():
@@ -104,8 +121,10 @@ for districts_str in emdat['districts_final_str'].dropna():
         if d_clean and d_clean not in ['state', 'states', 'districts', 'district']:
             emdat_all_districts.add(d_clean.title())
 
+
 emdat_unique = sorted(emdat_all_districts)
 print(f"   Unique EM-DAT districts: {len(emdat_unique)}")
+
 
 
 # === [4/5] FUZZY MATCH RBI -> GADM ===
@@ -130,6 +149,7 @@ def fuzzy_match_best(query, choices, threshold=80):
 gadm_choices = gadm_districts['district_gadm'].tolist()
 rbi_gadm_matches = []
 
+
 for rbi_dist in rbi_unique:
     best_match, score, matched = fuzzy_match_best(
         rbi_dist, gadm_choices, threshold=80
@@ -141,13 +161,16 @@ for rbi_dist in rbi_unique:
         'matched_rbi_gadm':     matched
     })
 
+
 df_crosswalk = pd.DataFrame(rbi_gadm_matches)
+
 
 match_rate_rbi_gadm = (
     df_crosswalk['matched_rbi_gadm'].sum() / len(df_crosswalk)
 ) * 100
 print(f"   RBI -> GADM match rate: {match_rate_rbi_gadm:.1f}% "
       f"({df_crosswalk['matched_rbi_gadm'].sum()}/{len(df_crosswalk)})")
+
 
 if match_rate_rbi_gadm < 80:
     print("\n" + "!" * 70)
@@ -156,13 +179,14 @@ if match_rate_rbi_gadm < 80:
     print("!" * 70)
 
 
-# --- Merge ALL GADM state rows (this intentionally creates duplicate rows
-#     for homonymous districts -- detected and removed in the block below).
+# --- Merge ALL GADM state rows (intentionally creates duplicate rows
+#     for homonymous districts -- detected and removed below).
 df_crosswalk = df_crosswalk.merge(
     gadm_districts[['district_gadm', 'state_gadm']],
     on='district_gadm',
     how='left'
 )
+
 
 # --- Detect duplicates using row count per district_rbi (.size()).
 #     NEVER use .nunique() on district_gadm names:
@@ -171,6 +195,7 @@ df_crosswalk = df_crosswalk.merge(
 rows_before_dedup = len(df_crosswalk)
 duplicate_check = df_crosswalk.groupby('district_rbi').size()
 duplicates_found = duplicate_check[duplicate_check > 1]
+
 
 if len(duplicates_found) > 0:
     print(f"\n   WARNING: {len(duplicates_found)} RBI districts match "
@@ -188,7 +213,7 @@ if len(duplicates_found) > 0:
     )
 
     # Deduplicate: keep first match per RBI district.
-    # Script 13 state filtering (applied Feb 11) ensures deposits are
+    # Script 13 state filtering (Feb 11) ensures deposits are
     # assigned to the correct state regardless of which row is kept here.
     print(f"\n   APPLYING DEDUPLICATION: keeping first match per district_rbi")
     df_crosswalk = df_crosswalk.drop_duplicates(
@@ -203,9 +228,9 @@ else:
     df_crosswalk['is_ambiguous_match'] = False
     print(f"\n   No homonymous districts detected")
 
+
 # --- HARD ASSERT: crosswalk must be exactly 762 rows before save.
-#     If this fails, script aborts and writes nothing to disk.
-#     762 = unique RBI districts after resolving 7 homonymous pairs.
+#     Script aborts and writes nothing if violated.
 assert len(df_crosswalk) == 762, (
     f"FATAL: crosswalk has {len(df_crosswalk)} rows, expected exactly 762. "
     f"Deduplication failed or RBI source district count has changed. "
@@ -216,13 +241,48 @@ print(f"   Final crosswalk: {len(df_crosswalk)} rows, "
       f"{df_crosswalk['district_rbi'].nunique()} unique RBI districts")
 
 
+
 # === [5/5] EM-DAT MATCHING ===
 print("\n[5/5] MATCHING EM-DAT DISTRICTS (informational)...")
 
+# Indian state and union territory names that appear in EM-DAT location strings.
+# These must NOT be matched to districts -- Script 10 handles them via the
+# state fallback (assigns Rule A to all districts in that state).
+# Matching them to a district bypasses the fallback and assigns flood exposure
+# to one wrong district only, producing artificial treatment observations.
+INDIA_STATE_NAMES = {
+    'andhra pradesh', 'arunachal pradesh', 'assam', 'bihar', 'chhattisgarh',
+    'goa', 'gujarat', 'haryana', 'himachal pradesh', 'jharkhand', 'karnataka',
+    'kerala', 'madhya pradesh', 'maharashtra', 'manipur', 'meghalaya', 'mizoram',
+    'nagaland', 'odisha', 'orissa', 'punjab', 'rajasthan', 'sikkim',
+    'tamil nadu', 'telangana', 'tripura', 'uttar pradesh', 'uttarakhand',
+    'west bengal', 'delhi', 'nct of delhi', 'jammu and kashmir', 'ladakh',
+    'puducherry', 'pondicherry'
+}
+
 emdat_gadm_matches = []
+skipped_state_tokens = []
+
 for emdat_dist in emdat_unique:
+    # Exclude state name tokens -- must remain unmatched for Script 10
+    # state fallback to handle correctly.
+    if emdat_dist.lower().strip() in INDIA_STATE_NAMES:
+        skipped_state_tokens.append(emdat_dist)
+        emdat_gadm_matches.append({
+            'district_emdat':         emdat_dist,
+            'district_gadm_match':    None,
+            'match_score_emdat_gadm': 0,
+            'matched_emdat_gadm':     False
+        })
+        continue
+
+    # Threshold: 80% (raised from 75% on 2026-03-05).
+    # Prevents geographic mismatches at 75-79%:
+    #   East Imphal -> East Nimar (76.2%)
+    #   West Imphal -> West Nimar (76.2%)
+    #   Tripura -> Raipur (76.9%)
     best_match, score, matched = fuzzy_match_best(
-        emdat_dist, gadm_choices, threshold=75
+        emdat_dist, gadm_choices, threshold=80
     )
     emdat_gadm_matches.append({
         'district_emdat':         emdat_dist,
@@ -231,12 +291,22 @@ for emdat_dist in emdat_unique:
         'matched_emdat_gadm':     matched
     })
 
+
 df_emdat_matches = pd.DataFrame(emdat_gadm_matches)
+
+if skipped_state_tokens:
+    print(f"   State name tokens excluded from district matching "
+          f"({len(skipped_state_tokens)}):")
+    for t in skipped_state_tokens:
+        print(f"      {t} -- handled by Script 10 state fallback")
+
 match_rate_emdat = (
     df_emdat_matches['matched_emdat_gadm'].sum() / len(df_emdat_matches)
 ) * 100
 print(f"   EM-DAT -> GADM match rate: {match_rate_emdat:.1f}% "
       f"({df_emdat_matches['matched_emdat_gadm'].sum()}/{len(df_emdat_matches)})")
+print(f"   Threshold: 80% (raised from 75% on 2026-03-05)")
+
 
 
 # === SAVE OUTPUTS (only reached if assert passes) ===
@@ -247,6 +317,7 @@ print(f"\nCrosswalk saved: {output_path} ({len(df_crosswalk)} rows)")
 emdat_output_path = '02_Data_Intermediate/emdat_district_matches.csv'
 df_emdat_matches.to_csv(emdat_output_path, index=False)
 print(f"EM-DAT matches saved: {emdat_output_path}")
+
 
 
 # === LOG ===
@@ -278,7 +349,7 @@ unmatched = (
 
 log_lines = [
     "=" * 70,
-    "DISTRICT CROSSWALK BUILD LOG (PERMANENT FIX 2026-03-05)",
+    "DISTRICT CROSSWALK BUILD LOG (PERMANENT FIX 2026-03-05 v2)",
     "=" * 70,
     f"Script:    08_build_district_crosswalk.py",
     f"Start:     {start_time.strftime('%Y-%m-%d %H:%M:%S')}",
@@ -286,17 +357,20 @@ log_lines = [
     f"Duration:  {(end_time - start_time).seconds} seconds",
     "",
     "FIX HISTORY:",
-    "  Feb 07: dedup used .nunique() on district_gadm names -- failed silently",
-    "          because homonyms share the same name; reported 0 duplicates.",
-    "  Feb 11: corrected to .groupby().size(); detected 7 pairs; deduped to 762.",
-    "  Feb 28: design changed to retain 769 rows; broke Script 12 (flood exposure)",
-    "          which has no state filtering; produced 10 artificial flood matches.",
-    "  Mar 05: reverted to 762-row output; added hard assert before save.",
-    "          Script 13 state filtering (Feb 11) handles deposit disambiguation.",
+    "  Feb 07: dedup used .nunique() on names -- failed silently (nunique=1",
+    "          for homonyms sharing name across states); reported 0 duplicates.",
+    "  Feb 11: corrected to .groupby().size(); detected 7 pairs; deduped 762.",
+    "  Feb 28: design changed to retain 769 rows; broke Script 12 which has",
+    "          no state filtering; produced 10 artificial Rule A flood events.",
+    "  Mar 05 v1: reverted to 762-row output; hard assert added before save.",
+    "  Mar 05 v2: EM-DAT state name exclusion + threshold raised 75->80%.",
+    "             Bihar->Bidar, Manipur->Mainpuri, Nagaland->Nalanda,",
+    "             Tripura->Raipur, Uttarakhand->Uttara Kannada eliminated.",
+    "             East/West Imphal->East/West Nimar (76.2%) eliminated.",
     "",
     "DESIGN:",
     "  Script 8  -> 762 rows (one per RBI district, homonyms deduplicated)",
-    "  Script 12 -> uses 762-row crosswalk, no artificial flood matches",
+    "  Script 10 -> state name tokens handled by state fallback (Rule A only)",
     "  Script 13 -> state filtering resolves deposit assignment for 7 pairs",
     "",
     "ASSERT:",
@@ -312,12 +386,16 @@ log_lines = [
     f"  - EM-DAT match: {emdat_output_path} ({len(df_emdat_matches)} rows)",
     "",
     "MATCH RATES:",
-    f"  - RBI -> GADM:   {match_rate_rbi_gadm:.1f}% (threshold: 80%)",
-    f"  - EM-DAT -> GADM: {match_rate_emdat:.1f}% (informational, threshold: 75%)",
+    f"  - RBI -> GADM:    {match_rate_rbi_gadm:.1f}% (threshold: 80%)",
+    f"  - EM-DAT -> GADM: {match_rate_emdat:.1f}% (threshold: 80%, "
+    f"excludes {len(skipped_state_tokens)} state name tokens)",
     "",
     "STOP CONDITION:",
     f"  - {'PASSED' if match_rate_rbi_gadm >= 80 else 'FAILED'} -- "
     f"RBI match rate {'at or above' if match_rate_rbi_gadm >= 80 else 'below'} 80%",
+    "",
+    f"STATE NAME TOKENS EXCLUDED FROM DISTRICT MATCHING ({len(skipped_state_tokens)}):",
+] + [f"  - {t}" for t in skipped_state_tokens] + [
     "",
     f"HOMONYMOUS DISTRICTS RESOLVED ({len(duplicates_found)} pairs, "
     f"{rows_before_dedup - len(df_crosswalk)} rows removed):",
@@ -340,6 +418,6 @@ print(f"Log saved: {log_path}")
 
 
 print("\n" + "=" * 70)
-print("CROSSWALK BUILD COMPLETE (PERMANENT FIX 2026-03-05)")
+print("CROSSWALK BUILD COMPLETE (PERMANENT FIX 2026-03-05 v2)")
 print(f"Crosswalk: {len(df_crosswalk)} rows | Assert: PASSED")
 print("=" * 70)

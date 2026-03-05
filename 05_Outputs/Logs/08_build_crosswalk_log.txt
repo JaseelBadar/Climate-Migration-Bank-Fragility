@@ -1,23 +1,26 @@
 ======================================================================
-DISTRICT CROSSWALK BUILD LOG (PERMANENT FIX 2026-03-05)
+DISTRICT CROSSWALK BUILD LOG (PERMANENT FIX 2026-03-05 v2)
 ======================================================================
 Script:    08_build_district_crosswalk.py
-Start:     2026-03-05 23:12:51
-End:       2026-03-05 23:12:52
-Duration:  1 seconds
+Start:     2026-03-05 23:31:08
+End:       2026-03-05 23:31:09
+Duration:  0 seconds
 
 FIX HISTORY:
-  Feb 07: dedup used .nunique() on district_gadm names -- failed silently
-          because homonyms share the same name; reported 0 duplicates.
-  Feb 11: corrected to .groupby().size(); detected 7 pairs; deduped to 762.
-  Feb 28: design changed to retain 769 rows; broke Script 12 (flood exposure)
-          which has no state filtering; produced 10 artificial flood matches.
-  Mar 05: reverted to 762-row output; added hard assert before save.
-          Script 13 state filtering (Feb 11) handles deposit disambiguation.
+  Feb 07: dedup used .nunique() on names -- failed silently (nunique=1
+          for homonyms sharing name across states); reported 0 duplicates.
+  Feb 11: corrected to .groupby().size(); detected 7 pairs; deduped 762.
+  Feb 28: design changed to retain 769 rows; broke Script 12 which has
+          no state filtering; produced 10 artificial Rule A flood events.
+  Mar 05 v1: reverted to 762-row output; hard assert added before save.
+  Mar 05 v2: EM-DAT state name exclusion + threshold raised 75->80%.
+             Bihar->Bidar, Manipur->Mainpuri, Nagaland->Nalanda,
+             Tripura->Raipur, Uttarakhand->Uttara Kannada eliminated.
+             East/West Imphal->East/West Nimar (76.2%) eliminated.
 
 DESIGN:
   Script 8  -> 762 rows (one per RBI district, homonyms deduplicated)
-  Script 12 -> uses 762-row crosswalk, no artificial flood matches
+  Script 10 -> state name tokens handled by state fallback (Rule A only)
   Script 13 -> state filtering resolves deposit assignment for 7 pairs
 
 ASSERT:
@@ -33,11 +36,39 @@ OUTPUTS:
   - EM-DAT match: 02_Data_Intermediate/emdat_district_matches.csv (209 rows)
 
 MATCH RATES:
-  - RBI -> GADM:   83.2% (threshold: 80%)
-  - EM-DAT -> GADM: 81.3% (informational, threshold: 75%)
+  - RBI -> GADM:    83.2% (threshold: 80%)
+  - EM-DAT -> GADM: 78.0% (threshold: 80%, excludes 26 state name tokens)
 
 STOP CONDITION:
   - PASSED -- RBI match rate at or above 80%
+
+STATE NAME TOKENS EXCLUDED FROM DISTRICT MATCHING (26):
+  - Andhra Pradesh
+  - Arunachal Pradesh
+  - Assam
+  - Bihar
+  - Chhattisgarh
+  - Delhi
+  - Gujarat
+  - Haryana
+  - Himachal Pradesh
+  - Jharkhand
+  - Karnataka
+  - Kerala
+  - Madhya Pradesh
+  - Maharashtra
+  - Manipur
+  - Meghalaya
+  - Nagaland
+  - Orissa
+  - Punjab
+  - Rajasthan
+  - Sikkim
+  - Tamil Nadu
+  - Tripura
+  - Uttar Pradesh
+  - Uttarakhand
+  - West Bengal
 
 HOMONYMOUS DISTRICTS RESOLVED (7 pairs, 7 rows removed):
   - AURANGABAD: kept Bihar, dropped ['Maharashtra']

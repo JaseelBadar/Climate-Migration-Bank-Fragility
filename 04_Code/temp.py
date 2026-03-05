@@ -1,23 +1,13 @@
-import subprocess
 import pandas as pd
 
-# This is what git checkout does -- reads the committed file content and writes it to disk
-result = subprocess.run(
-    ['git', 'show', 'f287cf5:02_Data_Intermediate/flood_exposure_panel.csv'],
-    capture_output=True, cwd='e:/Climate-Migration-Bank-Fragility'
-)
-with open('02_Data_Intermediate/flood_exposure_panel.csv', 'wb') as f:
-    f.write(result.stdout)
+# Load current emdat_district_matches
+current = pd.read_csv('02_Data_Intermediate/emdat_district_matches.csv')
 
-result2 = subprocess.run(
-    ['git', 'show', 'f287cf5:02_Data_Intermediate/district_crosswalk_draft.csv'],
-    capture_output=True, cwd='e:/Climate-Migration-Bank-Fragility'
-)
-with open('02_Data_Intermediate/district_crosswalk_draft.csv', 'wb') as f:
-    f.write(result2.stdout)
+# How many matched in current run?
+print(f"Current matches: {current['matched_emdat_gadm'].sum()} / {len(current)}")
 
-# Verify immediately
-flood = pd.read_csv('02_Data_Intermediate/flood_exposure_panel.csv')
-cw = pd.read_csv('02_Data_Intermediate/district_crosswalk_draft.csv')
-print("Crosswalk rows:", len(cw))
-print("Flood Rule A events:", flood['flood_exposure_ruleA_qt'].sum())
+# Which districts are matched now?
+matched = current[current['matched_emdat_gadm'] == True][
+    ['district_emdat', 'district_gadm_match', 'match_score_emdat_gadm']
+].sort_values('district_emdat')
+print(matched.to_string())

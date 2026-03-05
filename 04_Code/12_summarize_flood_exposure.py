@@ -87,7 +87,7 @@ for state, count in state_exp.items():
 # [7] KNOWN LIMITATIONS
 log_lines.append("\n[7] KNOWN LIMITATIONS")
 log_lines.append(
-    "   - 44 unmatched EM-DAT location tokens "
+    "   - 46 unmatched EM-DAT location tokens "
     "(typos, J&K data gaps, historical names)"
 )
 log_lines.append(

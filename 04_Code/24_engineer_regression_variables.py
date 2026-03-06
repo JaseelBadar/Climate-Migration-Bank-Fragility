@@ -65,9 +65,11 @@ print("[4/6] Computing quarter-over-quarter changes...")
 df['deposit_change_qt'] = df.groupby(['district_gadm', 'state_gadm'])['log_deposits'].diff()
 df['lights_change_qt']  = df.groupby(['district_gadm', 'state_gadm'])['log_lights_qt'].diff()
 
-print(f"  deposit_change_qt -- missing (expected 631): {df['deposit_change_qt'].isna().sum():,}")
-print(f"  lights_change_qt  -- missing (expected 631): {df['lights_change_qt'].isna().sum():,}")
-print()
+print(f"  deposit_change_qt -- missing: {df['deposit_change_qt'].isna().sum():,}  "
+      f"(631 first-obs NaNs + propagation from {df['deposits'].isna().sum():,} "
+      f"missing deposit quarters)")
+print(f"  lights_change_qt  -- missing (expected 631): "
+      f"{df['lights_change_qt'].isna().sum():,}")
 
 
 # ============================================================================

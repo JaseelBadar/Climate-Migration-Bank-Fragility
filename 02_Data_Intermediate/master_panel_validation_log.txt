@@ -1,5 +1,5 @@
 MASTER PANEL VALIDATION REPORT
-Generated: 2026-03-03 21:35 IST
+Generated: 2026-03-06 20:25 IST
 
 
 STRUCTURE:
@@ -11,8 +11,8 @@ STRUCTURE:
 
 DATA AVAILABILITY:
 - Deposits: 23079 / 26640 (86.6%)
-- Floods (Rule A): 2230 events
-- Floods (Rule B): 272 events
+- Floods (Rule A): 2518 events
+- Floods (Rule B): 255 events
 
 
 CRITICAL ISSUES:
@@ -20,7 +20,7 @@ CRITICAL ISSUES:
 2. 2016Q4: 100.0% missing deposits (RBI structural gap — source file boundary)
 3. 2017Q1: 100.0% missing deposits (RBI structural gap — same publication gap)
 4. 2017 overall: 29.5% missing deposits (partial recovery from Q2 onward)
-5. Treatment coverage: 88.3% of Rule A floods have deposit data
+5. Treatment coverage: 87.8% of Rule A floods have deposit data
 
 
 RECOMMENDATIONS:

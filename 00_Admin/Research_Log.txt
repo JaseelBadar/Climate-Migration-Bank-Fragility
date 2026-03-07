@@ -3850,11 +3850,9 @@ Next Session:
 5. Execute Scripts 21-24 if Scripts 13-17 review passes without issues
 
 ======================================================================
-2026-03-03 (Tue) 2200-2307 PM IST: Script 22b - VIIRS Alignment
-Bug Discovery and Fix
+2026-03-03 (Tue) 22:00-23:07 PM IST: Script 22b - VIIRS Alignment Bug Discovery and Fix
 ======================================================================
-Goal: Review and execute Script 22b to produce viirs_quarterly_panel_clean.csv
-aligned with clean deposits sample, prepare VIIRS panel for Script 23 merge.
+Goal: Review and execute Script 22b to produce viirs_quarterly_panel_clean.csv aligned with clean deposits sample, prepare VIIRS panel for Script 23 merge.
 
 Actions Completed
 
@@ -3927,11 +3925,9 @@ Next Session:
    coefficient changes by hypothesis
 
 ======================================================================
-2026-03-04 (Wed) 1800-2120 IST: Scripts 23-25 Verification,
-Pipeline Contamination Discovery, Documentation Updates
+2026-03-04 (Wed) 1800-2120 IST: Scripts 23-25 Verification, Pipeline Contamination Discovery, Documentation Updates
 ======================================================================
-Goal: Verify Script 23 output, review and execute Scripts 24-25,
-investigate anomalous descriptive statistics, update all core documents.
+Goal: Verify Script 23 output, review and execute Scripts 24-25, investigate anomalous descriptive statistics, update all core documents.
 
 Actions Completed
 
@@ -4105,11 +4101,9 @@ Next Session:
 9. Document all coefficient changes from Feb 6 contaminated run
 
 ======================================================================
-2026-03-05 (Thu) 2130-2345 IST: Script 8 Permanent Fix,
-Flood Exposure Pipeline Re-Run, Scripts 10-12 Verification
+2026-03-05 (Thu) 21:30-23:45 IST: Script 8 Permanent Fix, Flood Exposure Pipeline Re-Run, Scripts 10-12 Verification
 ======================================================================
-Goal: Implement permanent Script 8 fix, re-run flood exposure pipeline
-(Scripts 10-12), verify clean baseline, lock flood exposure numbers.
+Goal: Implement permanent Script 8 fix, re-run flood exposure pipeline (Scripts 10-12), verify clean baseline, lock flood exposure numbers.
 
 Actions Completed
 
@@ -4251,5 +4245,225 @@ Next Session:
 10. Correct 12_summarize_flood_exposure.py Section [7] token count
 
 ======================================================================
-END OF LOG - Last Updated: 2026-03-04 23:50 PM IST
+2026-03-07 (Sat) 21:30-23:45 IST: Scripts 14-17, 22b-26 Pipeline Re-Run and Full Verification.
+======================================================================
+Goal: Re-run downstream pipeline from clean flood baseline (Script 10 output, Rule A = 2,518). Verify master panel, analysis sample, VIIRS merge, regression variables, and descriptive statistics. Lock all baselines. Update project documentation to reflect clean pipeline.
+
+----------------------------------------------------------------------
+A) Scripts 14 + 15: Master Panel Re-Run and Validation
+----------------------------------------------------------------------
+Script 14 executed. master_panel_raw.csv regenerated from clean inputs:
+  - district_crosswalk_draft.csv: 762 rows (hard assert confirmed)
+  - flood_exposure_panel.csv: Rule A = 2,518 (clean Mar 5 baseline)
+  - rbi_deposits_panel.csv: CLEAN (Feb 11, unchanged)
+  Output: 26,640 rows, 666 district-state pairs, 40 quarters
+  Rule A confirmed: 2,518 events in raw panel
+  Litmus: BALOD 2022Q4 = 3,296 Crores (not 87) -- deposit bug resolved,
+  confirmed still clean.
+
+Script 15 executed. Validation log regenerated.
+  All checks passed. master_panel_raw.csv cleared for downstream use.
+
+Commits issued: master_panel_raw.csv, 15_validation_log.txt separately.
+
+----------------------------------------------------------------------
+B) Script 17: Analysis Sample Preparation
+----------------------------------------------------------------------
+Script 17 executed (Option 3: drop gap quarters + zero-coverage
+districts).
+
+  Restrictions applied:
+    Drop 2016Q3-2017Q1: 3 quarters, RBI publication blackout (100%
+    missing, confirmed structural).
+    Drop 35 zero-coverage districts: never report deposits across
+    full panel.
+
+  Output locked:
+    Rows:              23,347 (631 x 37)
+    Districts:         631 composite (district_gadm, state_gadm) pairs
+    Quarters:          37 (2015Q1-2016Q2, 2017Q2-2024Q4)
+    Rule A (sample):   2,238 events | 9.59% treatment rate
+    Rule B (sample):     209 events | 0.90% treatment rate
+    Districts hit (A): 569 | Districts hit (B): 141
+    Deposit coverage:  98.9% (23,079 / 23,347)
+
+  Analysis sample LOCKED. master_panel_analysis.csv committed.
+
+  Note on Rule A: 2,518 (raw panel) -> 2,238 (analysis sample).
+  Difference of 280 = events in dropped gap quarters (3Q x ~93
+  exposed districts) + events in 35 dropped zero-coverage districts.
+  Arithmetic confirmed. No data error.
+
+----------------------------------------------------------------------
+C) Script 22b: VIIRS Alignment (No Re-Run Required)
+----------------------------------------------------------------------
+viirs_quarterly_panel_clean.csv verified on disk. VIIRS data was never
+contaminated -- crosswalk contamination affected flood exposure only,
+not VIIRS extraction or quarterly aggregation. Script 22b output is
+bit-for-bit identical to what a re-run would produce.
+
+  Verified dimensions: 25,240 rows (631 x 40 quarters)
+  No action taken. No commit issued.
+
+----------------------------------------------------------------------
+D) Script 23: VIIRS + Master Panel Merge
+----------------------------------------------------------------------
+Script 23 executed. Left join on composite key
+(district_gadm, state_gadm, year, quarter).
+
+  All asserts passed:
+    Row count preserved: 23,347 (no fan-out, no drops)
+    District alignment:  631 == 631
+    VIIRS coverage:      100.0% (0 missing)
+
+  Litmus test (ADILABAD TELANGANA 2015Q1):
+    deposits      = 6,762.0646 Crores -- exact match to Feb 12 audit
+    mean_radiance = 0.245293          -- exact match to Feb 12 audit
+
+  Output: analysis_panel_final.csv, 23,347 rows, 11 columns.
+  Committed.
+
+----------------------------------------------------------------------
+E) Script 24: Regression Variable Engineering
+----------------------------------------------------------------------
+Script 24 executed. Sort -> log transforms -> QoQ changes -> lags.
+
+  Variables created:
+    log_deposits:      offset +1   | range [3.4011, 14.0288]
+    log_lights_qt:     offset +0.001 | range [-6.6447, 3.5559]
+    deposit_change_qt: log diff    | 905 missing (631 structural +
+                       274 from 268 missing deposit quarters)
+    lights_change_qt:  log diff    | 631 missing (100% VIIRS coverage,
+                       first-obs structural only)
+    flood_ruleA_L1-L4, flood_ruleB_L1-L4:
+      Missing: 631 / 1,262 / 1,893 / 2,524 (exact: 631 x k)
+
+  Column assert (23 columns): PASSED
+  Row assert (23,347 rows): PASSED
+  Output: regression_panel_final.csv committed.
+
+----------------------------------------------------------------------
+F) Script 25: Descriptive Statistics
+----------------------------------------------------------------------
+Script 25 executed. All values computed from clean regression panel.
+
+  Panel:
+    Rows: 23,347 | Districts: 631 | Quarters: 37
+    Perfectly balanced: obs/district = min=max=mean=37.0
+
+  Deposits (Rs Crores, nominal):
+    N: 23,079 | Mean: 16,425.73 | SD: 47,516.23
+    Min: 28.9979 | Median: 6,135.58 | Max: 1,237,744.34
+
+  VIIRS radiance (nW/cm2/sr):
+    N: 23,347 | Mean: 0.6955 | SD: 1.6884
+    Min: 0.0003 | Median: 0.4266 | Max: 35.0199
+
+  Flood exposure (analysis sample, locked):
+    Rule A: 2,238 events | 9.59% | 569 districts ever exposed
+    Rule B:   209 events | 0.90% | 141 districts ever exposed
+
+  01_descriptive_stats.csv and 25_descriptive_summary.txt committed.
+
+----------------------------------------------------------------------
+G) Script 26: VIIRS Quarterly Panel Validation
+----------------------------------------------------------------------
+Script 26 corrected (two bugs from original script) and executed.
+
+  Bug 1: expected_rows / expected_districts: 624 -> 631 (was using
+    unique district name count, not composite pair count). Old script
+    would have reported false FAIL on Checks 1 and 3.
+  Bug 2: Aurangabad litmus test used Title Case strings ('Aurangabad',
+    'Bihar') -- Script 22b normalised all keys to UPPERCASE. Old code
+    returned 0 rows and NaN silently without raising error.
+
+  Corrected script executed. All 9 checks passed:
+    Check 1 Dimensions:  25,240 rows (631x40)          PASS
+    Check 2 Columns:     6 required columns present     PASS
+    Check 3 Districts:   631 composite, 624 name-only   PASS
+    Check 4 Temporal:    40 quarters, no gaps            PASS
+    Check 5 NaN:         0 missing in radiance, pixels  PASS
+    Check 6 Inf:         0 infinite values               PASS
+    Check 7 Range:       min=0.0003, max=35.8691,
+                         all >= 0, max < 100 threshold   PASS
+    Check 8 Balance:     min=max=mean=40.0               PASS
+    Check 9 Homonyms:    7 pairs confirmed
+      AURANGABAD:  BIHAR=0.7222 vs MAHARASHTRA=0.5094
+      diff = 0.2128 >> 0.01 threshold                    PASS
+
+  Commits: 26_validate_viirs_quarterly.py (corrected script) and
+    26_viirs_quarterly_validation.txt (log) issued separately.
+
+----------------------------------------------------------------------
+H) Documentation Update
+----------------------------------------------------------------------
+Three project documents updated to v2.4 (Codebook, Hypotheses) and
+current (README). All contaminated metrics replaced with clean values.
+
+  README.md:
+    - Pipeline status: all scripts 08-26 marked Clean
+    - Flood baseline updated: Rule A 1,984 -> 2,238 (analysis sample)
+    - Treatment rate: 8.50% -> 9.59%
+    - Districts hit: 512 -> 569 (Rule A)
+    - Deposit coverage: 99.1% -> 98.9% (23,079 / 23,347)
+    - File registry: all CONTAMINATED flags removed
+    - Known issues: crosswalk regression moved to Resolved
+    - Sample statistics and verified file rows fully updated
+
+  Hypotheses_Formal_v2.4.md:
+    - Status line updated: pipeline fix pending -> fully clean
+    - Flood baseline locked in data state table
+    - H3 pending note: N 21,912 -> ~21,180 (correct base panel)
+    - H4a explicitly flagged: must not be cited pre-re-run with
+      corrected composite FE
+    - Pending actions: completed items removed; FE correction remains
+
+  Variables_Codebook_v2.4.md:
+    - All variable ranges updated to Mar 6-7 verified values
+    - Flood section: Rule A 1,984 -> 2,238, Rule B 272 -> 209
+    - Lag arithmetic table: actual values added (all exact matches)
+    - Data state table: all files updated, CONTAMINATED flags removed
+    - Known issues: three bugs moved to Resolved
+    - FE misspecification retained as active (Scripts 27, 28, 30)
+    - H3 N corrected to ~21,180
+
+  Commits: README.md, Hypotheses_Formal_v2.4.md, and
+    Variables_Codebook_v2.4.md issued separately.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Pipeline state (all files clean and verified Mar 6-7):
+  district_crosswalk_draft.csv  762 rows       Clean Mar 5
+  flood_exposure_panel.csv      26,640 rows    Clean Mar 5
+  rbi_deposits_panel.csv        50,192 rows    Clean Feb 11
+  master_panel_raw.csv          26,640 rows    Clean Mar 6
+  master_panel_analysis.csv     23,347 rows    Clean Mar 6
+  viirs_quarterly_panel_clean.csv 25,240 rows  Clean Mar 3
+  analysis_panel_final.csv      23,347 rows    Clean Mar 6
+  regression_panel_final.csv    23,347 rows    Clean Mar 6
+  01_descriptive_stats.csv      6 vars         Clean Mar 6
+
+Flood baseline LOCKED (analysis sample):
+  Rule A = 2,238 events | 9.59% treatment rate | 569 districts
+  Rule B =   209 events | 0.90% treatment rate | 141 districts
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Fix FE specification in Scripts 27, 28, 30:
+    district_state_id = district_gadm + '_' + state_gadm (631 FE)
+    Script 29 (H3, quarter FE only) is unaffected
+  - Execute H1 regression (Script 27)
+  - Execute H2 IV/2SLS regression (Script 28)
+  - Execute H3 distributed lag regression (Script 29) on full
+    23,347-observation clean sample; confirm t-2 lag persists
+  - Execute H4 heterogeneity regression (Script 30)
+  - Document all coefficient changes vs Feb 6 contaminated run
+  - Correct Section [7] hardcoded token count (44 -> 46) in
+    12_summarize_flood_exposure.py before paper writing
+
+Next session priority: FE correction Scripts 27, 28, 30 -> execute
+  all four regressions -> update Hypotheses v2.5 with confirmed results.
+
+======================================================================
+END OF LOG - Last Updated: 2026-03-07 21:10 PM IST
 ======================================================================

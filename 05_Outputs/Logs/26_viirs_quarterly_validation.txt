@@ -1,15 +1,15 @@
 ======================================================================
 VIIRS QUARTERLY PANEL VALIDATION REPORT
-Generated: 2026-02-15 20:52:45
+Generated: 2026-03-07 19:50:02
 ======================================================================
 
-File loaded successfully: 24,960 rows
+File loaded successfully: 25,240 rows
 
 ======================================================================
 CHECK 1: EXPECTED DIMENSIONS
 ======================================================================
-Expected: 24,960 rows (624 districts x 40 quarters)
-Actual:   24,960 rows
+Expected: 25,240 rows (631 districts x 40 quarters)
+Actual:   25,240 rows
 RESULT: PASS
 
 ======================================================================
@@ -20,10 +20,11 @@ RESULT: PASS - All required columns present
 ======================================================================
 CHECK 3: COMPOSITE DISTRICT COVERAGE
 ======================================================================
-Expected: 624 districts
+Expected: 631 districts
 Actual (name only): 624
-Actual (composite): 624
+Actual (composite): 631
 RESULT: PASS
+Homonymous pairs detected: 7
 
 ======================================================================
 CHECK 4: TEMPORAL COVERAGE
@@ -50,8 +51,8 @@ RESULT: PASS
 CHECK 7: RADIANCE VALUE RANGE
 ======================================================================
 Min:    0.0003
-Mean:   0.6900
-Median: 0.4178
+Mean:   0.6879
+Median: 0.4181
 Max:    35.8691
 RESULT: PASS - No negative values
 
@@ -65,8 +66,18 @@ RESULT: PASS - Balanced panel
 ======================================================================
 CHECK 9: HOMONYMOUS DISTRICT VERIFICATION
 ======================================================================
-Homonymous district pairs found: 0
-WARNING: Expected 7 homonymous pairs, found 0
+Homonymous district pairs found: 7
+Homonymous districts:
+  AURANGABAD: BIHAR, MAHARASHTRA
+  BALRAMPUR: CHHATTISGARH, UTTAR PRADESH
+  BIJAPUR: CHHATTISGARH, KARNATAKA
+  BILASPUR: CHHATTISGARH, HIMACHAL PRADESH
+  HAMIRPUR: HIMACHAL PRADESH, UTTAR PRADESH
+  PRATAPGARH: RAJASTHAN, UTTAR PRADESH
+  RAIGARH: CHHATTISGARH, MAHARASHTRA
+Aurangabad Bihar mean:       0.7222
+Aurangabad Maharashtra mean: 0.5094
+RESULT: PASS - Aurangabad values distinct
 
 ======================================================================
 FINAL VALIDATION SUMMARY

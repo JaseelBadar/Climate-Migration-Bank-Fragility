@@ -1,24 +1,101 @@
 ======================================================================
-H2: IV 2SLS REGRESSION (District-Clustered SEs)
-Composite district_state_id used for FE and clustering
+H2: IV 2SLS REGRESSION
+Nighttime Lights -> Deposit Withdrawals
+Estimator: linearmodels.IV2SLS
 ======================================================================
 
-[FIRST STAGE: Flood -> Lights]
-  Beta  = -0.015138
-  SE    = 0.002828 (clustered by district_state_id)
-  t     = -5.353
-  p     = 0.000000
-  N     = 22,251
+Panel loaded: 23,347 rows, 23 columns
+Required columns verified: ['deposit_change_qt', 'lights_change_qt', 'flood_exposure_ruleA_qt', 'flood_exposure_ruleB_qt', 'district_gadm', 'state_gadm', 'quarter']
 
-[SECOND STAGE: Lights_hat -> Deposits]
-  Beta  = 0.293054
-  SE    = 0.196385 (clustered by district_state_id)
-  t     = 1.492
-  p     = 0.1357
-  Significance: NOT SIGNIFICANT
-  N     = 22,251
+Initial: 23,347 obs
+After restriction: 22,442 obs  (expected ~22,442)
+Dropped: 905 obs (3.9%)
 
-[FE SPECIFICATION]
-  District FE: 623 (composite district_state_id)
-  Quarter FE: 35
-  Clusters: 624
+Districts (composite): 631  (expected 631)
+Quarters: 36
+Panel index set: (district_state_id, quarter) -- PASS
+
+District FE dummies: 630  (expected 630)
+Quarter FE dummies:  35   (expected 35)
+
+Dependent: (22442, 1)
+Exog: (22442, 666)  (const + 630 district FE + 35 quarter FE)
+Endog: (22442, 1)  (lights_change_qt)
+Instrument A: (22442, 1)  (flood_ruleA)
+Instrument B: (22442, 1)  (flood_ruleB)
+
+======================================================================
+RULE A: PRIMARY SPECIFICATION
+======================================================================
+Dependent:   deposit_change_qt
+Endog:       lights_change_qt
+Instrument:  flood_exposure_ruleA_qt (district OR state fallback)
+FE:          district_state_id (631) + quarter (36)
+SE:          Clustered by district_state_id
+Note:        Rule A state fallback attenuates first stage toward zero.
+             Second stage beta may be attenuated accordingly.
+
+FIRST STAGE:
+  Beta (flood -> lights): -0.045375
+  SE:     0.007706
+  t:      -5.888
+  p:      0.000000
+  F-statistic: 34.673
+  Credibility: STRONG INSTRUMENT (F >= 16.38). IV credible.
+
+SECOND STAGE:
+  Beta (lights_hat -> deposits): -0.008388
+  SE:      0.034022
+  t:       -0.247
+  p:       0.805268
+  95% CI:  [-0.075070, 0.058294]
+  N obs:   22,442
+  Status:  NOT SIGNIFICANT
+
+INTERPRETATION (pre-committed, not post-hoc):
+  Conclusion: H2 NULL. No significant lights-to-deposits transmission.
+  Pre-committed explanation order: (1) lights are noisy proxy,
+  (2) non-migration channels, (3) lagged effects -- see H3.
+
+======================================================================
+RULE B: ROBUSTNESS SPECIFICATION
+======================================================================
+Instrument:  flood_exposure_ruleB_qt (district-only, high precision)
+Note:        Rule B -- no state attenuation. Lower power (0.90% rate).
+
+FIRST STAGE:
+  Beta (flood -> lights): -0.058282
+  SE:     0.019482
+  t:      -2.992
+  p:      0.002775
+  F-statistic: 8.949
+  Credibility: WEAK INSTRUMENT (F < 10). Label 2SLS as suggestive. Drop causal language.
+
+SECOND STAGE:
+  Beta (lights_hat -> deposits): -0.006776
+  SE:      0.059698
+  t:       -0.114
+  p:       0.909625
+  95% CI:  [-0.123783, 0.110230]
+  N obs:   22,442
+  Status:  NOT SIGNIFICANT
+
+======================================================================
+SIDE-BY-SIDE SUMMARY
+======================================================================
+  SECOND STAGE: lights_change_qt_hat -> deposit_change_qt
+  Spec               Beta         SE        t          p   Sig
+  ----------------------------------------------------------
+  Rule A        -0.008388   0.034022   -0.247   0.805268      
+  Rule B        -0.006776   0.059698   -0.114   0.909625      
+  First Stage F: Rule A = 34.673 | Rule B = 8.949
+  N: 22,442 | Districts: 631 | Quarters: 36
+
+Table saved: 05_Outputs/Tables/03_H2_iv2sls.csv
+Full summary (Rule A) saved.
+Full summary (Rule B) saved.
+
+======================================================================
+SCRIPT 28 COMPLETE
+Next: Script 29 -- H3 Distributed Lag (Flood Timing)
+======================================================================

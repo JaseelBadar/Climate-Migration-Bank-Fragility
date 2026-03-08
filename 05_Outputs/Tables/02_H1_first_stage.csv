@@ -1,2 +1,3 @@
-hypothesis,specification,variable,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,n_obs,r_squared,r_squared_adj,district_fe_count,quarter_fe_count,se_type,significance
-H1,lights_change_qt ~ flood_ruleA + district_FE + quarter_FE,flood_exposure_ruleA_qt,-0.014896,0.002806,-5.309,0.0,-0.020396,-0.009396,22464,0.5549,0.5415,624,36,clustered_by_district_state_id,***
+hypothesis,rule,specification,variable,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,n_obs,r_squared,r_squared_adj,district_fe_count,quarter_fe_count,se_type,significance,note
+H1,A,lights_change_qt ~ flood_ruleA + district_FE + quarter_FE,flood_exposure_ruleA_qt,-0.044468,0.00779,-5.708,0.0,-0.059737,-0.029199,22716,0.6168,0.6053,631,36,clustered_by_district_state_id,***,Primary. State fallback attenuates beta toward zero. Conservative lower bound.
+H1,B,lights_change_qt ~ flood_ruleB + district_FE + quarter_FE,flood_exposure_ruleB_qt,-0.058446,0.019783,-2.954,0.003133,-0.09722,-0.019672,22716,0.6161,0.6045,631,36,clustered_by_district_state_id,***,Robustness. District-only match. No state attenuation. Lower power.

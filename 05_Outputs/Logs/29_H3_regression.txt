@@ -1,0 +1,140 @@
+======================================================================
+H3: DISTRIBUTED LAG REGRESSION
+Flood Timing -> Deposit Withdrawals
+SPECIFICATION: Quarter FE only (NO district FE) -- pre-committed
+======================================================================
+
+Panel loaded: 23,347 rows, 23 columns
+Required columns verified -- PASS
+
+district_state_id: 631 unique pairs  (expected 631)
+Composite key verified -- PASS
+
+Lag NaN arithmetic (from Script 24 pre-computed columns):
+  flood_ruleA L0 NaN: 0     (expected 0)
+  flood_ruleA L1 NaN: 631   (expected 631)
+  flood_ruleA L2 NaN: 1262 (expected 1,262)
+  flood_ruleB L0 NaN: 0     (expected 0)
+  flood_ruleB L1 NaN: 631   (expected 631)
+  flood_ruleB L2 NaN: 1262 (expected 1,262)
+Lag arithmetic verified -- PASS
+
+Initial: 23,347 obs
+After restriction (Rule A): 21,837 obs  (expected ~21,180)
+After restriction (Rule B): 21,837 obs  (expected ~21,180)
+Dropped (Rule A): 1,510 (6.5%)
+Dropped (Rule B): 1,510 (6.5%)
+Drop breakdown (Rule A): 631x2=1,262 lag NaN + 248 additional deposit NaN
+
+Quarter FE (Rule A): 35  (expected 36)
+Quarter FE (Rule B): 35  (expected 36)
+Quarter FE verified -- PASS
+
+======================================================================
+RULE A: PRIMARY SPECIFICATION
+======================================================================
+Dependent:   deposit_change_qt
+Regressors:  flood_exposure_ruleA_qt (t0)
+             flood_ruleA_L1          (t-1)
+             flood_ruleA_L2          (t-2)
+FE:          Quarter only (NO district FE -- pre-committed H3 design)
+SE:          Clustered by district_state_id
+Expected:    t0 and/or t-1 < 0, attenuation by t-2
+Validated:   Feb 6 t-2 beta=-0.0091, p=0.012 (clean spec, N=21,912)
+
+Model fitted: N=21,837, R2=0.2432, R2-adj=0.2419
+
+RESULTS (Rule A):
+
+  [t0  Current quarter]
+    Beta    = 0.000609
+    SE      = 0.001463
+    t       = 0.416
+    p       = 0.677115
+    95% CI  = [-0.002258, 0.003477]
+    Status  = NOT SIGNIFICANT
+
+  [t-1 One quarter lag]
+    Beta    = 0.001505
+    SE      = 0.001114
+    t       = 1.351
+    p       = 0.176801
+    95% CI  = [-0.000679, 0.003690]
+    Status  = NOT SIGNIFICANT
+
+  [t-2 Two quarter lag]
+    Beta    = -0.007005
+    SE      = 0.001645
+    t       = -4.258
+    p       = 0.000021
+    95% CI  = [-0.010230, -0.003780]
+    Status  = ***
+
+INTERPRETATION (pre-committed, not post-hoc):
+  Expected pattern: t0 and/or t-1 negative, attenuation by t-2.
+  t0:  positive (0.000609), p=0.6771
+  t-1: positive (0.001505), p=0.1768
+  t-2: negative (-0.007005), p=0.0000
+  Conclusion: H3 SUPPORTED. At least one lag negative and significant.
+  Liquidity timeline: deposit stress within 2 quarters of flood.
+
+======================================================================
+RULE B: ROBUSTNESS SPECIFICATION
+======================================================================
+Regressors:  flood_exposure_ruleB_qt + flood_ruleB_L1 + flood_ruleB_L2
+FE:          Quarter only | SE: Clustered district_state_id
+Note:        Rule B district-only match. Higher precision, lower power.
+
+Model fitted: N=21,837, R2=0.2426, R2-adj=0.2413
+
+RESULTS (Rule B):
+
+  [t0  Current quarter]
+    Beta    = -0.002555
+    SE      = 0.003486
+    t       = -0.733
+    p       = 0.463672
+    95% CI  = [-0.009388, 0.004278]
+    Status  = NOT SIGNIFICANT
+
+  [t-1 One quarter lag]
+    Beta    = -0.000778
+    SE      = 0.001955
+    t       = -0.398
+    p       = 0.690506
+    95% CI  = [-0.004610, 0.003053]
+    Status  = NOT SIGNIFICANT
+
+  [t-2 Two quarter lag]
+    Beta    = -0.003814
+    SE      = 0.006307
+    t       = -0.605
+    p       = 0.545338
+    95% CI  = [-0.016175, 0.008547]
+    Status  = NOT SIGNIFICANT
+
+======================================================================
+SIDE-BY-SIDE SUMMARY
+======================================================================
+  Lag    Rule           Beta         SE        t          p   Sig
+  ------------------------------------------------------------
+  t0     A          0.000609   0.001463    0.416   0.677115      
+  t0     B         -0.002555   0.003486   -0.733   0.463672      
+  ------------------------------------------------------------
+  t-1    A          0.001505   0.001114    1.351   0.176801      
+  t-1    B         -0.000778   0.001955   -0.398   0.690506      
+  ------------------------------------------------------------
+  t-2    A         -0.007005   0.001645   -4.258   0.000021   ***
+  t-2    B         -0.003814   0.006307   -0.605   0.545338      
+  ------------------------------------------------------------
+  N (Rule A): 21,837 | N (Rule B): 21,837
+  Quarter FE: 35 | District FE: NONE (pre-committed)
+
+Table saved: 05_Outputs/Tables/04_H3_timing.csv
+Full summary (Rule A) saved.
+Full summary (Rule B) saved.
+
+======================================================================
+SCRIPT 29 COMPLETE
+Next: Script 30 -- H4 Heterogeneity
+======================================================================

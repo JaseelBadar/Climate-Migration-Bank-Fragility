@@ -4247,7 +4247,7 @@ Next Session:
 ======================================================================
 2026-03-07 (Sat) 21:30-23:45 IST: Scripts 14-17, 22b-26 Pipeline Re-Run and Full Verification.
 ======================================================================
-Goal: Re-run downstream pipeline from clean flood baseline (Script 10 output, Rule A = 2,518). Verify master panel, analysis sample, VIIRS merge, regression variables, and descriptive statistics. Lock all baselines. Update project documentation to reflect clean pipeline.
+Goal: Re-run downstream pipeline from clean flood baseline (Script 10 output, Rule A = 2,518). Verify master panel, analysis sample, VIIRS merge, regression variables, and descriptive statistics. Lock all baselines.
 
 ----------------------------------------------------------------------
 A) Scripts 14 + 15: Master Panel Re-Run and Validation
@@ -4394,55 +4394,6 @@ Script 26 corrected (two bugs from original script) and executed.
   Commits: 26_validate_viirs_quarterly.py (corrected script) and
     26_viirs_quarterly_validation.txt (log) issued separately.
 
-----------------------------------------------------------------------
-H) Documentation Update
-----------------------------------------------------------------------
-Three project documents updated to v2.4 (Codebook, Hypotheses) and
-current (README). All contaminated metrics replaced with clean values.
-
-  README.md:
-    - Pipeline status: all scripts 08-26 marked Clean
-    - Flood baseline updated: Rule A 1,984 -> 2,238 (analysis sample)
-    - Treatment rate: 8.50% -> 9.59%
-    - Districts hit: 512 -> 569 (Rule A)
-    - Deposit coverage: 99.1% -> 98.9% (23,079 / 23,347)
-    - File registry: all CONTAMINATED flags removed
-    - Known issues: crosswalk regression moved to Resolved
-    - Sample statistics and verified file rows fully updated
-
-  Hypotheses_Formal_v2.4.md:
-    - Status line updated: pipeline fix pending -> fully clean
-    - Flood baseline locked in data state table
-    - H3 pending note: N 21,912 -> ~21,180 (correct base panel)
-    - H4a explicitly flagged: must not be cited pre-re-run with
-      corrected composite FE
-    - Pending actions: completed items removed; FE correction remains
-
-  Variables_Codebook_v2.4.md:
-    - All variable ranges updated to Mar 6-7 verified values
-    - Flood section: Rule A 1,984 -> 2,238, Rule B 272 -> 209
-    - Lag arithmetic table: actual values added (all exact matches)
-    - Data state table: all files updated, CONTAMINATED flags removed
-    - Known issues: three bugs moved to Resolved
-    - FE misspecification retained as active (Scripts 27, 28, 30)
-    - H3 N corrected to ~21,180
-
-  Commits: README.md, Hypotheses_Formal_v2.4.md, and
-    Variables_Codebook_v2.4.md issued separately.
-
-----------------------------------------------------------------------
-Status: End of Session
-----------------------------------------------------------------------
-Pipeline state (all files clean and verified Mar 6-7):
-  district_crosswalk_draft.csv  762 rows       Clean Mar 5
-  flood_exposure_panel.csv      26,640 rows    Clean Mar 5
-  rbi_deposits_panel.csv        50,192 rows    Clean Feb 11
-  master_panel_raw.csv          26,640 rows    Clean Mar 6
-  master_panel_analysis.csv     23,347 rows    Clean Mar 6
-  viirs_quarterly_panel_clean.csv 25,240 rows  Clean Mar 3
-  analysis_panel_final.csv      23,347 rows    Clean Mar 6
-  regression_panel_final.csv    23,347 rows    Clean Mar 6
-  01_descriptive_stats.csv      6 vars         Clean Mar 6
 
 Flood baseline LOCKED (analysis sample):
   Rule A = 2,238 events | 9.59% treatment rate | 569 districts
@@ -4465,5 +4416,154 @@ Next session priority: FE correction Scripts 27, 28, 30 -> execute
   all four regressions -> update Hypotheses v2.5 with confirmed results.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-03-07 21:10 PM IST
+2026-03-08 (Sun) 1700-1830 IST: Scripts 27-29, H1-H3 Regressions
+Executed and Verified. Phase 4 (H1, H2, H3) Complete.
+======================================================================
+Goal: Fix FE specification (composite district_state_id) in Scripts 27
+and 28. Execute H1, H2, H3 regressions with clean pipeline. Verify
+all results against pre-committed hypotheses and Feb 6 benchmarks.
+
+----------------------------------------------------------------------
+A) Script 27: H1 First Stage (Floods -> Lights)
+----------------------------------------------------------------------
+Script 27 rewritten. Two issues resolved vs prior version:
+  Fix 1: FE corrected to composite district_state_id throughout.
+    district_gadm alone -> 624 FE (WRONG, collapses 7 homonymous pairs).
+    district_gadm + '_' + state_gadm -> 631 FE (CORRECT).
+  Fix 2: Rule B added. Prior version ran Rule A only, violating
+    pre-committed R1 (both rules required in all core tables).
+  Additional: Unicode checkmarks removed (Windows cp1252 risk).
+  Hard asserts at load (23,347 rows, 23 columns). FE count assert
+  [620, 640] district / [35, 40] quarter.
+
+Executed. All asserts passed. N = 22,716. District FE = 631. Quarter
+FE = 36 (2015Q1 structurally absent after log-diff -- correct, not
+a bug). Both models fitted without error.
+
+Results:
+  Rule A: beta = -0.0445, SE = 0.0078, t = -5.708, p < 0.001 ***
+  Rule B: beta = -0.0584, SE = 0.0198, t = -2.954, p = 0.003 ***
+
+Rule B magnitude > Rule A -- attenuation bound confirmed. State
+fallback in Rule A attenuates beta toward zero as pre-committed.
+Change vs Feb 6 (beta = -0.0149): 3x larger. Root cause: Script 8
+state token fix now correctly assigns all state districts under Rule A.
+Cleaner treatment = stronger first stage. H1 CONFIRMED.
+
+Instrument credibility: CONFIRMED for H2 IV 2SLS.
+
+KNOWN PRE-PAPER ACTION: statsmodels ValueWarning (rank deficiency in
+clustered VCV at 666 exog columns). Coefficients valid. SE conservative.
+Must re-run Scripts 27-30 with linearmodels PanelOLS before final
+paper tables. Not a blocker for Scripts 28-29 today.
+
+Commits issued: 27_regression_H1_first_stage.py, 02_H1_first_stage.csv,
+  27_H1_regression.txt, 27_H1_regression_full_ruleA.txt,
+  27_H1_regression_full_ruleB.txt separately.
+
+----------------------------------------------------------------------
+B) Script 28: H2 IV 2SLS (Lights -> Deposits)
+----------------------------------------------------------------------
+Script 28 rewritten from scratch. Prior version (manual numpy 2SLS)
+had two critical errors:
+  Error 1: Second stage missing intercept (np.ones absent from X_second).
+  Error 2: SE computed from fitted residuals (y - X_hat*beta), not
+    structural residuals (y - X_actual*beta). Both invalidate the SE.
+    Wooldridge (2010) pp.106-107.
+Replaced with linearmodels.IV2SLS throughout.
+
+Additional fix (discovered post-run): linearmodels first_stage
+F-statistic overflows numerically at 666 exog columns. Output:
+  Rule A F = 4.5 x 10^26 (garbage). Rule B F = 1.3 x 10^27 (garbage).
+Fix: For a single excluded instrument, F = t^2 exactly (Wooldridge
+2010 p.104). Applied immediately after first stage extraction.
+  Rule A F = (-5.888)^2 = 34.673 (STRONG, F >= 16.38)
+  Rule B F = (-2.992)^2 =  8.949 (WEAK,   F <  10)
+
+Rule B labeled WEAK -- pre-committed instrument discipline enforced:
+Rule B second stage labeled suggestive throughout paper. Causal language
+dropped for Rule B per Hypotheses v2.4, Section H2b, R7.
+
+Executed. N = 22,442. District FE = 631. Quarter FE = 36.
+
+Results (second stage):
+  Rule A: beta = -0.0084, SE = 0.0340, t = -0.247, p = 0.805 -- NULL
+  Rule B: beta = -0.0068, SE = 0.0597, t = -0.114, p = 0.910 -- NULL
+
+H2 null confirmed under both rules. Consistent with Feb 6 preliminary
+(p = 0.609). Direction near zero -- noise, not interpretable sign.
+Pre-committed reconciliation: explanation #3 applies. Deposit effects
+lagged, not contemporaneous. H3 t-2 result explains null.
+
+Commits issued: 28_regression_H2_iv2sls.py, 03_H2_iv2sls.csv,
+  28_H2_regression.txt, 28_H2_regression_full_ruleA.txt,
+  28_H2_regression_full_ruleB.txt separately.
+
+----------------------------------------------------------------------
+C) Script 29: H3 Distributed Lag (Flood Timing -> Deposits)
+----------------------------------------------------------------------
+Script 29 rewritten from scratch. Prior version had three critical errors:
+  Error 1: District FE included -- violates pre-committed H3 spec.
+    H3 uses quarter FE only. This is why H3 was validated as clean --
+    unaffected by homonymous FE collapse or any pipeline contamination.
+  Error 2: Lags re-computed inside script instead of using pre-computed
+    flood_ruleA_L1/L2, flood_ruleB_L1/L2 from Script 24. Re-computing
+    risks inconsistency if sort order deviates.
+  Error 3: Rule B not estimated -- violates pre-committed R1.
+
+Lag arithmetic asserted before regression: L0=0, L1=631, L2=1,262
+(both rules). All exact. PASS.
+
+Executed. N = 21,837 (both rules). Quarter FE = 35 (L2 restriction
+drops 2015Q1+Q2 structurally -- correct). District FE = NONE.
+
+Results:
+  Rule A:
+    t0:  beta = +0.000609, SE = 0.001463, p = 0.677 -- NULL
+    t-1: beta = +0.001505, SE = 0.001114, p = 0.177 -- NULL
+    t-2: beta = -0.007005, SE = 0.001645, p < 0.001 ***
+  Rule B:
+    t0/t-1/t-2: all null (expected -- 0.90% treatment rate, low power)
+    t-2 direction: -0.0038 (negative, consistent with Rule A)
+
+H3 CONFIRMED under Rule A. Pre-committed validation holds with clean
+pipeline. t-2 change vs Feb 6 (beta = -0.0091, p = 0.012): magnitude
+smaller (-0.0070), significance stronger (p = 0.000021). Clean deposit
+pipeline = more precise estimate. Direction confirmed.
+
+Rule B null is not a falsification. 209 treatment events insufficient
+power. Coefficient direction consistent with Rule A throughout.
+
+Two cosmetic script fixes required before paper (no re-run needed):
+  expected ~21,180 -> ~21,837 (overlap in deposit/L2 NaN underestimated)
+  expected 36 quarter FE -> 35 (L2 restriction drops 2015Q2)
+
+Commits issued: 29_regression_H3_timing.py, 04_H3_timing.csv,
+  29_H3_regression.txt, 29_H3_regression_full_ruleA.txt,
+  29_H3_regression_full_ruleB.txt separately.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Phase 4 progress:
+  H1: COMPLETE. Confirmed. Rule A -0.0445***, Rule B -0.0584***
+  H2: COMPLETE. Null confirmed. Rule A p=0.805, Rule B p=0.910
+  H3: COMPLETE. Confirmed. Rule A t-2 -0.0070, p<0.001***
+  H4: PENDING -- Script 30 deferred to next session
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Script 30: H4 heterogeneity regressions (H4a, H4b, H4c)
+    Composite FE fix required (same as Scripts 27, 28)
+  - Update Hypotheses v2.5 with all confirmed results
+  - Update Codebook v2.5 with all confirmed results
+  - Fix cosmetic script estimates in Script 29 (N, QFE)
+  - Correct Section [7] token count (44 -> 46) in Script 12
+  - Pre-paper: re-run Scripts 27-30 with linearmodels PanelOLS
+    (statsmodels rank warning in Scripts 27, 29)
+
+Next session priority: Script 30 -> H4a, H4b, H4c -> update all
+  project documentation to v2.5 with final confirmed results.
+
+======================================================================
+END OF LOG - Last Updated: 2026-03-08 18:30 PM IST
 ======================================================================

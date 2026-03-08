@@ -1,0 +1,690 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:       lights_change_qt   R-squared:                       0.616
+Model:                            OLS   Adj. R-squared:                  0.604
+Method:                 Least Squares   F-statistic:                     465.4
+Date:                Sun, 08 Mar 2026   Prob (F-statistic):               0.00
+Time:                        17:17:33   Log-Likelihood:                 2296.3
+No. Observations:               22716   AIC:                            -3259.
+Df Residuals:                   22049   BIC:                             2098.
+Df Model:                         666                                         
+Covariance Type:              cluster                                         
+===================================================================================================================================
+                                                                      coef    std err          z      P>|z|      [0.025      0.975]
+-----------------------------------------------------------------------------------------------------------------------------------
+Intercept                                                          -0.1812      0.008    -22.835      0.000      -0.197      -0.166
+C(district_fe)[T.AGAR MALWA_MADHYA PRADESH]                         0.0047   6.04e-15   7.77e+11      0.000       0.005       0.005
+C(district_fe)[T.AGRA_UTTAR PRADESH]                               -0.0140    5.7e-15  -2.46e+12      0.000      -0.014      -0.014
+C(district_fe)[T.AHMADABAD_GUJARAT]                                 0.0026   5.84e-15   4.44e+11      0.000       0.003       0.003
+C(district_fe)[T.AHMADNAGAR_MAHARASHTRA]                            0.0046   8.04e-15   5.68e+11      0.000       0.005       0.005
+C(district_fe)[T.AIZAWL_MIZORAM]                                    0.0035   5.81e-15   5.97e+11      0.000       0.003       0.003
+C(district_fe)[T.AJMER_RAJASTHAN]                                  -0.0025   7.56e-15  -3.35e+11      0.000      -0.003      -0.003
+C(district_fe)[T.AKOLA_MAHARASHTRA]                                 0.0002   9.52e-15   1.61e+10      0.000       0.000       0.000
+C(district_fe)[T.ALAPPUZHA_KERALA]                                  0.0082      0.001     14.968      0.000       0.007       0.009
+C(district_fe)[T.ALIGARH_UTTAR PRADESH]                            -0.0005   6.21e-15  -8.29e+10      0.000      -0.001      -0.001
+C(district_fe)[T.ALIPURDUAR_WEST BENGAL]                        -8.769e-05   6.14e-15  -1.43e+10      0.000   -8.77e-05   -8.77e-05
+C(district_fe)[T.ALIRAJPUR_MADHYA PRADESH]                         -0.0042    5.7e-15  -7.42e+11      0.000      -0.004      -0.004
+C(district_fe)[T.ALMORA_UTTARAKHAND]                                0.0018   6.97e-15   2.63e+11      0.000       0.002       0.002
+C(district_fe)[T.ALWAR_RAJASTHAN]                                  -0.0135   6.43e-15   -2.1e+12      0.000      -0.013      -0.013
+C(district_fe)[T.AMBALA_HARYANA]                                    0.0026   6.87e-15   3.83e+11      0.000       0.003       0.003
+C(district_fe)[T.AMBEDKAR NAGAR_UTTAR PRADESH]                      0.0048      0.001      8.749      0.000       0.004       0.006
+C(district_fe)[T.AMETHI_UTTAR PRADESH]                              0.0059   6.48e-15   9.09e+11      0.000       0.006       0.006
+C(district_fe)[T.AMRAVATI_MAHARASHTRA]                             -0.0012   6.36e-15  -1.94e+11      0.000      -0.001      -0.001
+C(district_fe)[T.AMRELI_GUJARAT]                                   -0.0048      0.001     -8.678      0.000      -0.006      -0.004
+C(district_fe)[T.AMRITSAR_PUNJAB]                                  -0.0065   6.12e-15  -1.06e+12      0.000      -0.006      -0.006
+C(district_fe)[T.AMROHA_UTTAR PRADESH]                            9.21e-05   6.14e-15    1.5e+10      0.000    9.21e-05    9.21e-05
+C(district_fe)[T.ANAND_GUJARAT]                                     0.0009   6.62e-15   1.33e+11      0.000       0.001       0.001
+C(district_fe)[T.ANANTAPUR_ANDHRA PRADESH]                      -5.526e-05      0.001     -0.101      0.920      -0.001       0.001
+C(district_fe)[T.ANANTNAG_JAMMU AND KASHMIR]                        0.0007    5.9e-15   1.11e+11      0.000       0.001       0.001
+C(district_fe)[T.ANUGUL_ODISHA]                                    -0.0132    6.4e-15  -2.06e+12      0.000      -0.013      -0.013
+C(district_fe)[T.ANUPPUR_MADHYA PRADESH]                           -0.0077   6.54e-15  -1.17e+12      0.000      -0.008      -0.008
+C(district_fe)[T.ARARIA_BIHAR]                                      0.0096      0.001      8.742      0.000       0.007       0.012
+C(district_fe)[T.ARAVALLI_GUJARAT]                                 -0.0028   6.56e-15   -4.2e+11      0.000      -0.003      -0.003
+C(district_fe)[T.ARIYALUR_TAMIL NADU]                               0.0033   5.89e-15   5.59e+11      0.000       0.003       0.003
+C(district_fe)[T.ARWAL_BIHAR]                                       0.0056   6.36e-15   8.86e+11      0.000       0.006       0.006
+C(district_fe)[T.ASHOKNAGAR_MADHYA PRADESH]                         0.0070   6.45e-15   1.09e+12      0.000       0.007       0.007
+C(district_fe)[T.AURAIYA_UTTAR PRADESH]                            -0.0064      0.001    -11.689      0.000      -0.008      -0.005
+C(district_fe)[T.AURANGABAD_BIHAR]                                  0.0059   6.58e-15   9.04e+11      0.000       0.006       0.006
+C(district_fe)[T.AURANGABAD_MAHARASHTRA]                            0.0063   6.58e-15   9.64e+11      0.000       0.006       0.006
+C(district_fe)[T.AZAMGARH_UTTAR PRADESH]                            0.0067      0.001     12.124      0.000       0.006       0.008
+C(district_fe)[T.BADGAM_JAMMU AND KASHMIR]                          0.0036   5.69e-15    6.3e+11      0.000       0.004       0.004
+C(district_fe)[T.BAGALKOT_KARNATAKA]                               -0.0019   6.44e-15     -3e+11      0.000      -0.002      -0.002
+C(district_fe)[T.BAGESHWAR_UTTARAKHAND]                             0.0046    6.2e-15   7.42e+11      0.000       0.005       0.005
+C(district_fe)[T.BAGHPAT_UTTAR PRADESH]                             0.0029   5.98e-15   4.82e+11      0.000       0.003       0.003
+C(district_fe)[T.BAHRAICH_UTTAR PRADESH]                            0.0121      0.001     22.023      0.000       0.011       0.013
+C(district_fe)[T.BAKSA_ASSAM]                                      -0.0035      0.001     -6.332      0.000      -0.005      -0.002
+C(district_fe)[T.BALAGHAT_MADHYA PRADESH]                           0.0069   6.63e-15   1.04e+12      0.000       0.007       0.007
+C(district_fe)[T.BALANGIR_ODISHA]                                  -0.0035   6.44e-15  -5.39e+11      0.000      -0.003      -0.003
+C(district_fe)[T.BALESHWAR_ODISHA]                                 -0.0032   6.85e-15   -4.7e+11      0.000      -0.003      -0.003
+C(district_fe)[T.BALLIA_UTTAR PRADESH]                              0.0066      0.001     11.975      0.000       0.006       0.008
+C(district_fe)[T.BALODA BAZAR_CHHATTISGARH]                        -0.0073   6.35e-15  -1.15e+12      0.000      -0.007      -0.007
+C(district_fe)[T.BALOD_CHHATTISGARH]                                0.0002   6.39e-15    3.8e+10      0.000       0.000       0.000
+C(district_fe)[T.BALRAMPUR_CHHATTISGARH]                            0.0118      0.001     21.395      0.000       0.011       0.013
+C(district_fe)[T.BALRAMPUR_UTTAR PRADESH]                           0.0115      0.001     20.923      0.000       0.010       0.013
+C(district_fe)[T.BANAS KANTHA_GUJARAT]                             -0.0002      0.001     -0.216      0.829      -0.002       0.002
+C(district_fe)[T.BANDA_UTTAR PRADESH]                               0.0062   6.53e-15   9.42e+11      0.000       0.006       0.006
+C(district_fe)[T.BANDIPORE_JAMMU AND KASHMIR]                      -0.0054   6.14e-15   -8.8e+11      0.000      -0.005      -0.005
+C(district_fe)[T.BANGALORE RURAL_KARNATAKA]                         0.0052   5.98e-15   8.69e+11      0.000       0.005       0.005
+C(district_fe)[T.BANKA_BIHAR]                                       0.0075   6.16e-15   1.22e+12      0.000       0.008       0.008
+C(district_fe)[T.BANKURA_WEST BENGAL]                              -0.0102   6.55e-15  -1.55e+12      0.000      -0.010      -0.010
+C(district_fe)[T.BANSWARA_RAJASTHAN]                               -0.0059   6.14e-15  -9.55e+11      0.000      -0.006      -0.006
+C(district_fe)[T.BARABANKI_UTTAR PRADESH]                           0.0070      0.001     12.787      0.000       0.006       0.008
+C(district_fe)[T.BARAMULLA_JAMMU AND KASHMIR]                       0.0003    6.3e-15      4e+10      0.000       0.000       0.000
+C(district_fe)[T.BARAN_RAJASTHAN]                                  -0.0138   6.48e-15  -2.13e+12      0.000      -0.014      -0.014
+C(district_fe)[T.BAREILLY_UTTAR PRADESH]                            0.0014   6.06e-15   2.33e+11      0.000       0.001       0.001
+C(district_fe)[T.BARGARH_ODISHA]                                   -0.0046   6.39e-15  -7.14e+11      0.000      -0.005      -0.005
+C(district_fe)[T.BARMER_RAJASTHAN]                                  0.0039      0.001      7.020      0.000       0.003       0.005
+C(district_fe)[T.BARNALA_PUNJAB]                                    0.0010   5.73e-15    1.8e+11      0.000       0.001       0.001
+C(district_fe)[T.BARPETA_ASSAM]                                     0.0078      0.002      3.533      0.000       0.003       0.012
+C(district_fe)[T.BARWANI_MADHYA PRADESH]                            0.0037   6.58e-15   5.66e+11      0.000       0.004       0.004
+C(district_fe)[T.BASTAR_CHHATTISGARH]                              -0.0037   6.44e-15  -5.81e+11      0.000      -0.004      -0.004
+C(district_fe)[T.BASTI_UTTAR PRADESH]                              -0.0004      0.001     -0.723      0.470      -0.001       0.001
+C(district_fe)[T.BATHINDA_PUNJAB]                                  -0.0034   5.74e-15  -5.92e+11      0.000      -0.003      -0.003
+C(district_fe)[T.BEGUSARAI_BIHAR]                                   0.0076   6.21e-15   1.23e+12      0.000       0.008       0.008
+C(district_fe)[T.BEMETARA_CHHATTISGARH]                            -0.0084   6.25e-15  -1.35e+12      0.000      -0.008      -0.008
+C(district_fe)[T.BETUL_MADHYA PRADESH]                              0.0037   6.54e-15   5.66e+11      0.000       0.004       0.004
+C(district_fe)[T.BHADRAK_ODISHA]                                   -0.0004   6.26e-15  -6.39e+10      0.000      -0.000      -0.000
+C(district_fe)[T.BHAGALPUR_BIHAR]                                  -0.0011   6.03e-15  -1.87e+11      0.000      -0.001      -0.001
+C(district_fe)[T.BHANDARA_MAHARASHTRA]                              0.0025   6.28e-15   4.01e+11      0.000       0.003       0.003
+C(district_fe)[T.BHARATPUR_RAJASTHAN]                              -0.0161   6.33e-15  -2.54e+12      0.000      -0.016      -0.016
+C(district_fe)[T.BHARUCH_GUJARAT]                                  -0.0078   6.33e-15  -1.23e+12      0.000      -0.008      -0.008
+C(district_fe)[T.BHAVNAGAR_GUJARAT]                                -0.0063   6.16e-15  -1.03e+12      0.000      -0.006      -0.006
+C(district_fe)[T.BHILWARA_RAJASTHAN]                               -0.0032   6.36e-15  -4.98e+11      0.000      -0.003      -0.003
+C(district_fe)[T.BHIND_MADHYA PRADESH]                             -0.0013   6.33e-15   -2.1e+11      0.000      -0.001      -0.001
+C(district_fe)[T.BHIWANI_HARYANA]                                  -0.0015   6.03e-15  -2.46e+11      0.000      -0.001      -0.001
+C(district_fe)[T.BHOJPUR_BIHAR]                                     0.0112   6.51e-15   1.72e+12      0.000       0.011       0.011
+C(district_fe)[T.BHOPAL_MADHYA PRADESH]                            -0.0004   6.45e-15  -6.38e+10      0.000      -0.000      -0.000
+C(district_fe)[T.BIDAR_KARNATAKA]                                  -0.0060   6.33e-15  -9.49e+11      0.000      -0.006      -0.006
+C(district_fe)[T.BID_MAHARASHTRA]                                   0.0032   6.34e-15   5.11e+11      0.000       0.003       0.003
+C(district_fe)[T.BIJAPUR_CHHATTISGARH]                             -0.0084    6.2e-15  -1.36e+12      0.000      -0.008      -0.008
+C(district_fe)[T.BIJAPUR_KARNATAKA]                                 0.0041   6.26e-15   6.54e+11      0.000       0.004       0.004
+C(district_fe)[T.BIJNOR_UTTAR PRADESH]                              0.0029      0.001      5.294      0.000       0.002       0.004
+C(district_fe)[T.BIKANER_RAJASTHAN]                                 0.0005   6.22e-15   8.64e+10      0.000       0.001       0.001
+C(district_fe)[T.BILASPUR_CHHATTISGARH]                            -0.0089   6.37e-15   -1.4e+12      0.000      -0.009      -0.009
+C(district_fe)[T.BILASPUR_HIMACHAL PRADESH]                        -0.0008   5.91e-15  -1.37e+11      0.000      -0.001      -0.001
+C(district_fe)[T.BIRBHUM_WEST BENGAL]                              -0.0066   6.16e-15  -1.08e+12      0.000      -0.007      -0.007
+C(district_fe)[T.BISHNUPUR_MANIPUR]                                 0.0059      0.001     10.742      0.000       0.005       0.007
+C(district_fe)[T.BOKARO_JHARKHAND]                                 -0.0121   6.03e-15     -2e+12      0.000      -0.012      -0.012
+C(district_fe)[T.BONGAIGAON_ASSAM]                                  0.0017      0.002      0.767      0.443      -0.003       0.006
+C(district_fe)[T.BOTAD_GUJARAT]                                    -0.0027   6.39e-15  -4.24e+11      0.000      -0.003      -0.003
+C(district_fe)[T.BUDAUN_UTTAR PRADESH]                              0.0057      0.001     10.353      0.000       0.005       0.007
+C(district_fe)[T.BULANDSHAHR_UTTAR PRADESH]                        -0.0002   5.88e-15  -3.59e+10      0.000      -0.000      -0.000
+C(district_fe)[T.BULDANA_MAHARASHTRA]                               0.0046    6.5e-15    7.1e+11      0.000       0.005       0.005
+C(district_fe)[T.BUNDI_RAJASTHAN]                                  -0.0059   6.66e-15  -8.79e+11      0.000      -0.006      -0.006
+C(district_fe)[T.BURHANPUR_MADHYA PRADESH]                          0.0078    6.4e-15   1.21e+12      0.000       0.008       0.008
+C(district_fe)[T.BUXAR_BIHAR]                                       0.0086   6.64e-15   1.29e+12      0.000       0.009       0.009
+C(district_fe)[T.CACHAR_ASSAM]                                      0.0075      0.002      3.395      0.001       0.003       0.012
+C(district_fe)[T.CHAMBA_HIMACHAL PRADESH]                          -0.0058    5.8e-15     -1e+12      0.000      -0.006      -0.006
+C(district_fe)[T.CHAMOLI_UTTARAKHAND]                              -0.0002      0.001     -0.300      0.764      -0.001       0.001
+C(district_fe)[T.CHAMPAWAT_UTTARAKHAND]                             0.0030   5.84e-15   5.06e+11      0.000       0.003       0.003
+C(district_fe)[T.CHAMPHAI_MIZORAM]                                  0.0103   5.67e-15   1.82e+12      0.000       0.010       0.010
+C(district_fe)[T.CHAMRAJNAGAR_KARNATAKA]                           -0.0064   6.44e-15  -9.99e+11      0.000      -0.006      -0.006
+C(district_fe)[T.CHANDAULI_UTTAR PRADESH]                           0.0048      0.001      8.704      0.000       0.004       0.006
+C(district_fe)[T.CHANDEL_MANIPUR]                                   0.0130   6.08e-15   2.14e+12      0.000       0.013       0.013
+C(district_fe)[T.CHANDIGARH_CHANDIGARH]                            -0.0077   6.28e-15  -1.22e+12      0.000      -0.008      -0.008
+C(district_fe)[T.CHANDRAPUR_MAHARASHTRA]                           -0.0017   6.18e-15  -2.76e+11      0.000      -0.002      -0.002
+C(district_fe)[T.CHANGLANG_ARUNACHAL PRADESH]                       0.0013   6.47e-15   1.93e+11      0.000       0.001       0.001
+C(district_fe)[T.CHATRA_JHARKHAND]                                  0.0177   6.64e-15   2.67e+12      0.000       0.018       0.018
+C(district_fe)[T.CHENNAI_TAMIL NADU]                               -0.0099      0.001     -8.966      0.000      -0.012      -0.008
+C(district_fe)[T.CHHATARPUR_MADHYA PRADESH]                         0.0014    6.2e-15   2.29e+11      0.000       0.001       0.001
+C(district_fe)[T.CHHINDWARA_MADHYA PRADESH]                         0.0043   6.03e-15   7.09e+11      0.000       0.004       0.004
+C(district_fe)[T.CHHOTA UDAIPUR_GUJARAT]                           -0.0064   6.17e-15  -1.04e+12      0.000      -0.006      -0.006
+C(district_fe)[T.CHIKBALLAPURA_KARNATAKA]                           0.0002   5.85e-15    2.9e+10      0.000       0.000       0.000
+C(district_fe)[T.CHIKMAGALUR_KARNATAKA]                             0.0009   6.36e-15   1.42e+11      0.000       0.001       0.001
+C(district_fe)[T.CHIRANG_ASSAM]                                    -0.0109   6.26e-15  -1.74e+12      0.000      -0.011      -0.011
+C(district_fe)[T.CHITRADURGA_KARNATAKA]                             0.0010   6.02e-15   1.63e+11      0.000       0.001       0.001
+C(district_fe)[T.CHITRAKOOT_UTTAR PRADESH]                          0.0067   6.16e-15   1.09e+12      0.000       0.007       0.007
+C(district_fe)[T.CHITTAURGARH_RAJASTHAN]                           -0.0093   6.08e-15  -1.54e+12      0.000      -0.009      -0.009
+C(district_fe)[T.CHITTOOR_ANDHRA PRADESH]                          -0.0026      0.001     -2.390      0.017      -0.005      -0.000
+C(district_fe)[T.CHURACHANDPUR_MANIPUR]                             0.0037   5.92e-15   6.31e+11      0.000       0.004       0.004
+C(district_fe)[T.CHURU_RAJASTHAN]                                  -0.0047   5.84e-15  -8.02e+11      0.000      -0.005      -0.005
+C(district_fe)[T.COIMBATORE_TAMIL NADU]                            -0.0051      0.001     -9.200      0.000      -0.006      -0.004
+C(district_fe)[T.CUDDALORE_TAMIL NADU]                             -0.0112      0.001    -10.213      0.000      -0.013      -0.009
+C(district_fe)[T.CUTTACK_ODISHA]                                   -0.0049   6.01e-15  -8.19e+11      0.000      -0.005      -0.005
+C(district_fe)[T.DADRA AND NAGAR HAVELI_DADRA AND NAGAR HAVELI]    -0.0209   6.51e-15  -3.21e+12      0.000      -0.021      -0.021
+C(district_fe)[T.DAKSHIN DINAJPUR_WEST BENGAL]                      0.0006   5.93e-15    9.7e+10      0.000       0.001       0.001
+C(district_fe)[T.DAKSHINA KANNADA_KARNATAKA]                       -0.0078      0.001    -14.273      0.000      -0.009      -0.007
+C(district_fe)[T.DAMAN_DAMAN AND DIU]                              -0.0167   6.46e-15  -2.59e+12      0.000      -0.017      -0.017
+C(district_fe)[T.DAMOH_MADHYA PRADESH]                             -0.0017   6.32e-15  -2.66e+11      0.000      -0.002      -0.002
+C(district_fe)[T.DARBHANGA_BIHAR]                                   0.0116      0.001     21.039      0.000       0.010       0.013
+C(district_fe)[T.DARJILING_WEST BENGAL]                             0.0019      0.001      3.404      0.001       0.001       0.003
+C(district_fe)[T.DARRANG_ASSAM]                                     0.0041      0.003      1.482      0.138      -0.001       0.009
+C(district_fe)[T.DATIA_MADHYA PRADESH]                             -0.0039   6.45e-15  -6.06e+11      0.000      -0.004      -0.004
+C(district_fe)[T.DAUSA_RAJASTHAN]                                  -0.0148   6.27e-15  -2.36e+12      0.000      -0.015      -0.015
+C(district_fe)[T.DAVANAGERE_KARNATAKA]                             -0.0016   6.29e-15  -2.61e+11      0.000      -0.002      -0.002
+C(district_fe)[T.DEHRADUN_UTTARAKHAND]                              0.0009   6.05e-15   1.48e+11      0.000       0.001       0.001
+C(district_fe)[T.DEOGHAR_JHARKHAND]                                -0.0003   5.84e-15  -4.48e+10      0.000      -0.000      -0.000
+C(district_fe)[T.DEORIA_UTTAR PRADESH]                              0.0083      0.001      7.593      0.000       0.006       0.010
+C(district_fe)[T.DEVBHUMI DWARKA_GUJARAT]                          -0.0099   6.15e-15   -1.6e+12      0.000      -0.010      -0.010
+C(district_fe)[T.DEWAS_MADHYA PRADESH]                              0.0018   6.38e-15   2.79e+11      0.000       0.002       0.002
+C(district_fe)[T.DHALAI_TRIPURA]                                   -0.0029   6.18e-15  -4.69e+11      0.000      -0.003      -0.003
+C(district_fe)[T.DHAMTARI_CHHATTISGARH]                             0.0044   6.25e-15   7.01e+11      0.000       0.004       0.004
+C(district_fe)[T.DHANBAD_JHARKHAND]                                -0.0155   6.15e-15  -2.52e+12      0.000      -0.015      -0.015
+C(district_fe)[T.DHARMAPURI_TAMIL NADU]                             0.0020   6.42e-15   3.16e+11      0.000       0.002       0.002
+C(district_fe)[T.DHARWAD_KARNATAKA]                                 0.0023   6.36e-15   3.57e+11      0.000       0.002       0.002
+C(district_fe)[T.DHAR_MADHYA PRADESH]                               0.0046   6.21e-15   7.33e+11      0.000       0.005       0.005
+C(district_fe)[T.DHAULPUR_RAJASTHAN]                               -0.0113   6.13e-15  -1.85e+12      0.000      -0.011      -0.011
+C(district_fe)[T.DHEMAJI_ASSAM]                                     0.0125      0.003      4.542      0.000       0.007       0.018
+C(district_fe)[T.DHENKANAL_ODISHA]                                 -0.0118   6.44e-15  -1.83e+12      0.000      -0.012      -0.012
+C(district_fe)[T.DHUBRI_ASSAM]                                      0.0101      0.002      6.136      0.000       0.007       0.013
+C(district_fe)[T.DHULE_MAHARASHTRA]                                 0.0035   6.21e-15    5.6e+11      0.000       0.003       0.003
+C(district_fe)[T.DIBRUGARH_ASSAM]                                  -0.0131      0.002     -5.940      0.000      -0.017      -0.009
+C(district_fe)[T.DIMA HASAO_ASSAM]                                 -0.0084      0.001    -15.310      0.000      -0.009      -0.007
+C(district_fe)[T.DIMAPUR_NAGALAND]                                 -0.0030   6.44e-15  -4.72e+11      0.000      -0.003      -0.003
+C(district_fe)[T.DINDIGUL_TAMIL NADU]                              -0.0035   6.36e-15  -5.55e+11      0.000      -0.004      -0.004
+C(district_fe)[T.DINDORI_MADHYA PRADESH]                            0.0148   6.18e-15    2.4e+12      0.000       0.015       0.015
+C(district_fe)[T.DIU_DAMAN AND DIU]                                -0.0109   6.21e-15  -1.76e+12      0.000      -0.011      -0.011
+C(district_fe)[T.DODA_JAMMU AND KASHMIR]                           -0.0027   5.93e-15  -4.54e+11      0.000      -0.003      -0.003
+C(district_fe)[T.DUMKA_JHARKHAND]                                   0.0079   5.84e-15   1.36e+12      0.000       0.008       0.008
+C(district_fe)[T.DUNGARPUR_RAJASTHAN]                              -0.0007   6.07e-15  -1.22e+11      0.000      -0.001      -0.001
+C(district_fe)[T.DURG_CHHATTISGARH]                                -0.0093   6.19e-15  -1.51e+12      0.000      -0.009      -0.009
+C(district_fe)[T.EAST GARO HILLS_MEGHALAYA]                        -0.0035   5.77e-15  -5.98e+11      0.000      -0.003      -0.003
+C(district_fe)[T.EAST GODAVARI_ANDHRA PRADESH]                     -0.0117    6.4e-15  -1.83e+12      0.000      -0.012      -0.012
+C(district_fe)[T.EAST KAMENG_ARUNACHAL PRADESH]                     0.0081   5.66e-15   1.42e+12      0.000       0.008       0.008
+C(district_fe)[T.EAST KHASI HILLS_MEGHALAYA]                       -0.0041      0.001     -7.433      0.000      -0.005      -0.003
+C(district_fe)[T.EAST NIMAR_MADHYA PRADESH]                         0.0035   6.24e-15   5.68e+11      0.000       0.004       0.004
+C(district_fe)[T.EAST SIANG_ARUNACHAL PRADESH]                      0.0066   5.71e-15   1.15e+12      0.000       0.007       0.007
+C(district_fe)[T.ERNAKULAM_KERALA]                                  0.0022   6.25e-15    3.5e+11      0.000       0.002       0.002
+C(district_fe)[T.ERODE_TAMIL NADU]                                 -0.0061   5.77e-15  -1.06e+12      0.000      -0.006      -0.006
+C(district_fe)[T.ETAH_UTTAR PRADESH]                                0.0045   5.94e-15   7.65e+11      0.000       0.005       0.005
+C(district_fe)[T.ETAWAH_UTTAR PRADESH]                             -0.0191   6.34e-15  -3.01e+12      0.000      -0.019      -0.019
+C(district_fe)[T.FARIDABAD_HARYANA]                                -0.0066   5.81e-15  -1.14e+12      0.000      -0.007      -0.007
+C(district_fe)[T.FARIDKOT_PUNJAB]                                  -0.0009   6.34e-15  -1.42e+11      0.000      -0.001      -0.001
+C(district_fe)[T.FARRUKHABAD_UTTAR PRADESH]                         0.0073      0.001     13.295      0.000       0.006       0.008
+C(district_fe)[T.FATEHABAD_HARYANA]                                 0.0047   5.95e-15   7.92e+11      0.000       0.005       0.005
+C(district_fe)[T.FATEHGARH SAHIB_PUNJAB]                            0.0057   5.78e-15   9.83e+11      0.000       0.006       0.006
+C(district_fe)[T.FATEHPUR_UTTAR PRADESH]                            0.0023   6.23e-15   3.64e+11      0.000       0.002       0.002
+C(district_fe)[T.FAZILKA_PUNJAB]                                   -0.0054   5.86e-15  -9.21e+11      0.000      -0.005      -0.005
+C(district_fe)[T.FIROZABAD_UTTAR PRADESH]                          -0.0133   5.74e-15  -2.32e+12      0.000      -0.013      -0.013
+C(district_fe)[T.FIROZPUR_PUNJAB]                                  -0.0030   5.75e-15  -5.27e+11      0.000      -0.003      -0.003
+C(district_fe)[T.GADAG_KARNATAKA]                                   0.0010      0.001      1.808      0.071   -8.34e-05       0.002
+C(district_fe)[T.GAJAPATI_ODISHA]                                   0.0020      0.001      3.635      0.000       0.001       0.003
+C(district_fe)[T.GANDERBAL_JAMMU AND KASHMIR]                       0.0026   5.83e-15   4.46e+11      0.000       0.003       0.003
+C(district_fe)[T.GANDHINAGAR_GUJARAT]                               0.0061   6.17e-15   9.82e+11      0.000       0.006       0.006
+C(district_fe)[T.GANGANAGAR_RAJASTHAN]                              0.0007   5.81e-15   1.28e+11      0.000       0.001       0.001
+C(district_fe)[T.GANJAM_ODISHA]                                    -0.0031      0.001     -5.641      0.000      -0.004      -0.002
+C(district_fe)[T.GARHCHIROLI_MAHARASHTRA]                       -6.125e-05   6.04e-15  -1.01e+10      0.000   -6.13e-05   -6.13e-05
+C(district_fe)[T.GARHWAL_UTTARAKHAND]                               0.0034   5.92e-15   5.74e+11      0.000       0.003       0.003
+C(district_fe)[T.GARHWA_JHARKHAND]                                  0.0186   6.16e-15   3.02e+12      0.000       0.019       0.019
+C(district_fe)[T.GARIABAND_CHHATTISGARH]                           -0.0021      6e-15  -3.46e+11      0.000      -0.002      -0.002
+C(district_fe)[T.GAUTAM BUDDHA NAGAR_UTTAR PRADESH]                -0.0062   5.73e-15  -1.07e+12      0.000      -0.006      -0.006
+C(district_fe)[T.GAYA_BIHAR]                                        0.0046   6.08e-15   7.64e+11      0.000       0.005       0.005
+C(district_fe)[T.GHAZIABAD_UTTAR PRADESH]                          -0.0039    5.7e-15  -6.85e+11      0.000      -0.004      -0.004
+C(district_fe)[T.GHAZIPUR_UTTAR PRADESH]                            0.0084      0.001     15.196      0.000       0.007       0.009
+C(district_fe)[T.GIR SOMNATH_GUJARAT]                              -0.0113   5.98e-15  -1.88e+12      0.000      -0.011      -0.011
+C(district_fe)[T.GIRIDIH_JHARKHAND]                                 0.0013   5.97e-15   2.16e+11      0.000       0.001       0.001
+C(district_fe)[T.GOALPARA_ASSAM]                                   -0.0052      0.002     -2.381      0.017      -0.010      -0.001
+C(district_fe)[T.GODDA_JHARKHAND]                                   0.0085   5.72e-15   1.49e+12      0.000       0.009       0.009
+C(district_fe)[T.GOLAGHAT_ASSAM]                                    0.0026      0.002      1.583      0.113      -0.001       0.006
+C(district_fe)[T.GOMATI_TRIPURA]                                   -0.0104   5.79e-15   -1.8e+12      0.000      -0.010      -0.010
+C(district_fe)[T.GONDA_UTTAR PRADESH]                               0.0070      0.001     12.697      0.000       0.006       0.008
+C(district_fe)[T.GONDIYA_MAHARASHTRA]                               0.0009   6.02e-15   1.44e+11      0.000       0.001       0.001
+C(district_fe)[T.GOPALGANJ_BIHAR]                                   0.0117   6.02e-15   1.94e+12      0.000       0.012       0.012
+C(district_fe)[T.GORAKHPUR_UTTAR PRADESH]                           0.0076      0.001     13.798      0.000       0.007       0.009
+C(district_fe)[T.GUMLA_JHARKHAND]                                   0.0064   6.25e-15   1.02e+12      0.000       0.006       0.006
+C(district_fe)[T.GUNA_MADHYA PRADESH]                              -0.0020   6.13e-15  -3.21e+11      0.000      -0.002      -0.002
+C(district_fe)[T.GUNTUR_ANDHRA PRADESH]                            -0.0035   6.04e-15  -5.76e+11      0.000      -0.003      -0.003
+C(district_fe)[T.GURDASPUR_PUNJAB]                                 -0.0026   5.93e-15  -4.34e+11      0.000      -0.003      -0.003
+C(district_fe)[T.GWALIOR_MADHYA PRADESH]                           -0.0036   6.24e-15  -5.78e+11      0.000      -0.004      -0.004
+C(district_fe)[T.HAILAKANDI_ASSAM]                                 -0.0204      0.001    -37.176      0.000      -0.022      -0.019
+C(district_fe)[T.HAMIRPUR_HIMACHAL PRADESH]                         0.0007      0.001      1.197      0.231      -0.000       0.002
+C(district_fe)[T.HAMIRPUR_UTTAR PRADESH]                            0.0003      0.001      0.603      0.547      -0.001       0.001
+C(district_fe)[T.HANUMANGARH_RAJASTHAN]                             0.0060   5.84e-15   1.03e+12      0.000       0.006       0.006
+C(district_fe)[T.HAORA_WEST BENGAL]                                -0.0031   6.12e-15     -5e+11      0.000      -0.003      -0.003
+C(district_fe)[T.HAPUR_UTTAR PRADESH]                              -0.0011   5.77e-15   -1.9e+11      0.000      -0.001      -0.001
+C(district_fe)[T.HARDA_MADHYA PRADESH]                              0.0030   6.01e-15   4.98e+11      0.000       0.003       0.003
+C(district_fe)[T.HARDOI_UTTAR PRADESH]                              0.0092   5.79e-15   1.58e+12      0.000       0.009       0.009
+C(district_fe)[T.HARDWAR_UTTARAKHAND]                              -0.0069   5.88e-15  -1.18e+12      0.000      -0.007      -0.007
+C(district_fe)[T.HASSAN_KARNATAKA]                                  0.0069   6.07e-15   1.13e+12      0.000       0.007       0.007
+C(district_fe)[T.HATHRAS_UTTAR PRADESH]                            -0.0085      0.001    -15.401      0.000      -0.010      -0.007
+C(district_fe)[T.HAVERI_KARNATAKA]                                  0.0016   5.97e-15   2.71e+11      0.000       0.002       0.002
+C(district_fe)[T.HAZARIBAGH_JHARKHAND]                             -0.0015   6.19e-15  -2.37e+11      0.000      -0.001      -0.001
+C(district_fe)[T.HINGOLI_MAHARASHTRA]                               0.0018   6.04e-15   3.03e+11      0.000       0.002       0.002
+C(district_fe)[T.HISAR_HARYANA]                                     0.0036    5.8e-15   6.26e+11      0.000       0.004       0.004
+C(district_fe)[T.HOSHIARPUR_PUNJAB]                                 0.0026   6.11e-15   4.22e+11      0.000       0.003       0.003
+C(district_fe)[T.HUGLI_WEST BENGAL]                                -0.0014   6.15e-15  -2.24e+11      0.000      -0.001      -0.001
+C(district_fe)[T.HYDERABAD_TELANGANA]                              -0.0290   6.13e-15  -4.74e+12      0.000      -0.029      -0.029
+C(district_fe)[T.IDUKKI_KERALA]                                     0.0057      0.001     10.443      0.000       0.005       0.007
+C(district_fe)[T.IMPHAL EAST_MANIPUR]                               0.0102   5.83e-15   1.75e+12      0.000       0.010       0.010
+C(district_fe)[T.IMPHAL WEST_MANIPUR]                               0.0071   5.98e-15    1.2e+12      0.000       0.007       0.007
+C(district_fe)[T.INDORE_MADHYA PRADESH]                             0.0040   6.03e-15   6.56e+11      0.000       0.004       0.004
+C(district_fe)[T.JABALPUR_MADHYA PRADESH]                          -0.0002   5.91e-15  -3.31e+10      0.000      -0.000      -0.000
+C(district_fe)[T.JAGATSINGHAPUR_ODISHA]                            -0.0001   5.81e-15  -1.92e+10      0.000      -0.000      -0.000
+C(district_fe)[T.JAINTIA HILLS_MEGHALAYA]                          -0.0039   5.96e-15  -6.46e+11      0.000      -0.004      -0.004
+C(district_fe)[T.JAIPUR_RAJASTHAN]                                 -0.0075   5.87e-15  -1.28e+12      0.000      -0.008      -0.008
+C(district_fe)[T.JAISALMER_RAJASTHAN]                               0.0037   5.98e-15   6.12e+11      0.000       0.004       0.004
+C(district_fe)[T.JAJAPUR_ODISHA]                                   -0.0120      6e-15  -1.99e+12      0.000      -0.012      -0.012
+C(district_fe)[T.JALANDHAR_PUNJAB]                                 -0.0022   5.68e-15  -3.93e+11      0.000      -0.002      -0.002
+C(district_fe)[T.JALAUN_UTTAR PRADESH]                              0.0029   6.15e-15   4.65e+11      0.000       0.003       0.003
+C(district_fe)[T.JALGAON_MAHARASHTRA]                               0.0029   5.92e-15   4.87e+11      0.000       0.003       0.003
+C(district_fe)[T.JALNA_MAHARASHTRA]                                 0.0064   5.89e-15   1.08e+12      0.000       0.006       0.006
+C(district_fe)[T.JALOR_RAJASTHAN]                                  -0.0003      0.001     -0.500      0.617      -0.001       0.001
+C(district_fe)[T.JALPAIGURI_WEST BENGAL]                            0.0019      0.001      3.507      0.000       0.001       0.003
+C(district_fe)[T.JAMMU_JAMMU AND KASHMIR]                          -0.0132   5.97e-15  -2.22e+12      0.000      -0.013      -0.013
+C(district_fe)[T.JAMNAGAR_GUJARAT]                                 -0.0130      0.001    -23.640      0.000      -0.014      -0.012
+C(district_fe)[T.JAMTARA_JHARKHAND]                             -1.298e-05   5.79e-15  -2.24e+09      0.000    -1.3e-05    -1.3e-05
+C(district_fe)[T.JAMUI_BIHAR]                                       0.0108   5.94e-15   1.82e+12      0.000       0.011       0.011
+C(district_fe)[T.JANJGIR-CHAMPA_CHHATTISGARH]                      -0.0173   5.71e-15  -3.03e+12      0.000      -0.017      -0.017
+C(district_fe)[T.JASHPUR_CHHATTISGARH]                              0.0043   5.96e-15   7.18e+11      0.000       0.004       0.004
+C(district_fe)[T.JAUNPUR_UTTAR PRADESH]                             0.0090   5.97e-15    1.5e+12      0.000       0.009       0.009
+C(district_fe)[T.JEHANABAD_BIHAR]                                   0.0049   6.22e-15    7.8e+11      0.000       0.005       0.005
+C(district_fe)[T.JHABUA_MADHYA PRADESH]                            -0.0037   6.06e-15  -6.15e+11      0.000      -0.004      -0.004
+C(district_fe)[T.JHAJJAR_HARYANA]                                  -0.0024      6e-15  -4.03e+11      0.000      -0.002      -0.002
+C(district_fe)[T.JHALAWAR_RAJASTHAN]                               -0.0118   6.56e-15   -1.8e+12      0.000      -0.012      -0.012
+C(district_fe)[T.JHANSI_UTTAR PRADESH]                             -0.0031   5.93e-15  -5.23e+11      0.000      -0.003      -0.003
+C(district_fe)[T.JHARSUGUDA_ODISHA]                                -0.0075   5.93e-15  -1.26e+12      0.000      -0.007      -0.007
+C(district_fe)[T.JHUNJHUNUN_RAJASTHAN]                             -0.0113   5.84e-15  -1.93e+12      0.000      -0.011      -0.011
+C(district_fe)[T.JIND_HARYANA]                                      0.0009   5.69e-15    1.5e+11      0.000       0.001       0.001
+C(district_fe)[T.JODHPUR_RAJASTHAN]                                -0.0069   5.77e-15   -1.2e+12      0.000      -0.007      -0.007
+C(district_fe)[T.JORHAT_ASSAM]                                      0.0015      0.002      0.904      0.366      -0.002       0.005
+C(district_fe)[T.JUNAGADH_GUJARAT]                                 -0.0050      0.001     -9.012      0.000      -0.006      -0.004
+C(district_fe)[T.KABEERDHAM_CHHATTISGARH]                          -0.0138   5.85e-15  -2.36e+12      0.000      -0.014      -0.014
+C(district_fe)[T.KACHCHH_GUJARAT]                                   0.0052      0.001      9.393      0.000       0.004       0.006
+C(district_fe)[T.KAIMUR_BIHAR]                                      0.0034   6.26e-15   5.37e+11      0.000       0.003       0.003
+C(district_fe)[T.KAITHAL_HARYANA]                                  -0.0013   5.72e-15  -2.21e+11      0.000      -0.001      -0.001
+C(district_fe)[T.KALAHANDI_ODISHA]                                 -0.0012      0.001     -2.119      0.034      -0.002   -8.72e-05
+C(district_fe)[T.KAMRUP METROPOLITAN_ASSAM]                         0.0032   5.99e-15   5.34e+11      0.000       0.003       0.003
+C(district_fe)[T.KAMRUP_ASSAM]                                   4.367e-05      0.001      0.040      0.968      -0.002       0.002
+C(district_fe)[T.KANCHEEPURAM_TAMIL NADU]                          -0.0048      0.001     -8.691      0.000      -0.006      -0.004
+C(district_fe)[T.KANDHAMAL_ODISHA]                                  0.0067      0.001     12.148      0.000       0.006       0.008
+C(district_fe)[T.KANGRA_HIMACHAL PRADESH]                          -0.0021   5.74e-15  -3.72e+11      0.000      -0.002      -0.002
+C(district_fe)[T.KANNAUJ_UTTAR PRADESH]                            -0.0067   6.02e-15  -1.12e+12      0.000      -0.007      -0.007
+C(district_fe)[T.KANNIYAKUMARI_TAMIL NADU]                         -0.0031      0.001     -5.615      0.000      -0.004      -0.002
+C(district_fe)[T.KANNUR_KERALA]                                     0.0105   5.78e-15   1.81e+12      0.000       0.010       0.010
+C(district_fe)[T.KANPUR DEHAT_UTTAR PRADESH]                        0.0007   5.87e-15   1.23e+11      0.000       0.001       0.001
+C(district_fe)[T.KANPUR NAGAR_UTTAR PRADESH]                       -0.0080   5.93e-15  -1.34e+12      0.000      -0.008      -0.008
+C(district_fe)[T.KAPURTHALA_PUNJAB]                                 0.0005   5.76e-15   8.35e+10      0.000       0.000       0.000
+C(district_fe)[T.KARAIKAL_PUDUCHERRY]                              -0.0229   6.01e-15  -3.81e+12      0.000      -0.023      -0.023
+C(district_fe)[T.KARAULI_RAJASTHAN]                                -0.0215   5.93e-15  -3.63e+12      0.000      -0.022      -0.022
+C(district_fe)[T.KARBI ANGLONG_ASSAM]                              -0.0001      0.002     -0.069      0.945      -0.003       0.003
+C(district_fe)[T.KARGIL_JAMMU AND KASHMIR]                         -0.0070   5.71e-15  -1.23e+12      0.000      -0.007      -0.007
+C(district_fe)[T.KARIMGANJ_ASSAM]                                  -0.0027      0.001     -4.844      0.000      -0.004      -0.002
+C(district_fe)[T.KARIMNAGAR_TELANGANA]                              0.0027   5.96e-15   4.51e+11      0.000       0.003       0.003
+C(district_fe)[T.KARNAL_HARYANA]                                   -0.0006   5.82e-15  -9.67e+10      0.000      -0.001      -0.001
+C(district_fe)[T.KARUR_TAMIL NADU]                                 -0.0046   5.91e-15  -7.87e+11      0.000      -0.005      -0.005
+C(district_fe)[T.KASARAGOD_KERALA]                                  0.0145   6.04e-15    2.4e+12      0.000       0.015       0.015
+C(district_fe)[T.KASGANJ_UTTAR PRADESH]                            -0.0014    5.8e-15  -2.39e+11      0.000      -0.001      -0.001
+C(district_fe)[T.KATHUA_JAMMU AND KASHMIR]                         -0.0100   5.82e-15  -1.72e+12      0.000      -0.010      -0.010
+C(district_fe)[T.KATIHAR_BIHAR]                                     0.0100      0.001     18.221      0.000       0.009       0.011
+C(district_fe)[T.KATNI_MADHYA PRADESH]                              0.0018   6.19e-15   2.92e+11      0.000       0.002       0.002
+C(district_fe)[T.KAUSHAMBI_UTTAR PRADESH]                          -0.0065    5.9e-15  -1.11e+12      0.000      -0.007      -0.007
+C(district_fe)[T.KENDRAPARA_ODISHA]                                 0.0004   5.68e-15   7.24e+10      0.000       0.000       0.000
+C(district_fe)[T.KENDUJHAR_ODISHA]                                 -0.0012   5.83e-15  -1.99e+11      0.000      -0.001      -0.001
+C(district_fe)[T.KHAGARIA_BIHAR]                                    0.0120   5.86e-15   2.04e+12      0.000       0.012       0.012
+C(district_fe)[T.KHAMMAM_TELANGANA]                                -0.0014   5.91e-15  -2.42e+11      0.000      -0.001      -0.001
+C(district_fe)[T.KHEDA_GUJARAT]                                     0.0019   5.93e-15   3.16e+11      0.000       0.002       0.002
+C(district_fe)[T.KHOWAI_TRIPURA]                                   -0.0092   5.98e-15  -1.54e+12      0.000      -0.009      -0.009
+C(district_fe)[T.KHUNTI_JHARKHAND]                                  0.0067   6.13e-15   1.09e+12      0.000       0.007       0.007
+C(district_fe)[T.KINNAUR_HIMACHAL PRADESH]                         -0.0049   5.71e-15  -8.55e+11      0.000      -0.005      -0.005
+C(district_fe)[T.KISHANGANJ_BIHAR]                                  0.0067      0.001     12.235      0.000       0.006       0.008
+C(district_fe)[T.KISHTWAR_JAMMU AND KASHMIR]                       -0.0038   5.76e-15  -6.66e+11      0.000      -0.004      -0.004
+C(district_fe)[T.KOCH BIHAR_WEST BENGAL]                           -0.0046   5.83e-15  -7.89e+11      0.000      -0.005      -0.005
+C(district_fe)[T.KODAGU_KARNATAKA]                                  0.0024   5.83e-15   4.19e+11      0.000       0.002       0.002
+C(district_fe)[T.KODARMA_JHARKHAND]                                -0.0047    6.1e-15  -7.62e+11      0.000      -0.005      -0.005
+C(district_fe)[T.KOHIMA_NAGALAND]                                   0.0081   5.79e-15    1.4e+12      0.000       0.008       0.008
+C(district_fe)[T.KOKRAJHAR_ASSAM]                                  -0.0012      0.002     -0.716      0.474      -0.004       0.002
+C(district_fe)[T.KOLAR_KARNATAKA]                                  -0.0024   5.86e-15  -4.08e+11      0.000      -0.002      -0.002
+C(district_fe)[T.KOLASIB_MIZORAM]                                  -0.0036   5.87e-15  -6.14e+11      0.000      -0.004      -0.004
+C(district_fe)[T.KOLHAPUR_MAHARASHTRA]                             -0.0016   6.24e-15  -2.49e+11      0.000      -0.002      -0.002
+C(district_fe)[T.KOLKATA_WEST BENGAL]                              -0.0077      0.001    -13.979      0.000      -0.009      -0.007
+C(district_fe)[T.KOLLAM_KERALA]                                     0.0070      0.001     12.681      0.000       0.006       0.008
+C(district_fe)[T.KONDAGAON_CHHATTISGARH]                            0.0044   5.88e-15   7.42e+11      0.000       0.004       0.004
+C(district_fe)[T.KOPPAL_KARNATAKA]                                 -0.0019      0.001     -3.483      0.000      -0.003      -0.001
+C(district_fe)[T.KORAPUT_ODISHA]                                   -0.0003      0.001     -0.484      0.628      -0.001       0.001
+C(district_fe)[T.KORBA_CHHATTISGARH]                               -0.0093   5.86e-15  -1.59e+12      0.000      -0.009      -0.009
+C(district_fe)[T.KORIYA_CHHATTISGARH]                               0.0012   6.03e-15   1.98e+11      0.000       0.001       0.001
+C(district_fe)[T.KOTA_RAJASTHAN]                                   -0.0112   6.32e-15  -1.77e+12      0.000      -0.011      -0.011
+C(district_fe)[T.KOTTAYAM_KERALA]                                   0.0111      0.001     20.245      0.000       0.010       0.012
+C(district_fe)[T.KOZHIKODE_KERALA]                                  0.0139   5.71e-15   2.44e+12      0.000       0.014       0.014
+C(district_fe)[T.KRISHNAGIRI_TAMIL NADU]                            0.0109    5.9e-15   1.84e+12      0.000       0.011       0.011
+C(district_fe)[T.KRISHNA_ANDHRA PRADESH]                            0.0013   5.89e-15   2.27e+11      0.000       0.001       0.001
+C(district_fe)[T.KULGAM_JAMMU AND KASHMIR]                          0.0013   5.87e-15   2.27e+11      0.000       0.001       0.001
+C(district_fe)[T.KULLU_HIMACHAL PRADESH]                           -0.0024      0.001     -4.294      0.000      -0.003      -0.001
+C(district_fe)[T.KUPWARA_JAMMU AND KASHMIR]                        -0.0004   5.79e-15  -6.48e+10      0.000      -0.000      -0.000
+C(district_fe)[T.KURNOOL_ANDHRA PRADESH]                           -0.0037   5.79e-15  -6.35e+11      0.000      -0.004      -0.004
+C(district_fe)[T.KURUKSHETRA_HARYANA]                               0.0037   5.76e-15   6.49e+11      0.000       0.004       0.004
+C(district_fe)[T.KUSHINAGAR_UTTAR PRADESH]                          0.0210      0.001     38.131      0.000       0.020       0.022
+C(district_fe)[T.LAHUL & SPITI_HIMACHAL PRADESH]                   -0.0065   5.68e-15  -1.15e+12      0.000      -0.007      -0.007
+C(district_fe)[T.LAKHIMPUR_ASSAM]                                   0.0104      0.003      3.154      0.002       0.004       0.017
+C(district_fe)[T.LAKHISARAI_BIHAR]                                  0.0079    6.1e-15    1.3e+12      0.000       0.008       0.008
+C(district_fe)[T.LAKSHADWEEP_LAKSHADWEEP]                          -0.0129   5.78e-15  -2.24e+12      0.000      -0.013      -0.013
+C(district_fe)[T.LALITPUR_UTTAR PRADESH]                           -0.0004   5.99e-15  -6.05e+10      0.000      -0.000      -0.000
+C(district_fe)[T.LATEHAR_JHARKHAND]                                 0.0082    5.7e-15   1.43e+12      0.000       0.008       0.008
+C(district_fe)[T.LATUR_MAHARASHTRA]                                 0.0077   6.04e-15   1.27e+12      0.000       0.008       0.008
+C(district_fe)[T.LAWANGTLAI_MIZORAM]                               -0.0184   5.71e-15  -3.22e+12      0.000      -0.018      -0.018
+C(district_fe)[T.LEH (LADAKH)_JAMMU AND KASHMIR]                   -0.0046   5.68e-15  -8.02e+11      0.000      -0.005      -0.005
+C(district_fe)[T.LOHARDAGA_JHARKHAND]                              -0.0015   6.06e-15  -2.43e+11      0.000      -0.001      -0.001
+C(district_fe)[T.LOHIT_ARUNACHAL PRADESH]                           0.0101   5.84e-15   1.73e+12      0.000       0.010       0.010
+C(district_fe)[T.LONGDING_ARUNACHAL PRADESH]                       -0.0010    5.7e-15  -1.83e+11      0.000      -0.001      -0.001
+C(district_fe)[T.LOWER DIBANG VALLEY_ARUNACHAL PRADESH]             0.0112   5.84e-15   1.92e+12      0.000       0.011       0.011
+C(district_fe)[T.LOWER SUBANSIRI_ARUNACHAL PRADESH]                 0.0060   5.69e-15   1.06e+12      0.000       0.006       0.006
+C(district_fe)[T.LUCKNOW_UTTAR PRADESH]                            -0.0125   5.92e-15  -2.11e+12      0.000      -0.012      -0.012
+C(district_fe)[T.LUDHIANA_PUNJAB]                                   0.0004    5.7e-15   7.59e+10      0.000       0.000       0.000
+C(district_fe)[T.LUNGLEI_MIZORAM]                                  -0.0003    5.7e-15   -5.4e+10      0.000      -0.000      -0.000
+C(district_fe)[T.MADHEPURA_BIHAR]                                   0.0043   5.74e-15   7.41e+11      0.000       0.004       0.004
+C(district_fe)[T.MADHUBANI_BIHAR]                                   0.0135      0.001     24.535      0.000       0.012       0.015
+C(district_fe)[T.MADURAI_TAMIL NADU]                               -0.0108   5.77e-15  -1.87e+12      0.000      -0.011      -0.011
+C(district_fe)[T.MAHARAJGANJ_UTTAR PRADESH]                         0.0103      0.001     18.791      0.000       0.009       0.011
+C(district_fe)[T.MAHASAMUND_CHHATTISGARH]                          -0.0009   5.84e-15  -1.59e+11      0.000      -0.001      -0.001
+C(district_fe)[T.MAHBUBNAGAR_TELANGANA]                            -0.0033   6.06e-15  -5.46e+11      0.000      -0.003      -0.003
+C(district_fe)[T.MAHENDRAGARH_HARYANA]                             -0.0034   5.97e-15  -5.76e+11      0.000      -0.003      -0.003
+C(district_fe)[T.MAHESANA_GUJARAT]                                  0.0030   5.91e-15   5.15e+11      0.000       0.003       0.003
+C(district_fe)[T.MAHE_PUDUCHERRY]                                   0.0192    6.1e-15   3.15e+12      0.000       0.019       0.019
+C(district_fe)[T.MAHISAGAR_GUJARAT]                                -0.0051   5.95e-15  -8.53e+11      0.000      -0.005      -0.005
+C(district_fe)[T.MAHOBA_UTTAR PRADESH]                             -0.0010   5.78e-15  -1.68e+11      0.000      -0.001      -0.001
+C(district_fe)[T.MAINPURI_UTTAR PRADESH]                           -0.0144      0.001    -26.276      0.000      -0.016      -0.013
+C(district_fe)[T.MALAPPURAM_KERALA]                                 0.0168   5.82e-15   2.88e+12      0.000       0.017       0.017
+C(district_fe)[T.MALDAH_WEST BENGAL]                               -0.0043      0.001     -7.804      0.000      -0.005      -0.003
+C(district_fe)[T.MALKANGIRI_ODISHA]                                -0.0047      0.001     -8.621      0.000      -0.006      -0.004
+C(district_fe)[T.MAMIT_MIZORAM]                                     0.0037   5.72e-15   6.47e+11      0.000       0.004       0.004
+C(district_fe)[T.MANDI_HIMACHAL PRADESH]                            0.0030      0.001      2.746      0.006       0.001       0.005
+C(district_fe)[T.MANDLA_MADHYA PRADESH]                             0.0108   6.04e-15   1.79e+12      0.000       0.011       0.011
+C(district_fe)[T.MANDSAUR_MADHYA PRADESH]                           0.0061   6.09e-15      1e+12      0.000       0.006       0.006
+C(district_fe)[T.MANDYA_KARNATAKA]                                 -0.0029   5.84e-15  -4.96e+11      0.000      -0.003      -0.003
+C(district_fe)[T.MANSA_PUNJAB]                                      0.0011   5.86e-15   1.93e+11      0.000       0.001       0.001
+C(district_fe)[T.MATHURA_UTTAR PRADESH]                            -0.0049   5.77e-15  -8.48e+11      0.000      -0.005      -0.005
+C(district_fe)[T.MAU_UTTAR PRADESH]                                 0.0074      0.001     13.414      0.000       0.006       0.008
+C(district_fe)[T.MAYURBHANJ_ODISHA]                                -0.0058   5.68e-15  -1.03e+12      0.000      -0.006      -0.006
+C(district_fe)[T.MEDAK_TELANGANA]                                  -0.0008   6.11e-15  -1.38e+11      0.000      -0.001      -0.001
+C(district_fe)[T.MEERUT_UTTAR PRADESH]                             -0.0064   5.66e-15  -1.13e+12      0.000      -0.006      -0.006
+C(district_fe)[T.MEWAT_HARYANA]                                     0.0082   5.76e-15   1.43e+12      0.000       0.008       0.008
+C(district_fe)[T.MIRZAPUR_UTTAR PRADESH]                            0.0110      0.001     19.957      0.000       0.010       0.012
+C(district_fe)[T.MOGA_PUNJAB]                                      -0.0010   5.69e-15   -1.7e+11      0.000      -0.001      -0.001
+C(district_fe)[T.MOKOKCHUNG_NAGALAND]                              -0.0009   5.88e-15   -1.6e+11      0.000      -0.001      -0.001
+C(district_fe)[T.MON_NAGALAND]                                      0.0055   5.96e-15   9.24e+11      0.000       0.006       0.006
+C(district_fe)[T.MORADABAD_UTTAR PRADESH]                          -0.0042   6.02e-15  -7.02e+11      0.000      -0.004      -0.004
+C(district_fe)[T.MORBI_GUJARAT]                                     0.0078   5.88e-15   1.32e+12      0.000       0.008       0.008
+C(district_fe)[T.MORENA_MADHYA PRADESH]                            -0.0032   6.07e-15  -5.21e+11      0.000      -0.003      -0.003
+C(district_fe)[T.MORIGAON_ASSAM]                                    0.0028      0.002      1.675      0.094      -0.000       0.006
+C(district_fe)[T.MUKTSAR_PUNJAB]                                   -0.0045   5.67e-15   -7.9e+11      0.000      -0.004      -0.004
+C(district_fe)[T.MUMBAI SUBURBAN_MAHARASHTRA]                      -0.0088      0.001    -16.059      0.000      -0.010      -0.008
+C(district_fe)[T.MUNGELI_CHHATTISGARH]                             -0.0132   5.92e-15  -2.23e+12      0.000      -0.013      -0.013
+C(district_fe)[T.MUNGER_BIHAR]                                      0.0039   5.76e-15    6.8e+11      0.000       0.004       0.004
+C(district_fe)[T.MURSHIDABAD_WEST BENGAL]                          -0.0069   5.96e-15  -1.16e+12      0.000      -0.007      -0.007
+C(district_fe)[T.MUZAFFARNAGAR_UTTAR PRADESH]                      -0.0047      0.001     -8.537      0.000      -0.006      -0.004
+C(district_fe)[T.MUZAFFARPUR_BIHAR]                                 0.0133      0.001     24.250      0.000       0.012       0.014
+C(district_fe)[T.NABARANGAPUR_ODISHA]                               0.0117      0.001     21.222      0.000       0.011       0.013
+C(district_fe)[T.NADIA_WEST BENGAL]                                -0.0035   5.83e-15     -6e+11      0.000      -0.003      -0.003
+C(district_fe)[T.NAGAON_ASSAM]                                     -0.0016      0.001     -1.492      0.136      -0.004       0.001
+C(district_fe)[T.NAGAPPATTINAM_TAMIL NADU]                         -0.0111      0.001    -10.132      0.000      -0.013      -0.009
+C(district_fe)[T.NAGAUR_RAJASTHAN]                                 -0.0052   5.78e-15  -9.05e+11      0.000      -0.005      -0.005
+C(district_fe)[T.NAGPUR_MAHARASHTRA]                               -0.0040   6.06e-15  -6.55e+11      0.000      -0.004      -0.004
+C(district_fe)[T.NAINITAL_UTTARAKHAND]                              0.0055      0.001      9.958      0.000       0.004       0.007
+C(district_fe)[T.NALANDA_BIHAR]                                     0.0011   5.82e-15   1.91e+11      0.000       0.001       0.001
+C(district_fe)[T.NALBARI_ASSAM]                                     0.0065      0.002      2.950      0.003       0.002       0.011
+C(district_fe)[T.NALGONDA_TELANGANA]                                0.0019   5.94e-15   3.22e+11      0.000       0.002       0.002
+C(district_fe)[T.NAMAKKAL_TAMIL NADU]                              -0.0084   5.89e-15  -1.42e+12      0.000      -0.008      -0.008
+C(district_fe)[T.NAMSAI_ARUNACHAL PRADESH]                          0.0104    5.7e-15   1.83e+12      0.000       0.010       0.010
+C(district_fe)[T.NANDED_MAHARASHTRA]                                0.0023   5.89e-15   3.97e+11      0.000       0.002       0.002
+C(district_fe)[T.NANDURBAR_MAHARASHTRA]                            -0.0025   5.87e-15   -4.3e+11      0.000      -0.003      -0.003
+C(district_fe)[T.NARAYANPUR_CHHATTISGARH]                           0.0026   5.71e-15   4.49e+11      0.000       0.003       0.003
+C(district_fe)[T.NARMADA_GUJARAT]                                  -0.0008   5.68e-15  -1.49e+11      0.000      -0.001      -0.001
+C(district_fe)[T.NARSIMHAPUR_MADHYA PRADESH]                       -0.0020   5.79e-15   -3.4e+11      0.000      -0.002      -0.002
+C(district_fe)[T.NASHIK_MAHARASHTRA]                                0.0014   5.78e-15   2.39e+11      0.000       0.001       0.001
+C(district_fe)[T.NAVSARI_GUJARAT]                                   0.0037      0.001      6.720      0.000       0.003       0.005
+C(district_fe)[T.NAWADA_BIHAR]                                      0.0130   6.11e-15   2.13e+12      0.000       0.013       0.013
+C(district_fe)[T.NAYAGARH_ODISHA]                                  -0.0045   5.69e-15  -7.98e+11      0.000      -0.005      -0.005
+C(district_fe)[T.NEEMUCH_MADHYA PRADESH]                            0.0033   5.76e-15   5.77e+11      0.000       0.003       0.003
+C(district_fe)[T.NIZAMABAD_TELANGANA]                               0.0004   5.84e-15   6.05e+10      0.000       0.000       0.000
+C(district_fe)[T.NORTH 24 PARGANAS_WEST BENGAL]                    -0.0040   5.89e-15  -6.76e+11      0.000      -0.004      -0.004
+C(district_fe)[T.NORTH AND MIDDLE ANDAMAN_ANDAMAN AND NICOBAR]      0.0046   5.82e-15   7.88e+11      0.000       0.005       0.005
+C(district_fe)[T.NORTH GARO HILLS_MEGHALAYA]                       -0.0065   6.03e-15  -1.07e+12      0.000      -0.006      -0.006
+C(district_fe)[T.NORTH GOA_GOA]                                    -0.0029   5.97e-15  -4.78e+11      0.000      -0.003      -0.003
+C(district_fe)[T.NORTH TRIPURA_TRIPURA]                            -0.0065   5.96e-15  -1.08e+12      0.000      -0.006      -0.006
+C(district_fe)[T.OSMANABAD_MAHARASHTRA]                             0.0056   5.71e-15   9.75e+11      0.000       0.006       0.006
+C(district_fe)[T.PAKUR_JHARKHAND]                                   0.0064   5.76e-15   1.12e+12      0.000       0.006       0.006
+C(district_fe)[T.PALAKKAD_KERALA]                                   0.0068   5.92e-15   1.16e+12      0.000       0.007       0.007
+C(district_fe)[T.PALAMU_JHARKHAND]                                  0.0116   5.97e-15   1.93e+12      0.000       0.012       0.012
+C(district_fe)[T.PALGHAR_MAHARASHTRA]                              -0.0079    6.1e-15  -1.29e+12      0.000      -0.008      -0.008
+C(district_fe)[T.PALI_RAJASTHAN]                                    0.0012      0.001      2.185      0.029       0.000       0.002
+C(district_fe)[T.PALWAL_HARYANA]                                    0.0044   6.01e-15   7.39e+11      0.000       0.004       0.004
+C(district_fe)[T.PANCH MAHALS_GUJARAT]                             -0.0020   5.76e-15  -3.39e+11      0.000      -0.002      -0.002
+C(district_fe)[T.PANCHKULA_HARYANA]                                 0.0020   5.79e-15   3.52e+11      0.000       0.002       0.002
+C(district_fe)[T.PANIPAT_HARYANA]                                  -0.0090    5.7e-15  -1.59e+12      0.000      -0.009      -0.009
+C(district_fe)[T.PANNA_MADHYA PRADESH]                              0.0085   5.96e-15   1.43e+12      0.000       0.009       0.009
+C(district_fe)[T.PAPUM PARE_ARUNACHAL PRADESH]                    3.67e-05   5.68e-15   6.47e+09      0.000    3.67e-05    3.67e-05
+C(district_fe)[T.PARBHANI_MAHARASHTRA]                             -0.0042   5.86e-15  -7.14e+11      0.000      -0.004      -0.004
+C(district_fe)[T.PASHCHIM CHAMPARAN_BIHAR]                          0.0098   5.78e-15    1.7e+12      0.000       0.010       0.010
+C(district_fe)[T.PASHCHIM MEDINIPUR_WEST BENGAL]                   -0.0036    5.9e-15  -6.17e+11      0.000      -0.004      -0.004
+C(district_fe)[T.PASHCHIMI SINGHBHUM_JHARKHAND]                    -0.0054   5.92e-15  -9.11e+11      0.000      -0.005      -0.005
+C(district_fe)[T.PATAN_GUJARAT]                                     0.0043      0.001      3.910      0.000       0.002       0.006
+C(district_fe)[T.PATHANAMTHITTA_KERALA]                             0.0112      0.001     20.399      0.000       0.010       0.012
+C(district_fe)[T.PATHANKOT_PUNJAB]                                 -0.0071   5.76e-15  -1.23e+12      0.000      -0.007      -0.007
+C(district_fe)[T.PATIALA_PUNJAB]                                    0.0020   5.78e-15   3.45e+11      0.000       0.002       0.002
+C(district_fe)[T.PATNA_BIHAR]                                       0.0024   5.97e-15   4.05e+11      0.000       0.002       0.002
+C(district_fe)[T.PERAMBALUR_TAMIL NADU]                            -0.0039    5.7e-15  -6.93e+11      0.000      -0.004      -0.004
+C(district_fe)[T.PEREN_NAGALAND]                                   -0.0078   5.77e-15  -1.35e+12      0.000      -0.008      -0.008
+C(district_fe)[T.PHEK_NAGALAND]                                     0.0041   5.91e-15   6.89e+11      0.000       0.004       0.004
+C(district_fe)[T.PILIBHIT_UTTAR PRADESH]                            0.0089      0.001     16.230      0.000       0.008       0.010
+C(district_fe)[T.PITHORAGARH_UTTARAKHAND]                          -0.0018      0.001     -3.250      0.001      -0.003      -0.001
+C(district_fe)[T.POONCH_JAMMU AND KASHMIR]                         -0.0010   5.79e-15  -1.77e+11      0.000      -0.001      -0.001
+C(district_fe)[T.PORBANDAR_GUJARAT]                                 0.0023      0.001      4.186      0.000       0.001       0.003
+C(district_fe)[T.PRAKASAM_ANDHRA PRADESH]                          -0.0062      0.001    -11.372      0.000      -0.007      -0.005
+C(district_fe)[T.PRATAPGARH_RAJASTHAN]                             -0.0049      0.001     -8.996      0.000      -0.006      -0.004
+C(district_fe)[T.PRATAPGARH_UTTAR PRADESH]                          0.0056      0.001     10.116      0.000       0.004       0.007
+C(district_fe)[T.PUDUCHERRY_PUDUCHERRY]                            -0.0164   5.67e-15  -2.89e+12      0.000      -0.016      -0.016
+C(district_fe)[T.PUDUKKOTTAI_TAMIL NADU]                           -0.0064   5.74e-15  -1.11e+12      0.000      -0.006      -0.006
+C(district_fe)[T.PULWAMA_JAMMU AND KASHMIR]                         0.0013   5.74e-15   2.31e+11      0.000       0.001       0.001
+C(district_fe)[T.PUNE_MAHARASHTRA]                                  0.0048      0.001      4.398      0.000       0.003       0.007
+C(district_fe)[T.PURBA CHAMPARAN_BIHAR]                             0.0230      0.001     41.784      0.000       0.022       0.024
+C(district_fe)[T.PURBA MEDINIPUR_WEST BENGAL]                      -0.0097    6.1e-15  -1.58e+12      0.000      -0.010      -0.010
+C(district_fe)[T.PURBI SINGHBHUM_JHARKHAND]                        -0.0129   6.05e-15  -2.13e+12      0.000      -0.013      -0.013
+C(district_fe)[T.PURI_ODISHA]                                      -0.0040   5.89e-15  -6.84e+11      0.000      -0.004      -0.004
+C(district_fe)[T.PURNIA_BIHAR]                                      0.0084      0.001     15.325      0.000       0.007       0.009
+C(district_fe)[T.PURULIYA_WEST BENGAL]                             -0.0096   5.98e-15   -1.6e+12      0.000      -0.010      -0.010
+C(district_fe)[T.RAE BARELI_UTTAR PRADESH]                          0.0004    6.1e-15   7.37e+10      0.000       0.000       0.000
+C(district_fe)[T.RAICHUR_KARNATAKA]                                -0.0073   6.19e-15  -1.17e+12      0.000      -0.007      -0.007
+C(district_fe)[T.RAIGARH_CHHATTISGARH]                             -0.0093      0.001    -16.834      0.000      -0.010      -0.008
+C(district_fe)[T.RAIGARH_MAHARASHTRA]                              -0.0092      0.001    -16.784      0.000      -0.010      -0.008
+C(district_fe)[T.RAIPUR_CHHATTISGARH]                              -0.0038   5.86e-15  -6.42e+11      0.000      -0.004      -0.004
+C(district_fe)[T.RAISEN_MADHYA PRADESH]                             0.0066   5.75e-15   1.16e+12      0.000       0.007       0.007
+C(district_fe)[T.RAJGARH_MADHYA PRADESH]                            0.0031   5.83e-15   5.38e+11      0.000       0.003       0.003
+C(district_fe)[T.RAJKOT_GUJARAT]                                    0.0035      0.001      3.215      0.001       0.001       0.006
+C(district_fe)[T.RAJNANDGAON_CHHATTISGARH]                         -0.0069   6.01e-15  -1.15e+12      0.000      -0.007      -0.007
+C(district_fe)[T.RAJOURI_JAMMU AND KASHMIR]                        -0.0064   5.95e-15  -1.08e+12      0.000      -0.006      -0.006
+C(district_fe)[T.RAJSAMAND_RAJASTHAN]                              -0.0042   5.93e-15  -7.06e+11      0.000      -0.004      -0.004
+C(district_fe)[T.RAMANAGARA_KARNATAKA]                             -0.0055   6.05e-15   -9.1e+11      0.000      -0.006      -0.006
+C(district_fe)[T.RAMANATHAPURAM_TAMIL NADU]                        -0.0064   5.74e-15  -1.12e+12      0.000      -0.006      -0.006
+C(district_fe)[T.RAMBAN_JAMMU AND KASHMIR]                         -0.0034    5.9e-15   -5.7e+11      0.000      -0.003      -0.003
+C(district_fe)[T.RAMGARH_JHARKHAND]                                -0.0096   5.94e-15  -1.62e+12      0.000      -0.010      -0.010
+C(district_fe)[T.RAMPUR_UTTAR PRADESH]                             -0.0020   5.88e-15  -3.32e+11      0.000      -0.002      -0.002
+C(district_fe)[T.RANCHI_JHARKHAND]                                 -0.0046   5.81e-15  -7.87e+11      0.000      -0.005      -0.005
+C(district_fe)[T.RANGA REDDY_TELANGANA]                            -0.0092   5.87e-15  -1.57e+12      0.000      -0.009      -0.009
+C(district_fe)[T.RATLAM_MADHYA PRADESH]                             0.0035   5.69e-15   6.12e+11      0.000       0.003       0.003
+C(district_fe)[T.RATNAGIRI_MAHARASHTRA]                             0.0043      0.001      3.879      0.000       0.002       0.006
+C(district_fe)[T.RAYAGADA_ODISHA]                                   0.0016      0.001      2.885      0.004       0.001       0.003
+C(district_fe)[T.REASI_JAMMU AND KASHMIR]                          -0.0061   5.68e-15  -1.07e+12      0.000      -0.006      -0.006
+C(district_fe)[T.REWARI_HARYANA]                                   -0.0023   5.83e-15  -3.87e+11      0.000      -0.002      -0.002
+C(district_fe)[T.REWA_MADHYA PRADESH]                               0.0021   6.13e-15   3.35e+11      0.000       0.002       0.002
+C(district_fe)[T.RI BHOI_MEGHALAYA]                                -0.0136   5.72e-15  -2.38e+12      0.000      -0.014      -0.014
+C(district_fe)[T.ROHTAK_HARYANA]                                   -0.0018   5.67e-15  -3.25e+11      0.000      -0.002      -0.002
+C(district_fe)[T.ROHTAS_BIHAR]                                      0.0060   5.67e-15   1.06e+12      0.000       0.006       0.006
+C(district_fe)[T.RUDRAPRAYAG_UTTARAKHAND]                          -0.0039   5.78e-15  -6.73e+11      0.000      -0.004      -0.004
+C(district_fe)[T.RUPNAGAR_PUNJAB]                                  -0.0002   5.88e-15   -3.9e+10      0.000      -0.000      -0.000
+C(district_fe)[T.SABAR KANTHA_GUJARAT]                              0.0036      0.001      6.513      0.000       0.003       0.005
+C(district_fe)[T.SAGAR_MADHYA PRADESH]                             -0.0019   5.75e-15  -3.24e+11      0.000      -0.002      -0.002
+C(district_fe)[T.SAHARANPUR_UTTAR PRADESH]                         -0.0035   5.75e-15  -6.03e+11      0.000      -0.003      -0.003
+C(district_fe)[T.SAHARSA_BIHAR]                                     0.0030      0.001      5.428      0.000       0.002       0.004
+C(district_fe)[T.SAHIBGANJ_JHARKHAND]                               0.0039      6e-15   6.56e+11      0.000       0.004       0.004
+C(district_fe)[T.SAHIBZADA AJIT SINGH NAGAR_PUNJAB]                 0.0070   5.73e-15   1.23e+12      0.000       0.007       0.007
+C(district_fe)[T.SAIHA_MIZORAM]                                     0.0038   5.75e-15   6.56e+11      0.000       0.004       0.004
+C(district_fe)[T.SALEM_TAMIL NADU]                                 -0.0128   5.76e-15  -2.22e+12      0.000      -0.013      -0.013
+C(district_fe)[T.SAMASTIPUR_BIHAR]                                  0.0124   5.86e-15   2.11e+12      0.000       0.012       0.012
+C(district_fe)[T.SAMBALPUR_ODISHA]                                 -0.0095   5.71e-15  -1.67e+12      0.000      -0.010      -0.010
+C(district_fe)[T.SAMBA_JAMMU AND KASHMIR]                          -0.0099   5.78e-15  -1.71e+12      0.000      -0.010      -0.010
+C(district_fe)[T.SAMBHAL_UTTAR PRADESH]                            -0.0046   5.68e-15  -8.08e+11      0.000      -0.005      -0.005
+C(district_fe)[T.SANGLI_MAHARASHTRA]                                0.0036   5.77e-15   6.28e+11      0.000       0.004       0.004
+C(district_fe)[T.SANGRUR_PUNJAB]                                    0.0024   5.71e-15   4.14e+11      0.000       0.002       0.002
+C(district_fe)[T.SANT KABIR NAGAR_UTTAR PRADESH]                    0.0034      0.001      6.156      0.000       0.002       0.004
+C(district_fe)[T.SANT RAVI DAS NAGAR_UTTAR PRADESH]                 0.0097   5.84e-15   1.65e+12      0.000       0.010       0.010
+C(district_fe)[T.SARAIKELA-KHARSAWAN_JHARKHAND]                    -0.0067   5.74e-15  -1.17e+12      0.000      -0.007      -0.007
+C(district_fe)[T.SARAN_BIHAR]                                       0.0102   5.83e-15   1.75e+12      0.000       0.010       0.010
+C(district_fe)[T.SATARA_MAHARASHTRA]                                0.0044      0.001      7.972      0.000       0.003       0.005
+C(district_fe)[T.SATNA_MADHYA PRADESH]                              0.0042   5.73e-15   7.26e+11      0.000       0.004       0.004
+C(district_fe)[T.SAWAI MADHOPUR_RAJASTHAN]                         -0.0148    5.7e-15  -2.59e+12      0.000      -0.015      -0.015
+C(district_fe)[T.SEHORE_MADHYA PRADESH]                            -0.0003   5.77e-15  -5.15e+10      0.000      -0.000      -0.000
+C(district_fe)[T.SENAPATI_MANIPUR]                                  0.0115   5.68e-15   2.02e+12      0.000       0.011       0.011
+C(district_fe)[T.SEONI_MADHYA PRADESH]                              0.0063   5.89e-15   1.06e+12      0.000       0.006       0.006
+C(district_fe)[T.SERCHHIP_MIZORAM]                                  0.0095    5.9e-15   1.61e+12      0.000       0.009       0.009
+C(district_fe)[T.SHAHDOL_MADHYA PRADESH]                            0.0068   5.82e-15   1.17e+12      0.000       0.007       0.007
+C(district_fe)[T.SHAHID BHAGAT SINGH NAGAR_PUNJAB]                  0.0083   5.75e-15   1.44e+12      0.000       0.008       0.008
+C(district_fe)[T.SHAHJAHANPUR_UTTAR PRADESH]                        0.0033   5.72e-15    5.8e+11      0.000       0.003       0.003
+C(district_fe)[T.SHAJAPUR_MADHYA PRADESH]                          -0.0014   5.73e-15  -2.43e+11      0.000      -0.001      -0.001
+C(district_fe)[T.SHAMLI_UTTAR PRADESH]                              0.0034    5.7e-15   6.01e+11      0.000       0.003       0.003
+C(district_fe)[T.SHEIKHPURA_BIHAR]                                  0.0087   5.72e-15   1.53e+12      0.000       0.009       0.009
+C(district_fe)[T.SHEOHAR_BIHAR]                                     0.0203      0.001     36.982      0.000       0.019       0.021
+C(district_fe)[T.SHEOPUR_MADHYA PRADESH]                            0.0031   5.81e-15   5.29e+11      0.000       0.003       0.003
+C(district_fe)[T.SHIMLA_HIMACHAL PRADESH]                           0.0030   5.68e-15   5.33e+11      0.000       0.003       0.003
+C(district_fe)[T.SHIMOGA_KARNATAKA]                                -0.0016   5.78e-15  -2.74e+11      0.000      -0.002      -0.002
+C(district_fe)[T.SHIVPURI_MADHYA PRADESH]                           0.0052   5.86e-15   8.95e+11      0.000       0.005       0.005
+C(district_fe)[T.SHRAVASTI_UTTAR PRADESH]                           0.0041      0.001      7.470      0.000       0.003       0.005
+C(district_fe)[T.SHUPIYAN_JAMMU AND KASHMIR]                        0.0042   6.09e-15   6.89e+11      0.000       0.004       0.004
+C(district_fe)[T.SIDDHARTH NAGAR_UTTAR PRADESH]                     0.0073      0.001     13.241      0.000       0.006       0.008
+C(district_fe)[T.SIDHI_MADHYA PRADESH]                              0.0061   5.81e-15   1.05e+12      0.000       0.006       0.006
+C(district_fe)[T.SIKAR_RAJASTHAN]                                  -0.0094   5.81e-15  -1.62e+12      0.000      -0.009      -0.009
+C(district_fe)[T.SIMDEGA_JHARKHAND]                                 0.0075   5.89e-15   1.27e+12      0.000       0.007       0.007
+C(district_fe)[T.SINDHUDURG_MAHARASHTRA]                            0.0077   5.68e-15   1.35e+12      0.000       0.008       0.008
+C(district_fe)[T.SINGRAULI_MADHYA PRADESH]                         -0.0041   5.73e-15   -7.2e+11      0.000      -0.004      -0.004
+C(district_fe)[T.SIPAHIJALA_TRIPURA]                               -0.0122   5.67e-15  -2.16e+12      0.000      -0.012      -0.012
+C(district_fe)[T.SIRMAUR_HIMACHAL PRADESH]                          0.0028    5.8e-15   4.86e+11      0.000       0.003       0.003
+C(district_fe)[T.SIROHI_RAJASTHAN]                                  0.0019      0.001      3.545      0.000       0.001       0.003
+C(district_fe)[T.SIRSA_HARYANA]                                    -0.0004   5.67e-15  -7.72e+10      0.000      -0.000      -0.000
+C(district_fe)[T.SITAMARHI_BIHAR]                                   0.0206      0.001     37.423      0.000       0.019       0.022
+C(district_fe)[T.SITAPUR_UTTAR PRADESH]                             0.0092      0.001     16.691      0.000       0.008       0.010
+C(district_fe)[T.SIVAGANGA_TAMIL NADU]                             -0.0083   5.68e-15  -1.46e+12      0.000      -0.008      -0.008
+C(district_fe)[T.SIVASAGAR_ASSAM]                                  -0.0112      0.002     -5.090      0.000      -0.015      -0.007
+C(district_fe)[T.SIWAN_BIHAR]                                       0.0156   5.67e-15   2.75e+12      0.000       0.016       0.016
+C(district_fe)[T.SOLAN_HIMACHAL PRADESH]                            0.0029      0.001      5.222      0.000       0.002       0.004
+C(district_fe)[T.SOLAPUR_MAHARASHTRA]                              -0.0036   5.86e-15  -6.16e+11      0.000      -0.004      -0.004
+C(district_fe)[T.SONBHADRA_UTTAR PRADESH]                          -0.0012   5.67e-15   -2.1e+11      0.000      -0.001      -0.001
+C(district_fe)[T.SONIPAT_HARYANA]                                   0.0005   5.71e-15   8.13e+10      0.000       0.000       0.000
+C(district_fe)[T.SONITPUR_ASSAM]                                    0.0056      0.003      2.042      0.041       0.000       0.011
+C(district_fe)[T.SOUTH 24 PARGANAS_WEST BENGAL]                    -0.0102   5.67e-15  -1.79e+12      0.000      -0.010      -0.010
+C(district_fe)[T.SOUTH ANDAMAN_ANDAMAN AND NICOBAR]                -0.0103    5.7e-15   -1.8e+12      0.000      -0.010      -0.010
+C(district_fe)[T.SOUTH GARO HILLS_MEGHALAYA]                        0.0018   5.73e-15   3.07e+11      0.000       0.002       0.002
+C(district_fe)[T.SOUTH GOA_GOA]                                    -0.0033   5.72e-15   -5.7e+11      0.000      -0.003      -0.003
+C(district_fe)[T.SOUTH TRIPURA_TRIPURA]                            -0.0023   5.68e-15  -4.05e+11      0.000      -0.002      -0.002
+C(district_fe)[T.SOUTH WEST GARO HILLS_MEGHALAYA]                   0.0061   5.73e-15   1.06e+12      0.000       0.006       0.006
+C(district_fe)[T.SOUTH WEST KHASI HILLS_MEGHALAYA]                 -0.0047   5.68e-15  -8.26e+11      0.000      -0.005      -0.005
+C(district_fe)[T.SRIKAKULAM_ANDHRA PRADESH]                        -0.0012   5.66e-15  -2.19e+11      0.000      -0.001      -0.001
+C(district_fe)[T.SRINAGAR_JAMMU AND KASHMIR]                        0.0008   5.78e-15   1.35e+11      0.000       0.001       0.001
+C(district_fe)[T.SUKMA_CHHATTISGARH]                               -0.0007   5.68e-15   -1.3e+11      0.000      -0.001      -0.001
+C(district_fe)[T.SULTANPUR_UTTAR PRADESH]                           0.0055      0.001     10.065      0.000       0.004       0.007
+C(district_fe)[T.SUNDARGARH_ODISHA]                                -0.0016   5.72e-15  -2.84e+11      0.000      -0.002      -0.002
+C(district_fe)[T.SUPAUL_BIHAR]                                      0.0058      0.001     10.620      0.000       0.005       0.007
+C(district_fe)[T.SURAJPUR_CHHATTISGARH]                            -0.0019   5.67e-15   -3.3e+11      0.000      -0.002      -0.002
+C(district_fe)[T.SURAT_GUJARAT]                                     0.0007      0.001      0.597      0.551      -0.001       0.003
+C(district_fe)[T.SURENDRANAGAR_GUJARAT]                             0.0005   5.68e-15   9.58e+10      0.000       0.001       0.001
+C(district_fe)[T.SURGUJA_CHHATTISGARH]                              0.0011   5.74e-15      2e+11      0.000       0.001       0.001
+C(district_fe)[T.TAMENGLONG_MANIPUR]                               -0.0043   5.71e-15  -7.53e+11      0.000      -0.004      -0.004
+C(district_fe)[T.TAPI_GUJARAT]                                     -0.0017   5.77e-15  -2.96e+11      0.000      -0.002      -0.002
+C(district_fe)[T.TARN TARAN_PUNJAB]                                -0.0085   5.68e-15   -1.5e+12      0.000      -0.009      -0.009
+C(district_fe)[T.TAWANG_ARUNACHAL PRADESH]                          0.0089   5.69e-15   1.57e+12      0.000       0.009       0.009
+C(district_fe)[T.TEHRI GARHWAL_UTTARAKHAND]                        -0.0052   5.74e-15  -9.05e+11      0.000      -0.005      -0.005
+C(district_fe)[T.THANE_MAHARASHTRA]                                -0.0083      0.001    -15.182      0.000      -0.009      -0.007
+C(district_fe)[T.THANJAVUR_TAMIL NADU]                             -0.0092   5.68e-15  -1.62e+12      0.000      -0.009      -0.009
+C(district_fe)[T.THE NILGIRIS_TAMIL NADU]                          -0.0080   5.69e-15  -1.41e+12      0.000      -0.008      -0.008
+C(district_fe)[T.THENI_TAMIL NADU]                                 -0.0008   5.68e-15  -1.43e+11      0.000      -0.001      -0.001
+C(district_fe)[T.THIRUVALLUR_TAMIL NADU]                           -0.0059      0.001    -10.817      0.000      -0.007      -0.005
+C(district_fe)[T.THIRUVANANTHAPURAM_KERALA]                         0.0063      0.001     11.551      0.000       0.005       0.007
+C(district_fe)[T.THIRUVARUR_TAMIL NADU]                            -0.0170   5.67e-15  -2.99e+12      0.000      -0.017      -0.017
+C(district_fe)[T.THOOTHUKKUDI_TAMIL NADU]                          -0.0011      0.001     -1.025      0.305      -0.003       0.001
+C(district_fe)[T.THOUBAL_MANIPUR]                                   0.0307      0.001     55.788      0.000       0.030       0.032
+C(district_fe)[T.THRISSUR_KERALA]                                   0.0098      0.001     17.858      0.000       0.009       0.011
+C(district_fe)[T.TIKAMGARH_MADHYA PRADESH]                         -0.0025   5.68e-15  -4.39e+11      0.000      -0.002      -0.002
+C(district_fe)[T.TINSUKIA_ASSAM]                                   -0.0318      0.001    -28.922      0.000      -0.034      -0.030
+C(district_fe)[T.TIRUCHIRAPPALLI_TAMIL NADU]                       -0.0082   5.76e-15  -1.43e+12      0.000      -0.008      -0.008
+C(district_fe)[T.TIRUNELVELI_TAMIL NADU]                           -0.0043      0.001     -7.784      0.000      -0.005      -0.003
+C(district_fe)[T.TIRUPPUR_TAMIL NADU]                              -0.0023   5.72e-15  -3.98e+11      0.000      -0.002      -0.002
+C(district_fe)[T.TIRUVANNAMALAI_TAMIL NADU]                        -0.0109   5.71e-15  -1.91e+12      0.000      -0.011      -0.011
+C(district_fe)[T.TONK_RAJASTHAN]                                   -0.0041   5.81e-15  -7.12e+11      0.000      -0.004      -0.004
+C(district_fe)[T.TUENSANG_NAGALAND]                                 0.0086   5.78e-15   1.48e+12      0.000       0.009       0.009
+C(district_fe)[T.TUMKUR_KARNATAKA]                                 -0.0046   5.68e-15  -8.02e+11      0.000      -0.005      -0.005
+C(district_fe)[T.UDAIPUR_RAJASTHAN]                                -0.0003      0.001     -0.582      0.560      -0.001       0.001
+C(district_fe)[T.UDALGURI_ASSAM]                                   -0.0123   5.68e-15  -2.17e+12      0.000      -0.012      -0.012
+C(district_fe)[T.UDHAM SINGH NAGAR_UTTARAKHAND]                    -0.0059   5.66e-15  -1.05e+12      0.000      -0.006      -0.006
+C(district_fe)[T.UDHAMPUR_JAMMU AND KASHMIR]                       -0.0093   5.77e-15  -1.61e+12      0.000      -0.009      -0.009
+C(district_fe)[T.UDUPI_KARNATAKA]                                   0.0016      0.001      2.829      0.005       0.000       0.003
+C(district_fe)[T.UJJAIN_MADHYA PRADESH]                             0.0018   5.67e-15   3.16e+11      0.000       0.002       0.002
+C(district_fe)[T.UKHRUL_MANIPUR]                                    0.0125   5.79e-15   2.17e+12      0.000       0.013       0.013
+C(district_fe)[T.UMARIA_MADHYA PRADESH]                             0.0052   5.68e-15   9.11e+11      0.000       0.005       0.005
+C(district_fe)[T.UNA_HIMACHAL PRADESH]                           8.401e-05   5.68e-15   1.48e+10      0.000     8.4e-05     8.4e-05
+C(district_fe)[T.UNNAO_UTTAR PRADESH]                               0.0062   5.69e-15   1.09e+12      0.000       0.006       0.006
+C(district_fe)[T.UNOKOTI_TRIPURA]                                  -0.0074    5.7e-15  -1.29e+12      0.000      -0.007      -0.007
+C(district_fe)[T.UTTAR BASTAR KANKER_CHHATTISGARH]                  0.0020   5.72e-15   3.57e+11      0.000       0.002       0.002
+C(district_fe)[T.UTTAR DINAJPUR_WEST BENGAL]                       -0.0031   5.68e-15  -5.38e+11      0.000      -0.003      -0.003
+C(district_fe)[T.UTTARA KANNADA_KARNATAKA]                          0.0009   6.16e-15   1.49e+11      0.000       0.001       0.001
+C(district_fe)[T.UTTARKASHI_UTTARAKHAND]                           -0.0019   5.68e-15   -3.3e+11      0.000      -0.002      -0.002
+C(district_fe)[T.VADODARA_GUJARAT]                                 -0.0019   5.69e-15  -3.29e+11      0.000      -0.002      -0.002
+C(district_fe)[T.VAISHALI_BIHAR]                                    0.0066   5.78e-15   1.14e+12      0.000       0.007       0.007
+C(district_fe)[T.VALSAD_GUJARAT]                                    0.0052      0.001      4.720      0.000       0.003       0.007
+C(district_fe)[T.VARANASI_UTTAR PRADESH]                            0.0019      0.001      3.494      0.000       0.001       0.003
+C(district_fe)[T.VELLORE_TAMIL NADU]                               -0.0100    5.7e-15  -1.76e+12      0.000      -0.010      -0.010
+C(district_fe)[T.VIDISHA_MADHYA PRADESH]                            0.0050   5.69e-15   8.71e+11      0.000       0.005       0.005
+C(district_fe)[T.VILUPPURAM_TAMIL NADU]                            -0.0078      0.001    -14.243      0.000      -0.009      -0.007
+C(district_fe)[T.VIRUDUNAGAR_TAMIL NADU]                           -0.0042      0.001     -7.652      0.000      -0.005      -0.003
+C(district_fe)[T.VISAKHAPATNAM_ANDHRA PRADESH]                     -0.0078   5.81e-15  -1.35e+12      0.000      -0.008      -0.008
+C(district_fe)[T.VIZIANAGARAM_ANDHRA PRADESH]                   -8.398e-05   5.67e-15  -1.48e+10      0.000    -8.4e-05    -8.4e-05
+C(district_fe)[T.WARANGAL_TELANGANA]                               -0.0007   5.69e-15  -1.27e+11      0.000      -0.001      -0.001
+C(district_fe)[T.WARDHA_MAHARASHTRA]                                0.0025    5.7e-15   4.46e+11      0.000       0.003       0.003
+C(district_fe)[T.WASHIM_MAHARASHTRA]                                0.0003   5.68e-15   4.86e+10      0.000       0.000       0.000
+C(district_fe)[T.WAYANAD_KERALA]                                    0.0150   5.68e-15   2.65e+12      0.000       0.015       0.015
+C(district_fe)[T.WEST GARO HILLS_MEGHALAYA]                         0.0017   5.67e-15   2.94e+11      0.000       0.002       0.002
+C(district_fe)[T.WEST GODAVARI_ANDHRA PRADESH]                     -0.0007   5.68e-15  -1.23e+11      0.000      -0.001      -0.001
+C(district_fe)[T.WEST KAMENG_ARUNACHAL PRADESH]                     0.0071    5.7e-15   1.25e+12      0.000       0.007       0.007
+C(district_fe)[T.WEST KHASI HILLS_MEGHALAYA]                       -0.0037   5.67e-15  -6.57e+11      0.000      -0.004      -0.004
+C(district_fe)[T.WEST NIMAR_MADHYA PRADESH]                         0.0048   5.69e-15   8.48e+11      0.000       0.005       0.005
+C(district_fe)[T.WEST SIANG_ARUNACHAL PRADESH]                      0.0051   5.76e-15   8.89e+11      0.000       0.005       0.005
+C(district_fe)[T.WEST TRIPURA_TRIPURA]                             -0.0084   5.67e-15  -1.48e+12      0.000      -0.008      -0.008
+C(district_fe)[T.WOKHA_NAGALAND]                                   -0.0010   5.67e-15  -1.77e+11      0.000      -0.001      -0.001
+C(district_fe)[T.Y.S.R._ANDHRA PRADESH]                            -0.0031   5.73e-15  -5.37e+11      0.000      -0.003      -0.003
+C(district_fe)[T.YADGIR_KARNATAKA]                                 -0.0093   5.76e-15  -1.62e+12      0.000      -0.009      -0.009
+C(district_fe)[T.YAMUNANAGAR_HARYANA]                               0.0043   5.67e-15   7.54e+11      0.000       0.004       0.004
+C(district_fe)[T.YANAM_PUDUCHERRY]                                 -0.0170   5.67e-15     -3e+12      0.000      -0.017      -0.017
+C(district_fe)[T.YAVATMAL_MAHARASHTRA]                          -3.357e-06   5.67e-15  -5.92e+08      0.000   -3.36e-06   -3.36e-06
+C(district_fe)[T.ZUNHEBOTO_NAGALAND]                                0.0089   5.75e-15   1.54e+12      0.000       0.009       0.009
+C(quarter_fe)[T.2015Q3]                                            -0.0658      0.012     -5.309      0.000      -0.090      -0.042
+C(quarter_fe)[T.2015Q4]                                             0.5838      0.018     31.725      0.000       0.548       0.620
+C(quarter_fe)[T.2016Q1]                                            -0.0244      0.013     -1.923      0.054      -0.049       0.000
+C(quarter_fe)[T.2016Q2]                                             0.2577      0.012     20.649      0.000       0.233       0.282
+C(quarter_fe)[T.2017Q2]                                             0.5229      0.014     37.586      0.000       0.496       0.550
+C(quarter_fe)[T.2017Q3]                                             0.0127      0.013      1.010      0.313      -0.012       0.037
+C(quarter_fe)[T.2017Q4]                                             0.4317      0.012     36.248      0.000       0.408       0.455
+C(quarter_fe)[T.2018Q1]                                             0.1277      0.008     15.360      0.000       0.111       0.144
+C(quarter_fe)[T.2018Q2]                                             0.1858      0.010     18.786      0.000       0.166       0.205
+C(quarter_fe)[T.2018Q3]                                            -0.1601      0.016    -10.133      0.000      -0.191      -0.129
+C(quarter_fe)[T.2018Q4]                                             0.5490      0.014     37.965      0.000       0.521       0.577
+C(quarter_fe)[T.2019Q1]                                             0.1362      0.009     15.768      0.000       0.119       0.153
+C(quarter_fe)[T.2019Q2]                                             0.2525      0.009     26.749      0.000       0.234       0.271
+C(quarter_fe)[T.2019Q3]                                            -0.2570      0.015    -17.001      0.000      -0.287      -0.227
+C(quarter_fe)[T.2019Q4]                                             0.5668      0.014     39.754      0.000       0.539       0.595
+C(quarter_fe)[T.2020Q1]                                             0.2019      0.009     22.060      0.000       0.184       0.220
+C(quarter_fe)[T.2020Q2]                                             0.1926      0.011     17.692      0.000       0.171       0.214
+C(quarter_fe)[T.2020Q3]                                            -0.1665      0.014    -12.237      0.000      -0.193      -0.140
+C(quarter_fe)[T.2020Q4]                                             0.6445      0.012     51.602      0.000       0.620       0.669
+C(quarter_fe)[T.2021Q1]                                             0.1248      0.009     13.818      0.000       0.107       0.142
+C(quarter_fe)[T.2021Q2]                                             0.2300      0.008     27.456      0.000       0.214       0.246
+C(quarter_fe)[T.2021Q3]                                            -0.1588      0.014    -11.180      0.000      -0.187      -0.131
+C(quarter_fe)[T.2021Q4]                                             0.5804      0.015     37.785      0.000       0.550       0.611
+C(quarter_fe)[T.2022Q1]                                             0.2030      0.009     23.685      0.000       0.186       0.220
+C(quarter_fe)[T.2022Q2]                                             0.2171      0.008     27.636      0.000       0.202       0.232
+C(quarter_fe)[T.2022Q3]                                            -0.3345      0.014    -23.529      0.000      -0.362      -0.307
+C(quarter_fe)[T.2022Q4]                                             0.6930      0.011     65.431      0.000       0.672       0.714
+C(quarter_fe)[T.2023Q1]                                             0.1924      0.008     23.003      0.000       0.176       0.209
+C(quarter_fe)[T.2023Q2]                                             0.2629      0.009     28.364      0.000       0.245       0.281
+C(quarter_fe)[T.2023Q3]                                            -0.0880      0.012     -7.131      0.000      -0.112      -0.064
+C(quarter_fe)[T.2023Q4]                                             0.4808      0.012     40.177      0.000       0.457       0.504
+C(quarter_fe)[T.2024Q1]                                             0.1346      0.008     16.534      0.000       0.119       0.151
+C(quarter_fe)[T.2024Q2]                                             0.2468      0.009     26.002      0.000       0.228       0.265
+C(quarter_fe)[T.2024Q3]                                            -0.2147      0.014    -15.693      0.000      -0.242      -0.188
+C(quarter_fe)[T.2024Q4]                                             0.6006      0.014     43.730      0.000       0.574       0.628
+flood_exposure_ruleB_qt                                            -0.0584      0.020     -2.954      0.003      -0.097      -0.020
+==============================================================================
+Omnibus:                     2059.405   Durbin-Watson:                   2.726
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            13752.323
+Skew:                          -0.134   Prob(JB):                         0.00
+Kurtosis:                       6.802   Cond. No.                         641.
+==============================================================================
+
+Notes:
+[1] Standard Errors are robust to cluster correlation (cluster)

@@ -1,0 +1,687 @@
+                          IV-2SLS Estimation Summary                          
+==============================================================================
+Dep. Variable:      deposit_change_qt   R-squared:                      0.2588
+Estimator:                    IV-2SLS   Adj. R-squared:                 0.2361
+No. Observations:               22442   F-statistic:                 1.939e+24
+Date:                Sun, Mar 08 2026   P-value (F-stat)                0.0000
+Time:                        18:02:57   Distribution:                chi2(666)
+Cov. Estimator:             clustered                                         
+                                                                              
+                                                Parameter Estimates                                                
+===================================================================================================================
+                                                 Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+-------------------------------------------------------------------------------------------------------------------
+const                                              -0.0571     0.0110    -5.2122     0.0000     -0.0786     -0.0357
+d_AGAR MALWA_MADHYA PRADESH                         0.0509     0.0003     181.77     0.0000      0.0503      0.0514
+d_AGRA_UTTAR PRADESH                                0.0466     0.0008     55.691     0.0000      0.0450      0.0482
+d_AHMADABAD_GUJARAT                                 0.0496     0.0002     320.14     0.0000      0.0493      0.0499
+d_AHMADNAGAR_MAHARASHTRA                            0.0519     0.0003     190.51     0.0000      0.0514      0.0525
+d_AIZAWL_MIZORAM                                    0.0431     0.0002     208.14     0.0000      0.0427      0.0436
+d_AJMER_RAJASTHAN                                   0.0415     0.0002     275.08     0.0000      0.0412      0.0418
+d_AKOLA_MAHARASHTRA                                 0.0476  9.131e-06     5215.5     0.0000      0.0476      0.0476
+d_ALAPPUZHA_KERALA                                  0.0473     0.0004     120.00     0.0000      0.0465      0.0481
+d_ALIGARH_UTTAR PRADESH                             0.0471  3.077e-05     1530.3     0.0000      0.0470      0.0471
+d_ALIPURDUAR_WEST BENGAL                            0.0634     0.0003     221.57     0.0000      0.0629      0.0640
+d_ALIRAJPUR_MADHYA PRADESH                          0.0409     0.0003     161.94     0.0000      0.0404      0.0414
+d_ALMORA_UTTARAKHAND                                0.0447     0.0001     407.79     0.0000      0.0445      0.0449
+d_ALWAR_RAJASTHAN                                   0.0339     0.0008     42.162     0.0000      0.0324      0.0355
+d_AMBALA_HARYANA                                    0.0522     0.0002     332.59     0.0000      0.0519      0.0525
+d_AMBEDKAR NAGAR_UTTAR PRADESH                      0.0449     0.0002     236.16     0.0000      0.0445      0.0453
+d_AMETHI_UTTAR PRADESH                              0.0416     0.0004     118.34     0.0000      0.0409      0.0423
+d_AMRAVATI_MAHARASHTRA                              0.0502  7.347e-05     683.89     0.0000      0.0501      0.0504
+d_AMRELI_GUJARAT                                    0.0457     0.0004     119.69     0.0000      0.0449      0.0464
+d_AMRITSAR_PUNJAB                                   0.0459     0.0004     118.26     0.0000      0.0451      0.0466
+d_AMROHA_UTTAR PRADESH                              0.0305     0.0002     156.22     0.0000      0.0301      0.0309
+d_ANAND_GUJARAT                                     0.0403  5.249e-05     767.05     0.0000      0.0402      0.0404
+d_ANANTAPUR_ANDHRA PRADESH                          0.0204     0.0004     48.042     0.0000      0.0196      0.0212
+d_ANANTNAG_JAMMU AND KASHMIR                        0.0502  3.926e-05     1277.8     0.0000      0.0501      0.0502
+d_ANUGUL_ODISHA                                     0.0508     0.0004     119.16     0.0000      0.0500      0.0517
+d_ANUPPUR_MADHYA PRADESH                            0.0459     0.0005     100.30     0.0000      0.0450      0.0468
+d_ARARIA_BIHAR                                      0.0454     0.0004     119.60     0.0000      0.0447      0.0462
+d_ARAVALLI_GUJARAT                                  0.0507     0.0002     308.46     0.0000      0.0504      0.0511
+d_ARIYALUR_TAMIL NADU                               0.0492     0.0002     250.25     0.0000      0.0488      0.0496
+d_ARWAL_BIHAR                                       0.0413     0.0003     122.71     0.0000      0.0406      0.0419
+d_ASHOKNAGAR_MADHYA PRADESH                         0.0431     0.0004     102.70     0.0000      0.0423      0.0439
+d_AURAIYA_UTTAR PRADESH                             0.0475     0.0005     98.827     0.0000      0.0465      0.0484
+d_AURANGABAD_BIHAR                                  0.0405     0.0004     114.18     0.0000      0.0398      0.0412
+d_AURANGABAD_MAHARASHTRA                            0.0472     0.0027     17.164     0.0000      0.0418      0.0526
+d_AZAMGARH_UTTAR PRADESH                            0.0413     0.0003     137.44     0.0000      0.0408      0.0419
+d_BADGAM_JAMMU AND KASHMIR                          0.0588     0.0002     275.02     0.0000      0.0584      0.0593
+d_BAGALKOT_KARNATAKA                                0.0379     0.0001     329.23     0.0000      0.0377      0.0382
+d_BAGESHWAR_UTTARAKHAND                             0.0453     0.0003     164.97     0.0000      0.0448      0.0459
+d_BAGHPAT_UTTAR PRADESH                             0.0532     0.0002     309.11     0.0000      0.0528      0.0535
+d_BAHRAICH_UTTAR PRADESH                            0.0424     0.0006     67.804     0.0000      0.0412      0.0436
+d_BAKSA_ASSAM                                       0.0392     0.0003     128.80     0.0000      0.0386      0.0398
+d_BALAGHAT_MADHYA PRADESH                           0.0468     0.0004     113.54     0.0000      0.0460      0.0477
+d_BALANGIR_ODISHA                                   0.0440     0.0002     212.31     0.0000      0.0436      0.0444
+d_BALESHWAR_ODISHA                                  0.0494     0.0002     256.76     0.0000      0.0490      0.0497
+d_BALLIA_UTTAR PRADESH                              0.0414     0.0003     139.86     0.0000      0.0408      0.0420
+d_BALODA BAZAR_CHHATTISGARH                         0.0507     0.0004     116.43     0.0000      0.0498      0.0516
+d_BALOD_CHHATTISGARH                                0.0469  1.449e-05     3233.5     0.0000      0.0468      0.0469
+d_BALRAMPUR_CHHATTISGARH                            0.0462     0.0006     76.374     0.0000      0.0450      0.0474
+d_BALRAMPUR_UTTAR PRADESH                           0.0367     0.0006     62.338     0.0000      0.0356      0.0379
+d_BANAS KANTHA_GUJARAT                              0.0472     0.0002     227.15     0.0000      0.0468      0.0476
+d_BANDA_UTTAR PRADESH                               0.0411     0.0004     111.77     0.0000      0.0403      0.0418
+d_BANDIPORE_JAMMU AND KASHMIR                       0.0448     0.0003     139.01     0.0000      0.0442      0.0455
+d_BANGALORE RURAL_KARNATAKA                         0.0759     0.0005     139.30     0.0000      0.0748      0.0770
+d_BANKA_BIHAR                                       0.0450     0.0004     100.44     0.0000      0.0441      0.0459
+d_BANKURA_WEST BENGAL                               0.0435     0.0006     71.785     0.0000      0.0423      0.0447
+d_BANSWARA_RAJASTHAN                                0.0448     0.0004     128.08     0.0000      0.0442      0.0455
+d_BARABANKI_UTTAR PRADESH                           0.0401     0.0003     124.23     0.0000      0.0394      0.0407
+d_BARAMULLA_JAMMU AND KASHMIR                       0.0463  1.505e-05     3077.8     0.0000      0.0463      0.0463
+d_BARAN_RAJASTHAN                                   0.0526     0.0008     63.885     0.0000      0.0510      0.0542
+d_BAREILLY_UTTAR PRADESH                            0.0485   8.45e-05     573.74     0.0000      0.0483      0.0486
+d_BARGARH_ODISHA                                    0.0506     0.0003     185.90     0.0000      0.0501      0.0512
+d_BARMER_RAJASTHAN                                  0.0343     0.0001     257.21     0.0000      0.0340      0.0346
+d_BARNALA_PUNJAB                                    0.0494  6.143e-05     804.95     0.0000      0.0493      0.0496
+d_BARPETA_ASSAM                                     0.0374  7.599e-05     491.99     0.0000      0.0372      0.0375
+d_BARWANI_MADHYA PRADESH                            0.0441     0.0002     198.47     0.0000      0.0437      0.0445
+d_BASTAR_CHHATTISGARH                               0.0446     0.0002     199.82     0.0000      0.0442      0.0450
+d_BASTI_UTTAR PRADESH                               0.0442     0.0001     366.37     0.0000      0.0440      0.0444
+d_BATHINDA_PUNJAB                                   0.0468     0.0002     230.54     0.0000      0.0464      0.0472
+d_BEGUSARAI_BIHAR                                   0.0454     0.0005     99.928     0.0000      0.0445      0.0463
+d_BEMETARA_CHHATTISGARH                             0.0508     0.0005     101.10     0.0000      0.0498      0.0517
+d_BETUL_MADHYA PRADESH                              0.0502     0.0002     227.20     0.0000      0.0498      0.0506
+d_BHADRAK_ODISHA                                    0.0488  2.389e-05     2044.0     0.0000      0.0488      0.0489
+d_BHAGALPUR_BIHAR                                   0.0439  6.721e-05     652.96     0.0000      0.0438      0.0440
+d_BHANDARA_MAHARASHTRA                              0.0526     0.0002     349.60     0.0000      0.0523      0.0529
+d_BHARATPUR_RAJASTHAN                               0.0416     0.0010     43.417     0.0000      0.0397      0.0435
+d_BHARUCH_GUJARAT                                   0.0474     0.0005     101.95     0.0000      0.0465      0.0483
+d_BHAVNAGAR_GUJARAT                                 0.0414     0.0004     109.60     0.0000      0.0406      0.0421
+d_BHILWARA_RAJASTHAN                                0.0448     0.0002     236.84     0.0000      0.0444      0.0452
+d_BHIND_MADHYA PRADESH                              0.0470  7.949e-05     590.72     0.0000      0.0468      0.0471
+d_BHIWANI_HARYANA                                   0.0411  8.878e-05     463.47     0.0000      0.0410      0.0413
+d_BHOJPUR_BIHAR                                     0.0403     0.0007     60.162     0.0000      0.0390      0.0416
+d_BHOPAL_MADHYA PRADESH                             0.0330  2.459e-05     1340.1     0.0000      0.0329      0.0330
+d_BIDAR_KARNATAKA                                   0.0435     0.0004     121.27     0.0000      0.0428      0.0442
+d_BID_MAHARASHTRA                                   0.0475     0.0002     245.22     0.0000      0.0471      0.0479
+d_BIJAPUR_CHHATTISGARH                              0.0390     0.0005     77.486     0.0000      0.0380      0.0399
+d_BIJAPUR_KARNATAKA                                 0.0342     0.0036     9.4045     0.0000      0.0271      0.0414
+d_BIJNOR_UTTAR PRADESH                              0.0444  7.675e-05     578.61     0.0000      0.0443      0.0446
+d_BIKANER_RAJASTHAN                                 0.0475  3.206e-05     1482.5     0.0000      0.0475      0.0476
+d_BILASPUR_CHHATTISGARH                             0.0310     0.0005     58.347     0.0000      0.0299      0.0320
+d_BILASPUR_HIMACHAL PRADESH                         0.0499  4.841e-05     1031.3     0.0000      0.0498      0.0500
+d_BIRBHUM_WEST BENGAL                               0.0433     0.0004     109.58     0.0000      0.0426      0.0441
+d_BISHNUPUR_MANIPUR                                 0.0585     0.0003     228.80     0.0000      0.0580      0.0590
+d_BOKARO_JHARKHAND                                  0.0401     0.0007     55.765     0.0000      0.0387      0.0416
+d_BONGAIGAON_ASSAM                                  0.0462     0.0003     160.97     0.0000      0.0456      0.0468
+d_BOTAD_GUJARAT                                     0.0494     0.0002     305.46     0.0000      0.0491      0.0497
+d_BUDAUN_UTTAR PRADESH                              0.0433     0.0002     178.42     0.0000      0.0428      0.0438
+d_BULANDSHAHR_UTTAR PRADESH                         0.0486  1.262e-05     3855.0     0.0000      0.0486      0.0487
+d_BULDANA_MAHARASHTRA                               0.0541     0.0003     196.36     0.0000      0.0535      0.0546
+d_BUNDI_RAJASTHAN                                   0.0462     0.0003     132.41     0.0000      0.0456      0.0469
+d_BURHANPUR_MADHYA PRADESH                          0.0428     0.0005     92.228     0.0000      0.0419      0.0437
+d_BUXAR_BIHAR                                       0.0419     0.0005     81.774     0.0000      0.0409      0.0429
+d_CACHAR_ASSAM                                      0.0423  5.778e-05     732.68     0.0000      0.0422      0.0424
+d_CHAMBA_HIMACHAL PRADESH                           0.0430     0.0003     123.81     0.0000      0.0424      0.0437
+d_CHAMOLI_UTTARAKHAND                               0.0472     0.0001     442.17     0.0000      0.0470      0.0474
+d_CHAMPAWAT_UTTARAKHAND                             0.0500     0.0002     283.20     0.0000      0.0497      0.0504
+d_CHAMPHAI_MIZORAM                                  0.0428     0.0006     69.697     0.0000      0.0416      0.0440
+d_CHAMRAJNAGAR_KARNATAKA                            0.0467     0.0004     121.45     0.0000      0.0459      0.0474
+d_CHANDAULI_UTTAR PRADESH                           0.0454     0.0002     240.83     0.0000      0.0451      0.0458
+d_CHANDEL_MANIPUR                                   0.0251     0.0008     32.377     0.0000      0.0236      0.0267
+d_CHANDIGARH_CHANDIGARH                             0.0432     0.0005     94.153     0.0000      0.0423      0.0441
+d_CHANDRAPUR_MAHARASHTRA                            0.0506     0.0001     497.08     0.0000      0.0504      0.0508
+d_CHANGLANG_ARUNACHAL PRADESH                       0.0462  7.467e-05     619.00     0.0000      0.0461      0.0464
+d_CHATRA_JHARKHAND                                  0.0505     0.0011     47.665     0.0000      0.0484      0.0525
+d_CHENNAI_TAMIL NADU                                0.0489     0.0008     62.514     0.0000      0.0474      0.0504
+d_CHHATARPUR_MADHYA PRADESH                         0.0468  8.482e-05     552.32     0.0000      0.0467      0.0470
+d_CHHINDWARA_MADHYA PRADESH                         0.0417     0.0003     163.41     0.0000      0.0412      0.0422
+d_CHHOTA UDAIPUR_GUJARAT                            0.0524     0.0001     427.67     0.0000      0.0522      0.0527
+d_CHIKBALLAPURA_KARNATAKA                           0.0436  1.013e-05     4306.1     0.0000      0.0436      0.0436
+d_CHIKMAGALUR_KARNATAKA                             0.0460     0.0003     142.91     0.0000      0.0454      0.0467
+d_CHIRANG_ASSAM                                     0.0373     0.0006     57.362     0.0000      0.0360      0.0385
+d_CHITRADURGA_KARNATAKA                             0.0430   5.86e-05     733.73     0.0000      0.0429      0.0431
+d_CHITRAKOOT_UTTAR PRADESH                          0.0440     0.0004     109.97     0.0000      0.0432      0.0448
+d_CHITTAURGARH_RAJASTHAN                            0.0468     0.0006     83.954     0.0000      0.0457      0.0479
+d_CHITTOOR_ANDHRA PRADESH                          -0.0081     0.0004    -23.076     0.0000     -0.0088     -0.0074
+d_CHURACHANDPUR_MANIPUR                             0.0591     0.0002     265.16     0.0000      0.0587      0.0596
+d_CHURU_RAJASTHAN                                   0.0468     0.0003     167.42     0.0000      0.0463      0.0474
+d_COIMBATORE_TAMIL NADU                             0.0490     0.0004     122.84     0.0000      0.0482      0.0498
+d_CUDDALORE_TAMIL NADU                              0.0417     0.0009     48.309     0.0000      0.0400      0.0434
+d_CUTTACK_ODISHA                                    0.0481     0.0003     163.75     0.0000      0.0475      0.0487
+d_DADRA AND NAGAR HAVELI_DADRA AND NAGAR HAVELI     0.0540     0.0012     43.290     0.0000      0.0516      0.0565
+d_DAKSHIN DINAJPUR_WEST BENGAL                      0.0422  3.431e-05     1229.0     0.0000      0.0421      0.0422
+d_DAKSHINA KANNADA_KARNATAKA                        0.0444     0.0006     78.583     0.0000      0.0433      0.0455
+d_DAMAN_DAMAN AND DIU                               0.0459     0.0010     45.946     0.0000      0.0439      0.0478
+d_DAMOH_MADHYA PRADESH                              0.0462     0.0001     460.85     0.0000      0.0460      0.0464
+d_DARBHANGA_BIHAR                                   0.0445     0.0006     75.023     0.0000      0.0433      0.0457
+d_DARJILING_WEST BENGAL                             0.0452  1.474e-05     3064.5     0.0000      0.0451      0.0452
+d_DARRANG_ASSAM                                     0.0448     0.0002     185.62     0.0000      0.0443      0.0453
+d_DATIA_MADHYA PRADESH                              0.0473     0.0002     202.55     0.0000      0.0468      0.0478
+d_DAUSA_RAJASTHAN                                   0.0545     0.0009     61.701     0.0000      0.0527      0.0562
+d_DAVANAGERE_KARNATAKA                              0.0422  9.802e-05     430.22     0.0000      0.0420      0.0424
+d_DEHRADUN_UTTARAKHAND                              0.0485  5.344e-05     907.31     0.0000      0.0484      0.0486
+d_DEOGHAR_JHARKHAND                                 0.0493  1.562e-05     3155.2     0.0000      0.0493      0.0493
+d_DEORIA_UTTAR PRADESH                              0.0424     0.0003     139.25     0.0000      0.0418      0.0430
+d_DEVBHUMI DWARKA_GUJARAT                           0.0424     0.0011     38.971     0.0000      0.0402      0.0445
+d_DEWAS_MADHYA PRADESH                              0.0474     0.0001     445.74     0.0000      0.0472      0.0476
+d_DHALAI_TRIPURA                                    0.0312     0.0002     180.25     0.0000      0.0308      0.0315
+d_DHAMTARI_CHHATTISGARH                             0.0490     0.0003     187.22     0.0000      0.0485      0.0495
+d_DHANBAD_JHARKHAND                                 0.0444     0.0009     47.986     0.0000      0.0426      0.0462
+d_DHARMAPURI_TAMIL NADU                             0.0466     0.0001     385.57     0.0000      0.0464      0.0469
+d_DHARWAD_KARNATAKA                                 0.0433     0.0001     318.85     0.0000      0.0430      0.0435
+d_DHAR_MADHYA PRADESH                               0.0476     0.0003     175.28     0.0000      0.0471      0.0482
+d_DHAULPUR_RAJASTHAN                                0.0495     0.0007     73.110     0.0000      0.0482      0.0508
+d_DHEMAJI_ASSAM                                     0.0471     0.0003     180.78     0.0000      0.0466      0.0476
+d_DHENKANAL_ODISHA                                  0.0477     0.0007     67.672     0.0000      0.0464      0.0491
+d_DHUBRI_ASSAM                                      0.0408     0.0003     130.42     0.0000      0.0402      0.0415
+d_DHULE_MAHARASHTRA                                 0.0479     0.0002     230.68     0.0000      0.0475      0.0483
+d_DIBRUGARH_ASSAM                                   0.0393     0.0012     33.652     0.0000      0.0370      0.0416
+d_DIMA HASAO_ASSAM                                  0.0461     0.0002     232.64     0.0000      0.0457      0.0465
+d_DIMAPUR_NAGALAND                                  0.0367     0.0002     202.43     0.0000      0.0364      0.0371
+d_DINDIGUL_TAMIL NADU                               0.0478     0.0002     226.48     0.0000      0.0474      0.0482
+d_DINDORI_MADHYA PRADESH                            0.0443     0.0009     50.153     0.0000      0.0426      0.0461
+d_DIU_DAMAN AND DIU                                 0.0456     0.0007     69.810     0.0000      0.0443      0.0469
+d_DODA_JAMMU AND KASHMIR                            0.0498     0.0002     309.83     0.0000      0.0495      0.0501
+d_DUMKA_JHARKHAND                                   0.0432     0.0005     91.077     0.0000      0.0422      0.0441
+d_DUNGARPUR_RAJASTHAN                               0.0461  4.402e-05     1046.6     0.0000      0.0460      0.0462
+d_DURG_CHHATTISGARH                                 0.0436     0.0006     78.192     0.0000      0.0425      0.0446
+d_EAST GARO HILLS_MEGHALAYA                         0.0195     0.0002     94.492     0.0000      0.0191      0.0199
+d_EAST GODAVARI_ANDHRA PRADESH                      0.0194     0.0007     27.655     0.0000      0.0180      0.0208
+d_EAST KAMENG_ARUNACHAL PRADESH                     0.0574     0.0003     222.84     0.0000      0.0569      0.0579
+d_EAST KHASI HILLS_MEGHALAYA                        0.0395     0.0003     115.86     0.0000      0.0388      0.0401
+d_EAST NIMAR_MADHYA PRADESH                         0.0452     0.0002     213.77     0.0000      0.0448      0.0457
+d_EAST SIANG_ARUNACHAL PRADESH                      0.0490     0.0004     125.13     0.0000      0.0482      0.0498
+d_ERNAKULAM_KERALA                                  0.0498     0.0001     380.43     0.0000      0.0495      0.0500
+d_ERODE_TAMIL NADU                                  0.0490     0.0004     134.69     0.0000      0.0483      0.0497
+d_ETAH_UTTAR PRADESH                                0.0422     0.0003     155.80     0.0000      0.0417      0.0428
+d_ETAWAH_UTTAR PRADESH                              0.0446     0.0011     39.167     0.0000      0.0423      0.0468
+d_FARIDABAD_HARYANA                                 0.0532     0.0004     134.23     0.0000      0.0525      0.0540
+d_FARIDKOT_PUNJAB                                   0.0490  5.358e-05     914.74     0.0000      0.0489      0.0491
+d_FARRUKHABAD_UTTAR PRADESH                         0.0402     0.0003     118.46     0.0000      0.0395      0.0408
+d_FATEHABAD_HARYANA                                 0.0513     0.0003     182.22     0.0000      0.0507      0.0518
+d_FATEHGARH SAHIB_PUNJAB                            0.0475     0.0003     139.89     0.0000      0.0468      0.0481
+d_FATEHPUR_UTTAR PRADESH                            0.0419     0.0001     309.62     0.0000      0.0417      0.0422
+d_FAZILKA_PUNJAB                                    0.0502     0.0003     155.89     0.0000      0.0496      0.0509
+d_FIROZABAD_UTTAR PRADESH                           0.0473     0.0008     59.440     0.0000      0.0458      0.0489
+d_FIROZPUR_PUNJAB                                   0.0470     0.0002     259.86     0.0000      0.0467      0.0474
+d_GADAG_KARNATAKA                                   0.0408   3.76e-05     1085.8     0.0000      0.0408      0.0409
+d_GAJAPATI_ODISHA                                   0.0421  2.233e-05     1887.6     0.0000      0.0421      0.0422
+d_GANDERBAL_JAMMU AND KASHMIR                       0.0488     0.0002     313.79     0.0000      0.0485      0.0491
+d_GANDHINAGAR_GUJARAT                               0.0483     0.0004     133.37     0.0000      0.0475      0.0490
+d_GANGANAGAR_RAJASTHAN                              0.0440  4.449e-05     988.98     0.0000      0.0439      0.0441
+d_GANJAM_ODISHA                                     0.0460     0.0003     163.05     0.0000      0.0454      0.0465
+d_GARHCHIROLI_MAHARASHTRA                           0.0501  3.657e-06   1.37e+04     0.0000      0.0501      0.0501
+d_GARHWAL_UTTARAKHAND                               0.0440     0.0002     216.81     0.0000      0.0436      0.0444
+d_GARHWA_JHARKHAND                                  0.0458     0.0011     41.243     0.0000      0.0437      0.0480
+d_GARIABAND_CHHATTISGARH                            0.0468     0.0001     377.00     0.0000      0.0465      0.0470
+d_GAUTAM BUDDHA NAGAR_UTTAR PRADESH                 0.0593     0.0004     161.50     0.0000      0.0586      0.0601
+d_GAYA_BIHAR                                        0.0455     0.0003     164.17     0.0000      0.0450      0.0461
+d_GHAZIABAD_UTTAR PRADESH                           0.0533     0.0002     228.78     0.0000      0.0528      0.0538
+d_GHAZIPUR_UTTAR PRADESH                            0.0448     0.0004     111.57     0.0000      0.0440      0.0456
+d_GIR SOMNATH_GUJARAT                               0.0453     0.0005     85.645     0.0000      0.0443      0.0464
+d_GIRIDIH_JHARKHAND                                 0.0465  7.694e-05     604.08     0.0000      0.0463      0.0466
+d_GOALPARA_ASSAM                                    0.0432     0.0007     61.727     0.0000      0.0418      0.0446
+d_GODDA_JHARKHAND                                   0.0495     0.0005     96.922     0.0000      0.0485      0.0505
+d_GOLAGHAT_ASSAM                                    0.0379     0.0001     281.05     0.0000      0.0377      0.0382
+d_GOMATI_TRIPURA                                    0.0356     0.0006     57.432     0.0000      0.0344      0.0368
+d_GONDA_UTTAR PRADESH                               0.0408     0.0003     127.57     0.0000      0.0401      0.0414
+d_GONDIYA_MAHARASHTRA                               0.0523  5.174e-05     1011.4     0.0000      0.0522      0.0524
+d_GOPALGANJ_BIHAR                                   0.0432     0.0007     61.841     0.0000      0.0419      0.0446
+d_GORAKHPUR_UTTAR PRADESH                           0.0427     0.0004     120.06     0.0000      0.0420      0.0434
+d_GUMLA_JHARKHAND                                   0.0482     0.0004     126.63     0.0000      0.0475      0.0490
+d_GUNA_MADHYA PRADESH                               0.0452     0.0001     384.17     0.0000      0.0449      0.0454
+d_GUNTUR_ANDHRA PRADESH                             0.0415     0.0002     199.84     0.0000      0.0411      0.0420
+d_GURDASPUR_PUNJAB                                  0.0481     0.0002     313.20     0.0000      0.0478      0.0484
+d_GWALIOR_MADHYA PRADESH                            0.0459     0.0002     213.13     0.0000      0.0454      0.0463
+d_HAILAKANDI_ASSAM                                  0.0411     0.0013     31.196     0.0000      0.0385      0.0436
+d_HAMIRPUR_HIMACHAL PRADESH                         0.0503  5.766e-05     872.69     0.0000      0.0502      0.0504
+d_HAMIRPUR_UTTAR PRADESH                            0.0438  7.715e-05     567.13     0.0000      0.0436      0.0439
+d_HANUMANGARH_RAJASTHAN                             0.0515     0.0004     143.43     0.0000      0.0508      0.0522
+d_HAORA_WEST BENGAL                                 0.0451     0.0002     246.88     0.0000      0.0448      0.0455
+d_HAPUR_UTTAR PRADESH                               0.0491     0.0003     194.31     0.0000      0.0486      0.0496
+d_HARDA_MADHYA PRADESH                              0.0471     0.0002     263.74     0.0000      0.0468      0.0475
+d_HARDOI_UTTAR PRADESH                              0.0457     0.0005     83.453     0.0000      0.0446      0.0467
+d_HARDWAR_UTTARAKHAND                               0.0452     0.0004     109.14     0.0000      0.0444      0.0460
+d_HASSAN_KARNATAKA                                  0.0457     0.0004     111.27     0.0000      0.0449      0.0465
+d_HATHRAS_UTTAR PRADESH                             0.0452     0.0006     75.028     0.0000      0.0440      0.0464
+d_HAVERI_KARNATAKA                                  0.0424  9.665e-05     438.48     0.0000      0.0422      0.0426
+d_HAZARIBAGH_JHARKHAND                              0.0482  8.763e-05     550.23     0.0000      0.0480      0.0484
+d_HINGOLI_MAHARASHTRA                               0.0478     0.0001     437.20     0.0000      0.0476      0.0480
+d_HISAR_HARYANA                                     0.0513     0.0002     236.37     0.0000      0.0509      0.0517
+d_HOSHIARPUR_PUNJAB                                 0.0456     0.0002     296.57     0.0000      0.0453      0.0459
+d_HUGLI_WEST BENGAL                                 0.0431  8.234e-05     523.42     0.0000      0.0429      0.0433
+d_HYDERABAD_TELANGANA                               0.0434     0.0017     25.030     0.0000      0.0400      0.0468
+d_IDUKKI_KERALA                                     0.0552     0.0002     224.85     0.0000      0.0548      0.0557
+d_IMPHAL EAST_MANIPUR                               0.0507     0.0006     83.303     0.0000      0.0495      0.0519
+d_IMPHAL WEST_MANIPUR                               0.0439     0.0004     102.77     0.0000      0.0430      0.0447
+d_INDORE_MADHYA PRADESH                             0.0499     0.0002     211.11     0.0000      0.0494      0.0503
+d_JABALPUR_MADHYA PRADESH                           0.0479  1.167e-05     4102.5     0.0000      0.0479      0.0479
+d_JAGATSINGHAPUR_ODISHA                             0.0478  6.672e-06     7158.6     0.0000      0.0478      0.0478
+d_JAINTIA HILLS_MEGHALAYA                           0.0717     0.0001     551.22     0.0000      0.0714      0.0719
+d_JAIPUR_RAJASTHAN                                  0.0517     0.0004     115.21     0.0000      0.0509      0.0526
+d_JAISALMER_RAJASTHAN                               0.0462     0.0002     211.34     0.0000      0.0458      0.0466
+d_JAJAPUR_ODISHA                                    0.0529     0.0007     74.160     0.0000      0.0515      0.0543
+d_JALANDHAR_PUNJAB                                  0.0427     0.0001     320.39     0.0000      0.0424      0.0430
+d_JALAUN_UTTAR PRADESH                              0.0431     0.0002     251.89     0.0000      0.0427      0.0434
+d_JALGAON_MAHARASHTRA                               0.0512     0.0002     297.68     0.0000      0.0509      0.0516
+d_JALNA_MAHARASHTRA                                 0.0465     0.0004     121.79     0.0000      0.0457      0.0472
+d_JALOR_RAJASTHAN                                   0.0391     0.0001     344.98     0.0000      0.0389      0.0393
+d_JALPAIGURI_WEST BENGAL                            0.0345  1.812e-05     1906.7     0.0000      0.0345      0.0346
+d_JAMMU_JAMMU AND KASHMIR                           0.0494     0.0008     62.552     0.0000      0.0479      0.0510
+d_JAMNAGAR_GUJARAT                                  0.0397     0.0009     45.500     0.0000      0.0380      0.0414
+d_JAMTARA_JHARKHAND                                 0.0463   7.75e-07  5.973e+04     0.0000      0.0463      0.0463
+d_JAMUI_BIHAR                                       0.0444     0.0006     68.611     0.0000      0.0431      0.0457
+d_JANJGIR-CHAMPA_CHHATTISGARH                       0.0397     0.0010     38.407     0.0000      0.0376      0.0417
+d_JASHPUR_CHHATTISGARH                              0.0466     0.0003     182.33     0.0000      0.0461      0.0471
+d_JAUNPUR_UTTAR PRADESH                             0.0408     0.0005     76.364     0.0000      0.0398      0.0419
+d_JEHANABAD_BIHAR                                   0.0449     0.0003     154.99     0.0000      0.0443      0.0455
+d_JHABUA_MADHYA PRADESH                             0.0386     0.0002     173.38     0.0000      0.0381      0.0390
+d_JHAJJAR_HARYANA                                   0.0529     0.0001     366.95     0.0000      0.0527      0.0532
+d_JHALAWAR_RAJASTHAN                                0.0477     0.0007     67.671     0.0000      0.0463      0.0491
+d_JHANSI_UTTAR PRADESH                              0.0495     0.0002     267.34     0.0000      0.0491      0.0499
+d_JHARSUGUDA_ODISHA                                 0.0518     0.0004     115.91     0.0000      0.0509      0.0527
+d_JHUNJHUNUN_RAJASTHAN                              0.0441     0.0007     65.480     0.0000      0.0428      0.0455
+d_JIND_HARYANA                                      0.0544  5.095e-05     1068.6     0.0000      0.0543      0.0545
+d_JODHPUR_RAJASTHAN                                 0.0486     0.0004     117.21     0.0000      0.0478      0.0494
+d_JORHAT_ASSAM                                      0.0384     0.0002     190.20     0.0000      0.0380      0.0388
+d_JUNAGADH_GUJARAT                                  0.0366     0.0004     93.258     0.0000      0.0358      0.0374
+d_KABEERDHAM_CHHATTISGARH                           0.0453     0.0007     63.420     0.0000      0.0439      0.0467
+d_KACHCHH_GUJARAT                                   0.0439     0.0002     207.80     0.0000      0.0435      0.0443
+d_KAIMUR_BIHAR                                      0.0413     0.0002     205.95     0.0000      0.0409      0.0417
+d_KAITHAL_HARYANA                                   0.0558  7.547e-05     739.85     0.0000      0.0557      0.0560
+d_KALAHANDI_ODISHA                                  0.0488     0.0002     293.00     0.0000      0.0484      0.0491
+d_KAMRUP METROPOLITAN_ASSAM                         0.0442     0.0002     231.21     0.0000      0.0438      0.0445
+d_KAMRUP_ASSAM                                      0.0464     0.0002     242.45     0.0000      0.0460      0.0467
+d_KANCHEEPURAM_TAMIL NADU                           0.0099     0.0004     25.831     0.0000      0.0091      0.0106
+d_KANDHAMAL_ODISHA                                  0.0435     0.0003     144.37     0.0000      0.0430      0.0441
+d_KANGRA_HIMACHAL PRADESH                           0.0487     0.0001     382.08     0.0000      0.0484      0.0489
+d_KANNAUJ_UTTAR PRADESH                             0.0414     0.0004     102.79     0.0000      0.0406      0.0422
+d_KANNIYAKUMARI_TAMIL NADU                          0.0474     0.0003     168.51     0.0000      0.0468      0.0479
+d_KANNUR_KERALA                                     0.0482     0.0006     76.936     0.0000      0.0469      0.0494
+d_KANPUR DEHAT_UTTAR PRADESH                        0.0317  4.293e-05     738.17     0.0000      0.0316      0.0318
+d_KANPUR NAGAR_UTTAR PRADESH                        0.0396     0.0005     83.322     0.0000      0.0387      0.0405
+d_KAPURTHALA_PUNJAB                                 0.0438  2.871e-05     1524.7     0.0000      0.0437      0.0438
+d_KARAIKAL_PUDUCHERRY                               0.0455     0.0014     33.243     0.0000      0.0428      0.0482
+d_KARAULI_RAJASTHAN                                 0.0454     0.0013     35.355     0.0000      0.0429      0.0479
+d_KARBI ANGLONG_ASSAM                               0.0241     0.0003     81.002     0.0000      0.0235      0.0247
+d_KARGIL_JAMMU AND KASHMIR                          0.0615     0.0004     146.89     0.0000      0.0607      0.0623
+d_KARIMGANJ_ASSAM                                   0.0426     0.0003     166.61     0.0000      0.0421      0.0431
+d_KARIMNAGAR_TELANGANA                              0.0221     0.0002     137.97     0.0000      0.0218      0.0224
+d_KARNAL_HARYANA                                    0.0524  3.358e-05     1561.1     0.0000      0.0524      0.0525
+d_KARUR_TAMIL NADU                                  0.0303     0.0003     109.18     0.0000      0.0297      0.0308
+d_KASARAGOD_KERALA                                  0.0455     0.0009     52.587     0.0000      0.0438      0.0472
+d_KASGANJ_UTTAR PRADESH                             0.0409     0.0005     89.234     0.0000      0.0400      0.0418
+d_KATHUA_JAMMU AND KASHMIR                          0.0537     0.0006     89.967     0.0000      0.0525      0.0548
+d_KATIHAR_BIHAR                                     0.0494     0.0005     98.700     0.0000      0.0485      0.0504
+d_KATNI_MADHYA PRADESH                              0.0484     0.0001     449.24     0.0000      0.0482      0.0487
+d_KAUSHAMBI_UTTAR PRADESH                           0.0448     0.0004     114.89     0.0000      0.0441      0.0456
+d_KENDRAPARA_ODISHA                                 0.0481  2.454e-05     1961.0     0.0000      0.0481      0.0482
+d_KENDUJHAR_ODISHA                                  0.0562  6.937e-05     810.57     0.0000      0.0561      0.0564
+d_KHAGARIA_BIHAR                                    0.0446     0.0007     62.408     0.0000      0.0432      0.0460
+d_KHAMMAM_TELANGANA                                 0.0239  8.554e-05     279.46     0.0000      0.0237      0.0241
+d_KHEDA_GUJARAT                                     0.0405     0.0001     361.90     0.0000      0.0403      0.0407
+d_KHOWAI_TRIPURA                                    0.0253     0.0006     45.843     0.0000      0.0242      0.0264
+d_KHUNTI_JHARKHAND                                  0.0485     0.0004     121.70     0.0000      0.0477      0.0493
+d_KINNAUR_HIMACHAL PRADESH                          0.0435     0.0003     149.33     0.0000      0.0430      0.0441
+d_KISHANGANJ_BIHAR                                  0.0509     0.0003     167.20     0.0000      0.0503      0.0515
+d_KISHTWAR_JAMMU AND KASHMIR                        0.0540     0.0002     235.71     0.0000      0.0536      0.0545
+d_KOCH BIHAR_WEST BENGAL                            0.0460     0.0003     167.53     0.0000      0.0455      0.0465
+d_KODAGU_KARNATAKA                                  0.0442     0.0001     303.77     0.0000      0.0439      0.0445
+d_KODARMA_JHARKHAND                                 0.0475     0.0003     171.15     0.0000      0.0470      0.0481
+d_KOHIMA_NAGALAND                                   0.0470     0.0005     97.377     0.0000      0.0460      0.0479
+d_KOKRAJHAR_ASSAM                                   0.0478     0.0004     132.42     0.0000      0.0471      0.0485
+d_KOLAR_KARNATAKA                                   0.0466     0.0001     326.09     0.0000      0.0463      0.0469
+d_KOLASIB_MIZORAM                                   0.0377     0.0002     175.36     0.0000      0.0373      0.0381
+d_KOLHAPUR_MAHARASHTRA                              0.0479  9.272e-05     516.05     0.0000      0.0477      0.0480
+d_KOLKATA_WEST BENGAL                               0.0392     0.0006     70.491     0.0000      0.0381      0.0402
+d_KOLLAM_KERALA                                     0.0461     0.0003     144.57     0.0000      0.0455      0.0468
+d_KONDAGAON_CHHATTISGARH                            0.0453     0.0003     173.78     0.0000      0.0447      0.0458
+d_KOPPAL_KARNATAKA                                  0.0397     0.0002     188.19     0.0000      0.0393      0.0402
+d_KORAPUT_ODISHA                                    0.0457     0.0001     405.42     0.0000      0.0455      0.0460
+d_KORBA_CHHATTISGARH                                0.0470     0.0006     84.613     0.0000      0.0459      0.0481
+d_KORIYA_CHHATTISGARH                               0.0109  7.128e-05     153.55     0.0000      0.0108      0.0111
+d_KOTA_RAJASTHAN                                    0.0509     0.0007     76.285     0.0000      0.0496      0.0522
+d_KOTTAYAM_KERALA                                   0.0489     0.0006     86.123     0.0000      0.0477      0.0500
+d_KOZHIKODE_KERALA                                  0.0479     0.0008     57.595     0.0000      0.0463      0.0496
+d_KRISHNAGIRI_TAMIL NADU                            0.0494     0.0006     76.220     0.0000      0.0481      0.0507
+d_KRISHNA_ANDHRA PRADESH                            0.0398   7.97e-05     499.14     0.0000      0.0396      0.0399
+d_KULGAM_JAMMU AND KASHMIR                          0.0528  7.952e-05     664.53     0.0000      0.0527      0.0530
+d_KULLU_HIMACHAL PRADESH                            0.0483     0.0002     202.98     0.0000      0.0478      0.0487
+d_KUPWARA_JAMMU AND KASHMIR                         0.0450  2.237e-05     2012.9     0.0000      0.0450      0.0451
+d_KURNOOL_ANDHRA PRADESH                            0.0290     0.0002     131.97     0.0000      0.0286      0.0294
+d_KURUKSHETRA_HARYANA                               0.0546     0.0002     245.07     0.0000      0.0542      0.0551
+d_KUSHINAGAR_UTTAR PRADESH                          0.0411     0.0012     35.574     0.0000      0.0388      0.0433
+d_LAHUL & SPITI_HIMACHAL PRADESH                    0.0485     0.0004     124.42     0.0000      0.0478      0.0493
+d_LAKHIMPUR_ASSAM                                   0.0444  3.924e-05     1130.8     0.0000      0.0443      0.0444
+d_LAKHISARAI_BIHAR                                  0.0415     0.0005     87.762     0.0000      0.0406      0.0424
+d_LAKSHADWEEP_LAKSHADWEEP                           0.0420     0.0008     54.537     0.0000      0.0405      0.0436
+d_LALITPUR_UTTAR PRADESH                            0.0443  2.162e-05     2046.8     0.0000      0.0442      0.0443
+d_LATEHAR_JHARKHAND                                 0.0472     0.0005     96.936     0.0000      0.0462      0.0481
+d_LATUR_MAHARASHTRA                                 0.0499     0.0005     109.12     0.0000      0.0490      0.0508
+d_LAWANGTLAI_MIZORAM                                0.0486     0.0011     44.207     0.0000      0.0464      0.0507
+d_LEH (LADAKH)_JAMMU AND KASHMIR                    0.0577     0.0003     212.24     0.0000      0.0572      0.0582
+d_LOHARDAGA_JHARKHAND                               0.0486  8.771e-05     554.35     0.0000      0.0484      0.0488
+d_LOHIT_ARUNACHAL PRADESH                           0.0207     0.0006     34.281     0.0000      0.0195      0.0219
+d_LONGDING_ARUNACHAL PRADESH                        0.0456  6.226e-05     732.97     0.0000      0.0455      0.0458
+d_LOWER DIBANG VALLEY_ARUNACHAL PRADESH             0.0603     0.0007     89.915     0.0000      0.0590      0.0616
+d_LOWER SUBANSIRI_ARUNACHAL PRADESH                 0.0568     0.0004     158.19     0.0000      0.0561      0.0575
+d_LUCKNOW_UTTAR PRADESH                             0.0509     0.0007     68.310     0.0000      0.0494      0.0523
+d_LUDHIANA_PUNJAB                                   0.0469  2.583e-05     1816.6     0.0000      0.0469      0.0470
+d_LUNGLEI_MIZORAM                                   0.0359  1.837e-05     1955.3     0.0000      0.0359      0.0360
+d_MADHEPURA_BIHAR                                   0.0422     0.0003     166.15     0.0000      0.0417      0.0427
+d_MADHUBANI_BIHAR                                   0.0433     0.0007     61.132     0.0000      0.0419      0.0447
+d_MADURAI_TAMIL NADU                                0.0462     0.0006     71.810     0.0000      0.0449      0.0474
+d_MAHARAJGANJ_UTTAR PRADESH                         0.0436     0.0005     83.962     0.0000      0.0426      0.0446
+d_MAHASAMUND_CHHATTISGARH                           0.0483  5.543e-05     870.94     0.0000      0.0482      0.0484
+d_MAHBUBNAGAR_TELANGANA                             0.0156     0.0002     79.121     0.0000      0.0152      0.0160
+d_MAHENDRAGARH_HARYANA                              0.0535     0.0002     260.46     0.0000      0.0531      0.0539
+d_MAHESANA_GUJARAT                                  0.0474     0.0002     260.55     0.0000      0.0470      0.0477
+d_MAHE_PUDUCHERRY                                   0.0561     0.0011     48.976     0.0000      0.0538      0.0583
+d_MAHISAGAR_GUJARAT                                 0.0463     0.0003     152.91     0.0000      0.0457      0.0469
+d_MAHOBA_UTTAR PRADESH                              0.0440  5.805e-05     757.75     0.0000      0.0439      0.0441
+d_MAINPURI_UTTAR PRADESH                            0.0436     0.0010     45.465     0.0000      0.0417      0.0455
+d_MALAPPURAM_KERALA                                 0.0479     0.0010     47.862     0.0000      0.0460      0.0499
+d_MALDAH_WEST BENGAL                                0.0430     0.0004     121.91     0.0000      0.0423      0.0437
+d_MALKANGIRI_ODISHA                                 0.0439     0.0004     115.62     0.0000      0.0432      0.0446
+d_MAMIT_MIZORAM                                     0.0120     0.0002     56.161     0.0000      0.0116      0.0124
+d_MANDI_HIMACHAL PRADESH                            0.0451  1.365e-05     3305.5     0.0000      0.0451      0.0452
+d_MANDLA_MADHYA PRADESH                             0.0481     0.0006     74.474     0.0000      0.0469      0.0494
+d_MANDSAUR_MADHYA PRADESH                           0.0463     0.0004     127.08     0.0000      0.0455      0.0470
+d_MANDYA_KARNATAKA                                  0.0465     0.0002     268.65     0.0000      0.0462      0.0469
+d_MANSA_PUNJAB                                      0.0505  6.751e-05     747.61     0.0000      0.0503      0.0506
+d_MATHURA_UTTAR PRADESH                             0.0528     0.0003     180.89     0.0000      0.0523      0.0534
+d_MAU_UTTAR PRADESH                                 0.0428     0.0003     124.81     0.0000      0.0422      0.0435
+d_MAYURBHANJ_ODISHA                                 0.0466     0.0003     133.52     0.0000      0.0459      0.0473
+d_MEDAK_TELANGANA                                  -0.0192  5.014e-05    -382.64     0.0000     -0.0193     -0.0191
+d_MEERUT_UTTAR PRADESH                              0.0492     0.0004     128.44     0.0000      0.0485      0.0500
+d_MEWAT_HARYANA                                     0.0479     0.0027     17.907     0.0000      0.0427      0.0532
+d_MIRZAPUR_UTTAR PRADESH                            0.0439     0.0006     78.689     0.0000      0.0428      0.0450
+d_MOGA_PUNJAB                                       0.0470  5.782e-05     813.02     0.0000      0.0469      0.0471
+d_MOKOKCHUNG_NAGALAND                               0.0504    5.6e-05     900.18     0.0000      0.0503      0.0505
+d_MON_NAGALAND                                      0.0520     0.0003     158.21     0.0000      0.0514      0.0527
+d_MORADABAD_UTTAR PRADESH                           0.0427     0.0003     168.93     0.0000      0.0422      0.0431
+d_MORBI_GUJARAT                                     0.0580     0.0003     228.67     0.0000      0.0575      0.0585
+d_MORENA_MADHYA PRADESH                             0.0485     0.0002     256.92     0.0000      0.0482      0.0489
+d_MORIGAON_ASSAM                                    0.0412     0.0001     327.03     0.0000      0.0409      0.0414
+d_MUKTSAR_PUNJAB                                    0.0481     0.0003     180.10     0.0000      0.0476      0.0487
+d_MUMBAI SUBURBAN_MAHARASHTRA                       0.0492     0.0006     78.922     0.0000      0.0480      0.0505
+d_MUNGELI_CHHATTISGARH                              0.0508     0.0008     64.533     0.0000      0.0492      0.0523
+d_MUNGER_BIHAR                                      0.0418     0.0002     178.67     0.0000      0.0413      0.0422
+d_MURSHIDABAD_WEST BENGAL                           0.0426     0.0004     103.34     0.0000      0.0418      0.0434
+d_MUZAFFARNAGAR_UTTAR PRADESH                       0.0471     0.0004     125.01     0.0000      0.0464      0.0479
+d_MUZAFFARPUR_BIHAR                                 0.0414     0.0007     59.262     0.0000      0.0400      0.0428
+d_NABARANGAPUR_ODISHA                               0.0476     0.0006     79.399     0.0000      0.0464      0.0488
+d_NADIA_WEST BENGAL                                 0.0432     0.0002     206.75     0.0000      0.0428      0.0436
+d_NAGAON_ASSAM                                      0.0378     0.0003     129.65     0.0000      0.0373      0.0384
+d_NAGAPPATTINAM_TAMIL NADU                          0.0164     0.0009     19.137     0.0000      0.0147      0.0181
+d_NAGAUR_RAJASTHAN                                  0.0307     0.0003     98.158     0.0000      0.0301      0.0313
+d_NAGPUR_MAHARASHTRA                                0.0461     0.0002     194.35     0.0000      0.0456      0.0465
+d_NAINITAL_UTTARAKHAND                              0.0536     0.0002     233.28     0.0000      0.0531      0.0540
+d_NALANDA_BIHAR                                     0.0432  6.641e-05     649.82     0.0000      0.0430      0.0433
+d_NALBARI_ASSAM                                     0.0461  5.334e-07  8.644e+04     0.0000      0.0461      0.0461
+d_NALGONDA_TELANGANA                                0.0249     0.0001     218.59     0.0000      0.0247      0.0251
+d_NAMAKKAL_TAMIL NADU                               0.0495     0.0005     99.183     0.0000      0.0485      0.0505
+d_NAMSAI_ARUNACHAL PRADESH                          0.0566     0.0008     66.600     0.0000      0.0549      0.0582
+d_NANDED_MAHARASHTRA                                0.0451     0.0001     323.24     0.0000      0.0449      0.0454
+d_NANDURBAR_MAHARASHTRA                             0.0446     0.0002     295.92     0.0000      0.0443      0.0449
+d_NARAYANPUR_CHHATTISGARH                           0.0772     0.0002     504.84     0.0000      0.0769      0.0775
+d_NARMADA_GUJARAT                                   0.0465  5.038e-05     922.31     0.0000      0.0464      0.0466
+d_NARSIMHAPUR_MADHYA PRADESH                        0.0500     0.0001     425.75     0.0000      0.0498      0.0502
+d_NASHIK_MAHARASHTRA                                0.0550  8.249e-05     667.26     0.0000      0.0549      0.0552
+d_NAVSARI_GUJARAT                                   0.0389     0.0001     315.11     0.0000      0.0387      0.0392
+d_NAWADA_BIHAR                                      0.0424     0.0008     54.747     0.0000      0.0409      0.0439
+d_NAYAGARH_ODISHA                                   0.0470     0.0003     173.60     0.0000      0.0465      0.0476
+d_NEEMUCH_MADHYA PRADESH                            0.0463     0.0002     233.06     0.0000      0.0459      0.0467
+d_NIZAMABAD_TELANGANA                               0.0321  2.109e-05     1523.3     0.0000      0.0321      0.0322
+d_NORTH 24 PARGANAS_WEST BENGAL                     0.0459     0.0002     193.19     0.0000      0.0454      0.0464
+d_NORTH AND MIDDLE ANDAMAN_ANDAMAN AND NICOBAR      0.0511     0.0003     186.49     0.0000      0.0505      0.0516
+d_NORTH GARO HILLS_MEGHALAYA                        0.0438     0.0001     334.55     0.0000      0.0435      0.0441
+d_NORTH GOA_GOA                                     0.0428     0.0002     251.06     0.0000      0.0424      0.0431
+d_NORTH TRIPURA_TRIPURA                             0.0460     0.0004     119.27     0.0000      0.0452      0.0467
+d_OSMANABAD_MAHARASHTRA                             0.0659     0.0012     54.537     0.0000      0.0636      0.0683
+d_PAKUR_JHARKHAND                                   0.0535     0.0004     139.20     0.0000      0.0528      0.0543
+d_PALAKKAD_KERALA                                   0.0513     0.0004     125.38     0.0000      0.0505      0.0521
+d_PALAMU_JHARKHAND                                  0.0421     0.0007     60.990     0.0000      0.0407      0.0434
+d_PALGHAR_MAHARASHTRA                               0.0838     0.0004     196.17     0.0000      0.0830      0.0846
+d_PALI_RAJASTHAN                                    0.0387  2.524e-05     1534.6     0.0000      0.0387      0.0388
+d_PALWAL_HARYANA                                    0.0515     0.0003     194.27     0.0000      0.0510      0.0520
+d_PANCH MAHALS_GUJARAT                              0.0408     0.0001     349.92     0.0000      0.0406      0.0410
+d_PANCHKULA_HARYANA                                 0.0565     0.0001     464.58     0.0000      0.0562      0.0567
+d_PANIPAT_HARYANA                                   0.0509     0.0005     94.313     0.0000      0.0498      0.0520
+d_PANNA_MADHYA PRADESH                              0.0487     0.0005     95.814     0.0000      0.0477      0.0496
+d_PAPUM PARE_ARUNACHAL PRADESH                      0.0539  2.191e-06  2.458e+04     0.0000      0.0538      0.0539
+d_PARBHANI_MAHARASHTRA                              0.0448     0.0002     179.35     0.0000      0.0443      0.0453
+d_PASHCHIM CHAMPARAN_BIHAR                          0.0432     0.0006     73.638     0.0000      0.0421      0.0444
+d_PASHCHIM MEDINIPUR_WEST BENGAL                    0.0413     0.0002     190.13     0.0000      0.0409      0.0417
+d_PASHCHIMI SINGHBHUM_JHARKHAND                     0.0455     0.0003     141.14     0.0000      0.0448      0.0461
+d_PATAN_GUJARAT                                     0.0432  6.268e-05     688.54     0.0000      0.0430      0.0433
+d_PATHANAMTHITTA_KERALA                             0.0461     0.0006     80.474     0.0000      0.0449      0.0472
+d_PATHANKOT_PUNJAB                                  0.0500     0.0004     118.06     0.0000      0.0492      0.0509
+d_PATIALA_PUNJAB                                    0.0462     0.0001     388.29     0.0000      0.0460      0.0465
+d_PATNA_BIHAR                                       0.0475     0.0001     329.22     0.0000      0.0472      0.0478
+d_PERAMBALUR_TAMIL NADU                             0.0421     0.0002     178.37     0.0000      0.0416      0.0425
+d_PEREN_NAGALAND                                    0.0464     0.0005     99.514     0.0000      0.0455      0.0473
+d_PHEK_NAGALAND                                     0.0592     0.0002     243.57     0.0000      0.0587      0.0596
+d_PILIBHIT_UTTAR PRADESH                            0.0451     0.0004     103.62     0.0000      0.0443      0.0460
+d_PITHORAGARH_UTTARAKHAND                           0.0434     0.0002     213.09     0.0000      0.0430      0.0438
+d_POONCH_JAMMU AND KASHMIR                          0.0465  6.101e-05     761.95     0.0000      0.0464      0.0466
+d_PORBANDAR_GUJARAT                                 0.0407  4.042e-05     1006.5     0.0000      0.0406      0.0408
+d_PRAKASAM_ANDHRA PRADESH                           0.0324     0.0005     68.984     0.0000      0.0315      0.0333
+d_PRATAPGARH_RAJASTHAN                              0.0395     0.0004     100.79     0.0000      0.0387      0.0403
+d_PRATAPGARH_UTTAR PRADESH                          0.0407     0.0002     173.11     0.0000      0.0402      0.0411
+d_PUDUCHERRY_PUDUCHERRY                             0.0503     0.0010     51.489     0.0000      0.0484      0.0523
+d_PUDUKKOTTAI_TAMIL NADU                            0.0451     0.0004     118.33     0.0000      0.0443      0.0458
+d_PULWAMA_JAMMU AND KASHMIR                         0.0515  7.905e-05     651.69     0.0000      0.0514      0.0517
+d_PUNE_MAHARASHTRA                                  0.0537   9.47e-05     566.92     0.0000      0.0535      0.0539
+d_PURBA CHAMPARAN_BIHAR                             0.0464     0.0013     36.448     0.0000      0.0439      0.0489
+d_PURBA MEDINIPUR_WEST BENGAL                       0.0464     0.0006     80.480     0.0000      0.0452      0.0475
+d_PURBI SINGHBHUM_JHARKHAND                         0.0438     0.0008     56.827     0.0000      0.0423      0.0453
+d_PURI_ODISHA                                       0.0491     0.0002     204.09     0.0000      0.0486      0.0496
+d_PURNIA_BIHAR                                      0.0475     0.0004     117.00     0.0000      0.0467      0.0483
+d_PURULIYA_WEST BENGAL                              0.0449     0.0006     78.668     0.0000      0.0438      0.0460
+d_RAE BARELI_UTTAR PRADESH                          0.0457  2.684e-05     1703.0     0.0000      0.0457      0.0458
+d_RAICHUR_KARNATAKA                                 0.0413     0.0004     95.343     0.0000      0.0405      0.0422
+d_RAIGARH_CHHATTISGARH                              0.0454     0.0006     69.985     0.0000      0.0442      0.0467
+d_RAIGARH_MAHARASHTRA                               0.0496     0.0006     76.663     0.0000      0.0484      0.0509
+d_RAIPUR_CHHATTISGARH                               0.0508     0.0002     226.26     0.0000      0.0503      0.0512
+d_RAISEN_MADHYA PRADESH                             0.0504     0.0004     126.94     0.0000      0.0496      0.0512
+d_RAJGARH_MADHYA PRADESH                            0.0452     0.0002     241.20     0.0000      0.0448      0.0455
+d_RAJKOT_GUJARAT                                    0.0479  1.712e-05     2799.7     0.0000      0.0479      0.0480
+d_RAJNANDGAON_CHHATTISGARH                          0.0402     0.0004     97.587     0.0000      0.0394      0.0410
+d_RAJOURI_JAMMU AND KASHMIR                         0.0505     0.0004     131.85     0.0000      0.0497      0.0512
+d_RAJSAMAND_RAJASTHAN                               0.0472     0.0002     188.97     0.0000      0.0467      0.0477
+d_RAMANAGARA_KARNATAKA                              0.0561     0.0003     170.55     0.0000      0.0555      0.0567
+d_RAMANATHAPURAM_TAMIL NADU                         0.0418     0.0004     109.31     0.0000      0.0411      0.0426
+d_RAMBAN_JAMMU AND KASHMIR                          0.0471     0.0002     234.46     0.0000      0.0467      0.0475
+d_RAMGARH_JHARKHAND                                 0.0468     0.0006     81.642     0.0000      0.0457      0.0479
+d_RAMPUR_UTTAR PRADESH                              0.0436     0.0001     373.72     0.0000      0.0434      0.0438
+d_RANCHI_JHARKHAND                                  0.0491     0.0003     179.64     0.0000      0.0485      0.0496
+d_RANGA REDDY_TELANGANA                             0.0393     0.0006     71.360     0.0000      0.0382      0.0404
+d_RATLAM_MADHYA PRADESH                             0.0459     0.0002     220.84     0.0000      0.0455      0.0463
+d_RATNAGIRI_MAHARASHTRA                             0.0466  6.066e-05     767.75     0.0000      0.0465      0.0467
+d_RAYAGADA_ODISHA                                   0.0439  2.266e-06  1.937e+04     0.0000      0.0439      0.0439
+d_REASI_JAMMU AND KASHMIR                           0.0477     0.0004     131.76     0.0000      0.0470      0.0484
+d_REWARI_HARYANA                                    0.0505     0.0001     375.12     0.0000      0.0502      0.0508
+d_REWA_MADHYA PRADESH                               0.0434     0.0001     353.78     0.0000      0.0431      0.0436
+d_RI BHOI_MEGHALAYA                                 0.0480     0.0008     58.930     0.0000      0.0464      0.0496
+d_ROHTAK_HARYANA                                    0.0462     0.0001     420.11     0.0000      0.0460      0.0464
+d_ROHTAS_BIHAR                                      0.0410     0.0004     113.94     0.0000      0.0403      0.0417
+d_RUDRAPRAYAG_UTTARAKHAND                           0.0484     0.0002     208.04     0.0000      0.0479      0.0488
+d_RUPNAGAR_PUNJAB                                   0.0486  1.369e-05     3551.2     0.0000      0.0486      0.0486
+d_SABAR KANTHA_GUJARAT                              0.0458     0.0001     392.22     0.0000      0.0456      0.0460
+d_SAGAR_MADHYA PRADESH                              0.0420     0.0001     377.46     0.0000      0.0418      0.0422
+d_SAHARANPUR_UTTAR PRADESH                          0.0507     0.0002     244.58     0.0000      0.0503      0.0511
+d_SAHARSA_BIHAR                                     0.1000  8.114e-05     1232.0     0.0000      0.0998      0.1001
+d_SAHIBGANJ_JHARKHAND                               0.0468     0.0002     199.07     0.0000      0.0464      0.0473
+d_SAHIBZADA AJIT SINGH NAGAR_PUNJAB                 0.0577     0.0004     137.40     0.0000      0.0568      0.0585
+d_SAIHA_MIZORAM                                     0.0468     0.0002     207.97     0.0000      0.0464      0.0473
+d_SALEM_TAMIL NADU                                  0.0494     0.0008     64.757     0.0000      0.0479      0.0509
+d_SAMASTIPUR_BIHAR                                  0.0446     0.0007     60.368     0.0000      0.0431      0.0460
+d_SAMBALPUR_ODISHA                                  0.0370     0.0006     64.911     0.0000      0.0359      0.0381
+d_SAMBA_JAMMU AND KASHMIR                           0.0542     0.0006     91.701     0.0000      0.0530      0.0553
+d_SAMBHAL_UTTAR PRADESH                             0.0374     0.0004     88.664     0.0000      0.0366      0.0382
+d_SANGLI_MAHARASHTRA                                0.0486     0.0002     224.49     0.0000      0.0481      0.0490
+d_SANGRUR_PUNJAB                                    0.0383     0.0001     271.78     0.0000      0.0381      0.0386
+d_SANT KABIR NAGAR_UTTAR PRADESH                    0.0409     0.0001     389.19     0.0000      0.0407      0.0411
+d_SANT RAVI DAS NAGAR_UTTAR PRADESH                 0.0467     0.0006     80.953     0.0000      0.0455      0.0478
+d_SARAIKELA-KHARSAWAN_JHARKHAND                     0.0479     0.0004     120.08     0.0000      0.0472      0.0487
+d_SARAN_BIHAR                                       0.0426     0.0006     69.916     0.0000      0.0414      0.0438
+d_SATARA_MAHARASHTRA                                0.0514     0.0002     312.53     0.0000      0.0511      0.0518
+d_SATNA_MADHYA PRADESH                              0.0454     0.0002     182.49     0.0000      0.0449      0.0458
+d_SAWAI MADHOPUR_RAJASTHAN                          0.0378     0.0009     42.911     0.0000      0.0361      0.0396
+d_SEHORE_MADHYA PRADESH                             0.0543  1.772e-05     3062.4     0.0000      0.0542      0.0543
+d_SENAPATI_MANIPUR                                  0.0405     0.0007     59.105     0.0000      0.0392      0.0419
+d_SEONI_MADHYA PRADESH                              0.0495     0.0004     132.56     0.0000      0.0487      0.0502
+d_SERCHHIP_MIZORAM                                  0.0228     0.0006     40.238     0.0000      0.0217      0.0239
+d_SHAHDOL_MADHYA PRADESH                            0.0467     0.0004     115.37     0.0000      0.0459      0.0475
+d_SHAHID BHAGAT SINGH NAGAR_PUNJAB                  0.0430     0.0005     86.640     0.0000      0.0420      0.0440
+d_SHAHJAHANPUR_UTTAR PRADESH                        0.0437     0.0002     220.46     0.0000      0.0433      0.0440
+d_SHAJAPUR_MADHYA PRADESH                           0.0469  8.317e-05     564.50     0.0000      0.0468      0.0471
+d_SHAMLI_UTTAR PRADESH                              0.0465     0.0004     122.35     0.0000      0.0457      0.0472
+d_SHEIKHPURA_BIHAR                                  0.0469     0.0005     90.158     0.0000      0.0459      0.0479
+d_SHEOHAR_BIHAR                                     0.0480     0.0011     42.984     0.0000      0.0458      0.0502
+d_SHEOPUR_MADHYA PRADESH                            0.0481     0.0002     261.66     0.0000      0.0477      0.0484
+d_SHIMLA_HIMACHAL PRADESH                           0.0478     0.0003     161.17     0.0000      0.0472      0.0484
+d_SHIMOGA_KARNATAKA                                 0.0453     0.0006     74.524     0.0000      0.0441      0.0465
+d_SHIVPURI_MADHYA PRADESH                           0.0435     0.0003     138.95     0.0000      0.0429      0.0441
+d_SHRAVASTI_UTTAR PRADESH                           0.0361     0.0001     243.47     0.0000      0.0358      0.0364
+d_SHUPIYAN_JAMMU AND KASHMIR                        0.0517     0.0003     206.33     0.0000      0.0512      0.0522
+d_SIDDHARTH NAGAR_UTTAR PRADESH                     0.0439     0.0003     130.04     0.0000      0.0432      0.0445
+d_SIDHI_MADHYA PRADESH                              0.0447     0.0004     123.33     0.0000      0.0440      0.0454
+d_SIKAR_RAJASTHAN                                   0.0422     0.0006     75.208     0.0000      0.0411      0.0433
+d_SIMDEGA_JHARKHAND                                 0.0422     0.0004     94.346     0.0000      0.0413      0.0430
+d_SINDHUDURG_MAHARASHTRA                            0.0465     0.0005     101.28     0.0000      0.0456      0.0474
+d_SINGRAULI_MADHYA PRADESH                          0.0471     0.0002     191.25     0.0000      0.0466      0.0476
+d_SIPAHIJALA_TRIPURA                                0.0210     0.0007     28.720     0.0000      0.0195      0.0224
+d_SIRMAUR_HIMACHAL PRADESH                          0.0546     0.0002     324.29     0.0000      0.0542      0.0549
+d_SIROHI_RAJASTHAN                                  0.0472  1.937e-05     2437.4     0.0000      0.0472      0.0473
+d_SIRSA_HARYANA                                     0.0504  2.615e-05     1928.9     0.0000      0.0504      0.0505
+d_SITAMARHI_BIHAR                                   0.0464     0.0011     40.999     0.0000      0.0441      0.0486
+d_SITAPUR_UTTAR PRADESH                             0.0410     0.0005     90.948     0.0000      0.0401      0.0419
+d_SIVAGANGA_TAMIL NADU                              0.0428     0.0005     86.392     0.0000      0.0418      0.0438
+d_SIVASAGAR_ASSAM                                   0.0372     0.0011     35.208     0.0000      0.0351      0.0392
+d_SIWAN_BIHAR                                       0.0426     0.0009     45.736     0.0000      0.0408      0.0445
+d_SOLAN_HIMACHAL PRADESH                            0.0497   7.44e-05     667.60     0.0000      0.0495      0.0498
+d_SOLAPUR_MAHARASHTRA                               0.0507     0.0002     235.37     0.0000      0.0503      0.0511
+d_SONBHADRA_UTTAR PRADESH                           0.0434  7.125e-05     609.27     0.0000      0.0433      0.0435
+d_SONIPAT_HARYANA                                   0.0519  2.771e-05     1874.8     0.0000      0.0519      0.0520
+d_SONITPUR_ASSAM                                    0.0406     0.0001     271.13     0.0000      0.0403      0.0409
+d_SOUTH 24 PARGANAS_WEST BENGAL                     0.0444     0.0006     73.160     0.0000      0.0432      0.0456
+d_SOUTH ANDAMAN_ANDAMAN AND NICOBAR                 0.0506     0.0006     82.345     0.0000      0.0494      0.0518
+d_SOUTH GARO HILLS_MEGHALAYA                        0.0411     0.0001     390.53     0.0000      0.0409      0.0413
+d_SOUTH GOA_GOA                                     0.0468     0.0002     240.38     0.0000      0.0464      0.0472
+d_SOUTH TRIPURA_TRIPURA                             0.0366     0.0001     266.33     0.0000      0.0363      0.0369
+d_SOUTH WEST GARO HILLS_MEGHALAYA                   0.0467     0.0009     49.923     0.0000      0.0449      0.0485
+d_SOUTH WEST KHASI HILLS_MEGHALAYA                  0.0623     0.0006     110.46     0.0000      0.0612      0.0634
+d_SRIKAKULAM_ANDHRA PRADESH                         0.0415  7.393e-05     561.87     0.0000      0.0414      0.0417
+d_SRINAGAR_JAMMU AND KASHMIR                        0.0387  4.642e-05     833.74     0.0000      0.0386      0.0388
+d_SUKMA_CHHATTISGARH                                0.0454  4.396e-05     1032.5     0.0000      0.0453      0.0455
+d_SULTANPUR_UTTAR PRADESH                           0.0395     0.0002     169.18     0.0000      0.0390      0.0399
+d_SUNDARGARH_ODISHA                                 0.0492  9.703e-05     507.05     0.0000      0.0490      0.0494
+d_SUPAUL_BIHAR                                      0.0464     0.0003     184.39     0.0000      0.0459      0.0469
+d_SURAJPUR_CHHATTISGARH                             0.0385     0.0001     343.94     0.0000      0.0382      0.0387
+d_SURAT_GUJARAT                                     0.0501     0.0002     323.83     0.0000      0.0498      0.0504
+d_SURENDRANAGAR_GUJARAT                             0.0421  3.249e-05     1295.5     0.0000      0.0420      0.0422
+d_SURGUJA_CHHATTISGARH                              0.0443  6.842e-05     647.32     0.0000      0.0442      0.0444
+d_TAMENGLONG_MANIPUR                                0.0333     0.0003     129.61     0.0000      0.0328      0.0338
+d_TAPI_GUJARAT                                      0.0498     0.0001     488.69     0.0000      0.0496      0.0500
+d_TARN TARAN_PUNJAB                                 0.0473     0.0005     92.816     0.0000      0.0463      0.0483
+d_TAWANG_ARUNACHAL PRADESH                          0.0500     0.0005     94.028     0.0000      0.0490      0.0511
+d_TEHRI GARHWAL_UTTARAKHAND                         0.0480     0.0003     154.85     0.0000      0.0474      0.0486
+d_THANE_MAHARASHTRA                                 0.0490     0.0006     82.292     0.0000      0.0478      0.0501
+d_THANJAVUR_TAMIL NADU                              0.0462     0.0005     83.959     0.0000      0.0451      0.0472
+d_THE NILGIRIS_TAMIL NADU                           0.0445     0.0005     92.891     0.0000      0.0435      0.0454
+d_THENI_TAMIL NADU                                  0.0493  4.847e-05     1018.0     0.0000      0.0492      0.0494
+d_THIRUVALLUR_TAMIL NADU                            0.0403     0.0005     89.240     0.0000      0.0394      0.0412
+d_THIRUVANANTHAPURAM_KERALA                         0.0467     0.0003     165.59     0.0000      0.0461      0.0473
+d_THIRUVARUR_TAMIL NADU                             0.0436     0.0010     43.074     0.0000      0.0417      0.0456
+d_THOOTHUKKUDI_TAMIL NADU                           0.0424     0.0003     162.44     0.0000      0.0419      0.0429
+d_THOUBAL_MANIPUR                                   0.0406     0.0017     23.398     0.0000      0.0372      0.0440
+d_THRISSUR_KERALA                                   0.0501     0.0005     102.54     0.0000      0.0492      0.0511
+d_TIKAMGARH_MADHYA PRADESH                          0.0338     0.0001     227.25     0.0000      0.0335      0.0341
+d_TINSUKIA_ASSAM                                    0.0426     0.0021     20.363     0.0000      0.0385      0.0467
+d_TIRUCHIRAPPALLI_TAMIL NADU                        0.0475     0.0005     96.775     0.0000      0.0466      0.0485
+d_TIRUNELVELI_TAMIL NADU                            0.0351     0.0004     99.579     0.0000      0.0344      0.0358
+d_TIRUPPUR_TAMIL NADU                               0.0476     0.0001     350.17     0.0000      0.0473      0.0479
+d_TIRUVANNAMALAI_TAMIL NADU                         0.0485     0.0007     74.378     0.0000      0.0472      0.0498
+d_TONK_RAJASTHAN                                    0.0461     0.0002     186.85     0.0000      0.0457      0.0466
+d_TUENSANG_NAGALAND                                 0.0391     0.0005     76.360     0.0000      0.0381      0.0401
+d_TUMKUR_KARNATAKA                                  0.0507     0.0003     160.25     0.0000      0.0501      0.0514
+d_UDAIPUR_RAJASTHAN                                 0.0458     0.0001     394.99     0.0000      0.0456      0.0461
+d_UDALGURI_ASSAM                                    0.0476     0.0007     64.733     0.0000      0.0461      0.0490
+d_UDHAM SINGH NAGAR_UTTARAKHAND                     0.0507     0.0004     142.92     0.0000      0.0500      0.0513
+d_UDHAMPUR_JAMMU AND KASHMIR                        0.0482     0.0006     86.977     0.0000      0.0471      0.0493
+d_UDUPI_KARNATAKA                                   0.0468  4.116e-06  1.137e+04     0.0000      0.0468      0.0468
+d_UJJAIN_MADHYA PRADESH                             0.0490     0.0001     458.52     0.0000      0.0488      0.0492
+d_UKHRUL_MANIPUR                                    0.0507     0.0007     67.705     0.0000      0.0493      0.0522
+d_UMARIA_MADHYA PRADESH                             0.0461     0.0003     149.18     0.0000      0.0455      0.0467
+d_UNA_HIMACHAL PRADESH                              0.0492  5.015e-06     9818.5     0.0000      0.0492      0.0493
+d_UNNAO_UTTAR PRADESH                               0.0441     0.0004     119.27     0.0000      0.0434      0.0448
+d_UNOKOTI_TRIPURA                                   0.0095     0.0004     21.568     0.0000      0.0086      0.0104
+d_UTTAR BASTAR KANKER_CHHATTISGARH                  0.0480     0.0005     102.59     0.0000      0.0471      0.0490
+d_UTTAR DINAJPUR_WEST BENGAL                        0.0460     0.0002     251.94     0.0000      0.0456      0.0464
+d_UTTARA KANNADA_KARNATAKA                          0.0441   5.47e-05     806.90     0.0000      0.0440      0.0442
+d_UTTARKASHI_UTTARAKHAND                            0.0467     0.0001     417.26     0.0000      0.0464      0.0469
+d_VADODARA_GUJARAT                                  0.0457     0.0001     408.53     0.0000      0.0455      0.0459
+d_VAISHALI_BIHAR                                    0.0441     0.0004     112.63     0.0000      0.0433      0.0449
+d_VALSAD_GUJARAT                                    0.0493     0.0001     425.65     0.0000      0.0491      0.0495
+d_VARANASI_UTTAR PRADESH                            0.0446  1.769e-05     2522.2     0.0000      0.0446      0.0447
+d_VELLORE_TAMIL NADU                                0.0371     0.0006     61.917     0.0000      0.0359      0.0382
+d_VIDISHA_MADHYA PRADESH                            0.0489     0.0003     165.25     0.0000      0.0483      0.0495
+d_VILUPPURAM_TAMIL NADU                             0.0341     0.0006     60.458     0.0000      0.0330      0.0352
+d_VIRUDUNAGAR_TAMIL NADU                            0.0480     0.0003     138.07     0.0000      0.0474      0.0487
+d_VISAKHAPATNAM_ANDHRA PRADESH                      0.0437     0.0005     93.365     0.0000      0.0428      0.0446
+d_VIZIANAGARAM_ANDHRA PRADESH                       0.0372  5.013e-06     7413.1     0.0000      0.0372      0.0372
+d_WARANGAL_TELANGANA                                0.1137     0.0009     120.71     0.0000      0.1119      0.1156
+d_WARDHA_MAHARASHTRA                                0.0499     0.0002     328.60     0.0000      0.0496      0.0502
+d_WASHIM_MAHARASHTRA                                0.0523  1.649e-05     3173.7     0.0000      0.0523      0.0524
+d_WAYANAD_KERALA                                    0.0490     0.0009     54.605     0.0000      0.0473      0.0508
+d_WEST GARO HILLS_MEGHALAYA                         0.0381  9.955e-05     383.12     0.0000      0.0379      0.0383
+d_WEST GODAVARI_ANDHRA PRADESH                      0.0279  4.156e-05     670.25     0.0000      0.0278      0.0279
+d_WEST KAMENG_ARUNACHAL PRADESH                     0.0526     0.0004     123.26     0.0000      0.0517      0.0534
+d_WEST KHASI HILLS_MEGHALAYA                        0.0077     0.0002     34.755     0.0000      0.0073      0.0082
+d_WEST NIMAR_MADHYA PRADESH                         0.0463     0.0003     160.68     0.0000      0.0457      0.0468
+d_WEST SIANG_ARUNACHAL PRADESH                      0.0375     0.0003     122.57     0.0000      0.0369      0.0381
+d_WEST TRIPURA_TRIPURA                              0.0434     0.0005     86.656     0.0000      0.0424      0.0443
+d_WOKHA_NAGALAND                                    0.0498  6.007e-05     829.43     0.0000      0.0497      0.0499
+d_Y.S.R._ANDHRA PRADESH                             0.0324     0.0002     176.78     0.0000      0.0321      0.0328
+d_YADGIR_KARNATAKA                                  0.0444     0.0006     79.653     0.0000      0.0433      0.0455
+d_YAMUNANAGAR_HARYANA                               0.0489     0.0003     191.67     0.0000      0.0484      0.0494
+d_YANAM_PUDUCHERRY                                  0.0486     0.0010     47.917     0.0000      0.0467      0.0506
+d_YAVATMAL_MAHARASHTRA                              0.0560  2.004e-07  2.793e+05     0.0000      0.0560      0.0560
+d_ZUNHEBOTO_NAGALAND                                0.0453     0.0005     85.700     0.0000      0.0443      0.0463
+q_2015Q3                                            0.0327     0.0058     5.6728     0.0000      0.0214      0.0440
+q_2015Q4                                            0.0337     0.0349     0.9648     0.3346     -0.0347      0.1021
+q_2016Q1                                            0.0882     0.0038     23.300     0.0000      0.0808      0.0956
+q_2016Q2                                            0.0041     0.0157     0.2644     0.7915     -0.0266      0.0348
+q_2017Q2                                            0.2081     0.0312     6.6740     0.0000      0.1470      0.2692
+q_2017Q3                                            0.0350     0.0023     14.992     0.0000      0.0304      0.0396
+q_2017Q4                                            0.0155     0.0265     0.5855     0.5582     -0.0365      0.0675
+q_2018Q1                                            0.0523     0.0086     6.0836     0.0000      0.0354      0.0691
+q_2018Q2                                            0.0154     0.0113     1.3665     0.1718     -0.0067      0.0375
+q_2018Q3                                            0.0389     0.0098     3.9494     0.0001      0.0196      0.0582
+q_2018Q4                                            0.0357     0.0329     1.0830     0.2788     -0.0289      0.1002
+q_2019Q1                                            0.0563     0.0091     6.1916     0.0000      0.0385      0.0741
+q_2019Q2                                            0.0181     0.0151     1.1992     0.2304     -0.0115      0.0478
+q_2019Q3                                            0.0485     0.0157     3.0809     0.0021      0.0177      0.0794
+q_2019Q4                                            0.0332     0.0340     0.9768     0.3286     -0.0334      0.0998
+q_2020Q1                                            0.0675     0.0128     5.2836     0.0000      0.0425      0.0925
+q_2020Q2                                            0.0289     0.0119     2.4362     0.0148      0.0056      0.0521
+q_2020Q3                                            0.0353     0.0101     3.4906     0.0005      0.0155      0.0551
+q_2020Q4                                            0.0251     0.0385     0.6528     0.5139     -0.0503      0.1006
+q_2021Q1                                            0.0465     0.0080     5.7917     0.0000      0.0308      0.0622
+q_2021Q2                                            0.0152     0.0138     1.1045     0.2694     -0.0118      0.0423
+q_2021Q3                                            0.0231     0.0098     2.3540     0.0186      0.0039      0.0423
+q_2021Q4                                            0.0231     0.0348     0.6646     0.5063     -0.0451      0.0913
+q_2022Q1                                            0.0556     0.0126     4.4058     0.0000      0.0309      0.0803
+q_2022Q2                                            0.0082     0.0130     0.6322     0.5273     -0.0173      0.0338
+q_2022Q3                                            0.0246     0.0203     1.2104     0.2261     -0.0152      0.0643
+q_2022Q4                                            0.0289     0.0417     0.6940     0.4877     -0.0527      0.1106
+q_2023Q1                                           -0.0524     0.0141    -3.7252     0.0002     -0.0800     -0.0248
+q_2023Q2                                            0.0256     0.0158     1.6240     0.1044     -0.0053      0.0565
+q_2023Q3                                            0.0441     0.0063     7.0009     0.0000      0.0317      0.0564
+q_2023Q4                                            0.0268     0.0289     0.9299     0.3524     -0.0297      0.0834
+q_2024Q1                                            0.0616     0.0088     7.0236     0.0000      0.0444      0.0788
+q_2024Q2                                            0.0118     0.0149     0.7926     0.4280     -0.0174      0.0411
+q_2024Q3                                            0.0315     0.0135     2.3397     0.0193      0.0051      0.0579
+q_2024Q4                                            0.0326     0.0359     0.9077     0.3641     -0.0378      0.1031
+lights_change_qt                                   -0.0068     0.0597    -0.1135     0.9096     -0.1238      0.1102
+===================================================================================================================
+
+Endogenous: lights_change_qt
+Instruments: flood_exposure_ruleB_qt
+Clustered Covariance (One-Way)
+Debiased: False
+Num Clusters: 631

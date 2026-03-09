@@ -1,0 +1,51 @@
+======================================================================
+SCRIPT 31: WINSORIZE deposit_change_qt (1%/99%) -- Robustness Prep
+Run: 2026-03-09 18:42:46
+======================================================================
+
+[1/5] Loading regression-ready panel...
+  Loaded:   23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+  deposit_change_qt: 22,442 valid | 905 NaN
+
+[2/5] Pre-winsorize descriptives (deposit_change_qt)...
+  count   =       22,442
+  mean    =     0.023302
+  std     =     0.074288
+  min     =    -1.932227
+  1%      =    -0.162585
+  5%      =    -0.045154
+  25%     =     0.003149
+  median  =     0.020979
+  75%     =     0.040395
+  95%     =     0.109690
+  99%     =     0.230701
+  max     =     2.025118
+
+[3/5] Winsorizing at 1st / 99th percentile...
+  Lower threshold (1%):  -0.162585
+  Upper threshold (99%): 0.230701
+  Clipped below lower:  225 obs
+  Clipped above upper:  225 obs
+  Total clipped:        450 obs (2.01% of valid N)
+
+[4/5] Post-winsorize descriptives (deposit_change_qt_winsor)...
+  count   =       22,442
+  mean    =     0.024006
+  std     =     0.052129
+  min     =    -0.162585
+  1%      =    -0.162426
+  5%      =    -0.045154
+  25%     =     0.003149
+  median  =     0.020979
+  75%     =     0.040395
+  95%     =     0.109690
+  99%     =     0.230679
+  max     =     0.230701
+
+  Bounds verified (min >= lower, max <= upper) -- PASS
+  NaN count unchanged (905) -- PASS
+
+[5/5] Saving outputs...
+  Output CSV verified: 23,347 rows, 24 columns -- PASS
+  Saved: 03_Data_Clean/regression_panel_final_winsor.csv

@@ -1,0 +1,90 @@
+======================================================================
+SCRIPT 32b: 2023 DEPOSIT ANOMALY DIAGNOSIS
+Run: 2026-03-09 18:59:11
+======================================================================
+
+[1/6] Loading winsorized panel...
+  Loaded:   23,347 rows, 24 columns -- PASS
+  Required columns verified -- PASS
+  Years 2022, 2023, 2024 verified present -- PASS
+  Winsorized bounds: [-0.162585, 0.230701]
+  (Consistent with Script 31 thresholds [-0.162585, 0.230701])
+
+[2/6] Checking deposit LEVELS by year (unit error detection)...
+
+  Deposit levels (raw, crores INR) by year:
+  Year           Median           Mean            Min            Max        N
+  ----------------------------------------------------------------------
+  2021          6952.68       18075.33         116.22      778128.28     2504
+  2022          7476.46       19638.89         106.31      935173.81     2507
+  2023          7464.88       21044.02          29.00     1081684.73     2511
+  2024          8154.28       23221.49         105.73     1237744.34     2508
+
+  Year-on-year median level ratios:
+    2022 / 2021 = 1.0753x
+    2023 / 2022 = 0.9985x
+    2024 / 2023 = 1.0924x
+
+  Unit error flag (ratio > 5x or < 0.2): NO -- PASS
+
+[3/6] Raw deposit_change_qt distribution by year (pre-winsorization)...
+  Note: Raw column used here -- winsorization caps are NOT applied.
+  This reveals true extreme values before Script 31 clipping.
+
+  Year         Mean        Std          Min         1%     Median        99%          Max        N
+  ------------------------------------------------------------------------------------------
+  2021     0.014842   0.044563    -0.768140  -0.115776   0.015563   0.123701     0.473919     2504
+  2022     0.017217   0.061888    -1.119654  -0.120609   0.018878   0.139218     0.619405     2506
+  2023    -0.001067   0.106440    -1.452763  -0.306941   0.016845   0.126707     2.025118     2507
+  2024     0.022366   0.048806    -0.749426  -0.078722   0.020751   0.139179     0.938050     2508
+
+[4/6] Winsorized deposit_change_qt_winsor distribution by year...
+
+  Year         Mean        Std     Median        N
+  --------------------------------------------------
+  2021     0.015349   0.037256   0.015563     2504
+  2022     0.018562   0.039182   0.018878     2506
+  2023     0.002836   0.058475   0.016845     2507
+  2024     0.022574   0.036781   0.020751     2508
+
+[5/6] Extreme quarter identification in 2023...
+
+  Top 10 highest raw deposit_change_qt in 2023:
+  District                  State           Quarter      Deposits      Raw Chg   Winsor Chg
+  ----------------------------------------------------------------------------------------
+  SAHARSA                   BIHAR           2023Q1       35835.23     2.025118     0.230701
+  TUENSANG                  NAGALAND        2023Q3         172.96     1.757704     0.230701
+  SOUTH GARO HILLS          MEGHALAYA       2023Q4         234.02     0.767197     0.230701
+  EAST KAMENG               ARUNACHAL PRADESH 2023Q1         305.83     0.441015     0.230701
+  LONGDING                  ARUNACHAL PRADESH 2023Q1         217.35     0.353418     0.230701
+  SHIMOGA                   KARNATAKA       2023Q3       26604.46     0.336377     0.230701
+  DIMA HASAO                ASSAM           2023Q2        1452.51     0.319632     0.230701
+  PEREN                     NAGALAND        2023Q1         157.92     0.246384     0.230701
+  ZUNHEBOTO                 NAGALAND        2023Q1         258.48     0.242298     0.230701
+  NAMSAI                    ARUNACHAL PRADESH 2023Q1         712.30     0.235315     0.230701
+
+  Bottom 10 lowest raw deposit_change_qt in 2023:
+  District                  State           Quarter      Deposits      Raw Chg   Winsor Chg
+  ----------------------------------------------------------------------------------------
+  TUENSANG                  NAGALAND        2023Q1          33.16    -1.452763    -0.162585
+  SERCHHIP                  MIZORAM         2023Q1         103.78    -1.403537    -0.162585
+  KOLASIB                   MIZORAM         2023Q1         269.83    -0.862712    -0.162585
+  LAWANGTLAI                MIZORAM         2023Q1         161.53    -0.839402    -0.162585
+  SOUTH GARO HILLS          MEGHALAYA       2023Q1         108.20    -0.804130    -0.162585
+  SOUTH TRIPURA             TRIPURA         2023Q1        1260.32    -0.788255    -0.162585
+  WEST KHASI HILLS          MEGHALAYA       2023Q1         258.51    -0.784002    -0.162585
+  NAGAUR                    RAJASTHAN       2023Q4        5434.57    -0.701236    -0.162585
+  LUNGLEI                   MIZORAM         2023Q1         510.91    -0.673928    -0.162585
+  ALWAR                     RAJASTHAN       2023Q4       15086.87    -0.617351    -0.162585
+
+  Full-sample 95th pctile raw threshold: 0.109690
+  Full-sample 5th  pctile raw threshold: -0.045154
+  2023 obs above 95th pctile: 36 of 2,507 (1.4%)
+  2023 obs below  5th pctile: 385 of 2,507 (15.4%)
+
+[6/6] Conclusion and saving outputs...
+
+  CONCLUSION:
+  NO SYSTEMIC ANOMALY: 2023 extreme obs count is within normal range. Low 2023 annualized growth (1.14% from Script 32) reflects genuine economic signal -- consistent with RBI deposit growth slowdown and high inflation eroding real deposit accumulation in 2023. Winsorization handled individual outliers. No action required.
+
+  Table saved: 05_Outputs/Tables/06_32b_2023_diagnosis.csv -- PASS

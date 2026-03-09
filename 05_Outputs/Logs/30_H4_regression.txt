@@ -1,0 +1,195 @@
+======================================================================
+H4: HETEROGENEITY REGRESSIONS
+Flood x District Characteristics -> Deposit Withdrawals
+Specs: H4a (Urban), H4b (High Exposure), H4c (Monsoon)
+======================================================================
+
+Panel loaded: 23,347 rows, 23 columns
+Required columns verified -- PASS
+
+district_state_id: 631 unique pairs  (expected 631)
+Composite key verified -- PASS
+
+======================================================================
+HETEROGENEITY VARIABLE CONSTRUCTION
+======================================================================
+
+H4a Urban proxy:
+  Median log_lights_qt: -0.8900
+  Urban (above median): 315 districts
+  Rural (at/below):     316 districts
+  Label: proxy (not census-based). Results treated as suggestive.
+
+H4b High exposure proxy:
+  Median cumulative Rule A floods: 3.0
+  High exposure (above median): 255 districts
+  Low exposure (at/below):      376 districts
+  Label: proxy. Results treated as suggestive.
+
+H4c Monsoon indicator:
+  Q3 (monsoon) obs:     5,679
+  Non-Q3 obs:           17,668
+
+Heterogeneity variables constructed -- PASS
+
+Initial: 23,347 obs
+After restriction: 22,442 obs  (expected ~22,442)
+Dropped: 905 (3.9%)
+
+District FE: 631  (expected 631)
+Quarter FE:  36  (expected 36)
+FE counts verified -- PASS
+
+======================================================================
+H4a: Urban proxy x Flood
+======================================================================
+  Note: Urban proxy = above-median district mean log_lights_qt. Results suggestive only -- not census-based classification. Feb 6 benchmark: interaction p<0.001 (contaminated FE).
+
+  Rule A:
+    Formula: deposit_change_qt ~ flood_exposure_ruleA_qt + flood_x_urban + C(district_fe) + C(quarter_fe)
+    FE: district_state_id (631) + quarter (36)
+    SE: Clustered by district_state_id
+  Baseline (Non-urban (rural proxy)):
+    Beta    = 0.001207
+    SE      = 0.002268
+    t       = 0.532
+    p       = 0.594627
+    95% CI  = [-0.003238, 0.005652]
+    Status  = NOT SIGNIFICANT
+  Interaction (urban_proxy x Flood):
+    Beta    = -0.001666
+    SE      = 0.002666
+    t       = -0.625
+    p       = 0.532091
+    95% CI  = [-0.006892, 0.003560]
+    Status  = NOT SIGNIFICANT
+
+  Conclusion (Rule A): H4a NULL. No significant heterogeneity.
+
+  Rule B:
+    Formula: deposit_change_qt ~ flood_exposure_ruleB_qt + floodB_x_urban + C(district_fe) + C(quarter_fe)
+    FE: district_state_id (631) + quarter (36)
+    SE: Clustered by district_state_id
+  Baseline (Non-urban (rural proxy)):
+    Beta    = -0.002890
+    SE      = 0.005183
+    t       = -0.558
+    p       = 0.577152
+    95% CI  = [-0.013049, 0.007269]
+    Status  = NOT SIGNIFICANT
+  Interaction (urban_proxy x Flood):
+    Beta    = 0.007479
+    SE      = 0.006934
+    t       = 1.079
+    p       = 0.280778
+    95% CI  = [-0.006112, 0.021070]
+    Status  = NOT SIGNIFICANT
+
+======================================================================
+H4b: High exposure proxy x Flood
+======================================================================
+  Note: High exposure = above-median cumulative Rule A flood count. Feb 6 benchmark: null (p=0.360). Expected to persist.
+
+  Rule A:
+    Formula: deposit_change_qt ~ flood_exposure_ruleA_qt + flood_x_highexp + C(district_fe) + C(quarter_fe)
+    FE: district_state_id (631) + quarter (36)
+    SE: Clustered by district_state_id
+  Baseline (Low exposure (below median)):
+    Beta    = 0.004700
+    SE      = 0.002614
+    t       = 1.798
+    p       = 0.072175
+    95% CI  = [-0.000423, 0.009823]
+    Status  = *
+  Interaction (high_exposure_proxy x Flood):
+    Beta    = -0.006810
+    SE      = 0.002934
+    t       = -2.321
+    p       = 0.020304
+    95% CI  = [-0.012561, -0.001058]
+    Status  = **
+
+  Conclusion (Rule A): H4b SUPPORTED. Interaction negative and significant.
+
+  Rule B:
+    Formula: deposit_change_qt ~ flood_exposure_ruleB_qt + floodB_x_highexp + C(district_fe) + C(quarter_fe)
+    FE: district_state_id (631) + quarter (36)
+    SE: Clustered by district_state_id
+  Baseline (Low exposure (below median)):
+    Beta    = 0.012016
+    SE      = 0.006580
+    t       = 1.826
+    p       = 0.067833
+    95% CI  = [-0.000881, 0.024914]
+    Status  = *
+  Interaction (high_exposure_proxy x Flood):
+    Beta    = -0.013419
+    SE      = 0.007675
+    t       = -1.748
+    p       = 0.080414
+    95% CI  = [-0.028462, 0.001625]
+    Status  = *
+
+======================================================================
+H4c: Monsoon quarter x Flood
+======================================================================
+  Note: Monsoon = Q3 (July-September). Feb 6 benchmark: null (p=0.511). Expected to persist.
+
+  Rule A:
+    Formula: deposit_change_qt ~ flood_exposure_ruleA_qt + flood_x_monsoon + C(district_fe) + C(quarter_fe)
+    FE: district_state_id (631) + quarter (36)
+    SE: Clustered by district_state_id
+  Baseline (Non-monsoon quarters):
+    Beta    = -0.004700
+    SE      = 0.002078
+    t       = -2.262
+    p       = 0.023702
+    95% CI  = [-0.008773, -0.000627]
+    Status  = **
+  Interaction (monsoon_qt x Flood):
+    Beta    = 0.012495
+    SE      = 0.002886
+    t       = 4.330
+    p       = 0.000015
+    95% CI  = [0.006839, 0.018151]
+    Status  = ***
+
+  Conclusion (Rule A): H4c SIGNIFICANT but unexpected sign. Review.
+
+  Rule B:
+    Formula: deposit_change_qt ~ flood_exposure_ruleB_qt + floodB_x_monsoon + C(district_fe) + C(quarter_fe)
+    FE: district_state_id (631) + quarter (36)
+    SE: Clustered by district_state_id
+  Baseline (Non-monsoon quarters):
+    Beta    = -0.000838
+    SE      = 0.005382
+    t       = -0.156
+    p       = 0.876258
+    95% CI  = [-0.011387, 0.009711]
+    Status  = NOT SIGNIFICANT
+  Interaction (monsoon_qt x Flood):
+    Beta    = 0.002287
+    SE      = 0.007974
+    t       = 0.287
+    p       = 0.774275
+    95% CI  = [-0.013342, 0.017915]
+    Status  = NOT SIGNIFICANT
+
+======================================================================
+SUMMARY -- INTERACTION COEFFICIENTS
+======================================================================
+  Spec   Rule    Inter Beta         SE        t          p   Sig
+  ------------------------------------------------------------
+  H4a    A        -0.001666   0.002666   -0.625   0.532091      
+  H4a    B         0.007479   0.006934    1.079   0.280778      
+  H4b    A        -0.006810   0.002934   -2.321   0.020304    **
+  H4b    B        -0.013419   0.007675   -1.748   0.080414     *
+  H4c    A         0.012495   0.002886    4.330   0.000015   ***
+  H4c    B         0.002287   0.007974    0.287   0.774275      
+
+Table saved: 05_Outputs/Tables/05_H4_heterogeneity.csv
+
+======================================================================
+SCRIPT 30 COMPLETE
+Next: Update Hypotheses v2.5 and Codebook v2.5 with all results.
+======================================================================

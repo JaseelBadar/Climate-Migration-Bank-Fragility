@@ -4416,12 +4416,9 @@ Next session priority: FE correction Scripts 27, 28, 30 -> execute
   all four regressions -> update Hypotheses v2.5 with confirmed results.
 
 ======================================================================
-2026-03-08 (Sun) 1700-1830 IST: Scripts 27-29, H1-H3 Regressions
-Executed and Verified. Phase 4 (H1, H2, H3) Complete.
+2026-03-08 (Sun) 17:00-18:30 IST: Scripts 27-29, H1-H3 Regressions Executed and Verified. Phase 4 (H1, H2, H3) Complete.
 ======================================================================
-Goal: Fix FE specification (composite district_state_id) in Scripts 27
-and 28. Execute H1, H2, H3 regressions with clean pipeline. Verify
-all results against pre-committed hypotheses and Feb 6 benchmarks.
+Goal: Fix FE specification (composite district_state_id) in Scripts 27 and 28. Execute H1, H2, H3 regressions with clean pipeline. Verify all results against pre-committed hypotheses and Feb 6 benchmarks.
 
 ----------------------------------------------------------------------
 A) Script 27: H1 First Stage (Floods -> Lights)
@@ -4565,5 +4562,145 @@ Next session priority: Script 30 -> H4a, H4b, H4c -> update all
   project documentation to v2.5 with final confirmed results.
 
 ======================================================================
-END OF LOG - Last Updated: 2026-03-08 18:30 PM IST
+2026-03-09 (Mon) 18:00-19:17 IST: Scripts 30-32b Executed and Verified. Phase 4 (H4) Complete. Phase 6 CPI Diagnostic Complete.
+======================================================================
+Goal: Execute H4 heterogeneity regressions with composite FE fix. Run winsorization and CPI diagnostics. Verify all results.
+
+----------------------------------------------------------------------
+A) Script 30: H4 Heterogeneity Tests (Urban, HighExp, Monsoon x Flood)
+----------------------------------------------------------------------
+Script 30 rewritten. Four critical errors resolved vs prior version:
+  Fix 1-4: Composite district_state_id applied to FE, clustering, and
+    all Z_i groupby operations. Prior version used district_gadm alone
+    throughout -- collapsing 7 homonymous pairs in FE (624 vs 631),
+    clustering, and heterogeneity variable construction.
+    H4a urban proxy: AURANGABAD Bihar/Maharashtra merged incorrectly.
+    H4b high_exposure: cumulative flood counts pooled across pairs.
+  Rule B added for all three specifications per pre-committed R1.
+
+Executed. All asserts passed. N = 22,442. District FE = 631. Quarter
+FE = 36.
+
+Results -- interaction coefficients:
+  H4a: Rule A p = 0.532, Rule B p = 0.281 -- NULL (both rules)
+  H4b: Rule A beta = -0.006810, p = 0.020 **
+       Rule B beta = -0.013419, p = 0.080 *  -- SUPPORTED
+  H4c: Rule A beta = +0.012495, p < 0.001 ***
+       Rule B beta = +0.002287, p = 0.774 -- PARTIALLY SUPPORTED
+
+Benchmark changes vs Feb 6 (contaminated FE):
+  H4a: Was p < 0.001 (spurious). Now null. Urban proxy construction on
+    district_gadm collapsed homonymous pairs, inflating false signal.
+    Null is the correct result. Paper documents as methodological fix.
+  H4b: Was null (p = 0.360). Now p = 0.020. Composite key fix corrected
+    high/low exposure group misclassification. Signal is real.
+    Net effect high-exposure districts: +0.004700 + (-0.006810) = -0.002.
+    Economic interpretation: chronic flood exposure depletes household
+    buffers -- next flood forces withdrawal rather than precautionary save.
+  H4c: Was null (p = 0.511). Now p < 0.001 (Rule A). Rule A/B divergence
+    indicates seasonal offset is specific to moderate floods. Severe
+    floods override monsoon seasonality entirely. Result is fragile --
+    labeled partially supported. Language constrained accordingly.
+
+H4 final verdict:
+  H4a: NULL. Flood effects systemic -- not urban/rural differentiated.
+  H4b: SUPPORTED. Chronic exposure amplifies withdrawal. Directional.
+  H4c: PARTIALLY SUPPORTED. Rule A only. Fragile to intensity definition.
+
+Commits issued: 30_regression_H4_heterogeneity.py,
+  05_H4_heterogeneity.csv, 30_H4_regression.txt separately.
+
+----------------------------------------------------------------------
+B) Script 31: Winsorization (Robustness Prep)
+----------------------------------------------------------------------
+Script 31 rewritten. Nine issues resolved. Key fixes: hard asserts,
+NaN-safe winsorization via np.where, full percentile tables to log,
+output CSV verification, encoding='utf-8'.
+
+Executed. All asserts passed.
+  Thresholds: lower = -0.162585, upper = +0.230701
+  Clipped: 450 obs (2.01%) -- symmetric (225 low / 225 high)
+  Median, 25th, 75th pctile unchanged post-winsorization -- PASS
+  Output: regression_panel_final_winsor.csv (23,347 x 24) -- PASS
+
+Commits issued: 31_winsorize.py, regression_panel_final_winsor.csv,
+  31_winsorize_log.txt separately.
+
+----------------------------------------------------------------------
+C) Script 32: CPI / Nominal-vs-Real Diagnostic
+----------------------------------------------------------------------
+Script 32 rewritten. One mid-session error corrected: district_state_id
+assert removed (column not stored in CSV -- composite key is runtime
+only). Replaced with asserts on district_gadm and state_gadm.
+
+Executed. Three findings beyond primary CPI decision:
+  Finding 1: 37 quarters in full panel (not 36). 2015Q1 has zero valid
+    deposit obs -- absent from all regressions. Quarter FE = 36 correct.
+  Finding 2: Demonetization gap. 2016Q3, 2016Q4, 2017Q1 entirely absent
+    from panel. Excluded upstream -- district deposit data unreliable
+    during November 2016 demonetization window. Must be named in paper.
+  Finding 3: 2016 and 2017 annualized rates are incomplete-year estimates.
+    2016: Q1+Q2 only. 2017: Q2+Q3+Q4 only. Never report as full-year.
+    2017 annualized 31.60% is post-demonetization recovery artifact.
+
+CPI decision: retain nominal INR. Quarter FE absorb national price
+  trends. District-quarter CPI unavailable at required granularity.
+
+Commits issued: 32_cpi_diagnostic.py, 32_nominal_growth_trend.png,
+  32_cpi_diagnostic_log.txt separately.
+
+----------------------------------------------------------------------
+D) Script 32b: 2023 Deposit Anomaly Diagnosis
+----------------------------------------------------------------------
+Script 32b rewritten from scratch. Executed. All asserts passed.
+Unit error flag: NO (2023/2022 median ratio = 0.9985x -- continuous).
+
+Key finding: left-tail asymmetry in 2023.
+  2023 obs below full-sample p5: 385 of 2,507 (15.4%) -- 3x expected.
+  2023 obs above full-sample p95: 36 of 2,507 (1.4%) -- normal.
+  2023 raw std = 0.106 vs 2022 = 0.062 and 2024 = 0.049.
+  2023 mean = -0.001 (only negative mean in panel). Median = 0.017
+  (normal). Mean-median divergence confirms left tail pulling mean down.
+
+Post-execution error identified: conclusion logic evaluated n_high_2023
+  only. n_low_2023 = 385 never checked against any threshold. Printed
+  conclusion "NO SYSTEMIC ANOMALY" is incorrect for the negative tail.
+  Correct conclusion: left-tail asymmetry confirmed. Not a unit error or
+  data corruption. Winsorization adequate. Log file contains wrong
+  conclusion -- must not be cited directly in paper.
+
+TUENSANG (Nagaland): 2023Q1 raw = -1.453, 2023Q3 raw = +1.758.
+  Swing of +3.21 within same year -- likely reporting artifact.
+Northeast concentration: 7 of top 10 and 8 of bottom 10 extreme obs
+  are Northeast districts. Small-base variance amplification, not error.
+
+Recommendation: Northeast district sensitivity robustness check added
+  to pending list. Confirm as Script 33 or Hypotheses v2.5 addition.
+
+Commits issued: 32b_cpi_diagnostic_2023.py,
+  06_32b_2023_diagnosis.csv, 32b_cpi_diagnostic_2023_log.txt separately.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Phase 4:
+  H1: COMPLETE. Confirmed. Rule A -0.0445***, Rule B -0.0584***
+  H2: COMPLETE. Null. Rule A p=0.805, Rule B p=0.910
+  H3: COMPLETE. Confirmed. Rule A t-2 -0.0070, p<0.001***
+  H4: COMPLETE. H4a null. H4b supported **/*. H4c partial ***/null.
+
+Phase 6:
+  Script 31: Winsorization complete. regression_panel_final_winsor.csv.
+  Script 32: Nominal decision logged. Demonetization gap documented.
+  Script 32b: 2023 left-tail asymmetry confirmed. Conclusion bug noted.
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Fix Script 32b conclusion logic (n_low_2023 missing) and re-save log
+  - Fix Script 29 cosmetic estimates (N ~21,180 -> ~21,837, QFE 36 -> 35)
+  - Correct Section [7] token count (44 -> 46) in Script 12
+  - Pre-paper: re-run Scripts 27-30 with linearmodels PanelOLS
+  - Confirm Northeast sensitivity check scope (Script 33 vs v2.5 note)
+
+======================================================================
+END OF LOG - Last Updated: 2026-03-09 19:20 PM IST
 ======================================================================

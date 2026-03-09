@@ -1,18 +1,100 @@
-2026-01-28 Phase 6 Step 2: Nominal growth diagnostic.
-Total obs: 23347
-Mean annualized growth: 141.9%
-Decision: Keep nominal rupees. Disclose: "Deposits in nominal INR; inflation ~6-8% confounds trends."
+======================================================================
+SCRIPT 32: CPI / NOMINAL-VS-REAL DIAGNOSTIC
+Run: 2026-03-09 18:52:58
+======================================================================
 
-Growth summary:
-        mean     std  count  annualized_pct
-year                                       
-2015  0.0127  0.0234   1825            5.18
-2016  0.0126  0.0293   1230            5.14
-2017  0.0148  0.0456   1868            6.05
-2018  0.0032  0.0138   2508            1.29
-2019  0.0145  0.0435   2508            5.93
-2020  0.0041  0.0138   2508            1.65
-2021  0.0037  0.0192   2512            1.49
-2022  0.0057  0.0266   2514            2.30
-2023  0.9614  1.6364   2514         1380.01
-2024  0.0240  0.0400   2516            9.95
+[1/5] Loading winsorized panel...
+  Loaded:   23,347 rows, 24 columns -- PASS
+  Required columns verified -- PASS
+
+[2/5] Extracting year from quarter column...
+  Year range: 2015 - 2024 -- PASS
+  Unique years:    10  (expected 10)
+  Unique quarters: 37  (expected 36)
+
+  All 37 quarters in full panel:
+      1. 2015Q1
+      2. 2015Q2
+      3. 2015Q3
+      4. 2015Q4
+      5. 2016Q1
+      6. 2016Q2
+      7. 2017Q2
+      8. 2017Q3
+      9. 2017Q4
+     10. 2018Q1
+     11. 2018Q2
+     12. 2018Q3
+     13. 2018Q4
+     14. 2019Q1
+     15. 2019Q2
+     16. 2019Q3
+     17. 2019Q4
+     18. 2020Q1
+     19. 2020Q2
+     20. 2020Q3
+     21. 2020Q4
+     22. 2021Q1
+     23. 2021Q2
+     24. 2021Q3
+     25. 2021Q4
+     26. 2022Q1
+     27. 2022Q2
+     28. 2022Q3
+     29. 2022Q4
+     30. 2023Q1
+     31. 2023Q2
+     32. 2023Q3
+     33. 2023Q4
+     34. 2024Q1
+     35. 2024Q2
+     36. 2024Q3
+     37. 2024Q4
+
+  Quarters with ZERO valid deposit_change_qt obs: 1
+    --> 2015Q1  (0 valid obs -- absent from regression)
+
+  Quarters with <50 valid deposit_change_qt obs:
+    --> 2015Q1  (0 valid obs)
+
+  Quarter count 37 verified against full panel -- PASS
+  Note: regression subset has 36 quarters (1 quarter all-NaN, dropped by dropna)
+
+[3/5] Computing nominal growth diagnostics...
+
+  Annualized nominal deposit growth by year:
+  Year     Mean Qtrly        Std        N     Ann. %
+  --------------------------------------------------
+  2015       0.012007   0.042108     1825     4.8900%
+  2016       0.034872   0.056687     1230    14.6955%
+  2017       0.071060   0.086080     1862    31.5998%
+  2018       0.023806   0.040739     2500     9.8679%
+  2019       0.026760   0.042452     2500    11.1414%
+  2020       0.026613   0.049484     2500    11.0777%
+  2021       0.015349   0.037256     2504     6.2824%
+  2022       0.018562   0.039182     2506     7.6341%
+  2023       0.002836   0.058475     2507     1.1392%
+  2024       0.022574   0.036781     2508     9.3400%
+
+  Summary (annualized %):
+    Simple mean:    10.77%
+    Median:         9.60%
+    Min:            1.14% (2023)
+    Max:            31.60% (2017)
+
+  Note: 'Simple mean' = unweighted mean of annual rates across years.
+        Not a geometric mean. Used for diagnostic only, not regression.
+
+[4/5] Generating nominal growth trend figure...
+  Figure saved: 05_Outputs/Figures/32_nominal_growth_trend.png (207.4 KB) -- PASS
+
+[5/5] Logging decision and saving outputs...
+
+  DECISION: Keep nominal INR. Do NOT deflate by CPI.
+Rationale: District-quarter CPI unavailable at required granularity.
+Interpolated CPI would introduce noise exceeding the bias it corrects.
+Paper disclosure: 'Deposits measured in nominal INR. India CPI inflation
+averaged ~6-7% annually 2015-2024. All regressions include quarter FE,
+which absorb national-level price trends. Remaining inflation confound
+is acknowledged as a limitation.'
+Pre-committed in Hypotheses v2.4.

@@ -161,14 +161,14 @@ dropped_A = initial_n - len(df_A)
 dropped_B = initial_n - len(df_B)
 
 print(f"  Initial:               {initial_n:,} obs")
-print(f"  After restriction (A): {len(df_A):,} obs  (expected ~21,180)")
-print(f"  After restriction (B): {len(df_B):,} obs  (expected ~21,180)")
+print(f"  After restriction (A): {len(df_A):,} obs  (expected ~21,837)")
+print(f"  After restriction (B): {len(df_B):,} obs  (expected ~21,837)")
 print(f"  Dropped (A):           {dropped_A:,} obs ({dropped_A / initial_n * 100:.1f}%)")
 print(f"  Dropped (B):           {dropped_B:,} obs ({dropped_B / initial_n * 100:.1f}%)")
 
 log.info(f"\nInitial: {initial_n:,} obs")
-log.info(f"After restriction (Rule A): {len(df_A):,} obs  (expected ~21,180)")
-log.info(f"After restriction (Rule B): {len(df_B):,} obs  (expected ~21,180)")
+log.info(f"After restriction (Rule A): {len(df_A):,} obs  (expected ~21,837)")
+log.info(f"After restriction (Rule B): {len(df_B):,} obs  (expected ~21,837)")
 log.info(f"Dropped (Rule A): {dropped_A:,} ({dropped_A / initial_n * 100:.1f}%)")
 log.info(f"Dropped (Rule B): {dropped_B:,} ({dropped_B / initial_n * 100:.1f}%)")
 log.info(f"Drop breakdown (Rule A): 631x2=1,262 lag NaN + {dropped_A - 1262} additional deposit NaN")
@@ -185,10 +185,10 @@ df_B['quarter_fe'] = pd.Categorical(df_B['quarter'])
 n_qfe_A = df_A['quarter_fe'].nunique()
 n_qfe_B = df_B['quarter_fe'].nunique()
 
-print(f"  Rule A quarter FE: {n_qfe_A}  (expected 36)")
-print(f"  Rule B quarter FE: {n_qfe_B}  (expected 36)")
-log.info(f"\nQuarter FE (Rule A): {n_qfe_A}  (expected 36)")
-log.info(f"Quarter FE (Rule B): {n_qfe_B}  (expected 36)")
+print(f"  Rule A quarter FE: {n_qfe_A}  (expected 35)")
+print(f"  Rule B quarter FE: {n_qfe_B}  (expected 35)")
+log.info(f"\nQuarter FE (Rule A): {n_qfe_A}  (expected 35)")
+log.info(f"Quarter FE (Rule B): {n_qfe_B}  (expected 35)")
 
 if n_qfe_A < 33 or n_qfe_A > 38:
     raise ValueError(f"Quarter FE count {n_qfe_A} outside expected range [33, 38].")
@@ -396,7 +396,7 @@ for rule, m, lags_vars, coefs, ses, tstats, pvals, cilos, cihis, sigs, note in [
      [cilo_A_t0, cilo_A_t1, cilo_A_t2],
      [cihi_A_t0, cihi_A_t1, cihi_A_t2],
      [sig_A_t0,  sig_A_t1,  sig_A_t2 ],
-     'Primary. Quarter FE only. Validated Feb 6 (t-2 beta=-0.0091, p=0.012).'),
+     'Primary. Quarter FE only. Confirmed Mar 8 (t-2 beta=-0.0070, p<0.001).'),
     ('B', model_B,
      ['flood_exposure_ruleB_qt', 'flood_ruleB_L1', 'flood_ruleB_L2'],
      [coef_B_t0, coef_B_t1, coef_B_t2],

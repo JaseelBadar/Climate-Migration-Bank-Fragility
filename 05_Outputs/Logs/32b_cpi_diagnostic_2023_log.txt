@@ -1,6 +1,6 @@
 ======================================================================
 SCRIPT 32b: 2023 DEPOSIT ANOMALY DIAGNOSIS
-Run: 2026-03-09 18:59:11
+Run: 2026-03-10 23:18:20
 ======================================================================
 
 [1/6] Loading winsorized panel...
@@ -85,6 +85,6 @@ Run: 2026-03-09 18:59:11
 [6/6] Conclusion and saving outputs...
 
   CONCLUSION:
-  NO SYSTEMIC ANOMALY: 2023 extreme obs count is within normal range. Low 2023 annualized growth (1.14% from Script 32) reflects genuine economic signal -- consistent with RBI deposit growth slowdown and high inflation eroding real deposit accumulation in 2023. Winsorization handled individual outliers. No action required.
+  LEFT-TAIL ASYMMETRY CONFIRMED: 385 of 2,507 2023 district-quarters (15.4%) fall below the full-sample 5th percentile (expected ~5%, observed 3x expected). Unit error ruled out (2023/2022 median level ratio near 1.0 -- continuous). Mean-median divergence in 2023 confirms left-tail pull on mean. Concentration in small-base Northeast districts (low absolute deposit levels amplify percentage changes -- not data corruption). Positive tail normal (1.4% above p95 -- within expected range). Winsorization adequate for regression purposes. ACTION: Northeast district sensitivity robustness check required before submission.
 
   Table saved: 05_Outputs/Tables/06_32b_2023_diagnosis.csv -- PASS

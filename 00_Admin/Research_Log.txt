@@ -4561,9 +4561,9 @@ NOT COMPLETED / PENDING NEXT SESSION:
 Next session priority: Script 30 -> H4a, H4b, H4c -> update all
   project documentation to v2.5 with final confirmed results.
 
-======================================================================
+==============================================================================================================================
 2026-03-09 (Mon) 18:00-19:17 IST: Scripts 30-32b Executed and Verified. Phase 4 (H4) Complete. Phase 6 CPI Diagnostic Complete.
-======================================================================
+==============================================================================================================================
 Goal: Execute H4 heterogeneity regressions with composite FE fix. Run winsorization and CPI diagnostics. Verify all results.
 
 ----------------------------------------------------------------------
@@ -4701,6 +4701,125 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Pre-paper: re-run Scripts 27-30 with linearmodels PanelOLS
   - Confirm Northeast sensitivity check scope (Script 33 vs v2.5 note)
 
+==============================================================================================================================
+2026-03-10 (Tue) 19:39-23:57 IST: Cosmetic Fixes Complete. Script 32b Re-run. Script 33 Executed. R8 Confirmed Robust.
+==============================================================================================================================
+Goal: Close all cosmetic fixes. Fix Script 32b conclusion logic. Decide and execute Northeast sensitivity check (R8).
+
+----------------------------------------------------------------------
+A) Cosmetic Fixes: Scripts 29 and 12
+----------------------------------------------------------------------
+Script 29: Two comment-level corrections applied.
+  N comment:   ~21,180 -> ~21,837 (correct post-clean two-lag restriction)
+  QFE comment: 36 -> 35 (correct -- L2 drops 2015Q1 and 2015Q2)
+  CSV note:    Feb 6 benchmark beta=-0.0091 -> confirmed Mar 8 beta=-0.0070
+  No re-run required. No result changes.
+
+Script 12: Section [7] token count already reads 46 in current file.
+  Fix was either applied earlier or was never wrong in this version.
+  No change made. File untouched.
+
+----------------------------------------------------------------------
+B) Script 32b: Conclusion Logic Fix and Re-run
+----------------------------------------------------------------------
+Bug confirmed: conclusion if/elif/else block evaluated n_high_2023 only.
+  n_low_2023 = 385 computed correctly in Step 5 but never checked.
+  "NO SYSTEMIC ANOMALY" conclusion was factually wrong for negative tail.
+
+Fix: added elif branch between n_high > 0.05 and else:
+  n_low_2023 > 0.10 * n_total_2023 -> LEFT-TAIL ASYMMETRY CONFIRMED
+  Threshold 10% is symmetric with existing high-tail threshold (10%).
+
+Re-run confirmed correct. Key output:
+  2023 obs below p5: 385 of 2,507 (15.4%) -- 3x expected, branch fires.
+  Unit error flag: NO (ratio 0.9985x) -- PASS
+  Conclusion: LEFT-TAIL ASYMMETRY CONFIRMED. NE concentration confirmed.
+  Winsorization adequate. Action: NE sensitivity check required.
+
+Old log file (wrong conclusion) overwritten by re-run. Cannot be cited.
+Commits issued: 32b_cpi_diagnostic_2023.py, 06_32b_2023_diagnosis.csv,
+  32b_cpi_diagnostic_2023_log.txt separately.
+
+----------------------------------------------------------------------
+C) Script 33: R8 Northeast Sensitivity (H3 + H4)
+----------------------------------------------------------------------
+Scope decision: full Script 33 (executed re-run, not footnote).
+  Rationale: 8 of bottom 10 extreme 2023 obs are NE. TUENSANG swing
+  +-3.21. Reviewer will ask. Executed table stronger than a footnote.
+
+Northeast states targeted for exclusion (8):
+  ARUNACHAL PRADESH, ASSAM, MANIPUR, MEGHALAYA,
+  MIZORAM, NAGALAND, SIKKIM, TRIPURA
+
+SIKKIM absent from GADM v4.1 Level-2 panel. WARNING issued, filter
+  continued. Effective exclusion: 7 states, 83 districts, 3,071 obs
+  (13.15% of panel). Must be disclosed in robustness footnote.
+
+Z_i proxies constructed on FULL sample before NE filter -- thresholds
+  identical to Script 30. Urban median = -0.8900, flood median = 3.0.
+  Both match Script 30 exactly. Comparison is clean.
+
+All 18 hard asserts passed. Lag arithmetic exact on NE-excluded sample:
+  L1 NaN = 548, L2 NaN = 1,096 (= 548 x 1 and 548 x 2) -- PASS
+
+Results -- NE-excluded sample (Rule A):
+  H3 t0:   beta = +0.000192, p = 0.882 -- null (main: null) SAME
+  H3 t-1:  beta = +0.001333, p = 0.123 -- null (main: null) SAME
+  H3 t-2:  beta = -0.008608, p < 0.001 *** (main: -0.007005) SAME, stronger
+  H4a:     beta = -0.002192, p = 0.429 -- null (main: null) SAME
+  H4b:     beta = -0.005758, p = 0.044 ** (main: -0.006810) SAME, robust
+  H4c:     beta = +0.015435, p < 0.001 *** (main: +0.012495) SAME, stronger
+
+Critical verdict:
+  H3 t-2: ROBUST. Effect strengthens after NE exclusion. Not NE-driven.
+  H4b:    ROBUST. High-exposure heterogeneity not NE-driven.
+  H4c:    ROBUST under Rule A. Rule B fragility unchanged.
+  H4a:    Correctly null before and after.
+
+Writing is unblocked. Results section can proceed after linearmodels
+  re-run and remaining robustness scripts complete.
+
+One cosmetic log issue noted: H3 complete cases line reads "(expected ~35)"
+  -- QFE value misplaced on obs line. No effect on results or CSVs.
+
+Commits issued: 33_northeast_sensitivity.py,
+  07_H3_northeast_sensitivity.csv, 08_H4_northeast_sensitivity.csv,
+  33_northeast_sensitivity_log.txt separately.
+
+----------------------------------------------------------------------
+D) Pre-Writing Master Plan
+----------------------------------------------------------------------
+Pre_Writing_Master_Plan.txt generated and committed to 00_Admin/.
+  Contains: all locked results, completed scripts, remaining scripts
+  (33-37, 27b-30b), figure scripts (A/B/C), execution order,
+  writing plan, 10 methodological constraints, robustness status,
+  file locations, active known issues.
+  Purpose: session continuity document -- show to AI at session start.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Robustness status:
+  R1 (both rules):          COMPLETE
+  R2 (placebo timing):      PENDING -- Script 34
+  R3 (winsorized re-runs):  PENDING -- Script 37
+  R4 (nominal decision):    COMPLETE
+  R5 (longer lags):         PENDING -- Script 35
+  R6 (state clustering):    PENDING -- Script 36
+  R7 (IV F-stat):           COMPLETE
+  R8 (NE sensitivity):      COMPLETE -- Script 33
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Script 34: R2 placebo timing (falsification -- pre-committed, blocks writing)
+  - Script 35: R5 longer lags t-3/t-4 Rule B
+  - Script 36: R6 state-level clustering H1 + H3
+  - Script 37: R3 winsorized re-runs H2 + H3 + H4
+  - Scripts 27b-30b: linearmodels PanelOLS final tables
+  - Figure A: H3 event study plot
+  - Figure B: India district flood exposure map
+  - Figure C: H4 heterogeneity coefficient plot
+  - Update Hypotheses v2.6 and Codebook v2.6 with R8 results
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-09 19:20 PM IST
+END OF LOG - Last Updated: 2026-03-10 23:55 PM IST
 ======================================================================

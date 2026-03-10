@@ -1,0 +1,7 @@
+hypothesis,rule,lag,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,significance,n_obs,quarter_fe_count,district_fe,se_type,sample,ne_states_excluded,n_ne_districts_excl
+H3,A,t0,0.000192,0.001296,0.148,0.882391,-0.002349,0.002732,,18964,35,NONE (pre-committed H3 design),clustered_by_district_state_id,NE_excluded,ARUNACHAL PRADESH|ASSAM|MANIPUR|MEGHALAYA|MIZORAM|NAGALAND|SIKKIM|TRIPURA,83
+H3,A,t-1,0.001333,0.000863,1.544,0.122582,-0.000359,0.003026,,18964,35,NONE (pre-committed H3 design),clustered_by_district_state_id,NE_excluded,ARUNACHAL PRADESH|ASSAM|MANIPUR|MEGHALAYA|MIZORAM|NAGALAND|SIKKIM|TRIPURA,83
+H3,A,t-2,-0.008608,0.001684,-5.112,0.0,-0.011908,-0.005308,***,18964,35,NONE (pre-committed H3 design),clustered_by_district_state_id,NE_excluded,ARUNACHAL PRADESH|ASSAM|MANIPUR|MEGHALAYA|MIZORAM|NAGALAND|SIKKIM|TRIPURA,83
+H3,B,t0,0.004526,0.003245,1.395,0.163108,-0.001834,0.010885,,18964,35,NONE (pre-committed H3 design),clustered_by_district_state_id,NE_excluded,ARUNACHAL PRADESH|ASSAM|MANIPUR|MEGHALAYA|MIZORAM|NAGALAND|SIKKIM|TRIPURA,83
+H3,B,t-1,0.002632,0.002473,1.064,0.287332,-0.002216,0.007479,,18964,35,NONE (pre-committed H3 design),clustered_by_district_state_id,NE_excluded,ARUNACHAL PRADESH|ASSAM|MANIPUR|MEGHALAYA|MIZORAM|NAGALAND|SIKKIM|TRIPURA,83
+H3,B,t-2,-0.005471,0.009749,-0.561,0.57464,-0.024578,0.013636,,18964,35,NONE (pre-committed H3 design),clustered_by_district_state_id,NE_excluded,ARUNACHAL PRADESH|ASSAM|MANIPUR|MEGHALAYA|MIZORAM|NAGALAND|SIKKIM|TRIPURA,83

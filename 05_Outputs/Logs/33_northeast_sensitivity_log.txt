@@ -1,0 +1,205 @@
+======================================================================
+SCRIPT 33: ROBUSTNESS R8 -- NORTHEAST SENSITIVITY
+H3 and H4 re-run excluding 8 Northeast states
+Run: 2026-03-10 23:51:01
+======================================================================
+MOTIVATION: Script 32b -- 2023 left-tail anomaly concentrated in NE.
+  385 of 2,507 2023 obs (15.4%) below p5 (expected 5%).
+  TUENSANG 2023 swing = +-3.21. 8 of bottom 10 extreme obs are NE.
+  This check: do main results survive NE exclusion?
+======================================================================
+
+[1/9] Loading regression panel...
+  Loaded: 23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+
+[2/9] Constructing and verifying composite key on full sample...
+  Full sample: 631 unique district_state_id pairs (expected 631)
+  Full sample composite key verified -- PASS
+
+[3/9] Verifying all 8 Northeast states present before exclusion...
+  NE states found in data:     7 of 8
+  NE states not found in data: 1
+  WARNING: These NE states not found: ['SIKKIM']
+  Check state_gadm field spelling. Filter will proceed.
+  States present in data sample: ['ANDAMAN AND NICOBAR', 'ANDHRA PRADESH', 'ARUNACHAL PRADESH', 'ASSAM', 'BIHAR', 'CHANDIGARH', 'CHHATTISGARH', 'DADRA AND NAGAR HAVELI', 'DAMAN AND DIU', 'GOA']...
+  NE district-quarters (to be excluded): 3,071
+  NE unique districts (to be excluded):  83
+
+[4/9] Constructing Z_i proxies on FULL sample (before NE exclusion)...
+  CRITICAL: Thresholds must match Script 30 exactly.
+  Proxies computed on full sample -> same classification as main results.
+  urban_proxy: full-sample median log_lights_qt = -0.8900
+    Urban (above median): 315 districts
+    Rural (at/below):     316 districts
+  urban_proxy: 0 NaN -- PASS
+  high_exposure_proxy: full-sample median cumulative floods = 3.0
+    High exposure (strictly above median): 255 districts
+    Low  exposure (at/below median):       376 districts
+    Note: threshold strictly > 3.0 (consistent with Script 30)
+  high_exposure_proxy: 0 NaN -- PASS
+  monsoon_qt: 5,679 Q3 obs (expected ~23,347 / 4 = ~5,837)
+  Z_i construction on full sample complete -- PASS
+
+[5/9] Applying Northeast exclusion filter...
+  Initial:   23,347 obs
+  Excluded:  3,071 obs (13.15% of panel)
+  Remaining: 20,276 obs
+  Districts remaining: 548 (from 631 full sample)
+  Districts excluded:  83
+
+[6/9] Verifying NE exclusion is complete...
+  NE obs remaining after filter: 0 -- PASS
+  NE states in filtered sample: 0 -- PASS
+  Non-NE states in filtered sample: 27
+
+[7/9] Verifying lag arithmetic on NE-excluded sample...
+  Rule A L1 NaN: 548  (expected 548 = 548 districts x 1)
+  Rule A L2 NaN: 1,096  (expected 1,096 = 548 districts x 2)
+  Rule B L1 NaN: 548  (expected 548)
+  Rule B L2 NaN: 1,096  (expected 1,096)
+  Lag arithmetic on NE-excluded sample -- PASS
+
+  Filtered sample summary:
+    Obs:              20,276
+    Districts:        548
+    Quarters:         37
+    Rule A events:    1,870
+    Rule B events:    129
+
+======================================================================
+[8/9] H3: DISTRIBUTED LAG -- NE-EXCLUDED SAMPLE
+======================================================================
+  Spec: quarter FE only (NO district FE). SE: clustered district_state_id.
+  Pre-committed H3 design. Identical to Script 29 except NE excluded.
+
+  Rule A complete cases: 18,964  (expected ~35)
+  Rule B complete cases: 18,964
+  Quarter FE (Rule A):   35  (expected 35)
+  Quarter FE (Rule B):   35  (expected 35)
+
+  H3 Rule A:
+  Dependent: deposit_change_qt
+  Regressors: flood_ruleA t0, t-1, t-2 | Quarter FE | Clustered SE
+  Model fitted: N=18,964, R2=0.3046 -- PASS
+  [t0  Current quarter]
+    Beta    = 0.000192  (main: +0.000609)
+    SE      = 0.001296
+    t       = 0.148
+    p       = 0.882391  (main: 0.677)
+    95% CI  = [-0.002349, 0.002732]
+    Status  = NOT SIGNIFICANT
+  [t-1 One quarter lag]
+    Beta    = 0.001333  (main: +0.001505)
+    SE      = 0.000863
+    t       = 1.544
+    p       = 0.122582  (main: 0.177)
+    95% CI  = [-0.000359, 0.003026]
+    Status  = NOT SIGNIFICANT
+  [t-2 Two quarter lag]
+    Beta    = -0.008608  (main: -0.007005)
+    SE      = 0.001684
+    t       = -5.112
+    p       = 0.000000  (main: 0.000)
+    95% CI  = [-0.011908, -0.005308]
+    Status  = ***
+
+  H3 Rule B:
+  Model fitted: N=18,964, R2=0.3035 -- PASS
+  [t0  Current quarter]
+    Beta    = 0.004526
+    SE      = 0.003245
+    t       = 1.395
+    p       = 0.163108
+    95% CI  = [-0.001834, 0.010885]
+    Status  = NOT SIGNIFICANT
+  [t-1 One quarter lag]
+    Beta    = 0.002632
+    SE      = 0.002473
+    t       = 1.064
+    p       = 0.287332
+    95% CI  = [-0.002216, 0.007479]
+    Status  = NOT SIGNIFICANT
+  [t-2 Two quarter lag]
+    Beta    = -0.005471
+    SE      = 0.009749
+    t       = -0.561
+    p       = 0.574640
+    95% CI  = [-0.024578, 0.013636]
+    Status  = NOT SIGNIFICANT
+
+======================================================================
+H4: HETEROGENEITY -- NE-EXCLUDED SAMPLE
+======================================================================
+  Spec: district FE + quarter FE. SE: clustered district_state_id.
+  Z_i thresholds from FULL sample (Script 30 consistent).
+  urban_proxy median threshold:         -0.8900
+  high_exposure_proxy median threshold: 3.0
+
+  H4 complete cases: 19,492
+  District FE:       548  (from 548 NE-excluded)
+  Quarter FE:        36  (expected 36)
+
+  H4a Rule A: flood_exposure_ruleA_qt:urban_proxy
+  Formula: deposit ~ flood_exposure_ruleA_qt + flood_exposure_ruleA_qt:urban_proxy + distFE + qtrFE
+  Model fitted: N=19,492, R2=0.3237 -- PASS
+  Baseline flood (beta0): +0.000947, SE=0.002238, p=0.6720 
+  Interaction (beta1):    -0.002192, SE=0.002770, p=0.4287 
+    Main result anchor:   -0.001666, p=0.532
+
+  H4a Rule B: flood_exposure_ruleB_qt:urban_proxy
+  Formula: deposit ~ flood_exposure_ruleB_qt + flood_exposure_ruleB_qt:urban_proxy + distFE + qtrFE
+  Model fitted: N=19,492, R2=0.3238 -- PASS
+  Baseline flood (beta0): +0.009482, SE=0.004202, p=0.0240 **
+  Interaction (beta1):    -0.003169, SE=0.006308, p=0.6154 
+
+  H4b Rule A: flood_exposure_ruleA_qt:high_exposure_proxy
+  Formula: deposit ~ flood_exposure_ruleA_qt + flood_exposure_ruleA_qt:high_exposure_proxy + distFE + qtrFE
+  Model fitted: N=19,492, R2=0.3238 -- PASS
+  Baseline flood (beta0): +0.003379, SE=0.002342, p=0.1491 
+  Interaction (beta1):    -0.005758, SE=0.002855, p=0.0437 **
+    Main result anchor:   -0.006810, p=0.020
+
+  H4b Rule B: flood_exposure_ruleB_qt:high_exposure_proxy
+  Formula: deposit ~ flood_exposure_ruleB_qt + flood_exposure_ruleB_qt:high_exposure_proxy + distFE + qtrFE
+  Model fitted: N=19,492, R2=0.3238 -- PASS
+  Baseline flood (beta0): +0.017188, SE=0.006792, p=0.0114 **
+  Interaction (beta1):    -0.011881, SE=0.007785, p=0.1270 
+
+  H4c Rule A: flood_exposure_ruleA_qt:monsoon_qt
+  Formula: deposit ~ flood_exposure_ruleA_qt + flood_exposure_ruleA_qt:monsoon_qt + distFE + qtrFE
+  Model fitted: N=19,492, R2=0.3245 -- PASS
+  Baseline flood (beta0): -0.007100, SE=0.002067, p=0.0006 ***
+  Interaction (beta1):    +0.015435, SE=0.002421, p=0.0000 ***
+    Main result anchor:   +0.012495, p=0.000
+
+  H4c Rule B: flood_exposure_ruleB_qt:monsoon_qt
+  Formula: deposit ~ flood_exposure_ruleB_qt + flood_exposure_ruleB_qt:monsoon_qt + distFE + qtrFE
+  Model fitted: N=19,492, R2=0.3238 -- PASS
+  Baseline flood (beta0): +0.005515, SE=0.004105, p=0.1791 
+  Interaction (beta1):    +0.004147, SE=0.007173, p=0.5631 
+
+======================================================================
+[9/9] SIDE-BY-SIDE COMPARISON: MAIN vs NE-EXCLUDED
+======================================================================
+
+  H3 Rule A:
+  Lag       Main beta     Main p   NE-excl beta    NE-excl p  Direction
+  --------------------------------------------------------------------
+  t0         0.000609     0.6770       0.000192     0.882391       SAME (null)
+  t-1        0.001505     0.1770       0.001333     0.122582       SAME (null)
+  t-2       -0.007005     0.0000      -0.008608     0.000000       SAME (SIG)
+
+  H4 Interactions (Rule A):
+  Spec      Main beta     Main p   NE-excl beta    NE-excl p  Direction
+  --------------------------------------------------------------------
+  H4a       -0.001666     0.5320      -0.002192     0.428708       SAME (null)
+  H4b       -0.006810     0.0200      -0.005758     0.043715       SAME (SIG)
+  H4c        0.012495     0.0000       0.015435     0.000000       SAME (SIG)
+
+  CRITICAL VERDICT:
+  H3 t-2: ROBUST to NE exclusion. Effect not driven by NE districts.
+  H4b: ROBUST to NE exclusion. High-exposure heterogeneity not NE-driven.
+
+  H3 table saved: 05_Outputs/Tables/07_H3_northeast_sensitivity.csv  (6 rows) -- PASS
+  H4 table saved: 05_Outputs/Tables/08_H4_northeast_sensitivity.csv  (6 rows) -- PASS

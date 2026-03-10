@@ -1,0 +1,389 @@
+======================================================================
+PRE-WRITING MASTER PLAN
+Climate Shocks, Displacement, and Bank Liquidity Risk
+Evidence from Night-Lights in India, 2015-2024
+======================================================================
+PI:      Jaseel Badar, Harvard University
+Created: 2026-03-10
+Purpose: Complete record of all remaining scripts, figures, and tasks
+         required before actual paper writing begins.
+======================================================================
+
+
+----------------------------------------------------------------------
+SECTION 1: LOCKED RESULTS (DO NOT REVISIT)
+----------------------------------------------------------------------
+
+H1: Floods -> Lights
+  Rule A: beta = -0.0445, SE = 0.0078, t = -5.708, p < 0.001 ***
+  Rule B: beta = -0.0584, SE = 0.0198, t = -2.954, p = 0.003 ***
+  N = 22,716 | District FE = 631 | Quarter FE = 36
+  Status: CONFIRMED
+
+H2: Lights -> Deposits (IV 2SLS)
+  Rule A: beta = -0.0084, SE = 0.0340, p = 0.805 | F = 34.673 (strong)
+  Rule B: beta = -0.0068, SE = 0.0597, p = 0.910 | F = 8.949 (weak)
+  N = 22,442 | District FE = 631 | Quarter FE = 36
+  Status: NULL CONFIRMED. Rule B labeled suggestive.
+
+H3: Distributed Lag (Flood Timing -> Deposits)
+  Rule A t0:  beta = +0.000609, SE = 0.001463, p = 0.677 -- NULL
+  Rule A t-1: beta = +0.001505, SE = 0.001114, p = 0.177 -- NULL
+  Rule A t-2: beta = -0.007005, SE = 0.001645, p < 0.001 *** CONFIRMED
+  Rule B: all lags null (0.90% treatment rate, insufficient power)
+  N = 21,837 | Quarter FE = 35 | NO district FE
+  Status: CONFIRMED at t-2
+
+H4: Heterogeneity
+  H4a Urban proxy:      Rule A p = 0.532 null | Rule B p = 0.281 null
+  H4b High exposure:    Rule A p = 0.020 **   | Rule B p = 0.080 *
+  H4c Monsoon quarter:  Rule A p < 0.001 ***  | Rule B p = 0.774 null
+  N = 22,442 | District FE = 631 | Quarter FE = 36
+  Status: H4a null. H4b supported. H4c partial (Rule A only, fragile).
+
+Key net effect H4b (Rule A):
+  Low-exposure baseline:  +0.0047 (precautionary saving)
+  High-exposure net:      +0.0047 + (-0.0068) = -0.0021 (withdrawal)
+
+Instrument diagnostics:
+  Rule A F = (-5.888)^2 = 34.673 -- STRONG (threshold 16.38)
+  Rule B F = (-2.992)^2 =  8.949 -- WEAK  (threshold 10)
+  Method: F = t^2 for single excluded instrument (Wooldridge 2010 p.104)
+  Reason: linearmodels first_stage F overflows at 666 exog columns.
+
+----------------------------------------------------------------------
+SECTION 2: COMPLETED SCRIPTS (DO NOT RE-RUN UNLESS SPECIFIED)
+----------------------------------------------------------------------
+
+08  Build district crosswalk         Clean. 762-row assert PASS.
+10  Build flood exposure panel        Clean. Rule A 2,518 events.
+11  Validate flood exposure           Clean.
+12  Flood exposure summary            Clean. Token count = 46 (verified).
+13  Extract RBI deposits              Clean. dep_idx = q_idx + 1.
+14  Merge master panel                Clean. 26,640 rows.
+15  Validate master panel             Clean.
+17  Prepare analysis sample           Clean. 23,347 rows, 631 districts.
+21  Extract VIIRS full panel          Clean.
+21b Fix VIIRS duplicates              Clean.
+22  Aggregate VIIRS quarterly         Clean.
+22b Align VIIRS clean                 Clean. 25,240 rows.
+23  Merge VIIRS with master panel     Clean. 100% VIIRS coverage.
+24  Engineer regression variables     Clean. 23 columns, lag exact.
+25  Descriptive statistics            Clean.
+26  Validate VIIRS quarterly          Clean. All 9 checks PASS.
+27  H1: First stage                   Clean. Results locked.
+28  H2: IV 2SLS                       Clean. Results locked.
+29  H3: Distributed lag               Clean. Results locked. Cosmetic fix done 2026-03-10.
+30  H4: Heterogeneity                 Clean. Results locked.
+31  Winsorize                         Clean. 450 obs (2.01%), symmetric.
+32  CPI diagnostic                    Clean. Nominal INR decision locked.
+32b 2023 anomaly diagnosis            Clean. Left-tail fix done 2026-03-10.
+
+Key output files (all verified clean):
+  regression_panel_final.csv         23,347 x 23
+  regression_panel_final_winsor.csv  23,347 x 24  (winsor bounds: -0.162585, +0.230701)
+  02_H1_first_stage.csv
+  03_H2_iv2sls.csv
+  04_H3_timing.csv
+  05_H4_heterogeneity.csv
+  06_32b_2023_diagnosis.csv
+
+----------------------------------------------------------------------
+SECTION 3: REMAINING SCRIPTS (in execution order)
+----------------------------------------------------------------------
+
+All 6 robustness scripts BLOCK writing.
+Figure scripts can run in parallel with early writing sections
+(Introduction, Data, Methodology) but must be final before the
+Results section is written.
+
+--- BLOCK 1: ROBUSTNESS (scripts 33-37, must complete before writing) ---
+
+SCRIPT 33 -- R8: Northeast Sensitivity
+  Purpose:  Re-run H3 and H4 excluding 8 Northeast states.
+  Reason:   Script 32b confirmed left-tail asymmetry concentrated in
+            NE districts. 8 of bottom 10 extreme 2023 obs are NE.
+            TUENSANG 2023 swing = +-3.21 (likely reporting artifact).
+            A reviewer will ask. An executed table is stronger than a footnote.
+  Exclude:  ARUNACHAL PRADESH, ASSAM, MANIPUR, MEGHALAYA,
+            MIZORAM, NAGALAND, SIKKIM, TRIPURA (8 states)
+  Specs:    H3 (quarter FE, clustered SE, same formula as Script 29)
+            H4 (district+quarter FE, same formula as Script 30)
+  Expected: H3 t-2 to remain significant. H4b to remain supported.
+            If H3 t-2 disappears, the main result is NE-driven -- critical.
+  Input:    regression_panel_final.csv (not winsorized -- test raw result)
+  Output:   07_H3_northeast_sensitivity.csv
+            08_H4_northeast_sensitivity.csv
+            33_northeast_sensitivity_log.txt
+
+SCRIPT 34 -- R2: Placebo Timing
+  Purpose:  Falsification check. Test Flood_t-1 predicting
+            DeltaDeposits_t-1. Must return null.
+  Reason:   Pre-committed. If lagged flood predicts lagged deposit
+            in the same direction as H3, the t-2 result may reflect
+            reverse causality or spurious autocorrelation -- not
+            genuine liquidity timing.
+  Spec:     OLS, quarter FE only (same as H3), Rule A and Rule B.
+            Regressor: flood_ruleA_L1 on deposit_change_qt lagged by 1.
+            Requires constructing deposit_change_L1 from Script 24 data.
+  Expected: All coefficients null (no pre-trend in deposits before flood).
+  Output:   09_placebo_timing.csv
+            34_placebo_timing_log.txt
+
+SCRIPT 35 -- R5: Longer Lags (t-3, t-4)
+  Purpose:  Extend H3 distributed lag to t-3 and t-4.
+  Reason:   Pre-committed persistence check. Establishes whether the
+            t-2 effect decays (temporary displacement) or persists
+            (permanent loss). Directly feeds the mechanism narrative.
+            Rule B only -- Rule A has power for this, but Rule B
+            precision is preferred at deeper lag depth.
+  Spec:     OLS, quarter FE only. Rule B only.
+            Requires flood_ruleB_L3, flood_ruleB_L4 from Script 24
+            (already in regression_panel_final.csv -- verify cols exist).
+  Expected: t-3 and t-4 null under Rule B (effect decays at t-2).
+  Note:     If L3/L4 not in panel, recompute within script using
+            pre-committed sort order (district_gadm, state_gadm, year, q).
+  Output:   10_H3_longer_lags.csv
+            35_longer_lags_log.txt
+
+SCRIPT 36 -- R6: State-Level Clustering
+  Purpose:  Re-run H1 and H3 with SE clustered by state_gadm (28 clusters)
+            instead of district_state_id (631 clusters).
+  Reason:   Pre-committed conservative SE check. Fewer clusters = wider SEs.
+            If H1 and H3 t-2 survive, causal chain is robust to the most
+            conservative reasonable SE specification.
+            Cameron and Miller (2015): below 50 clusters, standard clustered
+            SEs may be liberal. 28 state clusters is below this threshold --
+            must use wild bootstrap or explicitly note the limitation.
+  Spec:     H1: same formula as Script 27, groups=state_gadm.
+            H3: same formula as Script 29, groups=state_gadm.
+            Both rules.
+  Expected: SEs widen. H1 and H3 t-2 remain significant (strong effects).
+  Output:   11_H1_state_clustering.csv
+            12_H3_state_clustering.csv
+            36_state_clustering_log.txt
+
+SCRIPT 37 -- R3: Winsorized Regression Re-runs
+  Purpose:  Re-run H2, H3, H4 on regression_panel_final_winsor.csv.
+  Reason:   Pre-committed R3. Script 31 produced the winsorized panel
+            but the regression re-runs have not been executed. H1 is
+            unaffected (outcome is lights, not deposits). H2, H3, H4
+            all use deposit_change_qt_winsor as outcome.
+  Spec:     H2: same as Script 28 but outcome = deposit_change_qt_winsor
+            H3: same as Script 29 but outcome = deposit_change_qt_winsor
+            H4: same as Script 30 but outcome = deposit_change_qt_winsor
+            All rules. All FE specifications unchanged.
+  Expected: Results robust. Winsorization removes 2.01% of obs symmetrically.
+            No material change to main coefficients expected.
+  Input:    regression_panel_final_winsor.csv (23,347 x 24)
+  Output:   13_H2_winsorized.csv
+            14_H3_winsorized.csv
+            15_H4_winsorized.csv
+            37_winsorized_reruns_log.txt
+
+--- BLOCK 2: FINAL TABLE SCRIPTS (linearmodels PanelOLS) ---
+
+SCRIPTS 27b, 28b, 29b, 30b -- linearmodels PanelOLS Final Tables
+  Purpose:  Replace statsmodels OLS with linearmodels.PanelOLS for all
+            four core regression scripts (H1, H2, H3, H4).
+  Reason:   Current scripts use statsmodels which triggers ValueWarning:
+            rank deficiency in clustered VCV at 666 exogenous columns.
+            Coefficients are valid but SEs are flagged as conservative.
+            Final paper tables must use linearmodels.PanelOLS which
+            handles within-panel FE and clustering correctly.
+  Expected: Coefficients identical to Scripts 27-30.
+            SEs may tighten slightly (more efficient estimator).
+            If any coefficient changes materially, investigate before writing.
+  Output:   Overwrite or replace 02_H1, 03_H2, 04_H3, 05_H4 CSVs
+            with linearmodels versions. Clearly labeled in filename.
+  Priority: Run AFTER Scripts 33-37. Robustness first, final tables last.
+
+----------------------------------------------------------------------
+SECTION 4: FIGURE SCRIPTS (parallel with early writing)
+----------------------------------------------------------------------
+
+Three figures genuinely earn their place. No others.
+
+FIGURE A -- H3 Event Study Plot
+  File:     05_Outputs/Figures/Fig_01_H3_event_study.png
+  Content:  X-axis: t0, t-1, t-2 (quarter lags)
+            Y-axis: coefficient on flood exposure (Rule A)
+            95% CI bars for each lag
+            Horizontal reference line at zero
+            Rule A and Rule B plotted side by side or as separate panels
+  Why:      Every distributed lag paper in applied economics has this.
+            Shows the null at t0/t-1 and the peak at t-2 visually.
+            A reviewer will expect it. Non-negotiable.
+  Data:     04_H3_timing.csv (already exists)
+
+FIGURE B -- India District Flood Exposure Map
+  File:     05_Outputs/Figures/Fig_02_flood_exposure_map.png
+  Content:  Choropleth of India at district level.
+            Color = Rule A cumulative treatment rate (0 to max).
+            7 homonymous pairs labeled correctly.
+            State boundaries overlaid.
+  Why:      Shows geographic variation in treatment -- standard for
+            papers exploiting geographic variation in India.
+            Establishes that treatment is not geographically clustered
+            in a single region (which would threaten identification).
+            GADM shapefile already in pipeline:
+            01_Data_Raw/District_Boundaries/gadm41_IND_2.shp
+  Data:     flood_exposure_panel.csv + GADM shapefile
+
+FIGURE C -- H4 Heterogeneity Coefficient Plot
+  File:     05_Outputs/Figures/Fig_03_H4_heterogeneity.png
+  Content:  Three coefficient plots (H4a, H4b, H4c) with 95% CI.
+            Rule A and Rule B side by side for each.
+            Reference line at zero.
+            H4b clearly significant, H4a null, H4c partial.
+  Why:      Cleaner than a table for a heterogeneity result.
+            Visually confirms H4b is the only robust finding across
+            both rules. Reviewers immediately see the Rule A/B contrast.
+  Data:     05_H4_heterogeneity.csv (already exists)
+
+NOTE: 32_nominal_growth_trend.png (existing) is a diagnostic figure,
+not a paper figure. It does NOT go in the paper. It stays in Figures/
+as a project record only.
+
+----------------------------------------------------------------------
+SECTION 5: EXECUTION ORDER
+----------------------------------------------------------------------
+
+SESSION: 2026-03-11 (tomorrow)
+
+Step 1:  Script 33 -- Northeast sensitivity (H3 + H4)
+Step 2:  Script 34 -- Placebo timing (R2 falsification)
+Step 3:  Script 35 -- Longer lags (R5, Rule B, t-3/t-4)
+Step 4:  Script 36 -- State clustering (R6, H1+H3)
+Step 5:  Script 37 -- Winsorized re-runs (R3, H2+H3+H4)
+Step 6:  Scripts 27b-30b -- linearmodels PanelOLS final tables
+Step 7:  Figure A -- H3 event study plot
+Step 8:  Figure B -- Flood exposure map
+Step 9:  Figure C -- H4 heterogeneity plot
+Step 10: Final documentation update (Hypotheses v2.6, Codebook v2.6)
+Step 11: BEGIN PAPER WRITING
+
+----------------------------------------------------------------------
+SECTION 6: WRITING PLAN (not yet started)
+----------------------------------------------------------------------
+
+Can begin in parallel with Step 7-9 (after Steps 1-6 complete):
+
+Section 1  -- Introduction
+Section 2  -- Related Literature
+Section 3  -- Data (3.1 EM-DAT, 3.2 VIIRS, 3.3 RBI, 3.4 Panel Construction)
+Section 4  -- Identification Strategy
+Section 5  -- Results (5.1 H1, 5.2 H2, 5.3 H3, 5.4 H4)
+Section 6  -- Robustness
+Section 7  -- Discussion and Mechanism
+Section 8  -- Conclusion
+Appendix A -- Variable Definitions (from Codebook v2.5)
+Appendix B -- Robustness Tables
+
+Writing order (recommended):
+  Data -> Identification -> Results -> Introduction -> Lit Review ->
+  Discussion -> Conclusion -> Abstract (last)
+
+----------------------------------------------------------------------
+SECTION 7: CRITICAL METHODOLOGICAL CONSTRAINTS FOR WRITING
+----------------------------------------------------------------------
+
+These must be enforced throughout every draft. No exceptions.
+
+1. H2 null reconciliation: Deposit effects are lagged (H3), not
+   contemporaneous. IV tests zero-effect window by construction.
+   Never present H2 null as a contradiction of the mechanism.
+
+2. H4c language constraint: EXACT required text --
+   "Monsoon seasonality moderates the deposit response to moderate-
+   intensity floods (Rule A: beta = +0.012, p < 0.001) but not to
+   severe flood events (Rule B: p = 0.774). The heterogeneity result
+   is fragile to flood intensity definition."
+
+3. Rule B IV (H2): Must be labeled suggestive throughout.
+   F = 8.949 < 10. Causal language removed from abstract and
+   conclusions for Rule B IV results.
+
+4. H4a: Must document that Feb 6 result (p < 0.001) was spurious --
+   result of homonymous FE collapse. Correct result is null.
+   The methodological correction must be stated explicitly.
+
+5. Proxy discipline: urban_proxy and high_exposure_proxy are proxies.
+   Never claim census-based urban/rural heterogeneity.
+
+6. TUENSANG disclosure: Must flag the within-year reversal (+3.21)
+   as a likely reporting artifact in the Appendix or footnote.
+
+7. Demonetization gap: 2016Q3-2017Q1 absent from panel. Must be
+   named explicitly in the Data section.
+
+8. Nominal INR: Deposits in nominal Rupees. Quarter FE absorb national
+   price trends. Acknowledged as a limitation.
+
+9. linearmodels SE: Current paper tables use statsmodels (conservative
+   SEs). Final paper tables must use linearmodels PanelOLS results
+   (Scripts 27b-30b). Never mix the two in the same table.
+
+10. Northeast: If Script 33 shows H3 t-2 disappears after NE exclusion,
+    writing must be reframed immediately. Do not begin Results writing
+    until Script 33 output is verified.
+
+----------------------------------------------------------------------
+SECTION 8: PRE-COMMITTED ROBUSTNESS STATUS
+----------------------------------------------------------------------
+
+R1  Flood precision (both rules)          COMPLETE
+R2  Placebo timing                        PENDING -- Script 34
+R3  Winsorization re-runs                 PENDING -- Script 37
+R4  CPI / nominal decision                COMPLETE (nominal retained)
+R5  Longer lags (t-3, t-4)               PENDING -- Script 35
+R6  State-level clustering                PENDING -- Script 36
+R7  IV discipline (F-stat)                COMPLETE
+R8  Northeast sensitivity                 PENDING -- Script 33
+
+----------------------------------------------------------------------
+SECTION 9: PROJECT FILE LOCATIONS
+----------------------------------------------------------------------
+
+Base directory:    E:\Climate-Migration-Bank-Fragility\
+Admin:             00_Admin\
+Raw data:          01_Data_Raw\
+Intermediate:      02_Data_Intermediate\
+Clean data:        03_Data_Clean\
+Code:              04_Code\
+Outputs:           05_Outputs\Tables\  05_Outputs\Figures\  05_Outputs\Logs\
+VIIRS raw tiles:   E:\VIIRS_Raw_Data_75N060E\  (~65 GB, external)
+
+Key clean files:
+  03_Data_Clean\regression_panel_final.csv         (23,347 x 23)
+  03_Data_Clean\regression_panel_final_winsor.csv  (23,347 x 24)
+  02_Data_Intermediate\flood_exposure_panel.csv    (26,640 rows)
+  01_Data_Raw\District_Boundaries\gadm41_IND_2.shp (for map)
+
+----------------------------------------------------------------------
+SECTION 10: KNOWN ACTIVE ISSUES (pre-paper)
+----------------------------------------------------------------------
+
+1. statsmodels ValueWarning in Scripts 27, 29, 30.
+   Fix: Scripts 27b-30b (linearmodels PanelOLS).
+
+2. Script 29 cosmetic fixes: DONE 2026-03-10.
+
+3. Script 12 token count: Already correct (46). No change needed.
+
+4. Script 32b conclusion logic: FIXED 2026-03-10. Re-run confirmed.
+   Left-tail asymmetry conclusion now correct.
+
+5. Northeast sensitivity: PENDING Script 33.
+
+6. 2016/2017 annualized rates are incomplete-year estimates.
+   2016: Q1+Q2 only. 2017: Q2+Q3+Q4 only.
+   Never report as full-year figures in the paper.
+
+======================================================================
+END OF PLAN
+======================================================================
+Project initiated: 2025-12-30
+PI: Jaseel Badar, Harvard University
+GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
+======================================================================

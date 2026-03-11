@@ -1,0 +1,143 @@
+======================================================================
+SCRIPT 34: ROBUSTNESS R2 -- PLACEBO TIMING
+Pre-trend falsification check for H3 distributed lag result.
+Run: 2026-03-11 22:06:08
+======================================================================
+LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
+  floods must NOT predict deposit changes that already occurred.
+  Both placebo tests must return null (p > 0.10).
+  If significant: pre-existing trend problem. H3 result suspect.
+======================================================================
+
+[1/7] Loading regression panel...
+  Loaded: 23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+
+[2/7] Constructing and verifying composite key...
+  district_state_id: 631 unique pairs (expected 631)
+  Composite key verified -- PASS
+
+[3/7] Verifying pre-existing lag arithmetic (Script 24 columns)...
+  flood_exposure_ruleA_qt NaN: 0        (expected 0)
+  flood_exposure_ruleB_qt NaN: 0        (expected 0)
+  flood_ruleA_L1          NaN: 631      (expected 631)
+  flood_ruleA_L2          NaN: 1262    (expected 1,262)
+  flood_ruleB_L1          NaN: 631      (expected 631)
+  flood_ruleB_L2          NaN: 1262    (expected 1,262)
+  Pre-existing lag arithmetic verified -- PASS
+
+[4/7] Constructing deposit_change_L1 (lagged dependent variable)...
+  Method: deposit_change_qt.shift(1) within composite groups.
+  Sort: district_gadm, state_gadm, year, q (pre-committed sort order).
+  CRITICAL: sort applied before shift -- matches Script 24 sort convention.
+  deposit_change_qt   NaN: 905   (reference: 905 expected)
+  deposit_change_L1   NaN: 1,532   (expected >= 1,262)
+  deposit_change_L1 valid: 21,815
+  deposit_change_L1 construction verified -- PASS
+
+[5/7] Encoding quarter FE...
+  Quarter FE levels: 37 (expected 37 -- full analysis period)
+  Quarter FE verified -- PASS
+
+======================================================================
+[6/7] PLACEBO REGRESSIONS
+======================================================================
+  Outcome: deposit_change_L1 (lagged deposit growth)
+  FE:      Quarter only (NO district FE -- consistent with H3)
+  SE:      Clustered by district_state_id
+  Both tests must be null (p > 0.10) for H3 to remain credible.
+
+----------------------------------------------------------------------
+TEST 1: Contemporaneous placebo
+  ΔDeposits_{t-1} = α + β·Flood_{t-1} + τ_t + ε
+  Regressor: flood_ruleA_L1 (flood at t-1)
+  Outcome:   deposit_change_L1 (deposit change at t-1)
+  Logic: mirrors H3 t0 but one period earlier. Must be null.
+----------------------------------------------------------------------
+
+  Test 1 Rule A: deposit_change_L1 ~ flood_ruleA_L1 + C(quarter_fe)
+  Complete cases: 21,815
+  Quarter FE:     35
+  Model fitted: N=21,815, R2=0.2455 -- PASS
+    [Test 1 Rule A: flood_ruleA_L1]
+      Beta   = 0.000716
+      SE     = 0.001468
+      t      = 0.487
+      p      = 0.625957
+      95% CI = [-0.002162, 0.003594]
+      Status = NOT SIGNIFICANT
+      VERDICT: NULL -- PASS
+
+  Test 1 Rule B: deposit_change_L1 ~ flood_ruleB_L1 + C(quarter_fe)
+  Complete cases: 21,815
+  Quarter FE:     35
+  Model fitted: N=21,815, R2=0.2455 -- PASS
+    [Test 1 Rule B: flood_ruleB_L1]
+      Beta   = -0.002066
+      SE     = 0.003428
+      t      = -0.603
+      p      = 0.546751
+      95% CI = [-0.008785, 0.004653]
+      Status = NOT SIGNIFICANT
+      VERDICT: NULL -- PASS
+
+----------------------------------------------------------------------
+TEST 2: Pre-trend placebo (stronger falsification)
+  ΔDeposits_{t-1} = α + β·Flood_t + τ_t + ε
+  Regressor: flood_exposure_ruleA_qt (flood at t)
+  Outcome:   deposit_change_L1 (deposit change at t-1)
+  Logic: current flood CANNOT causally affect LAST quarter deposits.
+  Significant result = pre-existing trend. H3 causal claim fails.
+----------------------------------------------------------------------
+
+  Test 2 Rule A: deposit_change_L1 ~ flood_exposure_ruleA_qt + C(quarter_fe)
+  Complete cases: 21,815
+  Quarter FE:     35
+  Model fitted: N=21,815, R2=0.2457 -- PASS
+    [Test 2 Rule A: flood_exposure_ruleA_qt]
+      Beta   = 0.004664
+      SE     = 0.001841
+      t      = 2.533
+      p      = 0.011301
+      95% CI = [0.001056, 0.008273]
+      Status = **
+      VERDICT: WARNING -- SIGNIFICANT: INVESTIGATE
+
+  Test 2 Rule B: deposit_change_L1 ~ flood_exposure_ruleB_qt + C(quarter_fe)
+  Complete cases: 21,815
+  Quarter FE:     35
+  Model fitted: N=21,815, R2=0.2455 -- PASS
+    [Test 2 Rule B: flood_exposure_ruleB_qt]
+      Beta   = -0.000549
+      SE     = 0.003257
+      t      = -0.169
+      p      = 0.866074
+      95% CI = [-0.006932, 0.005834]
+      Status = NOT SIGNIFICANT
+      VERDICT: NULL -- PASS
+
+======================================================================
+[7/7] FINAL SUMMARY AND VERDICT
+======================================================================
+
+  Reference: H3 main results (Script 29, Rule A):
+    t0:  beta = +0.000609,  p = 0.677  null
+    t-1: beta = +0.001505,  p = 0.177  null
+    t-2: beta = -0.007005,  p = 0.000  *** CONFIRMED
+
+  Placebo results:
+  Test                         Rule           Beta          p Verdict
+  ------------------------------------------------------------------------
+  Contemp (T1)                 A          0.000716   0.625957  NULL -- PASS
+  Contemp (T1)                 B         -0.002066   0.546751  NULL -- PASS
+  Pre-trend (T2)               A          0.004664   0.011301  WARNING -- SIGNIFICANT: INVESTIGATE
+  Pre-trend (T2)               B         -0.000549   0.866074  NULL -- PASS
+
+  CRITICAL VERDICT:
+  WARNING: ONE OR MORE PLACEBO TESTS SIGNIFICANT.
+  Pre-trend problem detected. H3 t-2 causal interpretation is suspect.
+  DO NOT write H3 results as causal until this is investigated.
+  ACTION REQUIRED: Check for deposit autocorrelation, flood clustering,
+  or structural breaks that coincide with flood timing.
+
+  Table saved: 05_Outputs/Tables/09_placebo_timing.csv  (4 rows) -- PASS

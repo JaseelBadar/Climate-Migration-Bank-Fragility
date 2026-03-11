@@ -1,0 +1,6 @@
+hypothesis,rule,lag,variable,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,significance,n_obs,r_squared,quarter_fe_count,district_fe,se_type
+H3_Longer_Lags,B,t0,flood_exposure_ruleB_qt,0.003827,0.00312,1.227,0.21992,-0.002287,0.009942,,20617,0.2556,33,NONE (pre-committed H3 design),clustered_by_district_state_id
+H3_Longer_Lags,B,t-1,flood_ruleB_L1,-0.000885,0.002089,-0.424,0.671866,-0.004979,0.00321,,20617,0.2556,33,NONE (pre-committed H3 design),clustered_by_district_state_id
+H3_Longer_Lags,B,t-2,flood_ruleB_L2,-0.00435,0.006501,-0.669,0.50346,-0.017092,0.008392,,20617,0.2556,33,NONE (pre-committed H3 design),clustered_by_district_state_id
+H3_Longer_Lags,B,t-3,flood_ruleB_L3,-0.016046,0.004598,-3.49,0.000483,-0.025057,-0.007035,***,20617,0.2556,33,NONE (pre-committed H3 design),clustered_by_district_state_id
+H3_Longer_Lags,B,t-4,flood_ruleB_L4,-0.004146,0.003058,-1.356,0.175191,-0.010141,0.001848,,20617,0.2556,33,NONE (pre-committed H3 design),clustered_by_district_state_id

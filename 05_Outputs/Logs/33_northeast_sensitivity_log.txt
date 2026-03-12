@@ -1,7 +1,7 @@
 ======================================================================
 SCRIPT 33: ROBUSTNESS R8 -- NORTHEAST SENSITIVITY
 H3 and H4 re-run excluding 8 Northeast states
-Run: 2026-03-10 23:51:01
+Run: 2026-03-12 18:13:59
 ======================================================================
 MOTIVATION: Script 32b -- 2023 left-tail anomaly concentrated in NE.
   385 of 2,507 2023 obs (15.4%) below p5 (expected 5%).
@@ -73,7 +73,7 @@ MOTIVATION: Script 32b -- 2023 left-tail anomaly concentrated in NE.
   Spec: quarter FE only (NO district FE). SE: clustered district_state_id.
   Pre-committed H3 design. Identical to Script 29 except NE excluded.
 
-  Rule A complete cases: 18,964  (expected ~35)
+  Rule A complete cases: 18,964
   Rule B complete cases: 18,964
   Quarter FE (Rule A):   35  (expected 35)
   Quarter FE (Rule B):   35  (expected 35)

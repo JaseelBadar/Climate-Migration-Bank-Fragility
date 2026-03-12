@@ -4914,6 +4914,124 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Investigate Script 34 Test 2 Rule A warning before H3 causal writing
   - Figure A/B/C scripts
 
+========================================================================================================================
+2026-03-12 (Thu) 18:10-23:48 IST: Scripts 33-35 Code Audit + Bug Fixes. R8/R2/R5 Outputs Verified. Zero Result Changes.
+========================================================================================================================
+Goal: Audit Scripts 33-35 for correctness before committing. Fix all bugs found. Verify output integrity against anchors.
+
+----------------------------------------------------------------------
+A) Script 33: R8 Northeast Sensitivity -- Code Audit and Fixes
+----------------------------------------------------------------------
+3 bugs found and fixed (zero effect on results or CSVs):
+
+  Fix 1: Removed dead print_coef() function (defined, never called).
+  Fix 2: Log line "Rule A complete cases: ... (expected ~35)" -- ~35
+    was the QFE count accidentally appended to the obs line. Removed.
+  Fix 3: CSV Rule B rows used hardcoded n_qfe_H3_A instead of n_qfe_H3_B.
+    Fixed to pass n_qfe_H3_B through loop tuple. No effect on regression.
+
+Output verified against run (2026-03-12 18:13:59):
+  NE exclusion: 83 districts, 3,071 obs (13.15%) removed from 631/23,347.
+  SIKKIM not found in GADM (WARNING fires correctly; filter proceeds on 7 of 8).
+  Z_i full-sample thresholds: urban median = -0.8900, flood median = 3.0 ✓
+  Lag NaN (NE-excluded): 548x1 / 548x2 exact ✓
+
+  H3 Rule A (NE-excluded, N = 18,964, R2 = 0.3046):
+    t0:  beta = +0.000192, p = 0.882 -- null (main: +0.000609, p = 0.677)
+    t-1: beta = +0.001333, p = 0.123 -- null (main: +0.001505, p = 0.177)
+    t-2: beta = -0.008608, p < 0.001 *** ROBUST (main: -0.007005, p < 0.001)
+
+  H4 Rule A (NE-excluded, N = 19,492):
+    H4a: beta = -0.002192, p = 0.429 -- null (main: -0.001666, p = 0.532)
+    H4b: beta = -0.005758, p = 0.044 ** ROBUST (main: -0.006810, p = 0.020)
+    H4c: beta = +0.015435, p < 0.001 *** ROBUST (main: +0.012495, p < 0.001)
+
+Critical verdict: ALL main results SAME direction post-NE exclusion.
+H3 t-2 ROBUST. H4b ROBUST. Effect not driven by NE districts.
+t-2 coefficient strengthens after NE exclusion (more negative, not less).
+
+Commits issued: 33_northeast_sensitivity.py, 33_northeast_sensitivity_log.txt.
+
+----------------------------------------------------------------------
+B) Script 34: R2 Placebo Timing -- Code Audit and Fixes
+----------------------------------------------------------------------
+2 bugs found and fixed (zero effect on results):
+
+  Fix 1: run_placebo() had two unused parameters (n_obs_label, rule).
+    Removed from function signature and all call sites.
+  Fix 2: flood_var assigned as f"flood_ruleA_L1" -- f-string prefix with
+    no format variables. Changed to plain string "flood_ruleA_L1".
+
+Output re-verified (run identical to 2026-03-11):
+  deposit_change_L1 NaN = 1,532 >= 1,262 ✓. Valid = 21,815 > 15,000 ✓.
+  QFE = 37 ✓. All 10 asserts passed. N = 21,815. 4-row CSV ✓.
+
+  Test 1 (Contemp): Rule A p = 0.626 null ✓, Rule B p = 0.547 null ✓
+  Test 2 (Pre-trend): Rule A p = 0.011 ** WARNING, Rule B p = 0.866 null
+
+Script WARNING block fires correctly. Test 2 Rule A warning carries forward.
+Writing remains blocked on H3 causal narrative pending investigation.
+
+Commits issued: 34_placebo_timing.py, 34_placebo_timing_log.txt.
+
+----------------------------------------------------------------------
+C) Script 35: R5 Longer Lags -- Code Audit and Fixes
+----------------------------------------------------------------------
+4 bugs found and fixed (zero effect on results):
+
+  Fix 1: Docstring: "Extend H3 from t-3" -> "Extend H3 to t-3" (typo).
+  Fix 2: Docstring L3/L4 NaN description said "548 districts" (NE-excluded
+    count from Script 33). Corrected to 631 (full sample, Script 35 scope).
+  Fix 3: [7/8] comparison loop: H3_ANCHORS.get() returns NaN for t-3/t-4.
+    nan * coef > 0 evaluates False -> "REVERSED" incorrectly for both.
+    Fixed with explicit NaN guard: direction = "N/A" when anchor missing.
+  Fix 4: [8/8] else branch after exhaustive if/elif was unreachable dead
+    code (conditions cover all cases). Removed.
+
+Output verified (run 2026-03-12 18:27:15):
+  L0-L4 NaN: 0/631/1,262/1,893/2,524 exact ✓. L4 complete: 20,617 ✓.
+  QFE = 33 ✓ (L4 restriction). Drop = 2,730 obs (11.69%) ✓.
+  N = 20,617, R2 = 0.2556.
+
+  Rule B results:
+    t0:  beta = +0.003827, p = 0.220 -- null
+    t-1: beta = -0.000885, p = 0.672 -- null
+    t-2: beta = -0.004350, p = 0.503 -- null (Rule B low power; Rule A ***)
+    t-3: beta = -0.016046, p = 0.0005 *** -- PERSISTENCE CONFIRMED
+    t-4: beta = -0.004146, p = 0.175 -- null
+
+Verdict: PERSISTENCE BEYOND t-2. t-3 *** confirms 9-12 month window.
+Mechanism narrative strengthened. Writing unblocked for mechanism section.
+
+Commits issued: 35_longer_lags.py, 35_longer_lags_log.txt.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Robustness status update:
+  R1 (both rules):          COMPLETE
+  R2 (placebo timing):      COMPLETE -- Test 2 Rule A warning investigation pending
+  R3 (winsorized re-runs):  PENDING -- Script 37
+  R4 (nominal decision):    COMPLETE
+  R5 (longer lags):         COMPLETE -- t-3 persistence confirmed ***
+  R6 (state clustering):    PENDING -- Script 36 pending execution
+  R7 (IV F-stat):           COMPLETE
+  R8 (NE sensitivity):      COMPLETE
+
+Key findings locked today:
+  R8: H3 t-2 ROBUST post-NE exclusion (beta more negative, -0.0086 vs -0.0070).
+      H4b and H4c both SAME direction and significant. SIKKIM absent from GADM.
+  R5: t-3 persistence confirmed (beta = -0.016, p = 0.0005). Mechanism window
+      extended to 9-12 months. Mechanism discussion update required.
+  R2: No new findings -- audit confirmed 2026-03-11 output exact. Warning stands.
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Script 36: R6 state-level clustering execution + commits
+  - Script 37: R3 winsorized re-runs (H2 + H3 + H4)
+  - Scripts 27b-30b: linearmodels PanelOLS final tables
+  - Investigate Script 34 Test 2 Rule A pre-trend warning before H3 writing
+  - Figure A/B/C scripts
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-10 23:55 PM IST
+END OF LOG - Last Updated: 2026-03-12 23:50 PM IST
 ======================================================================

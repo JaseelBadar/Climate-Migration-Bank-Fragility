@@ -1,7 +1,7 @@
 ======================================================================
 SCRIPT 34: ROBUSTNESS R2 -- PLACEBO TIMING
 Pre-trend falsification check for H3 distributed lag result.
-Run: 2026-03-11 22:06:08
+Run: 2026-03-12 18:21:10
 ======================================================================
 LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
   floods must NOT predict deposit changes that already occurred.

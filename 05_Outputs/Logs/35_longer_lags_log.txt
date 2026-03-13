@@ -1,7 +1,7 @@
 ======================================================================
 SCRIPT 35: ROBUSTNESS R5 -- LONGER LAGS (t-3, t-4)
 H3 distributed lag extension -- Rule B only (precision priority)
-Run: 2026-03-12 18:27:15
+Run: 2026-03-13 18:24:44
 ======================================================================
 Reference H3 result (Script 29, Rule A):
   t0:  beta = +0.000609,  p = 0.677
@@ -96,7 +96,7 @@ Expected: t-3 and t-4 null. Effect decays at t-2.
 [8/8] VERDICT AND SAVE
 ======================================================================
   VERDICT: PERSISTENCE BEYOND t-2
-    t-3: p = 0.0005 **
+    t-3: p = 0.0005 ***
     t-4: p = 0.1752 null
     H3 t-2 effect persists 9-12 months post-flood.
     Mechanism consistent with prolonged displacement or

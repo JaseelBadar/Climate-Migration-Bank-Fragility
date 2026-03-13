@@ -1,0 +1,3 @@
+hypothesis,rule,outcome,flood_var,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,significance,n_obs,district_fe_count,quarter_fe_count,se_clusters,anchor_beta,anchor_se,anchor_t
+H1,A,lights_change_qt,flood_exposure_ruleA_qt,-0.044468,0.027413,-1.622,0.104768,-0.098196,0.00926,,22716,631,36,state_gadm (34),-0.0445,0.0078,-5.708
+H1,B,lights_change_qt,flood_exposure_ruleB_qt,-0.058446,0.046784,-1.249,0.211563,-0.150141,0.033249,,22716,631,36,state_gadm (34),,,

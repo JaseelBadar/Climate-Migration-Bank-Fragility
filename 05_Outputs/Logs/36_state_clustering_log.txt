@@ -1,0 +1,88 @@
+======================================================================
+SCRIPT 36: ROBUSTNESS R6 -- STATE-LEVEL CLUSTERING
+H1 and H3 re-run with SE clustered by state_gadm (34 clusters)
+Run: 2026-03-13 18:40:22
+======================================================================
+Rationale: Cameron/Miller (2015) -- below 50 clusters, standard SEs liberal.
+Expected: SEs widen. H1 and H3 t-2 remain significant.
+======================================================================
+
+[1/9] Loading panel...
+  Loaded: 23,347 rows, 23 cols -- PASS
+
+[2/9] Composite key and state verification...
+  district_state_id: 631 (expected 631)
+  state_gadm:        34 (expected 34)
+  Note: 34 = 28 states + 6 union territories (GADM encoding)
+  Cameron/Miller (2015) threshold = 50. 34 clusters below threshold -- warning applies.
+  Keys verified -- PASS
+
+[3/9] H1 Rule A complete cases...
+  H1 Rule A: N=22,716, Dist FE=631, Qtr FE=36
+  H1 Rule A cases verified -- PASS
+
+[4/9] H1 Rule B complete cases...
+  H1 Rule B: N=22,716, Dist FE=631, Qtr FE=36
+  H1 Rule B cases verified -- PASS
+
+[5/9] H3 Rule A t-2 complete cases...
+  H3 Rule A t-2: N=21,837, Qtr FE=35
+  H3 Rule A t-2 cases verified -- PASS
+
+[6/9] H3 Rule B t-2 complete cases...
+  H3 Rule B t-2: N=21,837, Qtr FE=35
+  H3 Rule B t-2 cases verified -- PASS
+
+======================================================================
+[7/9] H1 Rule A -- state_gadm clustering...
+======================================================================
+    [H1 Rule A]
+      Beta   = -0.044468 (main: -0.0445)
+      SE     = 0.027413
+      t      = -1.622
+      p      = 0.104768
+      95% CI = [-0.098196, 0.009260]
+      Status = NOT SIGNIFICANT
+
+[8/9] Remaining regressions...
+
+  H1 Rule B -- state_gadm clustering
+    [H1 Rule B]
+      Beta   = -0.058446
+      SE     = 0.046784
+      t      = -1.249
+      p      = 0.211563
+      95% CI = [-0.150141, 0.033249]
+      Status = NOT SIGNIFICANT
+
+  H3 Rule A t-2 -- state_gadm clustering
+    [H3 Rule A t-2]
+      Beta   = -0.007012 (main: -0.007005)
+      SE     = 0.003302
+      t      = -2.123
+      p      = 0.033724
+      95% CI = [-0.013484, -0.000540]
+      Status = **
+
+  H3 Rule B t-2 -- state_gadm clustering
+    [H3 Rule B t-2]
+      Beta   = -0.003796
+      SE     = 0.006917
+      t      = -0.549
+      p      = 0.583206
+      95% CI = [-0.017353, 0.009762]
+      Status = NOT SIGNIFICANT
+
+======================================================================
+[9/9] VERDICT AND SAVE
+======================================================================
+
+  H1 Rule A survives state clustering: NO -- INVESTIGATE
+  H3 Rule A t-2 survives state clustering: YES
+
+  R6 VERDICT: PARTIAL FAILURE
+  One or both core results lose significance under state clustering.
+  Liberal SE concern confirmed. Causal claims must be qualified.
+
+  H1 table saved: 05_Outputs/Tables/11_H1_state_clustering.csv (2 rows) -- PASS
+  H3 table saved: 05_Outputs/Tables/12_H3_state_clustering.csv (2 rows) -- PASS

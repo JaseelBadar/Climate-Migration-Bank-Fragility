@@ -5032,6 +5032,117 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Investigate Script 34 Test 2 Rule A pre-trend warning before H3 writing
   - Figure A/B/C scripts
 
+====================================================================================================================
+2026-03-13 (Fri) 18:18-23:40 IST: Script 35 Audit + Script 36 Execution. R5 Verified. R6 Complete. PARTIAL FAILURE.
+====================================================================================================================
+Goal: Verify Script 35 output integrity. Audit and execute Script 36 (R6 state clustering). Commit all outputs.
+
+----------------------------------------------------------------------
+A) Script 35: R5 Longer Lags -- Output Verification
+----------------------------------------------------------------------
+Output from 2026-03-12 session re-examined against corrected script.
+1 residual bug confirmed and fixed (verdict star notation):
+
+  Fix: [8/8] verdict block used hardcoded '**' for t-3/t-4 lines.
+    t-3 p = 0.0005 < 0.01, so '***' is correct. Introduced _stars(p)
+    helper matching the 3-tier logic already present in [7/8]. No
+    effect on regression, CSV, or any numerical result.
+
+Output verified clean (run 2026-03-13 18:24:44):
+  L0-L4 NaN: 0/631/1,262/1,893/2,524 exact ✓. L4 complete: 20,617 ✓.
+  QFE = 33 ✓. Drop = 2,730 obs (11.69%) ✓. N = 20,617, R2 = 0.2556.
+  t-3: beta = -0.016046, p = 0.0005 *** -- verdict line now correctly prints ***.
+
+Commits issued: 35_longer_lags.py (star fix), 35_longer_lags_log.txt (regen).
+
+----------------------------------------------------------------------
+B) Script 36: R6 State-Level Clustering -- Audit, Debug, Execution
+----------------------------------------------------------------------
+Three separate bugs surfaced across pre-audit and two runtime failures.
+
+  Pre-audit Fix 1: log_coef() beta f-string missing closing ')' on anchor
+    display. f"...(main: {anchor['beta']}" evaluates to unclosed string
+    in log output. Extracted anchor_str variable before f-string.
+
+  Pre-audit Fix 2: No os.path.exists() assertions on any of the 3 file
+    saves. Silent failure would go undetected. Added assert + -- PASS
+    to all three save lines (H1 CSV, H3 CSV, log).
+
+  Pre-audit Fix 3: Completion block missing '=' * 70 separators and log
+    line for Log: path. Inconsistent with all prior scripts. Fixed.
+
+  Runtime Error 1 (18:32:25): assert n_states == 28 -- FAIL (actual = 34).
+    Root cause: Pre_Writing_Master_Plan assumed 28 official Indian states.
+    GADM v4.1 encodes union territories as separate admin units -> 34 unique
+    state_gadm values in panel. Cameron/Miller concern unchanged -- 34 still
+    below 50-cluster threshold. Assert updated to 34. Note added to [2/9]
+    log: "34 = 28 states + 6 union territories (GADM encoding)."
+
+  Runtime Error 2 (18:40:22): assert n_h1_a == 22716 -- FAIL (actual = 23,347).
+    Root cause: H1 filter used log_lights_qt.notna(). log_lights_qt is the
+    level variable with zero NaN across all 23,347 rows. H1 outcome is
+    lights_change_qt (quarterly change), which has exactly 631 NaN (one
+    per district, first quarter has no prior period). 23,347 - 631 = 22,716.
+    Fix: replaced log_lights_qt with lights_change_qt in required_cols,
+    both H1 filters ([3/9] and [4/9]), both H1 formulas ([7/9] and [8/9]),
+    and both result dict outcome fields.
+
+Script 36 executed clean (run 2026-03-13 18:40:22 -> final run ~19:00):
+  All 6 case-count asserts passed. N=22,716 (H1), N=21,837 (H3 t-2). ✓
+  State clusters = 34. District clusters = 631 (baseline comparison). ✓
+
+  H1 Rule A (state clustering): beta = -0.044468 (main: -0.0445)
+    SE: 0.0078 -> 0.0274 (3.5x wider). t = -1.622. p = 0.105 -- NOT SIGNIFICANT.
+  H1 Rule B (state clustering): beta = -0.058446.
+    SE: 0.0198 -> 0.0468. t = -1.249. p = 0.212 -- NOT SIGNIFICANT.
+  H3 Rule A t-2 (state clustering): beta = -0.007012 (main: -0.007005).
+    SE: 0.001645 -> 0.003302 (2.0x wider). t = -2.123. p = 0.034 ** -- ROBUST.
+  H3 Rule B t-2 (state clustering): beta = -0.003796.
+    SE: 0.0199 -> 0.0069. p = 0.583 -- null (consistent with low power).
+
+  R6 VERDICT: PARTIAL FAILURE.
+    H1 coefficient is intact (beta unchanged to 4 decimal places). SE tripled
+    due to Cameron/Miller concern materialising at 34 clusters. H1 result is
+    SE-sensitive at state level -- causal language for H1 must acknowledge
+    this limitation. H3 t-2 survives doubled SE (p = 0.034) -- H3 causal
+    chain is robust to the most conservative reasonable specification.
+
+Writing implication: H1 robustness section must report state-clustering
+  failure explicitly. Cannot claim H1 survives all SE specifications.
+  H3 t-2 state-cluster result (p = 0.034) is a positive robustness finding
+  and strengthens the H3 causal narrative.
+
+Commits issued: 36_state_clustering.py, 11_H1_state_clustering.csv,
+  12_H3_state_clustering.csv, 36_state_clustering_log.txt.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Robustness status update:
+  R1 (both rules):          COMPLETE
+  R2 (placebo timing):      COMPLETE -- Test 2 Rule A warning investigation pending
+  R3 (winsorized re-runs):  PENDING -- Script 37
+  R4 (nominal decision):    COMPLETE
+  R5 (longer lags):         COMPLETE -- t-3 persistence confirmed ***
+  R6 (state clustering):    COMPLETE -- PARTIAL FAILURE (H1 SE-sensitive, H3 robust)
+  R7 (IV F-stat):           COMPLETE
+  R8 (NE sensitivity):      COMPLETE
+
+Key findings locked today:
+  R5: Star notation corrected in log. t-3 result stands: beta = -0.016, p = 0.0005 ***.
+  R6: H1 loses significance at 34 state clusters (SE 3.5x wider, coefficient intact).
+      H3 t-2 robust at state-cluster level (p = 0.034 **). 34 clusters confirmed
+      from GADM (28 states + 6 union territories). Cameron/Miller warning materialised
+      for H1 -- must be disclosed in robustness section. Not a failure of H1 theory;
+      a precision limitation at the state-cluster aggregation level.
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Script 37: R3 winsorized re-runs (H2 + H3 + H4)
+  - Scripts 27b-30b: linearmodels PanelOLS final tables
+  - Investigate Script 34 Test 2 Rule A pre-trend warning before H3 writing
+  - Figure A/B/C scripts
+  - Update Pre_Writing_Master_Plan with R6 PARTIAL FAILURE status and GADM note
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-12 23:50 PM IST
+END OF LOG - Last Updated: 2026-03-13 23:45 PM IST
 ======================================================================

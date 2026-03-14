@@ -5143,6 +5143,50 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Figure A/B/C scripts
   - Update Pre_Writing_Master_Plan with R6 PARTIAL FAILURE status and GADM note
 
+========================================================================================
+2026-03-14 (Sat): Literature Review Session. Zotero. Related Papers Read. No Code Work.
+========================================================================================
+Goal: Deep reading of related literature in Zotero library ahead of paper writing phase.
+
+----------------------------------------------------------------------
+A) Literature Review -- Zotero Reading Session
+----------------------------------------------------------------------
+Full session devoted to reading. No scripts executed, no commits issued.
+
+Papers read covered the core adjacent literatures relevant to this paper:
+  - Climate shocks and household finance / deposit behaviour
+  - Flood exposure and bank stability / liquidity
+  - Internal migration responses to natural disasters in developing economies
+  - VIIRS / satellite-based economic activity measurement
+  - Panel IV methods in climate-finance settings
+
+Purpose: build command of the related literature before drafting
+  Section 2 (Related Literature) and Section 7 (Discussion and Mechanism).
+  Understanding precise claims, gaps, and citation anchors in adjacent
+  papers is prerequisite to positioning this paper's contributions cleanly.
+
+No new findings, no result changes, no pipeline work.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Robustness status (unchanged from 2026-03-13):
+  R1 (both rules):          COMPLETE
+  R2 (placebo timing):      COMPLETE -- Test 2 Rule A warning investigation pending
+  R3 (winsorized re-runs):  PENDING -- Script 37
+  R4 (nominal decision):    COMPLETE
+  R5 (longer lags):         COMPLETE -- t-3 persistence confirmed ***
+  R6 (state clustering):    COMPLETE -- PARTIAL FAILURE (H1 SE-sensitive, H3 robust)
+  R7 (IV F-stat):           COMPLETE
+  R8 (NE sensitivity):      COMPLETE
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Script 37: R3 winsorized re-runs (H2 + H3 + H4)
+  - Scripts 27b-30b: linearmodels PanelOLS final tables
+  - Investigate Script 34 Test 2 Rule A pre-trend warning before H3 writing
+  - Figure A/B/C scripts
+  - Update Pre_Writing_Master_Plan with R6 PARTIAL FAILURE status and GADM note
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-13 23:45 PM IST
+END OF LOG - Last Updated: 2026-03-14 23:30 PM IST
 ======================================================================

@@ -1,0 +1,3 @@
+hypothesis,rule,outcome,flood_var,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,significance,n_obs,district_fe,quarter_fe_count,se_type,anchor_beta,anchor_p,note
+H3,A,deposit_change_qt_winsor,flood_ruleA_L2,-0.007115,0.001122,-6.339,0.0,-0.009314,-0.004915,***,21837,NONE (H3 pre-committed spec),35,clustered_by_district_state_id,-0.007005,0.0,
+H3,B,deposit_change_qt_winsor,flood_ruleB_L2,0.000144,0.002662,0.054,0.956903,-0.005074,0.005362,,21837,NONE (H3 pre-committed spec),35,clustered_by_district_state_id,,,

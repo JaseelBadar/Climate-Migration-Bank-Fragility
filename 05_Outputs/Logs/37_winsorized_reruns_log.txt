@@ -1,0 +1,202 @@
+======================================================================
+SCRIPT 37: ROBUSTNESS R3 -- WINSORIZED REGRESSION RE-RUNS
+H2, H3, H4 re-run on deposit_change_qt_winsor
+Run: 2026-03-15 23:10:48
+======================================================================
+Winsor bounds: [-0.162585, 0.230701]
+Obs winsorized: 450 (2.01%)
+H1 excluded: outcome is lights_change_qt -- unaffected by winsorization.
+Expected: no material change to coefficients.
+======================================================================
+
+[1/11] Loading winsorized panel...
+  Loaded: 23,347 rows, 24 cols -- PASS
+  Required columns verified -- PASS
+  Note: urban_proxy and high_exposure_proxy are not stored columns.
+  They will be constructed at runtime (same logic as Script 30).
+
+[2/11] Constructing composite key...
+  district_state_id: 631 (expected 631)
+  state_gadm:        34 (expected 34)
+  Composite key verified -- PASS
+
+[3/11] Verifying winsorization bounds on deposit_change_qt_winsor...
+  Observed min: -0.162585  (expected >= -0.162585)
+  Observed max: 0.230701  (expected <= 0.230701)
+  Obs at lower bound: 225
+  Obs at upper bound: 225
+  Total winsorized:   450 (expected ~450)
+  Winsor bounds verified -- PASS
+
+[4/11] Constructing proxy variables (Script 30 logic)...
+  urban_proxy:         median lights threshold = -0.8900
+  urban_proxy = 1:     11,692 obs
+  urban_proxy = 0:     11,655 obs
+  high_exposure_proxy: districts with mean flood exposure > 0
+  high_exposure_proxy = 1: 21,053 obs
+  high_exposure_proxy = 0: 2,294 obs
+  Proxy variables constructed -- PASS
+
+[5/11] H2 / H4 complete cases (N = 22,442)...
+  N=22,442, Dist FE=631, Qtr FE=36
+  H2/H4 complete cases verified -- PASS
+
+[6/11] H3 complete cases (N = 21,837)...
+  H3 base (Rule A L2 restriction): N=21,837 (expected 21,837)
+  H3 complete cases verified -- PASS
+
+======================================================================
+[7/11] H2: Manual 2SLS -- Winsorized (Rule A and Rule B)
+======================================================================
+  Outcome:       deposit_change_qt_winsor
+  First stage:   lights_change_qt ~ flood_ruleX_qt + C(district) + C(quarter)
+  Second stage:  deposit_change_qt_winsor ~ lights_hat + C(district) + C(quarter)
+  SE:            clustered district_state_id (second-stage only;
+                 does not account for first-stage estimation error)
+  Rule A and Rule B produce different lights_hat from different instruments.
+  F Rule A: 34.673 -- strong instrument (threshold 16.38)
+  F Rule B: 8.949 -- weak instrument (< 10, suggestive only)
+
+  H2 Rule A -- manual 2SLS winsorized
+    First stage F = 52.640  (locked F = 34.673)
+    [H2 Rule A]
+      Beta   = -0.004279 (main beta: -0.0084)
+      SE     = 0.025184
+      t      = -0.170
+      p      = 0.865080
+      95% CI = [-0.053638, 0.045080]
+      Status = NOT SIGNIFICANT
+
+  H2 Rule B -- manual 2SLS winsorized
+    First stage F = 52.462  (locked F = 8.949)
+    [H2 Rule B]
+      Beta   = -0.035322
+      SE     = 0.050387
+      t      = -0.701
+      p      = 0.483293
+      95% CI = [-0.134079, 0.063435]
+      Status = NOT SIGNIFICANT
+
+  H2 winsorized: 2 rows.
+
+======================================================================
+[8/11] H3: Distributed Lag t-2 -- Winsorized (Rule A and Rule B)
+======================================================================
+  Outcome: deposit_change_qt_winsor
+  FE:      quarter only (NO district FE -- H3 pre-committed spec)
+  SE:      clustered district_state_id
+
+  H3 Rule A t-2 -- winsorized
+    N=21,837, Qtr FE=35
+    [H3 Rule A]
+      Beta   = -0.007115 (main beta: -0.007005)
+      SE     = 0.001122
+      t      = -6.339
+      p      = 0.000000
+      95% CI = [-0.009314, -0.004915]
+      Status = ***
+
+  H3 Rule B t-2 -- winsorized
+    N=21,837, Qtr FE=35
+    [H3 Rule B]
+      Beta   = 0.000144
+      SE     = 0.002662
+      t      = 0.054
+      p      = 0.956903
+      95% CI = [-0.005074, 0.005362]
+      Status = NOT SIGNIFICANT
+
+  H3 winsorized: 2 rows.
+
+======================================================================
+[9/11] H4: Heterogeneity -- Winsorized (H4a, H4b, H4c x Rule A and B)
+======================================================================
+  Outcome: deposit_change_qt_winsor
+  FE:      district_state_id + quarter (same as Script 30)
+  SE:      clustered district_state_id
+  Proxies: urban_proxy, high_exposure_proxy (constructed [4/11])
+  Note:    monsoon_quarter = 1 if q in [2, 3]
+
+  H4 Rule A -- winsorized
+    H4a Rule A
+    [H4a Rule A]
+      Beta   = -0.002224
+      SE     = 0.002097
+      t      = -1.060
+      p      = 0.289095
+      95% CI = [-0.006335, 0.001887]
+      Status = NOT SIGNIFICANT
+    H4b Rule A
+    [H4b Rule A]
+      Beta   = 0.000097 (main p: 0.02)
+      SE     = 0.000571
+      t      = 0.170
+      p      = 0.865087
+      95% CI = [-0.001023, 0.001217]
+      Status = NOT SIGNIFICANT
+    H4c Rule A
+    [H4c Rule A]
+      Beta   = -0.005655 (main p: 0.001)
+      SE     = 0.003380
+      t      = -1.673
+      p      = 0.094320
+      95% CI = [-0.012279, 0.000970]
+      Status = *
+
+  H4 Rule B -- winsorized
+    H4a Rule B
+    [H4a Rule B]
+      Beta   = 0.007297
+      SE     = 0.005866
+      t      = 1.244
+      p      = 0.213505
+      95% CI = [-0.004200, 0.018795]
+      Status = NOT SIGNIFICANT
+    H4b Rule B
+    [H4b Rule B]
+      Beta   = 0.001029
+      SE     = 0.001468
+      t      = 0.701
+      p      = 0.483313
+      95% CI = [-0.001849, 0.003907]
+      Status = NOT SIGNIFICANT
+    H4c Rule B
+    [H4c Rule B]
+      Beta   = -0.004588
+      SE     = 0.005404
+      t      = -0.849
+      p      = 0.395898
+      95% CI = [-0.015180, 0.006004]
+      Status = NOT SIGNIFICANT
+
+  H4 winsorized: 6 rows -- PASS
+
+======================================================================
+[10/11] VERDICT SUMMARY
+======================================================================
+
+  H2 Rule A (winsor, 2SLS): p = 0.8651 null  (main IV: p = 0.805 null)
+  H2 Rule B (winsor, 2SLS): p = 0.4833 null  [suggestive only -- F=8.949 < 10]
+
+  H3 t-2 Rule A (winsor): beta = -0.007115, p = 0.0000 ***  (main: beta = -0.007005, p < 0.001)
+  H3 t-2 Rule B (winsor): p = 0.9569 null
+
+  H4a Rule A (winsor): beta = -0.002224, p = 0.2891 null
+  H4b Rule A (winsor): beta = 0.000097, p = 0.8651 null
+  H4c Rule A (winsor): beta = -0.005655, p = 0.0943 *
+  H4a Rule B (winsor): beta = 0.007297, p = 0.2135 null
+  H4b Rule B (winsor): beta = 0.001029, p = 0.4833 null
+  H4c Rule B (winsor): beta = -0.004588, p = 0.3959 null
+
+  R3 VERDICT: ROBUST
+  H3 t-2 significant on winsorized outcome.
+  Winsorization does not drive or suppress the main result.
+  Writing unblocked for H3.
+
+======================================================================
+[11/11] SAVING OUTPUTS
+======================================================================
+
+  H2 table saved: 05_Outputs/Tables/13_H2_winsorized.csv (2 rows) -- PASS
+  H3 table saved: 05_Outputs/Tables/14_H3_winsorized.csv (2 rows) -- PASS
+  H4 table saved: 05_Outputs/Tables/15_H4_winsorized.csv (6 rows) -- PASS

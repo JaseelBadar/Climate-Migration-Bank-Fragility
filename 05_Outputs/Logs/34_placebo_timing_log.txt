@@ -1,7 +1,7 @@
 ======================================================================
 SCRIPT 34: ROBUSTNESS R2 -- PLACEBO TIMING
 Pre-trend falsification check for H3 distributed lag result.
-Run: 2026-03-12 18:21:10
+Run: 2026-03-15 23:42:58
 ======================================================================
 LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
   floods must NOT predict deposit changes that already occurred.
@@ -9,15 +9,15 @@ LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
   If significant: pre-existing trend problem. H3 result suspect.
 ======================================================================
 
-[1/7] Loading regression panel...
+[1/8] Loading regression panel...
   Loaded: 23,347 rows, 23 columns -- PASS
   Required columns verified -- PASS
 
-[2/7] Constructing and verifying composite key...
+[2/8] Constructing and verifying composite key...
   district_state_id: 631 unique pairs (expected 631)
   Composite key verified -- PASS
 
-[3/7] Verifying pre-existing lag arithmetic (Script 24 columns)...
+[3/8] Verifying pre-existing lag arithmetic (Script 24 columns)...
   flood_exposure_ruleA_qt NaN: 0        (expected 0)
   flood_exposure_ruleB_qt NaN: 0        (expected 0)
   flood_ruleA_L1          NaN: 631      (expected 631)
@@ -26,7 +26,7 @@ LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
   flood_ruleB_L2          NaN: 1262    (expected 1,262)
   Pre-existing lag arithmetic verified -- PASS
 
-[4/7] Constructing deposit_change_L1 (lagged dependent variable)...
+[4/8] Constructing deposit_change_L1 (lagged dependent variable)...
   Method: deposit_change_qt.shift(1) within composite groups.
   Sort: district_gadm, state_gadm, year, q (pre-committed sort order).
   CRITICAL: sort applied before shift -- matches Script 24 sort convention.
@@ -35,12 +35,14 @@ LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
   deposit_change_L1 valid: 21,815
   deposit_change_L1 construction verified -- PASS
 
-[5/7] Encoding quarter FE...
-  Quarter FE levels: 37 (expected 37 -- full analysis period)
-  Quarter FE verified -- PASS
+[5/8] Encoding FE variables...
+  Quarter levels in full panel: 37 (expected 37)
+  District levels in full panel: 631 (expected 631)
+  FE encoding verified -- PASS
+  Note: quarter_fe Categorical encoded per-subset in [6/8] and [7/8].
 
 ======================================================================
-[6/7] PLACEBO REGRESSIONS
+[6/8] PLACEBO REGRESSIONS (Test 1 and Test 2)
 ======================================================================
   Outcome: deposit_change_L1 (lagged deposit growth)
   FE:      Quarter only (NO district FE -- consistent with H3)
@@ -50,7 +52,7 @@ LOGIC: If H3 t-2 is causal (floods -> deposits 2Q later),
 ----------------------------------------------------------------------
 TEST 1: Contemporaneous placebo
   ΔDeposits_{t-1} = α + β·Flood_{t-1} + τ_t + ε
-  Regressor: flood_ruleA_L1 (flood at t-1)
+  Regressor: flood_ruleA/B_L1 (flood at t-1)
   Outcome:   deposit_change_L1 (deposit change at t-1)
   Logic: mirrors H3 t0 but one period earlier. Must be null.
 ----------------------------------------------------------------------
@@ -63,7 +65,7 @@ TEST 1: Contemporaneous placebo
       Beta   = 0.000716
       SE     = 0.001468
       t      = 0.487
-      p      = 0.625957
+      p      = 0.625941
       95% CI = [-0.002162, 0.003594]
       Status = NOT SIGNIFICANT
       VERDICT: NULL -- PASS
@@ -76,7 +78,7 @@ TEST 1: Contemporaneous placebo
       Beta   = -0.002066
       SE     = 0.003428
       t      = -0.603
-      p      = 0.546751
+      p      = 0.546733
       95% CI = [-0.008785, 0.004653]
       Status = NOT SIGNIFICANT
       VERDICT: NULL -- PASS
@@ -84,10 +86,10 @@ TEST 1: Contemporaneous placebo
 ----------------------------------------------------------------------
 TEST 2: Pre-trend placebo (stronger falsification)
   ΔDeposits_{t-1} = α + β·Flood_t + τ_t + ε
-  Regressor: flood_exposure_ruleA_qt (flood at t)
+  Regressor: flood_exposure_ruleA/B_qt (flood at t)
   Outcome:   deposit_change_L1 (deposit change at t-1)
   Logic: current flood CANNOT causally affect LAST quarter deposits.
-  Significant result = pre-existing trend. H3 causal claim fails.
+  Significant result = pre-existing trend. H3 causal claim suspect.
 ----------------------------------------------------------------------
 
   Test 2 Rule A: deposit_change_L1 ~ flood_exposure_ruleA_qt + C(quarter_fe)
@@ -98,7 +100,7 @@ TEST 2: Pre-trend placebo (stronger falsification)
       Beta   = 0.004664
       SE     = 0.001841
       t      = 2.533
-      p      = 0.011301
+      p      = 0.011298
       95% CI = [0.001056, 0.008273]
       Status = **
       VERDICT: WARNING -- SIGNIFICANT: INVESTIGATE
@@ -111,13 +113,46 @@ TEST 2: Pre-trend placebo (stronger falsification)
       Beta   = -0.000549
       SE     = 0.003257
       t      = -0.169
-      p      = 0.866074
+      p      = 0.866068
       95% CI = [-0.006932, 0.005834]
       Status = NOT SIGNIFICANT
       VERDICT: NULL -- PASS
 
 ======================================================================
-[7/7] FINAL SUMMARY AND VERDICT
+[7/8] TEST 2b: Pre-trend diagnostic WITH district FE (Rule A only)
+======================================================================
+  Purpose: Determine whether Test 2 Rule A signal (p=0.011) is
+    cross-sectional or within-district.
+  Formula: deposit_change_L1 ~ flood_exposure_ruleA_qt +
+           C(district_state_id) + C(quarter_fe)
+  If null with district FE: signal is cross-sectional only.
+    Flood-prone districts structurally differ -- not a dynamic
+    pre-trend. H3 within-district timing logic is defensible.
+  If still significant with district FE: genuine within-district
+    pre-trend exists. Must develop mechanism argument before writing.
+  Note: This test is a diagnostic, NOT a main robustness check.
+  It does not replace Test 2. It diagnoses the source of Test 2's signal.
+======================================================================
+
+  Test 2b Rule A: deposit_change_L1 ~ flood_exposure_ruleA_qt +
+                  C(district_state_id) + C(quarter_fe)
+  Complete cases: 21,815
+  Quarter FE:     35
+  District FE:    631
+  Model fitted: N=21,815, R2=0.2601 -- PASS
+    [Test 2b Rule A (with district FE): flood_exposure_ruleA_qt]
+      Beta   = 0.004417
+      SE     = 0.001881
+      t      = 2.348
+      p      = 0.018858
+      95% CI = [0.000730, 0.008103]
+      Status = **
+
+  Test 2b VERDICT: SIGNIFICANT WITH DISTRICT FE -- WITHIN-DISTRICT PRE-TREND
+  Interpretation: Genuine within-district pre-trend detected. Deposits rise within the same district before floods arrive. H3 causal narrative requires explicit mechanism argument. Anticipatory saving mechanism would need to be modeled directly.
+
+======================================================================
+[8/8] FINAL SUMMARY AND VERDICT
 ======================================================================
 
   Reference: H3 main results (Script 29, Rule A):
@@ -125,19 +160,21 @@ TEST 2: Pre-trend placebo (stronger falsification)
     t-1: beta = +0.001505,  p = 0.177  null
     t-2: beta = -0.007005,  p = 0.000  *** CONFIRMED
 
-  Placebo results:
-  Test                         Rule           Beta          p Verdict
-  ------------------------------------------------------------------------
-  Contemp (T1)                 A          0.000716   0.625957  NULL -- PASS
-  Contemp (T1)                 B         -0.002066   0.546751  NULL -- PASS
-  Pre-trend (T2)               A          0.004664   0.011301  WARNING -- SIGNIFICANT: INVESTIGATE
-  Pre-trend (T2)               B         -0.000549   0.866074  NULL -- PASS
+  Placebo results (Tests 1 and 2, no district FE):
+  Test                         Rule           Beta          p  Verdict
+  ----------------------------------------------------------------------
+  Contemp (T1)                 A          0.000716   0.625941  NULL -- PASS
+  Contemp (T1)                 B         -0.002066   0.546733  NULL -- PASS
+  Pre-trend (T2)               A          0.004664   0.011298  WARNING -- SIGNIFICANT: INVESTIGATE
+  Pre-trend (T2)               B         -0.000549   0.866068  NULL -- PASS
+
+  Diagnostic (Test 2b, WITH district FE, Rule A only):
+  Pre-trend+DistFE (T2b)       A          0.004417   0.018858  SIGNIFICANT WITH DISTRICT FE -- WITHIN-DISTRICT PRE-TREND
 
   CRITICAL VERDICT:
-  WARNING: ONE OR MORE PLACEBO TESTS SIGNIFICANT.
-  Pre-trend problem detected. H3 t-2 causal interpretation is suspect.
-  DO NOT write H3 results as causal until this is investigated.
-  ACTION REQUIRED: Check for deposit autocorrelation, flood clustering,
-  or structural breaks that coincide with flood timing.
+  Test 2 Rule A significant both with and without district FE.
+  WITHIN-DISTRICT PRE-TREND CONFIRMED.
+  DO NOT write H3 as causal without mechanism argument.
+  ACTION REQUIRED before writing proceeds.
 
-  Table saved: 05_Outputs/Tables/09_placebo_timing.csv  (4 rows) -- PASS
+  Table saved: 05_Outputs/Tables/09_placebo_timing.csv  (5 rows) -- PASS

@@ -1,0 +1,7 @@
+hypothesis,rule,outcome,flood_var,coefficient,std_error,t_statistic,p_value,ci_lower_95,ci_upper_95,significance,n_obs,district_fe,quarter_fe_count,se_type,anchor_beta,anchor_p,note
+H4a,A,deposit_change_qt_winsor,flood_exposure_ruleA_qt:urban_proxy,-0.002224,0.002097,-1.06,0.289095,-0.006335,0.001887,,22442,district_state_id (631),36,clustered_by_district_state_id,,,
+H4b,A,deposit_change_qt_winsor,flood_exposure_ruleA_qt:high_exposure_proxy,9.7e-05,0.000571,0.17,0.865087,-0.001023,0.001217,,22442,district_state_id (631),36,clustered_by_district_state_id,,0.02,
+H4c,A,deposit_change_qt_winsor,flood_exposure_ruleA_qt:monsoon_quarter,-0.005655,0.00338,-1.673,0.09432,-0.012279,0.00097,*,22442,district_state_id (631),36,clustered_by_district_state_id,,0.001,
+H4a,B,deposit_change_qt_winsor,flood_exposure_ruleB_qt:urban_proxy,0.007297,0.005866,1.244,0.213505,-0.0042,0.018795,,22442,district_state_id (631),36,clustered_by_district_state_id,,,
+H4b,B,deposit_change_qt_winsor,flood_exposure_ruleB_qt:high_exposure_proxy,0.001029,0.001468,0.701,0.483313,-0.001849,0.003907,,22442,district_state_id (631),36,clustered_by_district_state_id,,,
+H4c,B,deposit_change_qt_winsor,flood_exposure_ruleB_qt:monsoon_quarter,-0.004588,0.005404,-0.849,0.395898,-0.01518,0.006004,,22442,district_state_id (631),36,clustered_by_district_state_id,,,

@@ -5340,6 +5340,103 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Figure B: India district flood exposure map
   - Figure C: H4 heterogeneity coefficient plot
 
+====================================================================================================================
+2026-03-16 (Mon) 20:07-20:59 IST: Script 36b Execution. R6b Complete. H1 Wild Bootstrap Fails.
+====================================================================================================================
+Goal: Write, debug, and execute Script 36b (R6b wild cluster bootstrap for H1 at state level).
+      Lock writing constraint 13. Commit all outputs.
+
+----------------------------------------------------------------------
+A) Script 36b: R6b Wild Cluster Bootstrap -- Audit, Debug, Execution
+----------------------------------------------------------------------
+Two bugs surfaced across two runtime failures before clean execution.
+
+  Runtime Error 1 (20:07): AssertionError: Missing required columns:
+    ['district_state_id', 'quarter_fe'].
+    Root cause: required_cols listed district_state_id and quarter_fe
+    as stored CSV columns. They are not. Every prior script constructs
+    them at runtime from district_gadm, state_gadm, year, and quarter.
+    Fix: removed district_state_id and quarter_fe from required_cols.
+    [2/9] now checks only the four base columns present in the CSV.
+    [3/9] derives both identifiers before any subset or assertion.
+
+  Runtime Error 2 (20:14): ValueError: invalid literal for int() with
+    base 10: '2015Q1'.
+    Root cause: [3/9] attempted df["quarter"].astype(int) to reconstruct
+    quarter_fe. The quarter column already stores full period strings
+    ('2015Q1', '2015Q2', etc.), not numeric 1-4 values. Casting to int
+    fails on the string format.
+    Fix: quarter_fe = df["quarter"].astype(str) -- direct assignment,
+    no reconstruction. One line.
+
+Script 36b executed clean (run 2026-03-16 20:16:28 -> completion 20:21:09):
+  All 9 blocks PASS. N=22,716 both rules ✓. X shape (22716, 667) ✓.
+  1 intercept + 1 treatment + 630 district dummies + 35 quarter dummies = 667 ✓.
+  State clusters = 34 (28 states + 6 UTs, GADM encoding) ✓. B = 999 ✓.
+  SE comparison (Rule A): Script 27 SE=0.0078 -> Script 36 SE=0.0274
+  -> Script 36b SE=0.0300. Monotone widening confirms pattern. ✓
+  Runtime: 281.4s (Rule A 141.3s, Rule B 139.7s).
+
+  H1 Rule A (wild bootstrap): beta = -0.044468. SE = 0.030026.
+    t_obs = -1.6222. p = 0.1582 -- NOT ROBUST.
+  H1 Rule B (wild bootstrap): beta = -0.058446. SE = 0.045341.
+    t_obs = -1.2493. p = 0.2673 -- NOT ROBUST.
+
+  R6b VERDICT: NOT ROBUST. Both rules fail wild cluster bootstrap at
+    34 state clusters. Coefficients intact to 6 decimal places across
+    Scripts 27, 36, and 36b -- beta unchanged. The failure is entirely
+    a precision limitation at state-cluster aggregation level. Wild
+    bootstrap SE (Rule A 0.0300) is marginally wider than conventional
+    state-clustered SE (0.0274), confirming the Cameron/Miller concern
+    was correctly anticipated. H1 district-clustered result (p < 0.001,
+    Script 27) remains the primary identification. State-level failure
+    must be disclosed in the robustness section per constraint 13.
+    H3 t-2 unaffected (survived state-clustering at p=0.034, Script 36).
+    The causal chain is intact through H3.
+
+Writing constraint 13 confirmed and locked:
+    Report wild bootstrap result alongside Script 36 conventional
+    state-cluster result. State explicitly that H1 significance does
+    not survive the most conservative SE specification. Coefficient
+    stability (beta unchanged) must accompany the disclosure.
+    No H1 robustness claims may omit this finding.
+
+Commits issued: 36b_R6b_Wild_Cluster_bootstrap.py,
+  36b_wildbootstrap_log.txt, 16_H1_wildbootstrap.csv.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Robustness status:
+  R1 (both rules):          COMPLETE
+  R2 (placebo timing):      COMPLETE -- positive pre-period confirmed,
+                            anticipatory saving mechanism, constraint 11 locked
+  R3 (winsorized re-runs):  COMPLETE -- H3 robust, H4b fails (constraint 12)
+  R4 (nominal decision):    COMPLETE
+  R5 (longer lags):         COMPLETE -- t-3/t-4 null, decay confirmed at t-2
+  R6 (state clustering):    COMPLETE -- H1 p=0.105, H3 p=0.034 robust
+  R6b (wild bootstrap H1):  COMPLETE -- H1 fails wild bootstrap (p=0.1582).
+                            Coefficient intact. Constraint 13 locked.
+  R7 (IV F-stat):           COMPLETE
+  R8 (NE sensitivity):      COMPLETE
+  ALL ROBUSTNESS CHECKS COMPLETE.
+
+Key findings locked today:
+  R6b: H1 wild bootstrap p=0.1582 (Rule A), p=0.2673 (Rule B) -- both fail.
+       Coefficient stable: -0.044468 (A), -0.058446 (B) across all SE specs.
+       SE widens monotonically: 0.0078 (district) -> 0.0274 (state conv.) ->
+       0.0300 (state wild bootstrap). Pattern consistent and disclosed.
+       Writing constraint 13 active. H1 robustness claims blocked.
+
+NOT COMPLETED / PENDING NEXT SESSION:
+  - Scripts 27b-30b: linearmodels PanelOLS final tables (immediate priority)
+  - Figure A: H3 deposit timing cycle plot (two-phase, expanded scope)
+  - Figure B: India district flood exposure map
+  - Figure C: H4 heterogeneity coefficient plot
+  - Final documentation update (Hypotheses v2.6, Codebook v2.6)
+  - Pre_Writing_Master_Plan update: R6b COMPLETE, constraint 13 locked,
+    execution order updated (Step 6 DONE, Step 7 now immediate priority)
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-14 23:55 PM IST
+END OF LOG - Last Updated: 2026-03-16 23:55 PM IST
 ======================================================================

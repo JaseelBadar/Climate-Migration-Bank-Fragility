@@ -1,0 +1,101 @@
+======================================================================
+Script 36b: R6b Wild Cluster Bootstrap -- H1 State-Level SE
+Run timestamp: 2026-03-16 20:16:28
+Bootstrap iterations (B): 999
+Random seed: 42
+Cluster variable: state_gadm (34 clusters, GADM encoding)
+Reference: Cameron and Miller (2015), JHR 50(2)
+======================================================================
+
+[2/9] Loading data
+  Rows loaded:    23,347
+  Columns loaded: 23
+  Columns:        ['district_gadm', 'state_gadm', 'year', 'q', 'quarter', 'quarter_num', 'flood_exposure_ruleA_qt', 'flood_exposure_ruleB_qt', 'deposits', 'mean_radiance', 'pixel_count', 'log_deposits', 'log_lights_qt', 'deposit_change_qt', 'lights_change_qt', 'flood_ruleA_L1', 'flood_ruleB_L1', 'flood_ruleA_L2', 'flood_ruleB_L2', 'flood_ruleA_L3', 'flood_ruleB_L3', 'flood_ruleA_L4', 'flood_ruleB_L4']
+  Required columns: all present -- PASS
+
+[3/9] Computing derived identifiers
+  district_state_id: constructed (631 unique)
+  quarter_fe:        from 'quarter' column (37 unique)
+  Sample quarter_fe values: ['2015Q1', '2015Q2', '2015Q3', '2015Q4']
+  state_gadm:        34 clusters (28 states + 6 UTs, GADM) -- PASS
+
+[4/9] Preparing H1 sample
+  H1 sample (Rule A): N = 22,716 -- PASS
+  (23,347 total - 631 first-quarter NaN = 22,716)
+  State clusters in H1 sample: 34
+  District FE in H1 sample:    631
+  Quarter FE in H1 sample:     36
+
+[5/9] Defining wild cluster bootstrap (Rademacher weights)
+  Rademacher: P(w = +1) = P(w = -1) = 0.5 per cluster.
+  H0 imposed via restricted residuals (treatment coef = 0).
+  p-value: proportion of |t_b*| >= |t_obs| across B iterations.
+  SE_wb: std of bootstrap beta distribution (B = 999).
+
+[6/9] Building regressor matrix
+  Formula: lights_change_qt ~ flood_exposure_ruleX_qt
+           + C(district_state_id) + C(quarter_fe)
+  Identical formula to Scripts 27 and 36.
+
+[7/9] Running wild cluster bootstrap
+  B = 999 iterations per rule. Runtime: expect 20-60 min total.
+
+  --- Rule A ---
+  Anchor Script 27: beta = -0.044500, SE = 0.0078, p < 0.001
+  Anchor Script 36: beta = -0.044468, SE = 0.0274, p = 0.105
+  N = 22,716 -- PASS
+  X shape: (22716, 667) | State clusters: 34
+  Running 999 bootstrap iterations...
+  Completed in 141.3s
+  beta (OLS):           -0.044468
+  SE (conv clustered):  0.027413  [Script 36 reference]
+  t_obs:                -1.6222
+  SE (wild bootstrap):  0.030026
+  p  (wild bootstrap):  0.1582  
+  VERDICT: NOT ROBUST. H1 Rule A does not survive wild cluster bootstrap at 34 state clusters (p = 0.1582). Coefficient intact: beta = -0.044468. Precision limitation only. Writing constraint 13 applies: explicit disclosure required. Do not claim H1 is robust to the most conservative SE specification.
+
+  --- Rule B ---
+  Anchor Script 27: beta = -0.058400, SE = 0.0198, p < 0.003
+  Anchor Script 36: beta = -0.058446, SE = 0.0468, p = 0.212
+  N = 22,716 -- PASS
+  X shape: (22716, 667) | State clusters: 34
+  Running 999 bootstrap iterations...
+  Completed in 139.7s
+  beta (OLS):           -0.058446
+  SE (conv clustered):  0.046784  [Script 36 reference]
+  t_obs:                -1.2493
+  SE (wild bootstrap):  0.045341
+  p  (wild bootstrap):  0.2673  
+  VERDICT: NOT ROBUST. H1 Rule B does not survive wild cluster bootstrap at 34 state clusters (p = 0.2673). Coefficient intact: beta = -0.058446. Precision limitation only. Writing constraint 13 applies: explicit disclosure required. Do not claim H1 is robust to the most conservative SE specification.
+
+[8/9] Saving outputs
+  CSV saved:  E:\Climate-Migration-Bank-Fragility\05_Outputs\Tables\16_H1_wildbootstrap.csv -- PASS
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+
+H1 Rule A:
+  beta            = -0.044468
+  SE (wild boot)  = 0.030026
+  t_obs           = -1.6222
+  p (wild boot)   = 0.1582  
+  N = 22,716 | State clusters = 34 | B = 999
+  VERDICT: NOT ROBUST. H1 Rule A does not survive wild cluster bootstrap at 34 state clusters (p = 0.1582). Coefficient intact: beta = -0.044468. Precision limitation only. Writing constraint 13 applies: explicit disclosure required. Do not claim H1 is robust to the most conservative SE specification.
+
+H1 Rule B:
+  beta            = -0.058446
+  SE (wild boot)  = 0.045341
+  t_obs           = -1.2493
+  p (wild boot)   = 0.2673  
+  N = 22,716 | State clusters = 34 | B = 999
+  VERDICT: NOT ROBUST. H1 Rule B does not survive wild cluster bootstrap at 34 state clusters (p = 0.2673). Coefficient intact: beta = -0.058446. Precision limitation only. Writing constraint 13 applies: explicit disclosure required. Do not claim H1 is robust to the most conservative SE specification.
+
+SE comparison (Rule A):
+  District-clustered  (Script 27): SE = 0.0078, p < 0.001 ***
+  State conv. cluster (Script 36): SE = 0.027413, p = 0.105
+  State wild bootstrap(Script 36b): SE = 0.030026, p = 0.1582  
+
+Total script runtime: 281.4s
+Run timestamp:        2026-03-16 20:16:28
+======================================================================

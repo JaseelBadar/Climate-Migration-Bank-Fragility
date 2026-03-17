@@ -1,0 +1,79 @@
+======================================================================
+27b: H1 FIRST STAGE -- linearmodels PanelOLS
+Floods -> Nighttime Lights Decline
+Anchors (Script 27 statsmodels):
+  Rule A: beta = -0.0445, SE = 0.0078, p < 0.001
+  Rule B: beta = -0.0584, SE = 0.0198, p = 0.003
+======================================================================
+
+[2/7] Loading data
+  Loaded: 23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+
+[3/7] Composite key and sample restriction
+  H1 sample: N = 22,716 -- PASS
+  Districts: 631 -- PASS
+  Quarters:  36 -- PASS
+
+[4/7] Building panel index
+  Quarter range: 2015Q2 to 2024Q4 (36 quarters, mapped to integers 1-36) -- PASS
+  Panel index unique: 0 duplicates -- PASS
+  Entity: district_state_id (631 unique)
+  Time:   quarter_int (36 unique, 1=2015Q2, 36=2024Q4)
+
+[5/7] Model fitting
+  Specification: entity_effects=True, time_effects=True
+  SE:            cov_type='clustered', cluster_entity=True
+  Clusters:      district_state_id (631) -- entity index
+  Note:          cluster_entity=True clusters by the entity
+                 index (district_state_id), identical to
+                 Script 27 cov_kwds={'groups': district_state_id}.
+
+  Rule A:
+    Treatment: flood_exposure_ruleA_qt
+    Anchor beta = -0.0445, SE = 0.0078
+    beta        = -0.044468  (anchor: -0.044500)
+    SE          = 0.007784  (anchor: 0.007800)
+    t           = -5.7124
+    p           = 0.000000  ***
+    95% CI      = [-0.059726, -0.029210]
+    N           = 22,716
+    R2 (within) = 0.0026
+    Coefficient stable: delta = 0.000032 <= threshold 0.001 -- PASS
+
+  Rule B:
+    Treatment: flood_exposure_ruleB_qt
+    Anchor beta = -0.0584, SE = 0.0198
+    beta        = -0.058446  (anchor: -0.058400)
+    SE          = 0.019768  (anchor: 0.019800)
+    t           = -2.9566
+    p           = 0.003114  **
+    95% CI      = [-0.097192, -0.019700]
+    N           = 22,716
+    R2 (within) = 0.0006
+    Coefficient stable: delta = 0.000046 <= threshold 0.001 -- PASS
+
+======================================================================
+SIDE-BY-SIDE SUMMARY -- linearmodels PanelOLS
+======================================================================
+  Spec               Beta         SE        t          p   Sig
+  ----------------------------------------------------------
+  Rule A        -0.044468   0.007784  -5.7124   0.000000   ***
+  Rule B        -0.058446   0.019768  -2.9566   0.003114    **
+  N: 22,716 | Entity FE: 631 | Time FE: 36
+  SE: clustered by entity (district_state_id)
+  Sign check Rule A: negative (expected) -- PASS
+  Sign check Rule B: negative (expected) -- PASS
+
+[7/7] Saving outputs
+  CSV saved: 05_Outputs/Tables/02b_H1_linearmodels.csv -- PASS
+  Full summary (Rule A): 05_Outputs/Logs/27b_H1_linearmodels_full_ruleA.txt -- PASS
+  Full summary (Rule B): 05_Outputs/Logs/27b_H1_linearmodels_full_ruleB.txt -- PASS
+
+======================================================================
+SCRIPT 27b COMPLETE
+  CSV:           05_Outputs/Tables/02b_H1_linearmodels.csv
+  Full (Rule A): 05_Outputs/Logs/27b_H1_linearmodels_full_ruleA.txt
+  Full (Rule B): 05_Outputs/Logs/27b_H1_linearmodels_full_ruleB.txt
+Next: Script 28b -- H2 IV 2SLS linearmodels
+======================================================================

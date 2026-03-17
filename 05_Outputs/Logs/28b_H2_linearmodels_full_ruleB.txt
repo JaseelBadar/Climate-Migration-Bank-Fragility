@@ -1,0 +1,22 @@
+                          IV-2SLS Estimation Summary                          
+==============================================================================
+Dep. Variable:      deposit_change_qt   R-squared:                    9.95e-05
+Estimator:                    IV-2SLS   Adj. R-squared:              5.494e-05
+No. Observations:               22442   F-statistic:                    0.0129
+Date:                Tue, Mar 17 2026   P-value (F-stat)                0.9096
+Time:                        21:12:03   Distribution:                  chi2(1)
+Cov. Estimator:             clustered                                         
+                                                                              
+                                Parameter Estimates                                 
+====================================================================================
+                  Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+------------------------------------------------------------------------------------
+const             2.025e-19  8.579e-20     2.3605     0.0182   3.436e-20   3.707e-19
+lights_change_qt    -0.0068     0.0597    -0.1135     0.9096     -0.1238      0.1102
+====================================================================================
+
+Endogenous: lights_change_qt
+Instruments: flood_exposure_ruleB_qt
+Clustered Covariance (One-Way)
+Debiased: False
+Num Clusters: 631

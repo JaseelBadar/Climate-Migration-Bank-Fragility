@@ -1,0 +1,33 @@
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:      deposit_change_qt   R-squared:                        0.0008
+Estimator:                   PanelOLS   R-squared (Between):             -0.0333
+No. Observations:               21837   R-squared (Within):               0.0016
+Date:                Tue, Mar 17 2026   R-squared (Overall):             -0.0022
+Time:                        21:34:46   Log-likelihood                  2.87e+04
+Cov. Estimator:             Clustered                                           
+                                        F-statistic:                      5.7405
+Entities:                         631   P-value                           0.0006
+Avg Obs:                       34.607   Distribution:                 F(3,21799)
+Min Obs:                       4.0000                                           
+Max Obs:                       35.000   F-statistic (robust):             6.5051
+                                        P-value                           0.0002
+Time periods:                      35   Distribution:                 F(3,21799)
+Avg Obs:                       623.91                                           
+Min Obs:                       605.00                                           
+Max Obs:                       629.00                                           
+                                                                                
+                                    Parameter Estimates                                    
+===========================================================================================
+                         Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+-------------------------------------------------------------------------------------------
+flood_exposure_ruleA_qt     0.0006     0.0015     0.4167     0.6769     -0.0023      0.0035
+flood_ruleA_L1              0.0015     0.0011     1.3517     0.1765     -0.0007      0.0037
+flood_ruleA_L2             -0.0070     0.0016    -4.2609     0.0000     -0.0102     -0.0038
+===========================================================================================
+
+F-test for Poolability: 204.46
+P-value: 0.0000
+Distribution: F(34,21799)
+
+Included effects: Time

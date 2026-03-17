@@ -1,0 +1,97 @@
+======================================================================
+28b: H2 IV 2SLS -- linearmodels IV2SLS
+Nighttime Lights -> Deposit Withdrawals
+Anchors (Script 28):
+  Rule A: 2nd beta=-0.0084, SE=0.034, p=0.805 | F=34.673
+  Rule B: 2nd beta=-0.0068, SE=0.0597, p=0.910 | F=8.949
+  N=22442
+======================================================================
+
+[2/7] Loading data
+  Loaded: 23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+
+[3/7] Composite key and sample restriction
+  H2 sample: N = 22,442 -- PASS
+  Districts: 631 -- PASS
+  Quarters:  36 -- PASS
+
+[4/7] Building panel index
+  Quarter range: 2015Q2 to 2024Q4 (36 quarters, mapped to integers 1-36) -- PASS
+  Panel index unique: 0 duplicates -- PASS
+  Entity: district_state_id (631 unique)
+  Time:   quarter_int (36 unique, 1=2015Q2, 36=2024Q4)
+
+[5/7] Two-way within-transformation
+  Method: iterative alternating entity/time demeaning.
+  Required because H2 panel is unbalanced (N=22,442 < 631x36=22,716).
+  Single-pass formula fails on unbalanced panels; iterative converges.
+  Tolerance: 1e-12. Max iterations: 500.
+  Reference: Gauss-Seidel alternating projections.
+  Equivalent to PanelOLS(entity_effects=True, time_effects=True).
+  Converged at iteration 8 (max change = 1.46e-14 < tol 1e-12).
+  Entity mean check: 5.55e-17 -- PASS
+  Time mean check:   1.51e-18 -- PASS
+
+[6/7] Model fitting
+  Specification: deposit_change_qt(dm) ~ const | lights_change_qt(dm)
+  Instrument A: flood_exposure_ruleA_qt(dm)
+  Instrument B: flood_exposure_ruleB_qt(dm)
+  SE: clustered by entity (district_state_id, 631 clusters)
+
+  Rule A:
+    Instrument: flood_exposure_ruleA_qt
+    Anchors: 2nd beta=-0.0084, SE=0.034, F=34.673
+    FIRST STAGE:
+      beta = -0.045375, SE = 0.007706, t = -5.8884, p = 0.000000
+      F(t^2) = 34.673 (anchor: 34.673), F(direct) = 34.673
+      Credibility: STRONG INSTRUMENT (F >= 16.38). IV credible.
+    SECOND STAGE:
+      beta = -0.008388 (anchor: -0.008400)
+      SE = 0.034022 (anchor: 0.034000)
+      t = -0.2465, p = 0.805268 
+      95% CI = [-0.075070, 0.058294]
+      N = 22,442, R2 = -0.0000
+    Second-stage coefficient stable: delta = 0.000012 <= threshold 0.005 -- PASS
+
+  Rule B:
+    Instrument: flood_exposure_ruleB_qt
+    Anchors: 2nd beta=-0.0068, SE=0.0597, F=8.949
+    FIRST STAGE:
+      beta = -0.058282, SE = 0.019482, t = -2.9916, p = 0.002775
+      F(t^2) = 8.949 (anchor: 8.949), F(direct) = 8.949
+      Credibility: WEAK INSTRUMENT (F < 10). Label suggestive. Remove causal language.
+    SECOND STAGE:
+      beta = -0.006776 (anchor: -0.006800)
+      SE = 0.059698 (anchor: 0.059700)
+      t = -0.1135, p = 0.909625 
+      95% CI = [-0.123783, 0.110230]
+      N = 22,442, R2 = 0.0001
+    Second-stage coefficient stable: delta = 0.000024 <= threshold 0.005 -- PASS
+
+======================================================================
+SIDE-BY-SIDE SUMMARY -- linearmodels IV2SLS (two-way demeaned)
+======================================================================
+  Spec               Beta         SE        t          p   Sig
+  ----------------------------------------------------------
+  Rule A        -0.008388   0.034022  -0.2465   0.805268      
+  Rule B        -0.006776   0.059698  -0.1135   0.909625      
+  First Stage F: Rule A = 34.673 | Rule B = 8.949
+  N: 22,442 | Entity FE: 631 | Time FE: 36
+  H2 Rule A: NULL CONFIRMED (p=0.8053 >= 0.05) -- PASS
+  H2 Rule B: NULL CONFIRMED (p=0.9096 >= 0.05) -- PASS
+  Rule A instrument: STRONG (F=34.673 >= 16.38) -- PASS
+  Rule B instrument: WEAK (F=8.949 < 10) -- expected, consistent with anchor.
+
+[7/7] Saving outputs
+  CSV saved: 05_Outputs/Tables/03b_H2_linearmodels.csv -- PASS
+  Full summary (Rule A): 05_Outputs/Logs/28b_H2_linearmodels_full_ruleA.txt -- PASS
+  Full summary (Rule B): 05_Outputs/Logs/28b_H2_linearmodels_full_ruleB.txt -- PASS
+
+======================================================================
+SCRIPT 28b COMPLETE
+  CSV:           05_Outputs/Tables/03b_H2_linearmodels.csv
+  Full (Rule A): 05_Outputs/Logs/28b_H2_linearmodels_full_ruleA.txt
+  Full (Rule B): 05_Outputs/Logs/28b_H2_linearmodels_full_ruleB.txt
+Next: Script 29b -- H3 Distributed Lag linearmodels PanelOLS
+======================================================================

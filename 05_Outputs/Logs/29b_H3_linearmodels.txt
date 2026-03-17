@@ -1,0 +1,127 @@
+======================================================================
+29b: H3 DISTRIBUTED LAG -- linearmodels PanelOLS
+Flood Timing -> Deposit Withdrawals
+SPECIFICATION: time_effects=True, entity_effects=False (pre-committed)
+Anchors (Script 29, statsmodels):
+  Rule A t0:  beta=0.000609, SE=0.001463, p=0.677 -- NULL
+  Rule A t-1: beta=0.001505, SE=0.001114, p=0.177 -- NULL
+  Rule A t-2: beta=-0.007005, SE=0.001645, p<0.001 -- CONFIRMED
+  Rule B: all lags null (0.90% treatment rate)
+  N=21837, Quarter FE=35, NO district FE
+======================================================================
+
+[2/7] Loading data
+  Loaded: 23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+
+[3/7] Composite key, lag arithmetic, complete cases
+  district_state_id: 631 -- PASS
+  flood_exposure_ruleA_qt NaN: 0  (expected 0) -- PASS
+  flood_ruleA_L1 NaN: 631  (expected 631) -- PASS
+  flood_ruleA_L2 NaN: 1,262  (expected 1,262) -- PASS
+  flood_exposure_ruleB_qt NaN: 0  (expected 0) -- PASS
+  flood_ruleB_L1 NaN: 631  (expected 631) -- PASS
+  flood_ruleB_L2 NaN: 1,262  (expected 1,262) -- PASS
+  Initial: 23,347
+  After restriction (A): 21,837  (anchor: 21,837)
+  After restriction (B): 21,837  (anchor: 21,837)
+  Dropped (A): 1,510 (6.5%)
+  Dropped (B): 1,510 (6.5%)
+
+[4/7] Building panel indices
+  Rule A: 35 quarters (2015Q3 to 2024Q4), 631 entities, 0 duplicates -- PASS
+  Rule B: 35 quarters (2015Q3 to 2024Q4), 631 entities, 0 duplicates -- PASS
+
+[5/7] Model fitting
+  Specification: time_effects=True, entity_effects=False
+  Equivalent to: OLS + C(quarter) dummies (pre-committed H3 spec)
+  NO district (entity) FE -- deposit_change_qt is log-differenced;
+  district trends absorbed by differencing. Pre-committed H3 design.
+  SE: cluster_entity=True (clustered by district_state_id, 631 clusters)
+
+  Rule A:
+    t0:  flood_exposure_ruleA_qt
+    t-1: flood_ruleA_L1
+    t-2: flood_ruleA_L2
+    N = 21,837, R2(within/time) = 0.0008
+    [t0  Current quarter]
+      beta = 0.000609  (anchor: 0.000609)
+      SE   = 0.001462
+      t    = 0.4167
+      p    = 0.676885  (NOT SIGNIFICANT)
+      95% CI = [-0.002256, 0.003474]
+    [t-1 One quarter lag]
+      beta = 0.001505  (anchor: 0.001505)
+      SE   = 0.001114
+      t    = 1.3517
+      p    = 0.176482  (NOT SIGNIFICANT)
+      95% CI = [-0.000677, 0.003688]
+    [t-2 Two quarter lag]
+      beta = -0.007005  (anchor: -0.007005)
+      SE   = 0.001644
+      t    = -4.2609
+      p    = 0.000020  ***
+      95% CI = [-0.010227, -0.003783]
+    Coefficient stable Rule A t0: delta = 0.000000 <= threshold 0.001 -- PASS
+    Coefficient stable Rule A t-1: delta = 0.000000 <= threshold 0.001 -- PASS
+    Coefficient stable Rule A t-2: delta = 0.000000 <= threshold 0.001 -- PASS
+
+  Rule B:
+    t0:  flood_exposure_ruleB_qt
+    t-1: flood_ruleB_L1
+    t-2: flood_ruleB_L2
+    N = 21,837, R2(within/time) = 0.0000
+    [t0  Current quarter]
+      beta = -0.002555  (anchor: not anchored)
+      SE   = 0.003484
+      t    = -0.7334
+      p    = 0.463335  (NOT SIGNIFICANT)
+      95% CI = [-0.009383, 0.004273]
+    [t-1 One quarter lag]
+      beta = -0.000778  (anchor: not anchored)
+      SE   = 0.001953
+      t    = -0.3985
+      p    = 0.690284  (NOT SIGNIFICANT)
+      95% CI = [-0.004607, 0.003050]
+    [t-2 Two quarter lag]
+      beta = -0.003814  (anchor: not anchored)
+      SE   = 0.006302
+      t    = -0.6052
+      p    = 0.545035  (NOT SIGNIFICANT)
+      95% CI = [-0.016166, 0.008538]
+    Stability Rule B t0: anchor not confirmed -- SKIP
+    Stability Rule B t-1: anchor not confirmed -- SKIP
+    Stability Rule B t-2: anchor not confirmed -- SKIP
+
+======================================================================
+SIDE-BY-SIDE SUMMARY -- linearmodels PanelOLS (time FE only)
+======================================================================
+  Lag    Rule           Beta         SE        t          p   Sig
+  ------------------------------------------------------------
+  t0     A          0.000609   0.001462   0.4167   0.676885      
+  t0     B         -0.002555   0.003484  -0.7334   0.463335      
+  ------------------------------------------------------------
+  t-1    A          0.001505   0.001114   1.3517   0.176482      
+  t-1    B         -0.000778   0.001953  -0.3985   0.690284      
+  ------------------------------------------------------------
+  t-2    A         -0.007005   0.001644  -4.2609   0.000020   ***
+  t-2    B         -0.003814   0.006302  -0.6052   0.545035      
+  ------------------------------------------------------------
+  N (Rule A): 21,837 | N (Rule B): 21,837
+  Quarter FE: 35 | District FE: NONE (pre-committed)
+  H3 CONFIRMED: Rule A t-2 negative and p<0.001 -- PASS
+  Rule A t0: positive, null (p=0.6769) -- expected null
+  Rule A t-1: positive, null (p=0.1765) -- expected null
+
+[7/7] Saving outputs
+  CSV saved: 05_Outputs/Tables/04b_H3_linearmodels.csv -- PASS
+  Full summary (Rule A): 05_Outputs/Logs/29b_H3_linearmodels_full_ruleA.txt -- PASS
+  Full summary (Rule B): 05_Outputs/Logs/29b_H3_linearmodels_full_ruleB.txt -- PASS
+
+======================================================================
+SCRIPT 29b COMPLETE
+  CSV:           05_Outputs/Tables/04b_H3_linearmodels.csv
+  Full (Rule A): 05_Outputs/Logs/29b_H3_linearmodels_full_ruleA.txt
+  Full (Rule B): 05_Outputs/Logs/29b_H3_linearmodels_full_ruleB.txt
+Next: Script 30b -- H4 Heterogeneity linearmodels PanelOLS
+======================================================================

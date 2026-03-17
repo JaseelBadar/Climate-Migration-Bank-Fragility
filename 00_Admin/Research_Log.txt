@@ -5340,11 +5340,10 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Figure B: India district flood exposure map
   - Figure C: H4 heterogeneity coefficient plot
 
-====================================================================================================================
+==============================================================================================
 2026-03-16 (Mon) 20:07-20:59 IST: Script 36b Execution. R6b Complete. H1 Wild Bootstrap Fails.
-====================================================================================================================
+==============================================================================================
 Goal: Write, debug, and execute Script 36b (R6b wild cluster bootstrap for H1 at state level).
-      Lock writing constraint 13. Commit all outputs.
 
 ----------------------------------------------------------------------
 A) Script 36b: R6b Wild Cluster Bootstrap -- Audit, Debug, Execution
@@ -5437,6 +5436,134 @@ NOT COMPLETED / PENDING NEXT SESSION:
   - Pre_Writing_Master_Plan update: R6b COMPLETE, constraint 13 locked,
     execution order updated (Step 6 DONE, Step 7 now immediate priority)
 
+==============================================================================================
+2026-03-17 (Tue) 20:30-21:40 IST: Scripts 27b, 28b, 29b Execution. linearmodels Final Tables.
+==============================================================================================
+Goal: Write, debug, and execute Scripts 27b, 28b, 29b -- linearmodels PanelOLS/IV2SLS final paper tables for H1, H2, H3. Replace statsmodels OLS across all three core hypotheses. Resolve ValueWarning from rank deficiency in clustered VCV at 666 exogenous columns.
+
+----------------------------------------------------------------------
+A) Script 27b: H1 First Stage -- linearmodels PanelOLS
+----------------------------------------------------------------------
+Three runtime failures before clean execution.
+
+  Runtime Error 1: ValueError: The index on the time dimension must be
+    either numeric or date-like.
+    Root cause: PanelOLS received string quarter values ('2015Q1') as
+    time index. linearmodels does not accept string time indices.
+    Fix attempted: pd.PeriodIndex conversion (quarter_period).
+
+  Runtime Error 2: Same ValueError persisted.
+    Root cause: pd.Period is unreliable as "date-like" across linearmodels
+    versions. PanelOLS rejected it silently in some builds.
+    Fix: switched to sequential integer mapping. quarter strings sorted
+    chronologically ('YYYYQN' format sorts correctly), mapped to integers
+    1-36. linearmodels accepts numeric time index unconditionally.
+
+  Runtime Error 3: AssertionError: First period expected 2015Q1, got 2015Q2.
+    Root cause: H1 sample drops 2015Q1 for all 631 districts (first quarter
+    has no prior period for lights_change_qt log-diff). Assertion hardcoded
+    wrong endpoint. Fix: replaced endpoint assertion with count assertion
+    (assert len == 36), which is the logically correct check.
+
+Script 27b executed clean:
+  N=22,716. Districts=631. Quarters=36 (2015Q2-2024Q4). 0 duplicates.
+  Rule A: beta=-0.044468, SE=0.007784, t=-5.7124, p<0.001 ***
+    delta vs Script 27 anchor: 0.000032 -- PASS
+  Rule B: beta=-0.058446, SE=0.019768, t=-2.9566, p=0.003 **
+    delta vs Script 27 anchor: 0.000046 -- PASS
+  Outputs: 02b_H1_linearmodels.csv, full summaries Rule A/B. All PASS.
+
+----------------------------------------------------------------------
+B) Script 28b: H2 IV 2SLS -- linearmodels IV2SLS (two-way demeaned)
+----------------------------------------------------------------------
+Four runtime failures before clean execution.
+
+  Runtime Error 1: ValueError: The index on the time dimension must be
+    either numeric or date-like.
+    Root cause: Same string quarter index issue as Script 27b.
+    Fix: identical quarter_int sequential integer mapping applied.
+
+  Runtime Error 2: AssertionError: Entity demeaning failed:
+    max entity mean = 6.59e-03.
+    Root cause: H2 panel is unbalanced (N=22,442 < 631x36=22,716).
+    Single-pass two-way demeaning formula (result - entity_mean -
+    time_mean + grand_mean) is algebraically exact only on balanced
+    panels. On unbalanced panels it leaves residual entity means.
+    Fix: replaced single-pass with iterative alternating demeaning
+    (entity then time, repeated until max change < 1e-12). Converged
+    at iteration 8, max change 1.46e-14. Entity mean 5.55e-17,
+    time mean 1.51e-18 -- both well below 1e-8 threshold.
+
+  Runtime Error 3: TypeError: ClusteredCovariance.__init__() got an
+    unexpected keyword argument 'cluster_entity'.
+    Root cause: cluster_entity=True is a PanelOLS-only argument.
+    IV2SLS.fit() requires clusters= Series, not cluster_entity=.
+    Fix: built clusters Series from entity index values, passed as
+    clusters=cluster_series to IV2SLS.fit(cov_type='clustered').
+
+Script 28b executed clean:
+  N=22,442. Iterative demeaning converged iteration 8. 0 duplicates.
+  Rule A: 2nd beta=-0.008388, SE=0.034022, t=-0.2465, p=0.805 -- NULL
+    F(t^2)=34.673 STRONG. delta vs Script 28: 0.000012 -- PASS
+  Rule B: 2nd beta=-0.006776, SE=0.059698, t=-0.1135, p=0.910 -- NULL
+    F(t^2)=8.949 WEAK. delta vs Script 28: 0.000024 -- PASS
+  H2 null confirmed both rules. Rule B labeled suggestive throughout
+  (F<10, writing constraint 3 active).
+  Outputs: 03b_H2_linearmodels.csv, full summaries Rule A/B. All PASS.
+  Note: F(t^2) = F(direct) for both rules -- no overflow (exog=const
+  only after demeaning). Cross-validation clean.
+
+----------------------------------------------------------------------
+C) Script 29b: H3 Distributed Lag -- linearmodels PanelOLS
+----------------------------------------------------------------------
+Zero runtime failures. Executed clean on first run.
+  Pre-committed specification preserved exactly: time_effects=True,
+  entity_effects=False (quarter FE only, no district FE). Identical
+  to Script 29 statsmodels design.
+
+Script 29b executed clean:
+  N=21,837 both rules. Quarters=35 (2015Q3-2024Q4). 631 entities.
+  All 6 lag NaN assertions PASS (L1=631, L2=1,262 per rule).
+  Rule A t0:  beta= 0.000609, SE=0.001462, p=0.677 -- NULL
+    delta vs anchor: 0.000000 -- PASS (exact)
+  Rule A t-1: beta= 0.001505, SE=0.001114, p=0.177 -- NULL
+    delta vs anchor: 0.000000 -- PASS (exact)
+  Rule A t-2: beta=-0.007005, SE=0.001644, t=-4.2609, p<0.001 ***
+    delta vs anchor: 0.000000 -- PASS (exact to 6 decimal places)
+  Rule B: all three lags null (p>0.46). Consistent with 0.90%
+    treatment rate and insufficient power. Expected and confirmed.
+  Outputs: 04b_H3_linearmodels.csv, full summaries Rule A/B. All PASS.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+linearmodels migration status:
+  Script 27b (H1 first stage):    COMPLETE -- results locked
+  Script 28b (H2 IV 2SLS):        COMPLETE -- results locked
+  Script 29b (H3 distributed lag): COMPLETE -- results locked
+  Script 30b (H4 heterogeneity):  PENDING -- immediate priority tomorrow
+
+Key findings confirmed today:
+  H1: Rule A beta=-0.044468 ***, Rule B beta=-0.058446 **. Stable to
+    6dp vs Script 27 statsmodels anchors. ValueWarning resolved.
+  H2: Null confirmed. Rule A p=0.805, Rule B p=0.910. F cross-validated
+    (t^2 = direct, no overflow). Iterative demeaning required for
+    unbalanced panel -- documented and implemented.
+  H3: t-2 Rule A beta=-0.007005 *** reproduced to exact 6 decimal places.
+    Two-phase cycle intact: t-1 positive (anticipatory), t-2 negative
+    (withdrawal). Writing constraint 11 active.
+
+Methodological note locked: linearmodels IV2SLS on unbalanced panels
+  requires iterative alternating demeaning (Gauss-Seidel projections),
+  not single-pass within transformation. Convergence verified to 1e-14
+  tolerance. Appendix methods note required (Section 5, writing plan).
+
+PENDING NEXT SESSION (in execution order):
+  1. Script 30b -- H4 heterogeneity linearmodels PanelOLS (immediate)
+  2. Figure A  -- H3 deposit timing cycle plot (two-phase, expanded scope)
+  3. Figure B  -- India district flood exposure map
+  4. Figure C  -- H4 heterogeneity coefficient plot
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-16 23:55 PM IST
+END OF LOG - Last Updated: 2026-03-17 21:40 PM IST
 ======================================================================

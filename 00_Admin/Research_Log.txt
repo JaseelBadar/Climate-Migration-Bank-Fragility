@@ -5565,7 +5565,11 @@ PENDING NEXT SESSION (in execution order):
   4. Figure C  -- H4 heterogeneity coefficient plot
 
 18-03-2026
-Read, Researchs
+Read, Research
+
+18-03-2026
+Read, Research
+
 
 ======================================================================
 END OF LOG - Last Updated: 2026-03-17 21:40 PM IST

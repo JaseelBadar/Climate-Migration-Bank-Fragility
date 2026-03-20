@@ -1,0 +1,32 @@
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:      deposit_change_qt   R-squared:                        0.0002
+Estimator:                   PanelOLS   R-squared (Between):              0.0011
+No. Observations:               22442   R-squared (Within):               0.0005
+Date:                Fri, Mar 20 2026   R-squared (Overall):              0.0005
+Time:                        18:22:09   Log-likelihood                 2.986e+04
+Cov. Estimator:             Clustered                                           
+                                        F-statistic:                      2.3865
+Entities:                         631   P-value                           0.0920
+Avg Obs:                       35.566   Distribution:                 F(2,21774)
+Min Obs:                       5.0000                                           
+Max Obs:                       36.000   F-statistic (robust):             2.7040
+                                        P-value                           0.0670
+Time periods:                      36   Distribution:                 F(2,21774)
+Avg Obs:                       623.39                                           
+Min Obs:                       605.00                                           
+Max Obs:                       629.00                                           
+                                                                                
+                                    Parameter Estimates                                    
+===========================================================================================
+                         Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+-------------------------------------------------------------------------------------------
+flood_exposure_ruleA_qt     0.0047     0.0026     1.7994     0.0720     -0.0004      0.0098
+floodA_x_highexp           -0.0068     0.0029    -2.3225     0.0202     -0.0126     -0.0011
+===========================================================================================
+
+F-test for Poolability: 11.412
+P-value: 0.0000
+Distribution: F(665,21774)
+
+Included effects: Entity, Time

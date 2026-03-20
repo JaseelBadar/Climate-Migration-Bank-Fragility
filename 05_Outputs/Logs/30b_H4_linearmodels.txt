@@ -1,0 +1,209 @@
+======================================================================
+30b: H4 HETEROGENEITY -- linearmodels PanelOLS
+Flood x District Characteristics -> Deposit Withdrawals
+Specification: entity_effects=True, time_effects=True
+SE: cluster_entity=True (district_state_id, 631 clusters)
+Anchors (Script 30, statsmodels):
+  H4a Rule A: p=0.532 NULL  | H4a Rule B: p=0.281 NULL
+  H4b Rule A: p=0.020 SUGGESTIVE (constraint 12: winsorization fails)
+  H4b Rule B: p=0.080 SUGGESTIVE (marginal)
+  H4c Rule A: p=0.001 CONFIRMED | H4c Rule B: p=0.774 NULL
+  N=22442, District FE=631, Quarter FE=36
+======================================================================
+
+[2/8] Loading data
+  Loaded: 23,347 rows, 23 columns -- PASS
+  Required columns verified -- PASS
+
+[3/8] Composite key
+  district_state_id: 631 -- PASS
+
+[4/8] Heterogeneity variable construction
+  H4a Urban proxy: median log_lights = -0.8900
+    Urban (above median): 315 | Rural (at/below): 316 -- PASS
+    Label: proxy (not census-based). Writing constraint 5 active.
+  urban_proxy merged: 0 NaN -- PASS
+  H4b High exposure proxy: median cum floods = 3.0
+    High: 255 | Low: 376 -- PASS
+    Label: proxy. Writing constraint 12 active.
+    MANDATORY: H4b Rule A p=0.020 does not survive winsorization (p=0.865).
+    H4b must be presented as suggestive only. Never as robust.
+  high_exposure_proxy merged: 0 NaN -- PASS
+  H4c Monsoon indicator: 5,679 Q3 | 17,668 non-Q3 -- PASS
+  Z_i construction complete -- PASS
+
+[5/8] Complete cases and interaction construction
+  Initial: 23,347
+  After restriction: 22,442  (anchor: 22,442)
+  Dropped: 905 (3.9%)
+  All 6 interaction columns verified (0 NaN, 0 Inf) -- PASS
+
+[6/8] Panel index construction
+  Entities: 631 -- PASS
+  Periods:  36  -- PASS
+  Duplicates: 0     -- PASS
+  Quarter range: 2015Q2 to 2024Q4
+
+[7/8] Model fitting
+  Specification: entity_effects=True, time_effects=True
+  SE: cluster_entity=True (district_state_id, 631 clusters)
+  Interaction terms pre-constructed as explicit columns.
+
+======================================================================
+H4a: Urban proxy x Flood
+======================================================================
+
+  H4a Rule A:
+    N=22,442 | R2(within) = 0.0000
+    Baseline var: flood_exposure_ruleA_qt
+    Interaction:  floodA_x_urban
+    [Baseline flood (flood_exposure_ruleA_qt)]
+      beta = 0.001207
+      SE   = 0.002266
+      t    = 0.5326
+      p    = 0.594348  (NOT SIGNIFICANT)
+      95% CI = [-0.003235, 0.005649]
+    [Interaction (floodA_x_urban)]
+      beta = -0.001666
+      SE   = 0.002664
+      t    = -0.6253
+      p    = 0.531782  (NOT SIGNIFICANT)
+      95% CI = [-0.006888, 0.003556]
+    Significance consistent with Script 30 anchor (anchor p=0.532, anchor sig=False, 30b p=0.5318) -- PASS
+    Full summary: 05_Outputs/Logs/30b_H4_linearmodels_full_h4a_ruleA.txt -- PASS
+
+  H4a Rule B:
+    N=22,442 | R2(within) = 0.0000
+    Baseline var: flood_exposure_ruleB_qt
+    Interaction:  floodB_x_urban
+    [Baseline flood (flood_exposure_ruleB_qt)]
+      beta = -0.002890
+      SE   = 0.005179
+      t    = -0.5580
+      p    = 0.576864  (NOT SIGNIFICANT)
+      95% CI = [-0.013042, 0.007262]
+    [Interaction (floodB_x_urban)]
+      beta = 0.007479
+      SE   = 0.006929
+      t    = 1.0794
+      p    = 0.280419  (NOT SIGNIFICANT)
+      95% CI = [-0.006102, 0.021060]
+    Significance consistent with Script 30 anchor (anchor p=0.281, anchor sig=False, 30b p=0.2804) -- PASS
+    Full summary: 05_Outputs/Logs/30b_H4_linearmodels_full_h4a_ruleB.txt -- PASS
+
+======================================================================
+H4b: High exposure proxy x Flood
+======================================================================
+
+  H4b Rule A:
+    N=22,442 | R2(within) = 0.0002
+    Baseline var: flood_exposure_ruleA_qt
+    Interaction:  floodA_x_highexp
+    [Baseline flood (flood_exposure_ruleA_qt)]
+      beta = 0.004700
+      SE   = 0.002612
+      t    = 1.7994
+      p    = 0.071970  +
+      95% CI = [-0.000420, 0.009819]
+    [Interaction (floodA_x_highexp)]
+      beta = -0.006810
+      SE   = 0.002932
+      t    = -2.3225
+      p    = 0.020217  *
+      95% CI = [-0.012557, -0.001063]
+    Significance consistent with Script 30 anchor (anchor p=0.02, anchor sig=True, 30b p=0.0202) -- PASS
+    MANDATORY DISCLOSURE (constraint 12): H4b Rule A main result p=0.0202 does NOT survive winsorization (p=0.865, Script 37). Must be presented as suggestive. Never omit winsorization failure.
+    Full summary: 05_Outputs/Logs/30b_H4_linearmodels_full_h4b_ruleA.txt -- PASS
+
+  H4b Rule B:
+    N=22,442 | R2(within) = 0.0000
+    Baseline var: flood_exposure_ruleB_qt
+    Interaction:  floodB_x_highexp
+    [Baseline flood (flood_exposure_ruleB_qt)]
+      beta = 0.012016
+      SE   = 0.006575
+      t    = 1.8275
+      p    = 0.067635  +
+      95% CI = [-0.000872, 0.024904]
+    [Interaction (floodB_x_highexp)]
+      beta = -0.013419
+      SE   = 0.007670
+      t    = -1.7496
+      p    = 0.080195  +
+      95% CI = [-0.028452, 0.001614]
+    Significance consistent with Script 30 anchor (anchor p=0.08, anchor sig=False, 30b p=0.0802) -- PASS
+    Full summary: 05_Outputs/Logs/30b_H4_linearmodels_full_h4b_ruleB.txt -- PASS
+
+======================================================================
+H4c: Monsoon quarter x Flood
+======================================================================
+
+  H4c Rule A:
+    N=22,442 | R2(within) = 0.0006
+    Baseline var: flood_exposure_ruleA_qt
+    Interaction:  floodA_x_monsoon
+    [Baseline flood (flood_exposure_ruleA_qt)]
+      beta = -0.004700
+      SE   = 0.002076
+      t    = -2.2637
+      p    = 0.023604  *
+      95% CI = [-0.008770, -0.000630]
+    [Interaction (floodA_x_monsoon)]
+      beta = 0.012495
+      SE   = 0.002884
+      t    = 4.3332
+      p    = 0.000015  ***
+      95% CI = [0.006843, 0.018147]
+    Significance consistent with Script 30 anchor (anchor p=0.001, anchor sig=True, 30b p=0.0000) -- PASS
+    CONSTRAINT 2 ACTIVE: H4c Rule A confirmed p=0.0000. Required language: 'Monsoon seasonality moderates the deposit response to moderate-intensity floods (Rule A beta, p=0.0000) but not to severe flood events (Rule B p=0.774). The heterogeneity result is fragile to flood intensity definition.'
+    Full summary: 05_Outputs/Logs/30b_H4_linearmodels_full_h4c_ruleA.txt -- PASS
+
+  H4c Rule B:
+    N=22,442 | R2(within) = 0.0000
+    Baseline var: flood_exposure_ruleB_qt
+    Interaction:  floodB_x_monsoon
+    [Baseline flood (flood_exposure_ruleB_qt)]
+      beta = -0.000838
+      SE   = 0.005378
+      t    = -0.1558
+      p    = 0.876165  (NOT SIGNIFICANT)
+      95% CI = [-0.011380, 0.009704]
+    [Interaction (floodB_x_monsoon)]
+      beta = 0.002287
+      SE   = 0.007968
+      t    = 0.2870
+      p    = 0.774108  (NOT SIGNIFICANT)
+      95% CI = [-0.013331, 0.017904]
+    Significance consistent with Script 30 anchor (anchor p=0.774, anchor sig=False, 30b p=0.7741) -- PASS
+    Full summary: 05_Outputs/Logs/30b_H4_linearmodels_full_h4c_ruleB.txt -- PASS
+
+======================================================================
+SIDE-BY-SIDE SUMMARY -- linearmodels PanelOLS
+======================================================================
+  Spec   Rule    Inter Beta         SE        t          p   Sig
+  ------------------------------------------------------------
+  H4a    A        -0.001666   0.002664  -0.6253   0.531782      
+  H4a    B         0.007479   0.006929   1.0794   0.280419      
+  H4b    A        -0.006810   0.002932  -2.3225   0.020217     *
+  H4b    B        -0.013419   0.007670  -1.7496   0.080195     +
+  H4c    A         0.012495   0.002884   4.3332   0.000015   ***
+  H4c    B         0.002287   0.007968   0.2870   0.774108      
+
+  Significance consistency vs Script 30 anchors:
+  H4a Rule A: anchor sig=False, 30b sig=False -- PASS
+  H4a Rule B: anchor sig=False, 30b sig=False -- PASS
+  H4b Rule A: anchor sig=True, 30b sig=True -- PASS
+  H4b Rule B: anchor sig=False, 30b sig=False -- PASS
+  H4c Rule A: anchor sig=True, 30b sig=True -- PASS
+  H4c Rule B: anchor sig=False, 30b sig=False -- PASS
+  All 6 significance checks consistent -- PASS
+
+  CSV saved: 05_Outputs/Tables/05b_H4_linearmodels.csv -- PASS
+
+======================================================================
+SCRIPT 30b COMPLETE
+  CSV: 05_Outputs/Tables/05b_H4_linearmodels.csv
+  Full summaries: 6 files (h4a-h4c, rules A-B).
+All linearmodels final tables complete: 27b, 28b, 29b, 30b.
+Next: Figure A -- H3 deposit timing cycle plot (two-phase).
+======================================================================

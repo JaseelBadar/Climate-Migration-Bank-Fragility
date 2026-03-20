@@ -1,0 +1,32 @@
+                          PanelOLS Estimation Summary                           
+================================================================================
+Dep. Variable:      deposit_change_qt   R-squared:                        0.0006
+Estimator:                   PanelOLS   R-squared (Between):             -0.0010
+No. Observations:               22442   R-squared (Within):               0.0006
+Date:                Fri, Mar 20 2026   R-squared (Overall):              0.0005
+Time:                        18:22:09   Log-likelihood                 2.987e+04
+Cov. Estimator:             Clustered                                           
+                                        F-statistic:                      6.4427
+Entities:                         631   P-value                           0.0016
+Avg Obs:                       35.566   Distribution:                 F(2,21774)
+Min Obs:                       5.0000                                           
+Max Obs:                       36.000   F-statistic (robust):             9.7180
+                                        P-value                           0.0001
+Time periods:                      36   Distribution:                 F(2,21774)
+Avg Obs:                       623.39                                           
+Min Obs:                       605.00                                           
+Max Obs:                       629.00                                           
+                                                                                
+                                    Parameter Estimates                                    
+===========================================================================================
+                         Parameter  Std. Err.     T-stat    P-value    Lower CI    Upper CI
+-------------------------------------------------------------------------------------------
+flood_exposure_ruleA_qt    -0.0047     0.0021    -2.2637     0.0236     -0.0088     -0.0006
+floodA_x_monsoon            0.0125     0.0029     4.3332     0.0000      0.0068      0.0181
+===========================================================================================
+
+F-test for Poolability: 11.423
+P-value: 0.0000
+Distribution: F(665,21774)
+
+Included effects: Entity, Time

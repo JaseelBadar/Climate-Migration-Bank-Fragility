@@ -5564,13 +5564,319 @@ PENDING NEXT SESSION (in execution order):
   3. Figure B  -- India district flood exposure map
   4. Figure C  -- H4 heterogeneity coefficient plot
 
-18-03-2026
-Read, Research
+==============================================================================================
+2026-03-18 (Wed) 19:00-21:30 IST: Literature Review -- Climate-Banking Nexus and IV Strategy
+==============================================================================================
+Goal: Survey empirical papers closest to the identification strategy and mechanism.
+Focus on (1) natural disaster effects on credit/deposit markets, (2) nighttime lights
+as an economic activity proxy, (3) IV designs using climate shocks.
 
-18-03-2026
-Read, Research
+----------------------------------------------------------------------
+A) Natural Disasters and Bank Fragility
+----------------------------------------------------------------------
+Reviewed papers linking flood and storm events to deposit withdrawal, credit
+contraction, and branch-level banking stress in developing economies. Common
+finding: deposit effects are short-run and asymmetric -- affected districts show
+larger deposit outflows than deposit inflows in matched control districts.
 
+Key methodological note: most papers in this strand use county or municipality
+level data at annual frequency. Quarterly panel at district level (this project)
+is finer than the modal specification in the literature. The H3 distributed-lag
+design is not standard in this strand -- most papers use contemporaneous or
+one-year-lag effects. The t0+2 finding is therefore not a replication of a known
+result; it requires full timing disclosure and cannot be defended by appeal to
+precedent alone.
+
+Identification gap confirmed: no identified paper in this strand uses nighttime
+lights as a displacement channel with IV 2SLS at district-quarter frequency for
+India. The IV chain (flood -> lights -> deposits) is the project's distinct
+contribution.
+
+----------------------------------------------------------------------
+B) Nighttime Lights as Economic Proxy
+----------------------------------------------------------------------
+Henderson, Storeygard, and Weil (2012) is the methodological foundation for using
+satellite radiance as an economic activity proxy where administrative data is
+unreliable. Lights are a noisy proxy for GDP with well-documented limitations at
+sub-national scale: urban saturation, rural censoring, and seasonal agricultural
+fire contamination. All three apply to India districts.
+
+Relevant to this project: the log offset choice (+0.001 vs +1) is not arbitrary.
+Papers using district-level India lights confirm that most districts fall below
+1 nW/cm2/sr -- the range where log(x+1) approximates the identity and destroys
+variance. The +0.001 offset is defensible and needs one sentence of justification
+in the paper (Section 3.3, variable construction).
+
+Saturation is not a concern at Indian district scale given mean radiance = 0.695.
+Fire contamination: VIIRS DNB monthly composites from CSM-EOG include cloud-masked
+composites that suppress most fire artifacts. Limitation acknowledged but not
+material.
+
+----------------------------------------------------------------------
+C) IV Design with Climate Shocks
+----------------------------------------------------------------------
+Reviewed IV strategies using rainfall, flood, and temperature shocks as instruments
+for economic outcomes in India and other South Asian settings. The exclusion
+restriction in this project (flood affects deposits only through the lights/
+displacement channel) faces the standard threat: direct banking disruption via
+branch closures, cash logistics, and payment system failures. This threat is well
+documented in the disaster-banking literature and is not easily resolved
+instrumentally. Causal language must be softened in the paper where this threat
+is plausible -- pre-committed in writing constraints.
+
+Rule B (district-level match only, F=8.949) is weak. No paper in this strand uses
+a weak instrument and labels it causal. Writing constraint 3 is correct and must
+be enforced without exception.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Literature review scope defined. Three strands read: disaster-banking, lights-as-
+proxy, climate IV. No paper identified that replicates or directly competes with
+the H3 distributed-lag design at quarterly district frequency in India.
+
+PENDING NEXT SESSION:
+  1. Light research -- deposit fragility and shadow run literature
+  2. Framing decisions for Abstract and Introduction
+  3. Identify 3-4 anchor citations for each hypothesis section
+
+=============================================================================================
+2026-03-19 (Thu) 18:30-20:30 IST: Literature Review -- Deposit Fragility and Writing Framing
+=============================================================================================
+Goal: Survey deposit fragility and bank run literature for framing. Identify where the
+shadow run mechanism sits relative to canonical models. Settle framing decisions for
+the Abstract and Introduction before writing begins.
+
+----------------------------------------------------------------------
+A) Deposit Fragility and Bank Run Literature
+----------------------------------------------------------------------
+Diamond and Dybvig (1983) is the canonical foundation for the liquidity demand
+mechanism. The shadow run framing in this project maps directly: a coordinated
+(or individually rational) withdrawal of deposits driven by a common observable
+shock -- flood -- rather than by sunspot coordination or solvency signals.
+The distinction from a solvency-driven run is important and must be stated early
+in the paper. The H3 timing evidence (t0+2, not contemporaneous) is consistent
+with gradual liquidity demand, not panic withdrawal.
+
+Noted: Diamond-Dybvig predicts complete run or no run (corner solution). The
+empirical H3 result is partial -- a -0.70pp decline, not a full withdrawal.
+The paper should not claim a full shadow run. The finding is a deposit stress
+consistent with the liquidity demand channel, not a systemic bank run in the
+Diamond-Dybvig sense. Language must reflect this -- pre-committed in writing
+constraints under shadow run definition.
+
+H4b (chronic exposure) adds a buffer-depletion mechanism not present in
+Diamond-Dybvig: repeated exposure depletes outside assets, making the marginal
+withdrawal more likely at next shock. This is closer to Brunnermeier and Sannikov
+(2014) type amplification through balance sheet deterioration. H4b is suggestive
+only (winsorization failure) -- cannot use the amplification framing as if it is
+a confirmed finding.
+
+----------------------------------------------------------------------
+B) Framing Decisions Locked for Writing
+----------------------------------------------------------------------
+After surveying the literature, the following framing decisions are locked before
+writing begins. These are not flexible -- they must be enforced in every draft.
+
+  (1) The paper's central empirical contribution is the H3 two-phase liquidity
+      cycle: anticipatory saving (t-1) followed by post-flood withdrawal (t0+2).
+      This is a timing result, not a level result. Frame accordingly in the
+      Abstract and Introduction.
+
+  (2) H2 null is not a failure. It is a prediction of the mechanism and must be
+      presented as such from the first paragraph. Never use the phrase "H2 fails."
+
+  (3) H1 significance is district-clustered (631 clusters). The paper is honest
+      about the state-level clustering sensitivity from the first time H1 is
+      reported. Never claim H1 is robust without the wild bootstrap caveat.
+
+  (4) H4b is suggestive only. It is not the main result. H4c (monsoon seasonality)
+      is the more credible heterogeneity finding. The ordering in the paper should
+      reflect this: H4c before H4b, or H4b clearly sub-ordered.
+
+  (5) The contribution is to the disaster-banking and displacement-finance
+      literature, not to the bank run theory literature. Diamond-Dybvig is
+      motivation, not the theoretical model being tested.
+
+----------------------------------------------------------------------
+C) Anchor Citations Identified
+----------------------------------------------------------------------
+Anchor citations identified for each section. Final selection deferred to writing
+stage -- citations confirmed by abstract/full read, not title-only scan.
+
+  Section 1 (Introduction): Henderson et al. (2012) for lights proxy foundation.
+    Diamond and Dybvig (1983) for liquidity demand motivation.
+  Section 3 (Data): GADM and VIIRS methodology papers.
+  Section 4 (Strategy): Dell, Jones, Olken (2012) for climate IV precedent.
+  Section 5 (Results): Disaster-banking strand for comparison of effect magnitude.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Literature review complete. Shadow run mechanism framing locked. Five framing
+decisions written and enforced in documentation. No hypothesis modifications
+arose from the literature review -- no paper identified that requires reframing
+of H1-H4.
+
+PENDING NEXT SESSION:
+  1. Script 30b -- H4 linearmodels (immediate -- regression work resumes)
+  2. Robustness batch (Scripts 33-37, 36b)
+  3. Figure generation (fig01, fig02)
+  4. Documentation update (Hypotheses v2.6, Codebook v2.6, README v2.6)
+
+============================================================================================
+2026-03-20 (Fri) 14:00-20:00 IST: Script 30b, Robustness Batch, Figures, Documentation v2.6
+============================================================================================
+Goal: Complete linearmodels migration (Script 30b), execute all pending robustness checks
+(R2, R5, R6, R6b, R8, winsorization), generate figures (fig01, fig02), and update all
+three documentation files to writing-ready state.
+
+----------------------------------------------------------------------
+A) Script 30b: H4 Heterogeneity -- linearmodels PanelOLS
+----------------------------------------------------------------------
+Zero runtime failures. Executed clean on first run.
+Composite key confirmed throughout: district_state_id used for both FE and Z_i
+groupby construction. All six interaction rows output (3 specs x 2 rules).
+H4a null under both rules -- spurious Feb 6 signal does not reappear.
+H4b interaction significant (Rule A p=0.020, Rule B p=0.080). Directionally
+consistent. H4c significant under Rule A only (p<0.001). Rule B null.
+Output: 05b_H4_linearmodels.csv. All PASS.
+linearmodels migration complete -- all four core regression scripts (27b-30b) done.
+
+----------------------------------------------------------------------
+B) Robustness Batch: Scripts 33, 34, 35, 36, 36b, 37
+----------------------------------------------------------------------
+All six robustness scripts executed in sequence. No re-runs required on any.
+
+Script 33 (R8 -- Northeast sensitivity):
+  H3 t0+2 result confirmed robust to exclusion of Northeast districts.
+  Coefficient stable in direction and order of magnitude. PASS.
+
+Script 34 (R2 -- Placebo timing):
+  Test 1 (flood t-1 predicts deposit change t-1): null under both rules. PASS.
+  Test 2 (flood t predicts deposit change t-1): significant under Rule A
+  (p=0.011, no district FE). Signal survives district FE inclusion (Test 2b,
+  p=0.019). Positive coefficient -- opposite sign to H3 t0+2 withdrawal effect.
+  This is the two-phase liquidity cycle finding. Not a pre-trend.
+  Writing constraint 11 activated: mandatory disclosure language locked.
+  Output: 09_placebo_timing.csv.
+
+Script 35 (R5 -- Longer lags):
+  t0+3 and t0+4 both null under Rule A. Effect confirmed to decay within two
+  quarters. H3 interpretation intact. PASS.
+
+Script 36 (R6 -- State-level clustering, 34 clusters):
+  H3 t0+2 survives state-level clustering (p=0.034). Robust.
+  H1 Rule A p=0.105 -- does not hold at state level under conventional SE.
+  Coefficient stable. SE widening consistent with low-cluster-count inflation.
+  Writing constraint 13 activated: mandatory H1 clustering disclosure locked.
+
+Script 36b (R6b -- Wild cluster bootstrap, 999 iterations, Rademacher weights):
+  H1 Rule A p=0.1582, Rule B p=0.2673 -- H1 fails under wild bootstrap at state
+  level. Coefficient unchanged at -0.044468. Significance is clustering-level
+  sensitive. Disclosure is mandatory. Writing constraint 13 final language locked.
+
+Script 37 (H4b winsorization robustness):
+  H4b interaction p=0.865 on winsorized panel (Script 31 panel reused).
+  H4b demoted from supported to suggestive only. Effect is driven by extreme
+  deposit observations, not the systematic mechanism.
+  Writing constraint 12 activated: mandatory H4b winsorization failure language
+  locked. H4b cannot be presented as a robust finding under any framing.
+
+Robustness status: R1-R8, R6b all complete. Zero open robustness items.
+
+----------------------------------------------------------------------
+C) Figure Scripts: fig01, fig02
+----------------------------------------------------------------------
+Both scripts written in full. Locked values sourced directly from output CSVs.
+Hard assertions built into each script against locked values before render.
+pdf.fonttype=42 throughout -- font embedding required for journal submission.
+
+fig01 -- India District Flood Exposure Map:
+  One assertion failure on first execution.
+
+  Runtime Error 1: AssertionError: District count 666 deviates from locked 631.
+    Root cause: Script was asserting analysis sample count (631) against the
+    flood_exposure_panel.csv aggregation, which correctly returns 666 GADM-matched
+    districts (pre-RBI restriction). 631 is the regression sample; 666 is correct
+    for the panel file. Assertion was checking the wrong population.
+    Fix: LOCKED_N_DISTRICTS updated to 666. Caption updated to disclose both
+    figures (666 GADM-matched; 631 in regression sample).
+
+  Second execution clean:
+    666 districts aggregated. Max=11 quarters, median=3.0. Both assertions PASS.
+    GADM: 676 features, EPSG:4326. Match rate: 100% (676/676). 36 states dissolved.
+    Outputs: Fig_01_flood_exposure_map.pdf + .png (300 DPI). PASS.
+
+fig02 -- H3 Two-Phase Liquidity Cycle (event study):
+  Zero runtime failures. Executed clean on first run.
+  Pre-period from 09_placebo_timing.csv Test2_PreTrend Rule A: 5 locked-value
+  assertions all PASS. H3 lags from 04b_H3_linearmodels.csv Rule A: 3 assertions
+  per lag, all PASS. No connecting line between pre-period and H3 points --
+  different specifications; a connecting line would imply continuity that does not
+  exist.
+  Outputs: Fig_02_H3_event_study.pdf + .png (300 DPI). PASS.
+
+----------------------------------------------------------------------
+D) Documentation: Hypotheses v2.5 -> v2.6, Variables Codebook v2.5 -> v2.6,
+   README -> v2.6
+----------------------------------------------------------------------
+All three files regenerated to writing-ready state.
+
+  Hypotheses_Formal_v2.6.md:
+    linearmodels values (27b-30b) replace statsmodels throughout.
+    H4b demoted to suggestive only. Winsorization failure documented.
+    Two-phase cycle section added with exact mandatory language.
+    Wild bootstrap H1 outcome locked. Writing constraints 11-13 added.
+    Pending Pre-Paper Actions section removed -- all items closed.
+    Robustness table: R1-R8, R6b all marked complete.
+
+  Variables_Codebook_v2.6.md:
+    Final locked values cross-checked against all output CSVs (39 values).
+    statsmodels rank warning moved to Resolved. Script 32b conclusion
+    error moved to Resolved. Script 33 NE result incorporated.
+    H4b demoted throughout. Two-phase cycle incorporated into R2 section.
+    Estimator discipline section added. All active issues closed.
+
+  README_v2.6.md:
+    Pipeline table updated: scripts 27b-30b replace 27-30. Scripts 33-37,
+    36b, fig01, fig02 added, all marked complete.
+    Repository structure updated with all new scripts and outputs.
+    Results section reflects final linearmodels values.
+    Known issues section removed. All active issues resolved.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Robustness status (all checks):
+  R1 (both rules):              COMPLETE
+  R2 (placebo timing):          COMPLETE -- two-phase cycle confirmed and locked
+  R3 (winsorization panel):     COMPLETE -- H3 robust, H4b fails
+  R4 (nominal INR):             COMPLETE
+  R5 (longer lags):             COMPLETE -- t0+3, t0+4 null, decay confirmed
+  R6 (state clustering):        COMPLETE -- H3 robust, H1 sensitive
+  R6b (wild bootstrap):         COMPLETE -- H1 fails state level
+  R7 (IV discipline):           COMPLETE
+  R8 (Northeast sensitivity):   COMPLETE -- H3 robust
+
+Figure status:
+  Fig_01 (flood exposure map):  COMPLETE
+  Fig_02 (H3 event study):      COMPLETE
+  Fig_03 (H4 heterogeneity):    PENDING -- next priority
+
+Documentation status:
+  Hypotheses_Formal_v2.6.md:   COMPLETE
+  Variables_Codebook_v2.6.md:  COMPLETE
+  README_v2.6.md:               COMPLETE
+
+All regressions locked. All robustness checks locked. Two figures complete.
+Pipeline fully verified. Writing constraints 1-13 active.
+
+PENDING NEXT SESSION (in execution order):
+  1. Fig_03 -- H4 heterogeneity coefficient plot (05b_H4_linearmodels.csv)
+  2. Writing begins -- Abstract and Introduction drafts
+  3. Section 3 (Data), Section 4 (Empirical Strategy) -- from Pre_Writing_Master_Plan
 
 ======================================================================
-END OF LOG - Last Updated: 2026-03-17 21:40 PM IST
+END OF LOG - Last Updated: 2026-03-20 20:00 PM IST
 ======================================================================

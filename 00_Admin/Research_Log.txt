@@ -5877,6 +5877,84 @@ PENDING NEXT SESSION (in execution order):
   2. Writing begins -- Abstract and Introduction drafts
   3. Section 3 (Data), Section 4 (Empirical Strategy) -- from Pre_Writing_Master_Plan
 
+========================================================================================
+2026-03-21 (Sat) 18:53-23:15 IST: Fig_03, Script 38 Diagnostic, Pre-Writing Gate Closed
+========================================================================================
+Goal: Complete Fig_03 (H4 heterogeneity plot), run zero-change quarters diagnostic,
+
+----------------------------------------------------------------------
+A) Fig_03: H4 Heterogeneity Coefficient Plot
+----------------------------------------------------------------------
+Two column map failures before clean execution.
+
+  Error 1: COL_SPEC set to "spec" -- actual column name is "hypothesis".
+    Fix: COL_SPEC = "hypothesis". Script prints columns on load; mismatch
+    caught immediately by assertion block.
+
+  Error 2: COL_COEF, COL_CI_LO, COL_CI_HI, COL_PVAL all referenced the
+    top-level coefficient structure. Script 30b stores interaction-term
+    estimates under separate columns (interaction_coef, interaction_p, etc.).
+    Fix: full column map updated to interaction_ prefix columns.
+
+Second execution clean. All 6 locked p-values verified before rendering:
+  H4a null both rules, H4b Rule A p=0.020, H4b Rule B p=0.080,
+  H4c Rule A p<0.001, H4c Rule B null. All PASS.
+Writing constraints enforced:
+  C3: Rule B legend labeled suggestive (F=8.949 < 10).
+  C5: Proxy labels only -- no census urban/rural language.
+  C12: H4b hollow markers (circle-open/square-open) + dagger footnote.
+       Winsorization failure disclosed in subtitle. Never robust.
+Outputs: Fig_03_H4_heterogeneity.png + .meta.json. PASS.
+
+----------------------------------------------------------------------
+B) Script 38: Zero-Change Quarters Diagnostic
+----------------------------------------------------------------------
+Two path/column failures before clean execution.
+
+  Error 1: DATA_PATH referenced regressionpanelfinal.csv (no underscores).
+    Actual filename: regression_panel_final.csv. Fixed in path string.
+
+  Error 2: Column map used district_state_id, quarter_int,
+    flood_exposure_ruleA_L1/L2. Actual columns: district_gadm, quarter_num,
+    flood_ruleA_L1/L2. Fixed in column map section.
+
+  Error 3: UnicodeEncodeError on log write -- Windows cp1252 cannot encode
+    dagger character. Fix: open(LOG_PATH, "w", encoding="utf-8").
+
+Third execution clean. Key findings:
+  Exact zeros: 0 (0.00%). No copy-forward errors in RBI deposit data.
+  Near-zeros (|x| < 0.001): 409 obs (1.82%) -- genuine low-growth quarters.
+  H3 t-2 replication: beta exact to 6dp vs Script 29b anchor. PASS.
+  H3 t-2 near-zero exclusion: delta=0.000294, well within threshold. PASS.
+  Section 3.3 writing gate: UNBLOCKED.
+Output: 38_zerochg_diagnostic.txt. PASS.
+
+----------------------------------------------------------------------
+C) Pre_Writing_Master_Plan.txt -- Final Update
+----------------------------------------------------------------------
+Steps 8-10 (Figures A-C) marked complete. Step 11 (documentation) confirmed
+closed. Step 12 (writing) set as active. All pre-writing gates confirmed
+closed. File committed as final pre-writing state.
+
+----------------------------------------------------------------------
+Status: End of Session
+----------------------------------------------------------------------
+Pre-writing checklist: 100% COMPLETE. All gates cleared.
+  Scripts 27b-30b (linearmodels):     COMPLETE
+  Scripts 33-37, 36b (robustness):    COMPLETE
+  Script 38 (diagnostic):             COMPLETE
+  Fig_01 (flood exposure map):        COMPLETE
+  Fig_02 (H3 event study):            COMPLETE
+  Fig_03 (H4 heterogeneity):          COMPLETE
+  Documentation v2.6:                 COMPLETE
+  Pre_Writing_Master_Plan:            CLOSED
+
+Writing begins next session. Recommended order per Pre_Writing_Master_Plan:
+  Section 3 (Data) -- first. Section 3.3 gate confirmed unblocked today.
+  Section 4 (Empirical Strategy) -- second.
+  Section 5 (Results) -- third.
+  Introduction, Lit Review, Discussion, Conclusion, Abstract -- thereafter.
+
 ======================================================================
-END OF LOG - Last Updated: 2026-03-20 20:00 PM IST
+END OF LOG - Last Updated: 2026-03-21 23:30 PM IST
 ======================================================================

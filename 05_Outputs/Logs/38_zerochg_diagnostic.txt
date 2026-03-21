@@ -1,0 +1,61 @@
+======================================================================
+38_zerochg_diagnostic.txt
+Zero-Change Quarters Diagnostic -- deposit_change_qt
+Climate Shocks, Displacement, and Bank Liquidity Risk
+======================================================================
+Data : e:\Climate-Migration-Bank-Fragility\03_Data_Clean\regression_panel_final.csv
+N    : 23,347
+
+── DISTRIBUTION PROFILE ─────────────────────────────────────────
+count    22442.000000
+mean         0.023302
+std          0.074288
+min         -1.932227
+1%          -0.162585
+5%          -0.045154
+10%         -0.019988
+25%          0.003149
+50%          0.020979
+75%          0.040395
+90%          0.069255
+95%          0.109690
+99%          0.230701
+max          2.025118
+
+Exact zero     (== 0.000):  0  (0.00%)
+Near-zero  (|x| < 0.001):  409  (1.82%)
+Small      (|x| < 0.003):  1,286  (5.73%)
+
+── COPY-FORWARD TEST ────────────────────────────────────────────
+Districts with >= 1 exact zero:       0
+Max zeros in one district:            0
+Median zeros per district:            0.0
+Consecutive zero pairs (within-dist): 0
+Max zeros in one quarter:             0
+Median zeros per quarter:             0.0
+DIAGNOSIS: NO EXACT ZEROS -- no copy-forward concern. Section 3.3 unblocked.
+
+── H3 t-2 SENSITIVITY ───────────────────────────────────────────
+Locked reference: beta_L2=-0.007005, SE=0.001645, p<0.001 (Script 29b)
+
+  Full sample (replication of Script 29b)
+    N=21,837  beta_L2=-0.007005  SE=0.001642  p=0.000020  delta=0.000000  material=NO
+
+  Exclude exact zeros (deposit_change_qt == 0)
+    N=21,837  beta_L2=-0.007005  SE=0.001642  p=0.000020  delta=0.000000  material=NO
+
+  Exclude near-zeros (|deposit_change_qt| < 0.001)
+    N=21,445  beta_L2=-0.007299  SE=0.001672  p=0.000013  delta=0.000294  material=NO
+
+── VERDICT ──────────────────────────────────────────────────────
+  NO EXACT ZEROS -- no copy-forward concern. Section 3.3 unblocked.
+  PASS: H3 t-2 coefficient stable under zero exclusion. Writing unblocked on this dimension.
+
+── SECTION 3.3 WRITING GATE ─────────────────────────────────────
+  UNBLOCKED. Report near-zero frequency in Section 3.3.
+  If copy-forward diagnosed: add one sentence disclosing RBI
+  rounding/copy-forward as a data limitation.
+  If low risk: one sentence noting 25th pct ~0.003, consistent
+  with genuine low-growth quarters in smaller districts.
+
+======================================================================

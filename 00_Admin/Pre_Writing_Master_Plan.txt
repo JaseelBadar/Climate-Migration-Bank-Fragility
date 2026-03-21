@@ -5,11 +5,13 @@ Evidence from Night-Lights in India, 2015-2024
 ======================================================================
 PI:      Jaseel Badar, Harvard University
 Created: 2026-03-10
-Updated: 2026-03-20
-Purpose: Complete record of all remaining scripts, figures, and tasks
-         required before actual paper writing begins.
+Updated: 2026-03-21
+Purpose: Complete record of all scripts, figures, and tasks required
+         before actual paper writing begins.
          All locked results reflect final linearmodels PanelOLS outputs
          (Scripts 27b-30b). statsmodels results superseded. Never mix.
+         STATUS AS OF 2026-03-21: ALL PRE-WRITING TASKS COMPLETE.
+         WRITING IS ACTIVE. SEE SECTION 6.
 ======================================================================
 
 
@@ -27,13 +29,13 @@ H1: Floods -> Lights
   N = 22,716 | District FE = 631 | Quarter FE = 36
   Estimator: linearmodels PanelOLS (Script 27b)
   Status: CONFIRMED at district-clustered SE.
-  Wild bootstrap note (LOCKED -- constraint 13 active):
+  Wild bootstrap (LOCKED -- constraint 13 active):
     Script 36b: Rule A p = 0.1582, Rule B p = 0.2673 -- BOTH FAIL.
     H1 does NOT survive wild cluster bootstrap at 34 state clusters.
     Coefficient stable across all SE specifications:
       District SE (631 clusters): beta = -0.044468, SE = 0.0078 ***
-      State conv. SE (34 clusters): beta = -0.044468, SE = 0.0274, p=0.105
-      State wild bootstrap (34 clusters): beta = -0.044468, SE = 0.0300, p=0.1582
+      State conv. SE (34 clusters): beta = -0.044468, SE = 0.0274, p = 0.105
+      State wild bootstrap (34 clusters): beta = -0.044468, SE = 0.0300, p = 0.1582
     SE widening is monotone and consistent. The failure is purely a
     precision/aggregation issue. Coefficient and sign are intact.
     See writing constraint 13 for mandatory disclosure language.
@@ -57,23 +59,21 @@ H3: Distributed Lag (Flood Timing -> Deposits)
   Rule A t-2: beta = -0.007005, SE = 0.001644, t = -4.2609, p < 0.001 *** CONFIRMED
               95% CI: [-0.010227, -0.003783]
   Rule B: all three lags null (p > 0.46, insufficient power at 0.90% treatment)
-  N = 21,837 | Quarter FE = 35 | NO district FE (pre-committed, deposit
+  N = 21,837 | Quarter FE = 35 | NO district FE (pre-committed; deposit
   change is log-differenced; district trends absorbed by differencing)
   Estimator: linearmodels PanelOLS, time_effects=True only (Script 29b)
   Status: CONFIRMED at t-2.
-  Pre-period note (LOCKED -- constraint 11 active):
+  Pre-period (LOCKED -- constraint 11 active):
     Script 34 Test 2 Rule A: beta = +0.004664, p = 0.011 (no district FE)
     Script 34 Test 2b Rule A: beta = +0.004417, p = 0.019 (with district FE)
     Direction POSITIVE -- opposite to H3 t-2 negative.
-    This is the two-phase household liquidity cycle:
-      Phase 1 (t-1 pre-period): anticipatory saving +0.005
-      Phase 2 (t-2 post-flood): deposit withdrawal -0.007
+    Two-phase household liquidity cycle:
+      Phase 1 (t-1 pre-period): anticipatory saving   +0.005
+      Phase 2 (t-2 post-flood): deposit withdrawal    -0.007
     See writing constraint 11 for mandatory disclosure language.
-  Longer lags: t-3 and t-4 null under Rule B (Script 35).
-    Effect decays at t-2. Confirmed.
+  Longer lags: t-3 and t-4 null under Rule B (Script 35). Decay at t-2.
   NE sensitivity: H3 t-2 robust to Northeast exclusion (Script 33).
-  State clustering: H3 t-2 robust at 34 state clusters (Script 36).
-    p = 0.034 at state level. No wild bootstrap required for H3.
+  State clustering: H3 t-2 robust at 34 state clusters (Script 36, p=0.034).
 
 H4: Heterogeneity (Flood x District Characteristics -> Deposits)
   All numbers from linearmodels PanelOLS, Script 30b.
@@ -147,200 +147,178 @@ SECTION 2: COMPLETED SCRIPTS (DO NOT RE-RUN UNLESS SPECIFIED)
 27   H1: First stage                    Clean. Results locked (statsmodels).
 28   H2: IV 2SLS                        Clean. Results locked (statsmodels).
 29   H3: Distributed lag                Clean. Results locked (statsmodels).
-                                         Cosmetic fix done 2026-03-10.
 30   H4: Heterogeneity                  Clean. Results locked (statsmodels).
 31   Winsorize                          Clean. 450 obs (2.01%), symmetric.
 32   CPI diagnostic                     Clean. Nominal INR decision locked.
 32b  2023 anomaly diagnosis             Clean. Left-tail fix done 2026-03-10.
 33   R8: Northeast sensitivity          Clean. H3 t-2 robust to NE exclusion.
 34   R2: Placebo timing                 Clean. Positive pre-period confirmed.
-                                         beta=+0.004664, p=0.011 (no dFE).
-                                         beta=+0.004417, p=0.019 (with dFE).
+                                         beta = +0.004664, p = 0.011 (no dFE).
+                                         beta = +0.004417, p = 0.019 (with dFE).
                                          Two-phase cycle confirmed.
                                          Writing constraint 11 locked.
 35   R5: Longer lags (t-3, t-4)         Clean. t-3/t-4 null. Decay at t-2.
-36   R6: State-level clustering         Clean. H3 t-2 robust (p=0.034).
-                                         H1 p=0.105 at 34 state clusters.
+36   R6: State-level clustering         Clean. H3 t-2 robust (p = 0.034).
+                                         H1 p = 0.105 at 34 state clusters.
 36b  R6b: Wild bootstrap H1             Clean. H1 FAILS wild bootstrap.
-                                         Rule A p=0.1582, Rule B p=0.2673.
-                                         Coefficient intact. SE widening
+                                         Rule A p = 0.1582, Rule B p = 0.2673.
+                                         Coefficient stable. SE widening
                                          monotone and consistent.
                                          Writing constraint 13 locked.
-37   R3: Winsorized re-runs             Clean. H3 robust (p<0.001).
-                                         H4b fails (p=0.865).
+37   R3: Winsorized re-runs             Clean. H3 robust (p < 0.001).
+                                         H4b fails (p = 0.865).
                                          Writing constraint 12 locked.
 27b  H1: linearmodels PanelOLS          Clean. FINAL PAPER TABLE. Locked.
-                                         Rule A delta=0.000032 vs Script 27.
 28b  H2: linearmodels IV2SLS            Clean. FINAL PAPER TABLE. Locked.
                                          Iterative demeaning (8 iterations,
-                                         tol 1e-14). Rule A delta=0.000012.
+                                         tol 1e-14). Rule A delta = 0.000012.
 29b  H3: linearmodels PanelOLS          Clean. FINAL PAPER TABLE. Locked.
-                                         t-2 delta=0.000000 (exact).
+                                         t-2 delta = 0.000000 (exact).
 30b  H4: linearmodels PanelOLS          Clean. FINAL PAPER TABLE. Locked.
                                          All 6 significance checks PASS.
-                                         Monsoon assertion corrected for
-                                         2016Q3 RBI blackout (9 Q3, not 10).
+38   Zero-change diagnostic             Clean. Zero exact zeros in
+                                         deposit_change_qt. No copy-forward
+                                         errors. H3 t-2 stable under near-zero
+                                         exclusion (delta = 0.000294).
+                                         Section 3.3 writing gate UNBLOCKED.
+fig01 Flood exposure map                Clean. Fig_01_flood_exposure_map.png.
+                                         666 districts mapped. 631 in
+                                         regression sample. Assertion PASS.
+fig02 H3 event study                    Clean. Fig_02_H3_event_study.png.
+                                         All 5 locked-value assertions PASS.
+                                         Two-phase cycle visible.
+fig03 H4 heterogeneity                  Clean. Fig_03_H4_heterogeneity.png.
+                                         All 6 p-value assertions PASS.
+                                         Writing constraints 3, 5, 12
+                                         enforced (hollow markers, dagger).
 
 Key output files (all verified clean):
   regression_panel_final.csv            23,347 x 23
   regression_panel_final_winsor.csv     23,347 x 24
-  02_H1_first_stage.csv                 (statsmodels -- superseded)
   02b_H1_linearmodels.csv               FINAL PAPER TABLE
-  03_H2_iv2sls.csv                      (statsmodels -- superseded)
   03b_H2_linearmodels.csv               FINAL PAPER TABLE
-  04_H3_timing.csv                      (statsmodels -- superseded)
   04b_H3_linearmodels.csv               FINAL PAPER TABLE
-  05_H4_heterogeneity.csv               (statsmodels -- superseded)
   05b_H4_linearmodels.csv               FINAL PAPER TABLE
-  06_32b_2023_diagnosis.csv
-  07_H3_northeast_sensitivity.csv
-  08_H4_northeast_sensitivity.csv
   09_placebo_timing.csv                  5 rows (incl. Test 2b diagnostic)
   10_H3_longer_lags.csv
   11_H1_state_clustering.csv
   12_H3_state_clustering.csv
-  13_H2_winsorized.csv
   14_H3_winsorized.csv
   15_H4_winsorized.csv
   16_H1_wildbootstrap.csv
+  38_zerochg_diagnostic.txt
 
 
 ----------------------------------------------------------------------
-SECTION 3: REMAINING BEFORE WRITING (in execution order)
+SECTION 3: PRE-WRITING STATUS
 ----------------------------------------------------------------------
 
-ALL ROBUSTNESS AND REGRESSION SCRIPTS ARE COMPLETE.
-ALL FINAL PAPER TABLES ARE LOCKED.
-Three figures and two documentation updates remain.
-Writing is blocked until all five items below are done.
+ALL PRE-WRITING TASKS COMPLETE AS OF 2026-03-21.
 
-FIGURE A -- H3 Deposit Timing Cycle Plot (NON-NEGOTIABLE)
-  File:    05_Outputs/Figures/Fig_01_H3_event_study.png
-  Content: Four points on a single x-axis:
-             Pre-period (t-1): beta = +0.004664, p = 0.011
-             t0 (contemp.):    beta = +0.000609, p = 0.677
-             t-1 lag:          beta = +0.001505, p = 0.177
-             t-2 lag:          beta = -0.007005, p < 0.001 ***
-           95% CI bars at each point.
-           Reference line at zero.
-           X-axis labeled precisely: pre-period point is from placebo
-           test (Script 34), not from H3 regression. Must be visually
-           distinguished and labeled accordingly.
-           The two-phase cycle (positive pre-period, negative post-
-           flood) must be immediately legible to a referee.
-  Data:    04b_H3_linearmodels.csv (t0, t-1, t-2 lags)
-           09_placebo_timing.csv (pre-period point + SE)
-  Why:     Every distributed lag paper in AEJ:Applied has this.
-           The two-phase finding makes it more important, not less.
-           A referee who reads the abstract will look for this figure
-           before reading Section 5.
+  Scripts (all regressions, robustness, diagnostics):  COMPLETE
+  linearmodels final tables (27b-30b):                  COMPLETE
+  All robustness checks (R1-R8, R6b):                   COMPLETE
+  Zero-change diagnostic (Script 38):                   COMPLETE
+  Figure 1 -- flood exposure map:                       COMPLETE
+  Figure 2 -- H3 two-phase event study:                 COMPLETE
+  Figure 3 -- H4 heterogeneity:                         COMPLETE
+  Hypotheses_Formal_v2.6.md:                            COMPLETE
+  Variables_Codebook_v2.6.md:                           COMPLETE
+  README_v2.6.md:                                       COMPLETE
+  Pre_Writing_Master_Plan.txt:                          CLOSED
 
-FIGURE B -- India District Flood Exposure Map
-  File:    05_Outputs/Figures/Fig_02_flood_exposure_map.png
-  Content: Choropleth at district level (631 districts).
+No open code tasks. No open robustness items. No open data issues.
+Writing is unblocked on all dimensions. See Section 6.
+
+
+----------------------------------------------------------------------
+SECTION 4: COMPLETED FIGURES
+----------------------------------------------------------------------
+
+FIGURE 1 -- India District Flood Exposure Map
+  File:    05_Outputs/Figures/Fig_01_flood_exposure_map.png/.pdf
+  Content: Choropleth at district level (666 GADM-matched; 631 in
+           regression sample -- both figures disclosed in caption).
            Color = Rule A cumulative treatment rate (0 to max).
            State boundaries overlaid. 7 homonymous pairs correct.
-  Data:    flood_exposure_panel.csv + gadm41_IND_2.shp
-  Why:     Standard for geographic variation papers. Shows treatment
-           is nationally distributed, not regionally concentrated.
-           Answers identification concern before referee raises it.
+  Status:  COMPLETE. Assertion PASS. 300 DPI.
 
-FIGURE C -- H4 Heterogeneity Coefficient Plot
+FIGURE 2 -- H3 Two-Phase Liquidity Cycle (event study)
+  File:    05_Outputs/Figures/Fig_02_H3_event_study.png/.pdf
+  Content: Four points on single x-axis:
+             Pre-period (t-1): beta = +0.004664, p = 0.011
+               Source: 09_placebo_timing.csv Test 2 Rule A
+               Marker/color distinct. Labeled "placebo test (Script 34)".
+             t0 (flood quarter): beta = +0.000609, p = 0.677 (null)
+             t+1 (one quarter after): beta = +0.001505, p = 0.177 (null)
+             t+2 (two quarters after): beta = -0.007005, p < 0.001 ***
+               Source: 04b_H3_linearmodels.csv Rule A
+           95% CI bars at each point. Reference line at zero.
+           No connecting line between pre-period and H3 points
+           (different specifications; continuity does not exist).
+  Status:  COMPLETE. All 5 locked-value assertions PASS. 300 DPI.
+
+FIGURE 3 -- H4 Heterogeneity Coefficient Plot
   File:    05_Outputs/Figures/Fig_03_H4_heterogeneity.png
   Content: Three coefficient panels (H4a, H4b, H4c).
-           Rule A and Rule B side by side for each.
+           Rule A (circle/blue) and Rule B (square/red) side by side.
            95% CI bars. Reference line at zero.
-           Significance markers accurate to 30b results.
-           H4b Rule A: CI must visually communicate fragility
-           (suggestive only, fails winsorization). Do not present
-           as clean positive result.
-  Data:    05b_H4_linearmodels.csv
-  Why:     Cleaner than a table for heterogeneity results.
+           H4b: hollow markers (circle-open/square-open) + dagger
+                footnote disclosing winsorization failure (p=0.865).
+  Status:  COMPLETE. All 6 p-value assertions PASS.
+           Writing constraints 3, 5, 12 enforced.
 
-DOCUMENTATION -- Hypotheses v2.6
-  Update from v2.5: lock all H1-H4 results with 30b final numbers.
-  Add 36b outcome. Convert constraint 13 from conditional to locked.
-  30 minutes maximum.
-
-DOCUMENTATION -- Codebook v2.6
-  Update from v2.5: verify all variable definitions match what
-  appears in regression_panel_final.csv (23 columns).
-  Note iterative demeaning method (Script 28b appendix entry).
-  30 minutes maximum.
+NOTE: 32_nominal_growth_trend.png is a diagnostic figure only.
+      It does NOT appear in the paper.
 
 
 ----------------------------------------------------------------------
-SECTION 4: FIGURE SPECIFICATIONS (detailed)
+SECTION 5: EXECUTION ORDER (final state)
 ----------------------------------------------------------------------
 
-FIGURE A DATA ASSEMBLY:
-  Pre-period point:
-    Source: 09_placebo_timing.csv, Test 2 Rule A (no district FE)
-    beta = +0.004664, p = 0.011
-    SE: read from 09_placebo_timing.csv for 95% CI calculation
-    X-axis label: "Pre-period (t-1)" with distinct marker/color
-                  and footnote: "from placebo test (Script 34)"
-  t0, t-1, t-2:
-    Source: 04b_H3_linearmodels.csv, Rule A, lag = t0/t-1/t-2
-    X-axis labels: "t (flood quarter)", "t+1", "t+2"
-  Note: x-axis direction -- flood is at t, so:
-    pre-period   = one quarter BEFORE flood hits (t-1 relative to flood)
-    t0           = flood quarter
-    t-1 lag      = one quarter AFTER flood
-    t-2 lag      = two quarters AFTER flood
-    This must be clear in axis labels. Do not label ambiguously.
-
-FIGURE C SIGNIFICANCE MARKERS:
-  H4a: both rules NOT significant (open/hollow markers)
-  H4b: Rule A * (p=0.020, note: fails winsorization)
-       Rule B + (p=0.080, marginal)
-       Both markers with explicit fragility notation
-  H4c: Rule A *** (p=0.000015)
-       Rule B NOT significant (p=0.774)
+Step 1:  Script 33 -- R8 Northeast sensitivity              DONE
+Step 2:  Script 34 -- R2 Placebo timing                     DONE
+Step 3:  Script 35 -- R5 Longer lags                        DONE
+Step 4:  Script 36 -- R6 State clustering                   DONE
+Step 5:  Script 37 -- R3 Winsorized re-runs                 DONE
+Step 6:  Script 36b -- Wild bootstrap H1                    DONE
+                       H1 FAILS (p=0.1582, p=0.2673).
+                       Constraint 13 locked.
+Step 7:  Scripts 27b-30b -- linearmodels final tables       DONE
+                       All four scripts clean.
+                       All coefficients stable.
+                       ValueWarning resolved.
+Step 8:  Figure 1 -- Flood exposure map                     DONE
+Step 9:  Figure 2 -- H3 event study                         DONE
+Step 10: Figure 3 -- H4 heterogeneity                       DONE
+Step 11: Documentation v2.6 + Pre_Writing_Master_Plan       DONE
+Step 12: BEGIN PAPER WRITING                             --> ACTIVE
 
 
 ----------------------------------------------------------------------
-SECTION 5: EXECUTION ORDER (updated 2026-03-20)
+SECTION 6: WRITING PLAN (ACTIVE as of 2026-03-22)
 ----------------------------------------------------------------------
 
-COMPLETED:
-  Step 1:  Script 33 -- R8 Northeast sensitivity          DONE
-  Step 2:  Script 34 -- R2 Placebo timing                 DONE
-  Step 3:  Script 35 -- R5 Longer lags                    DONE
-  Step 4:  Script 36 -- R6 State clustering               DONE
-  Step 5:  Script 37 -- R3 Winsorized re-runs             DONE
-  Step 6:  Script 36b -- Wild bootstrap H1                DONE
-                         H1 FAILS (p=0.158, p=0.267).
-                         Constraint 13 locked.
-  Step 7:  Scripts 27b-30b -- linearmodels final tables   DONE
-                         All four scripts clean.
-                         All coefficients stable.
-                         ValueWarning resolved.
+Day 1 action (before first draft sentence):
+  OSF pre-registration. Upload locked result CSVs (02b-05b), this
+  plan, and Hypotheses_Formal_v2.6.md. Establishes public timestamp
+  confirming all results were locked before writing began.
+  30 minutes. Non-negotiable for research integrity.
 
-REMAINING:
-  Step 8:  Figure A -- H3 deposit timing cycle plot       NEXT
-  Step 9:  Figure B -- Flood exposure map
-  Step 10: Figure C -- H4 heterogeneity plot
-  Step 11: Hypotheses v2.6 + Codebook v2.6
-  Step 12: BEGIN PAPER WRITING
-
-Steps 8-10 can run in any order (no dependencies between figures).
-Writing is BLOCKED until Steps 8-11 are all complete.
-No exceptions. No parallel writing.
-
-
-----------------------------------------------------------------------
-SECTION 6: WRITING PLAN
-----------------------------------------------------------------------
-
-Begin after Steps 8-11 complete.
-
-Sections:
+Paper sections:
   1  -- Introduction
   2  -- Related Literature
-  3  -- Data (3.1 EM-DAT, 3.2 VIIRS, 3.3 RBI, 3.4 Panel Construction)
+  3  -- Data
+         3.1  EM-DAT flood data
+         3.2  VIIRS nighttime lights
+         3.3  RBI district-level deposits
+         3.4  Panel construction
   4  -- Identification Strategy
-  5  -- Results (5.1 H1, 5.2 H2, 5.3 H3, 5.4 H4)
+  5  -- Results
+         5.1  H1: Floods and economic displacement
+         5.2  H2: IV -- lights to deposits
+         5.3  H3: Deposit timing and the two-phase cycle
+         5.4  H4: Heterogeneity
   6  -- Robustness
   7  -- Discussion and Mechanism
   8  -- Conclusion
@@ -350,8 +328,15 @@ Sections:
                 unbalanced IV panels (from Script 28b)
 
 Writing order (non-negotiable):
-  Data -> Identification -> Results -> Introduction ->
-  Literature Review -> Discussion -> Conclusion -> Abstract (last)
+  Section 3 (Data) --> Section 4 (Identification) -->
+  Section 5 (Results) --> Section 1 (Introduction) -->
+  Section 2 (Lit Review) --> Section 7 (Discussion) -->
+  Section 8 (Conclusion) --> Abstract (last)
+
+Reason: Results are locked. Writing data and identification first
+forces precision before any narrative is constructed. Introduction
+written last anchors framing to what was actually found, not
+what was hoped.
 
 Target journal: AEJ:Applied Economics (first submission)
 
@@ -367,9 +352,7 @@ Each constraint has a source event. None is optional.
     Deposit effects are lagged (H3), not contemporaneous. The IV window
     by construction tests contemporaneous transmission. H2 null is
     expected and consistent with H3 confirmed. Never present H2 null
-    as a contradiction of the mechanism. Never use the phrase
-    "H2 fails" -- it does not fail; it finds exactly what the mechanism
-    predicts for the contemporaneous window.
+    as a contradiction of the mechanism. Never use "H2 fails."
 
 2.  H4c language constraint. EXACT REQUIRED TEXT (no paraphrase):
     "Monsoon seasonality moderates the deposit response to moderate-
@@ -384,8 +367,8 @@ Each constraint has a source event. None is optional.
 4.  H4a spurious benchmark disclosure:
     Must state explicitly that the Feb 6 H4a result (p < 0.001) was
     spurious -- caused by homonymous FE collapse (district_gadm alone,
-    624 FE instead of 631). Corrected result is null. The methodological
-    correction must be documented in the paper (footnote or Appendix).
+    624 FE instead of 631). Corrected result is null. Document in
+    footnote or Appendix.
 
 5.  Proxy discipline:
     urban_proxy and high_exposure_proxy are proxies. Never claim
@@ -393,18 +376,17 @@ Each constraint has a source event. None is optional.
     variables must carry the word "proxy."
 
 6.  TUENSANG disclosure:
-    Flag the within-year reversal (+3.21) as a likely reporting artifact.
-    Location: Appendix or footnote in the Data section.
+    Flag the within-year reversal (+3.21) as a likely reporting
+    artifact. Location: Appendix or footnote in Section 3.
 
 7.  Demonetization gap:
-    2016Q3-2017Q1 is absent from panel (RBI blackout).
-    Must be named explicitly in Section 3.4 (Panel Construction).
-    Never report 2016 or 2017 as full-year figures.
+    2016Q3-2017Q1 is absent from panel (RBI blackout). Must be named
+    explicitly in Section 3.4. Never report 2016 or 2017 as full-year
+    figures.
 
 8.  Nominal INR:
     Deposits in nominal Rupees. Quarter FE absorb national price trends.
-    Acknowledged as a limitation in Section 3.3 (RBI) or Section 8
-    (Conclusion / Limitations).
+    Acknowledged as a limitation in Section 3.3 or Section 8.
 
 9.  linearmodels SE discipline:
     Final paper tables use linearmodels PanelOLS (Scripts 27b-30b).
@@ -413,16 +395,16 @@ Each constraint has a source event. None is optional.
 
 10. Northeast robustness:
     Script 33 confirms H3 t-2 robust to Northeast exclusion.
-    H3 result is not NE-driven. Report in Robustness section (Section 6).
+    H3 result is not NE-driven. Report in Section 6 (Robustness).
 
 11. R2 pre-trend disclosure. MANDATORY -- no exceptions.
     Test 2 Rule A: beta = +0.004664, p = 0.011 (no district FE).
     Test 2b Rule A: beta = +0.004417, p = 0.019 (with district FE).
     Direction POSITIVE -- opposite sign to H3 t-2 (-0.007005).
-    This is the two-phase household liquidity cycle:
+    Two-phase household liquidity cycle:
       Phase 1 (t-1 pre-period): anticipatory accumulation (+0.005)
-      Phase 2 (t-2 post-flood): deposit withdrawal              (-0.007)
-    This must be disclosed in full in Section 6 (Robustness).
+      Phase 2 (t-2 post-flood): deposit withdrawal        (-0.007)
+    Must be disclosed in full in Section 6 (Robustness).
     REQUIRED LANGUAGE (exact):
     "Flood exposure at time t predicts higher deposit growth at t-1
     (beta = +0.005, p = 0.011), a signal that survives the inclusion
@@ -432,7 +414,7 @@ Each constraint has a source event. None is optional.
     liquidity cycle -- anticipatory saving ahead of the predictable
     flood season followed by post-flood deposit withdrawal -- rather
     than a pre-existing downward trend in deposits."
-    Never claim the R2 placebo is clean. Never omit the pre-period.
+    Never claim R2 placebo is clean. Never omit the pre-period.
     Never describe the two-phase cycle as a weakness. It is a finding.
 
 12. H4b winsorization failure. MANDATORY -- no exceptions.
@@ -448,9 +430,9 @@ Each constraint has a source event. None is optional.
     Never present H4b as a robust finding. Never omit the failure.
 
 13. H1 wild bootstrap failure. MANDATORY -- no exceptions.
-    Script 36b outcome is now locked. H1 FAILS wild cluster bootstrap.
-    Rule A: p = 0.1582. Rule B: p = 0.2673. Both fail at alpha = 0.10.
-    Coefficient is stable: beta = -0.044468 unchanged across all specs.
+    Script 36b outcome is locked. H1 FAILS wild cluster bootstrap.
+    Rule A: p = 0.1582. Rule B: p = 0.2673.
+    Coefficient stable: beta = -0.044468 unchanged across all specs.
     SE widening: 0.0078 (631 clusters) -> 0.0274 (34 conv.) -> 0.0300 (wild).
     REQUIRED LANGUAGE (exact):
     "H1 is significant under district-level clustering (631 clusters,
@@ -463,8 +445,6 @@ Each constraint has a source event. None is optional.
     are reported as a robustness bound."
     Never claim H1 is robust to state-level clustering.
     Never omit the wild bootstrap failure.
-    The district-clustered result (p < 0.001) remains the primary
-    identification evidence and may be stated as such with full disclosure.
 
 
 ----------------------------------------------------------------------
@@ -473,23 +453,23 @@ SECTION 8: PRE-COMMITTED ROBUSTNESS STATUS
 
 R1  Flood precision (both rules)          COMPLETE
 R2  Placebo timing                        COMPLETE
-                                          Positive pre-period (p=0.011,
-                                          within-district p=0.019).
+                                          Positive pre-period (p = 0.011,
+                                          within-district p = 0.019).
                                           Two-phase cycle confirmed.
                                           Constraint 11 locked.
 R3  Winsorization re-runs                 COMPLETE
-                                          H3 robust (p<0.001,
-                                          beta=-0.007115). H4b fails
-                                          (p=0.865). Constraint 12 locked.
+                                          H3 robust (p < 0.001,
+                                          beta = -0.007115). H4b fails
+                                          (p = 0.865). Constraint 12 locked.
 R4  CPI / nominal decision                COMPLETE (nominal retained)
 R5  Longer lags (t-3, t-4)               COMPLETE
                                           t-3/t-4 null. Decay at t-2.
 R6  State-level clustering                COMPLETE
-                                          H3 t-2 robust (p=0.034).
-                                          H1 p=0.105 at 34 clusters.
+                                          H3 t-2 robust (p = 0.034).
+                                          H1 p = 0.105 at 34 clusters.
 R6b Wild bootstrap H1                     COMPLETE
-                                          H1 FAILS. Rule A p=0.1582,
-                                          Rule B p=0.2673. Coefficient
+                                          H1 FAILS. Rule A p = 0.1582,
+                                          Rule B p = 0.2673. Coefficient
                                           stable. SE widening monotone.
                                           Constraint 13 locked.
 R7  IV discipline (F-stat)                COMPLETE
@@ -533,43 +513,55 @@ Robustness table CSVs:
   05_Outputs\\Tables\\15_H4_winsorized.csv
   05_Outputs\\Tables\\16_H1_wildbootstrap.csv
 
-Figures (PENDING):
-  05_Outputs\\Figures\\Fig_01_H3_event_study.png
-  05_Outputs\\Figures\\Fig_02_flood_exposure_map.png
+Diagnostics:
+  05_Outputs\\Logs\\38_zerochg_diagnostic.txt
+
+Figures (all complete):
+  05_Outputs\\Figures\\Fig_01_flood_exposure_map.png/.pdf
+  05_Outputs\\Figures\\Fig_02_H3_event_study.png/.pdf
   05_Outputs\\Figures\\Fig_03_H4_heterogeneity.png
 
 
 ----------------------------------------------------------------------
-SECTION 10: KNOWN ACTIVE ISSUES
+SECTION 10: KNOWN ISSUES AND DISCLOSURE REQUIREMENTS
 ----------------------------------------------------------------------
 
 1.  RESOLVED. statsmodels ValueWarning in Scripts 27, 29, 30.
     Fixed by Scripts 27b-30b (linearmodels PanelOLS). COMPLETE.
 
 2.  ACTIVE -- WRITING DISCLOSURE REQUIRED (constraint 11).
-    R2 positive pre-period (Test 2 Rule A p=0.011, within-district
-    p=0.019). Direction positive -- anticipatory saving. H3
+    R2 positive pre-period (Test 2 Rule A p = 0.011, within-district
+    p = 0.019). Direction positive -- anticipatory saving. H3
     identification intact. Disclose in Section 6 (Robustness).
+    Required language in constraint 11.
 
 3.  ACTIVE -- WRITING DISCLOSURE REQUIRED (constraint 12).
-    H4b winsorization failure (Script 37, p=0.865). H4b demoted.
+    H4b winsorization failure (Script 37, p = 0.865). H4b demoted.
     Disclose in Section 5.4 (H4 Results) and Section 6 (Robustness).
+    Required language in constraint 12.
 
-4.  RESOLVED. H1 state clustering.
-    Script 36b complete. H1 fails wild bootstrap (p=0.158, p=0.267).
-    Constraint 13 locked. Disclose in Section 6 (Robustness).
+4.  ACTIVE -- WRITING DISCLOSURE REQUIRED (constraint 13).
+    H1 wild bootstrap failure (Script 36b, Rule A p = 0.1582).
+    Coefficient stable. Disclose in Section 6 (Robustness).
+    Required language in constraint 13.
 
 5.  ACTIVE -- WRITING DISCLOSURE REQUIRED.
     2016/2017 annualized rates are incomplete-year estimates.
-    2016: Q1+Q2 only. 2017: Q2+Q3+Q4 only.
+    2016: Q1+Q2 only. 2017: Q2+Q3+Q4 only (RBI demonetization blackout).
     Never report as full-year figures. Disclose in Section 3.4.
+
+6.  RESOLVED. deposit_change_qt zero-change concern.
+    Script 38: zero exact zeros. No copy-forward errors in RBI data.
+    Near-zeros (|x| < 0.001): 409 obs (1.82%) -- genuine stagnation.
+    H3 t-2 stable under near-zero exclusion (delta = 0.000294).
+    Section 3.3 writing gate UNBLOCKED.
 
 
 ======================================================================
 END OF PLAN
 ======================================================================
 Project initiated:  2025-12-30
-Last updated:       2026-03-20
+Last updated:       2026-03-21
 PI: Jaseel Badar, Harvard University
 GitHub: https://github.com/JaseelBadar/Climate-Migration-Bank-Fragility
 ======================================================================

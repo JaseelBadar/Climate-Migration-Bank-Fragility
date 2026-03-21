@@ -1,0 +1,4 @@
+{
+  "caption": "Figure C: H4 Heterogeneity -- Flood Exposure and Deposit Response. Rule A (circle, blue) and Rule B (square, red) side by side. Open/hollow markers on H4b indicate suggestive-only status (winsorization failure, Script 37, p=0.865).",
+  "description": "Coefficient plot for three heterogeneity interactions. H4a (urban proxy): null both rules. H4b (high exposure): Rule A p=0.020, Rule B p=0.080, demoted to suggestive -- does not survive winsorization. H4c (monsoon quarter): Rule A p<0.001 ***, Rule B null p=0.774. Data: 05b_H4_linearmodels.csv (Script 30b). Writing constraints 2, 3, 5, 12 enforced."
+}

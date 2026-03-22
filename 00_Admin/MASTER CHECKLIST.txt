@@ -1,0 +1,434 @@
+======================================================================
+MASTER CHECKLIST — "Flood Shocks and the Two-Phase Deposit Cycle:
+Evidence from Nighttime Lights"
+Last updated: 2026-03-22
+DELETE THIS FILE WHEN ALL ITEMS ARE CHECKED OFF
+======================================================================
+
+NEW TITLE (copy exactly, use everywhere):
+  Flood Shocks and the Two-Phase Deposit Cycle:
+  Evidence from Nighttime Lights
+
+SHORT TITLE (for profiles, bios, social media):
+  Flood Shocks and the Two-Phase Deposit Cycle
+
+======================================================================
+SECTION 1 — NAME CHANGES (LOCAL FILES)
+======================================================================
+
+[ ] 04_Code/README_v2.6.md
+    -- header title line
+    -- abstract section
+    -- results section
+    -- pipeline table header
+
+[ ] 00_Admin/Hypotheses_Formal_v2.6.md
+    -- document header
+
+[ ] 00_Admin/Variables_Codebook_v2.6.md
+    -- document header
+
+[ ] 00_Admin/Pre_Writing_Master_Plan.txt
+    -- document header
+
+[ ] 05_Outputs/Figures/Fig_01_flood_exposure_map -- caption string
+[ ] 05_Outputs/Figures/Fig_02_H3_event_study    -- caption string
+[ ] 05_Outputs/Figures/Fig_03_H4_heterogeneity  -- caption string
+[ ] fig01 script -- any hardcoded title string
+[ ] fig02 script -- any hardcoded title string
+[ ] fig03 script -- any hardcoded title string
+
+[ ] Resume / CV
+    -- project title line
+    -- one-line description under project:
+       "Identifies a two-phase household liquidity cycle using
+       a district-quarter panel IV design (VIIRS nighttime lights,
+       EM-DAT floods, RBI deposits) across 631 Indian districts,
+       2015-2024."
+
+[ ] Any presentation slides already created
+[ ] Any email drafts / cover letters referencing the old title
+
+======================================================================
+SECTION 2 — NAME CHANGES (EXISTING ONLINE ACCOUNTS)
+======================================================================
+
+SSRN (ssrn.com) -- you have this
+[ ] Log in
+[ ] Go to My Papers (even if paper not yet uploaded, update any draft)
+[ ] Profile bio -- update to reflect this paper
+[ ] Author name -- confirm spelled exactly as it will appear on paper
+[ ] Affiliation -- fill in correctly (institution name, city, country)
+[ ] Paper title field -- use new title when you upload
+
+ResearchGate (researchgate.net) -- you have this
+[ ] Log in
+[ ] Profile > Edit > Research -- add this paper as a project
+[ ] Project title: use new title
+[ ] Skills section -- add: Panel Data, IV Econometrics,
+    Nighttime Lights, Satellite Data, Development Economics,
+    Climate Finance, Flood Risk
+[ ] Profile photo -- must be professional
+[ ] Bio -- one paragraph, see template at end of this file
+
+RePEC / IDEAS (ideas.repec.org) -- you have this
+[ ] Log in to author registration (authors.repec.org)
+[ ] Confirm your author profile is claimed and verified
+[ ] Affiliation field -- fill in correctly
+[ ] Paper will auto-index from SSRN once uploaded there
+[ ] Confirm SSRN and RePEC are linked
+
+======================================================================
+SECTION 3 — NEW ACCOUNTS TO CREATE (PRIORITY ORDER)
+======================================================================
+
+----------------------------------------------------------------------
+PRIORITY 1 — CREATE IMMEDIATELY (these define your permanent
+academic identity, everything else links back to these)
+----------------------------------------------------------------------
+
+[ ] ORCID
+    URL: orcid.org/register
+    Why: permanent researcher ID, like a DOI but for you as a person.
+    Every journal submission, grant application, and institutional
+    system will ask for it. Non-negotiable.
+    Actions after creating:
+      [ ] Add your name exactly as it appears on your paper
+      [ ] Add your education / affiliation
+      [ ] Add this paper as a "work" once it is on SSRN
+      [ ] Copy your ORCID number (format: 0000-0000-0000-0000)
+          into your email signature, CV, SSRN, ResearchGate,
+          GitHub, and every profile going forward
+
+[ ] Google Scholar Profile
+    URL: scholar.google.com
+    Go to: My Profile > Create Profile
+    Why: this is where citation counts are publicly displayed.
+    Every time someone googles you or your paper, Google Scholar
+    is the first result. Without a claimed profile, auto-generated
+    duplicates appear.
+    Actions after creating:
+      [ ] Photo (professional)
+      [ ] Affiliation
+      [ ] Research interests:
+          Development Economics, Climate Finance,
+          Panel Econometrics, Satellite Data, Banking
+      [ ] Email for verification (use institutional email if possible)
+      [ ] Once paper is on SSRN, it will auto-appear here. Confirm
+          the citation is correctly attributed to your profile.
+
+[ ] GitHub
+    URL: github.com
+    Why: your replication package (Scripts 01-38, 27b-30b) is a
+    major methodological contribution. Making it public signals
+    transparency and technical rigor. Recruiters and PhD committees
+    increasingly check GitHub.
+    Actions:
+      [ ] Create account
+      [ ] Username: use your real name or a clean variant
+          (e.g., firstname-lastname). This URL will be on your CV.
+      [ ] Create repository named:
+          flood-shocks-deposit-cycle
+      [ ] Repository description (copy exactly):
+          "Replication package for 'Flood Shocks and the Two-Phase
+          Deposit Cycle: Evidence from Nighttime Lights.' Panel IV
+          analysis using VIIRS nighttime lights, EM-DAT flood events,
+          and RBI district deposits. 631 districts, 37 quarters,
+          2015-2024."
+      [ ] Set repository to PUBLIC (after paper is on SSRN)
+      [ ] Upload all scripts with clean folder structure
+      [ ] README.md in the repository must match README_v2.6.md
+      [ ] Add LICENSE file (MIT license is standard for academic code)
+      [ ] Pin this repository to your GitHub profile
+
+----------------------------------------------------------------------
+PRIORITY 2 — CREATE THIS WEEK
+----------------------------------------------------------------------
+
+[ ] Personal Academic Website
+    Recommended platform: GitHub Pages (free, professional, permanent)
+    Alternative: Google Sites (simpler, also free)
+    URL will be: yourusername.github.io
+    Why: every email you send to a professor, journal editor, or
+    recruiter should have this URL in your signature. It is your
+    single source of truth. Controls the narrative.
+    Pages to create:
+      [ ] Home -- one paragraph about you and your research
+      [ ] Research -- list this paper with title, abstract,
+          download link (SSRN), and GitHub link
+      [ ] CV -- embed or link your PDF CV
+      [ ] Contact -- email only
+    Do not over-engineer this. One clean, minimal page is better
+    than a complicated site that is 60% complete.
+
+[ ] OSF (Open Science Framework)
+    URL: osf.io/register
+    Why: pre-registration and data/code sharing. This is the most
+    powerful credibility signal for a young causal identification
+    researcher. Pre-registering your hypotheses before final
+    analysis proves you did not p-hack. Reviewers at AER and QJE
+    increasingly expect this.
+    Actions:
+      [ ] Create account
+      [ ] Create project: "Flood Shocks and the Two-Phase
+          Deposit Cycle: Evidence from Nighttime Lights"
+      [ ] Upload your Hypotheses_Formal_v2.6.md as the
+          pre-registration document
+      [ ] Set date lock (timestamp your pre-registration)
+      [ ] Link your ORCID to your OSF profile
+      [ ] Later: upload cleaned data and replication scripts here
+          as supplementary material for journal submission
+
+[ ] Twitter / X Academic Account
+    URL: twitter.com or x.com
+    Why: this is how working papers circulate virally before
+    publication. One good thread from a senior economist retweeting
+    your SSRN link can generate thousands of downloads and dozens
+    of citations before the paper is even published.
+    Actions:
+      [ ] Username: use your real name
+      [ ] Bio (copy and adapt):
+          "Empirical economist | Climate finance + banking |
+          Panel IV, satellite data | [Paper short title]
+          [SSRN link when ready] | [Institution]"
+      [ ] Follow: @NBER, @WorldBank, @IMFNews, @J_DevEcon,
+          development economics researchers you cite,
+          climate finance researchers
+      [ ] When paper goes on SSRN: write a 10-tweet thread
+          (template at end of this file)
+
+----------------------------------------------------------------------
+PRIORITY 3 — BEFORE JOURNAL SUBMISSION
+----------------------------------------------------------------------
+
+[ ] Academia.edu
+    URL: academia.edu
+    Why: secondary discovery platform. Reaches non-economics
+    academics (geographers, climate scientists, policy researchers)
+    who would not normally find your paper on SSRN or IDEAS.
+    Actions:
+      [ ] Create account
+      [ ] Upload paper PDF (same version as SSRN)
+      [ ] Add research interests matching your Twitter bio
+
+[ ] Semantic Scholar
+    URL: semanticscholar.org
+    Why: auto-indexes your paper once it is on SSRN. Claim your
+    author profile to ensure all papers are attributed to you
+    correctly. AI-assisted citation tracking increasingly uses
+    Semantic Scholar.
+    Actions:
+      [ ] Search your name once paper is live
+      [ ] Claim the auto-generated author profile
+      [ ] Link your ORCID
+
+[ ] LinkedIn
+    Why: for non-academic audiences -- policy researchers, central
+    bank economists, development finance practitioners, and quant
+    recruiters. This paper is directly relevant to RBI policy,
+    disaster risk finance, and climate risk teams at banks.
+    Actions:
+      [ ] Headline: "Empirical Economist | Climate Finance &
+          Banking | Panel IV | Nighttime Lights"
+      [ ] About section: one paragraph ending with a link to your
+          academic website
+      [ ] Add this paper under Projects section with new title
+      [ ] When paper goes on SSRN: post a 3-paragraph summary
+          (non-technical, policy-focused)
+
+[ ] Harvard Dataverse or Zenodo
+    URL: dataverse.harvard.edu or zenodo.org
+    Why: permanent data repository with a DOI for your dataset.
+    Top journals increasingly require data deposition with a
+    citable DOI as a condition of publication.
+    Actions:
+      [ ] Create account
+      [ ] Upload cleaned analysis dataset with codebook
+      [ ] Upload replication scripts
+      [ ] Record the DOI -- it goes in your paper's data
+          availability statement
+
+======================================================================
+SECTION 4 — WHAT TO POST AND WHEN (SEQUENCING)
+======================================================================
+
+STAGE 1 -- PAPER DRAFT COMPLETE
+  [ ] Upload to SSRN immediately
+      Title: Flood Shocks and the Two-Phase Deposit Cycle:
+             Evidence from Nighttime Lights
+      Abstract: [write when paper section drafts are done]
+      Series: Economics Research Network > Development Economics
+              AND Financial Economics > Banking
+      Keywords: flood exposure, deposit cycle, nighttime lights,
+                panel IV, India, district-level, VIIRS, bank deposits,
+                climate finance, two-phase liquidity
+  [ ] Post Twitter/X thread same day as SSRN upload
+  [ ] Post LinkedIn summary same day
+  [ ] Email 3-5 senior researchers in this literature
+      (one paragraph, SSRN link, why their work relates)
+  [ ] Update Google Scholar, ResearchGate, Academia.edu with
+      SSRN link
+
+STAGE 2 -- JOURNAL SUBMISSION
+  [ ] Target journal 1: AEJ: Applied Economics or
+      Journal of Development Economics
+  [ ] Cover letter must mention:
+      - Pre-registration on OSF (date)
+      - Replication package on GitHub
+      - Data deposited on Harvard Dataverse / Zenodo
+  [ ] Submit to one journal at a time (economics norm --
+      simultaneous submission is not acceptable)
+
+STAGE 3 -- CONFERENCE SUBMISSIONS (parallel to journal)
+  [ ] NEUDC (Northeast Universities Development Consortium)
+      -- submit paper or extended abstract
+  [ ] CSAE Conference, Oxford
+  [ ] IGC (International Growth Centre) Annual Conference
+  [ ] AEA Annual Meeting (January deadline, submit in August)
+
+STAGE 4 -- POLICY IMPACT
+  [ ] Write a VoxDev column (voxdev.org -- 1,200 words,
+      non-technical, policy audience)
+  [ ] Write a VoxEU column (cepr.org/voxeu -- same format,
+      global macro/finance audience)
+  [ ] Submit policy brief to NCAER or IFMR/KREA
+
+======================================================================
+SECTION 5 -- PROFILE BIO TEMPLATE
+(adapt and use on ResearchGate, Academia.edu, personal website)
+======================================================================
+
+"I am an empirical economist working at the intersection of climate
+finance, development economics, and spatial econometrics. My current
+research identifies the causal effects of flood shocks on household
+deposit behavior using a district-quarter panel IV design that
+combines VIIRS nighttime lights satellite data with EM-DAT flood
+events and Reserve Bank of India district-level deposits. Working
+paper: 'Flood Shocks and the Two-Phase Deposit Cycle: Evidence from
+Nighttime Lights.' [SSRN link]"
+
+======================================================================
+SECTION 6 -- TWITTER/X THREAD TEMPLATE
+(post the day paper goes on SSRN)
+======================================================================
+
+Tweet 1:
+New working paper: "Flood Shocks and the Two-Phase Deposit Cycle:
+Evidence from Nighttime Lights."
+631 Indian districts. 37 quarters. Panel IV using VIIRS satellite
+data + EM-DAT floods + RBI deposits.
+Main finding: floods create a 2-phase deposit cycle. Here is what
+that means. [thread] [SSRN link]
+
+Tweet 2:
+When a flood hits, what happens to household savings?
+Not what you expect. The effect is NOT immediate.
+Deposits actually show a POSITIVE anticipatory saving pattern
+in the quarter BEFORE the flood (t-1).
+
+Tweet 3:
+Then, 6 months after the flood (t-2), deposits fall sharply.
+-0.70pp. Highly significant. Robust to Northeast exclusion,
+winsorization, and state-level clustering.
+This is the recovery phase. Households liquidate savings to
+rebuild. Not panic. Delayed, rational, costly.
+
+Tweet 4:
+How did we identify this causally?
+Instrument: flood exposure predicts nighttime lights (VIIRS),
+which proxies for economic displacement.
+First stage F = 34.7 under the conservative rule. Strong.
+
+Tweet 5:
+H2 (economic activity -> deposits contemporaneously): null.
+p = 0.805.
+This is NOT a failure. It is a prediction of the mechanism.
+The effect is LAGGED, not contemporaneous. The null confirms
+the timing story.
+
+Tweet 6:
+Robustness:
+- Northeast exclusion: H3 strengthens (beta more negative)
+- Winsorization: H3 stable (delta < 0.0002)
+- State-level wild cluster bootstrap (999 iter): H3 p=0.034
+- Longer lags (t-3): persistence confirmed (beta=-0.016, p<0.001)
+
+Tweet 7:
+Data pipeline: 38 scripts. VIIRS monthly composites (120 tiles,
+2015-2024), EM-DAT flood events, RBI district deposits.
+Composite district FE to resolve homonymous district problem
+(7 district-name pairs spanning state boundaries).
+Replication package: [GitHub link]
+
+Tweet 8:
+Policy implication:
+If relief disbursement happens in t=0 (disaster quarter),
+it arrives BEFORE peak household liquidity stress.
+Peak stress is at t=2 (6 months later).
+Disaster relief timing is systematically misaligned with
+behavioral need.
+
+Tweet 9:
+For the disaster-banking and displacement-finance literature:
+No identified paper estimates this two-phase cycle at
+district-quarter frequency using satellite-based IV.
+This is new.
+Comments welcome. [SSRN link]
+
+Tweet 10:
+Pre-registered on OSF: [OSF link]
+Data and code: [GitHub link] [Dataverse/Zenodo link]
+Written under full replication transparency.
+Happy to discuss. DMs open.
+
+======================================================================
+SECTION 7 -- EMAIL SIGNATURE (use immediately)
+======================================================================
+
+[Your Name]
+[Institution / Independent Researcher]
+Research: Flood Shocks and the Two-Phase Deposit Cycle
+[Personal Website URL] | [SSRN URL] | [GitHub URL]
+ORCID: [your ORCID number]
+
+======================================================================
+STATUS TRACKER
+======================================================================
+
+ACCOUNTS:
+  [ ] ORCID            -- created and linked
+  [ ] Google Scholar   -- profile claimed
+  [ ] GitHub           -- repo created and public
+  [ ] Personal Website -- live
+  [ ] OSF              -- pre-registration uploaded
+  [ ] Twitter/X        -- bio updated
+  [ ] Academia.edu     -- paper uploaded
+  [ ] Semantic Scholar -- profile claimed
+  [ ] LinkedIn         -- updated
+  [ ] Harvard Dataverse or Zenodo -- data deposited
+
+EXISTING ACCOUNTS UPDATED:
+  [ ] SSRN             -- title and profile updated
+  [ ] ResearchGate     -- title and skills updated
+  [ ] RePEC            -- profile verified and linked
+
+NAME CHANGED:
+  [ ] All local documentation files
+  [ ] Resume / CV
+  [ ] GitHub repo
+  [ ] All online profiles
+
+PAPER POSTED:
+  [ ] SSRN upload complete
+  [ ] Twitter/X thread posted
+  [ ] LinkedIn post published
+  [ ] Outreach emails sent (minimum 3 researchers)
+
+JOURNAL:
+  [ ] Target journal confirmed
+  [ ] Submission package complete (paper + data + code + OSF link)
+  [ ] Submitted
+
+======================================================================
+DELETE THIS FILE WHEN ALL BOXES ARE CHECKED
+======================================================================

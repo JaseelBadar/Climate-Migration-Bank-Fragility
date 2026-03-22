@@ -4396,3 +4396,124 @@ Writing order per Pre_Writing_Master_Plan:
   Abstract -- thereafter
 
 Active writing constraints: 1-13.
+
+
+----------------------------------------------------------------------
+2026-03-22 (Sun) 21:18-23:49 IST -- Research Log Compiled.
+Project Title Locked. Academic Presence Checklist Generated.
+----------------------------------------------------------------------
+
+(A) Research Log Compilation
+- All raw session notes 2026-02-13 through 2026-03-21 (22 sessions,
+  Phases 3d through pre-writing gate) reformatted into standardised
+  plain-text format.
+- Format standards enforced:
+    ASCII-only throughout (Unicode arrows, emoji, special
+    characters removed)
+    Consistent (A)/(B)/(C) section labeling at every session
+    All numerical results preserved to stated precision
+    Stale outputs labeled with explicit cross-references
+    Writing constraints 1-13 documented inline at point of origin
+    Robustness verdicts (PASS/FAIL/PARTIAL) preserved in context
+- Sessions covered: Feb 13, Feb 15, Feb 16, Feb 27, Feb 28,
+  Mar 1, Mar 3, Mar 4, Mar 5, Mar 7, Mar 8, Mar 9, Mar 10,
+  Mar 11, Mar 12, Mar 13, Mar 14, Mar 15, Mar 16, Mar 17,
+  Mar 18, Mar 19, Mar 20, Mar 21.
+- No data modified. No scripts re-run. No result changes.
+
+(B) Project Title Finalised
+- Prior title: "Climate Shocks, Displacement, and Bank Liquidity
+  Risk"
+- Problems identified:
+    "Climate Shocks" is a literature category, not a finding
+    Comma list implies three equal topics, not a causal chain
+    "Bank Liquidity Risk" overclaims -- paper proves a household
+    behavioral timing result, not bank balance-sheet fragility
+    Country name in title risks signaling area study rather than
+    a generalizable mechanism
+- Title PERMANENTLY LOCKED:
+
+    Flood Shocks and the Two-Phase Deposit Cycle:
+    Evidence from Nighttime Lights
+
+- Rationale:
+    "Flood Shocks" -- names exact exogenous variation, signals
+    IV identification to any economist in five seconds
+    "Two-Phase Deposit Cycle" -- names the actual finding, not a
+    generic risk concept; claims a new stylized fact; forces the
+    reader to ask what the two phases are (anticipatory saving
+    at t-1, delayed withdrawal at t-2); no comparable phrase
+    exists in this literature
+    "Evidence from Nighttime Lights" -- signals satellite data
+    and modern IV methodology; functions as keyword trigger for
+    PhD committees, quant recruiters, and senior researchers on
+    SSRN; removing country name positions mechanism as the
+    contribution, not geography
+- Short title (bios, social media):
+    "Flood Shocks and the Two-Phase Deposit Cycle"
+- Name change locations confirmed:
+    Local: README_v2.6.md, Hypotheses_Formal_v2.6.md,
+    Variables_Codebook_v2.6.md, Pre_Writing_Master_Plan.txt,
+    all three figure caption strings, all three figure scripts,
+    resume/CV
+    Online: SSRN, ResearchGate, RePEC, GitHub, personal website,
+    OSF, Academia.edu, LinkedIn, Semantic Scholar, email signature
+
+(C) Academic Presence Master Checklist Generated
+- Full plain-text checklist written and saved locally.
+  Delete when all items are checked off.
+- Accounts to create (priority order):
+    Priority 1 (permanent identity, this week):
+      ORCID (orcid.org) -- permanent researcher fingerprint,
+      required by every journal and grant system
+      Google Scholar -- citation tracking, first result when
+      anyone searches name or paper title
+      GitHub -- replication package repository;
+      repo name: flood-shocks-deposit-cycle; upload Scripts
+      01-38 and 27b-30b; set PUBLIC after SSRN upload
+    Priority 2 (this week):
+      Personal academic website (GitHub Pages recommended)
+      OSF (osf.io) -- pre-register Hypotheses_Formal_v2.6.md,
+      timestamp lock, data deposition for journal submission
+      Twitter/X -- working paper circulation; 10-tweet SSRN
+      launch thread template saved in checklist
+    Priority 3 (before journal submission):
+      Academia.edu, Semantic Scholar, LinkedIn,
+      Harvard Dataverse or Zenodo (data DOI)
+- Existing accounts to update:
+    SSRN -- title, bio, affiliation, keywords
+    ResearchGate -- title, skills (Panel Data, IV Econometrics,
+    Nighttime Lights, Satellite Data, Development Economics,
+    Climate Finance, Flood Risk)
+    RePEC -- verify profile claimed, affiliation correct,
+    SSRN linked for auto-indexing
+- Templates saved in checklist:
+    Profile bio (one paragraph, adapt for all platforms)
+    10-tweet SSRN launch thread (copy-paste ready)
+    Email signature (name, title, URLs, ORCID)
+- Posting and submission sequencing locked:
+    SSRN upload --> Twitter/X thread + LinkedIn post same day
+    --> outreach emails to 3-5 senior researchers
+    --> journal submission (AEJ:Applied or JDE first,
+        escalate to AER/QJE on R&R signal)
+    --> conference circuit (NEUDC, CSAE Oxford, AEA, IGC)
+    --> VoxDev + VoxEU policy columns
+
+Status: No code executed. No data modified. No pipeline changes.
+  All outputs from Mar 21 session unchanged.
+  Project title permanently locked.
+  Academic presence action plan complete.
+  Writing begins next session.
+
+Next session:
+  1. Change title in all local documentation files
+  2. Create ORCID and Google Scholar profile (10 minutes)
+  3. Begin Section 3 (Data) draft
+     Order: 3.1 RBI deposits, 3.2 EM-DAT floods,
+     3.3 VIIRS nighttime lights, 3.4 panel construction
+  4. Section 3.3 gate: CONFIRMED UNBLOCKED (Script 38)
+  Active writing constraints: 1-13.
+
+======================================================================
+END OF LOG -- Last entry: 2026-03-22 23:49 IST
+======================================================================

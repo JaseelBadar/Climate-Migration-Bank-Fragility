@@ -1,6 +1,6 @@
 # =============================================================================
 # Script 36b: R6b -- Wild Cluster Bootstrap SE for H1 at State Level
-# Project:    Climate Shocks, Displacement, and Bank Liquidity Risk
+# Project:    Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 #             Evidence from Night-Lights in India, 2015-2024
 # PI:         Jaseel Badar, Harvard University
 # Purpose:    Re-run H1 with wild cluster bootstrap SE clustered by state_gadm

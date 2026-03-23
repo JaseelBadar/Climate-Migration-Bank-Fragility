@@ -1,7 +1,7 @@
 ======================================================================
 38_zerochg_diagnostic.txt
 Zero-Change Quarters Diagnostic -- deposit_change_qt
-Climate Shocks, Displacement, and Bank Liquidity Risk
+Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 ======================================================================
 Data : e:\Climate-Migration-Bank-Fragility\03_Data_Clean\regression_panel_final.csv
 N    : 23,347

@@ -1,7 +1,7 @@
 """
 fig03_H4_heterogeneity.py
 Figure C -- H4 Heterogeneity Coefficient Plot
-Climate Shocks, Displacement, and Bank Liquidity Risk
+Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 Evidence from Night-Lights in India, 2015-2024
 
 Data:   05_Outputs/Tables/05b_H4_linearmodels.csv  (Script 30b)

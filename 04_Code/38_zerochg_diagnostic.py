@@ -1,7 +1,7 @@
 """
 38_zerochg_diagnostic.py
 Zero-Change Quarters Diagnostic -- deposit_change_qt
-Climate Shocks, Displacement, and Bank Liquidity Risk
+Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 
 Purpose:
   Profile zero and near-zero deposit_change_qt observations.
@@ -240,7 +240,7 @@ lines = []
 lines.append("=" * 70)
 lines.append("38_zerochg_diagnostic.txt")
 lines.append("Zero-Change Quarters Diagnostic -- deposit_change_qt")
-lines.append("Climate Shocks, Displacement, and Bank Liquidity Risk")
+lines.append("Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification")
 lines.append("=" * 70)
 lines.append(f"Data : {DATA_PATH}")
 lines.append(f"N    : {len(df):,}")

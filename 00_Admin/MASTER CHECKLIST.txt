@@ -16,28 +16,6 @@ SHORT TITLE (for profiles, bios, social media):
 SECTION 1 — NAME CHANGES (LOCAL FILES)
 ======================================================================
 
-[ ] 04_Code/README_v2.6.md
-    -- header title line
-    -- abstract section
-    -- results section
-    -- pipeline table header
-
-[ ] 00_Admin/Hypotheses_Formal_v2.6.md
-    -- document header
-
-[ ] 00_Admin/Variables_Codebook_v2.6.md
-    -- document header
-
-[ ] 00_Admin/Pre_Writing_Master_Plan.txt
-    -- document header
-
-[ ] 05_Outputs/Figures/Fig_01_flood_exposure_map -- caption string
-[ ] 05_Outputs/Figures/Fig_02_H3_event_study    -- caption string
-[ ] 05_Outputs/Figures/Fig_03_H4_heterogeneity  -- caption string
-[ ] fig01 script -- any hardcoded title string
-[ ] fig02 script -- any hardcoded title string
-[ ] fig03 script -- any hardcoded title string
-
 [ ] Resume / CV
     -- project title line
     -- one-line description under project:
@@ -45,9 +23,6 @@ SECTION 1 — NAME CHANGES (LOCAL FILES)
        a district-quarter panel IV design (VIIRS nighttime lights,
        EM-DAT floods, RBI deposits) across 631 Indian districts,
        2015-2024."
-
-[ ] Any presentation slides already created
-[ ] Any email drafts / cover letters referencing the old title
 
 ======================================================================
 SECTION 2 — NAME CHANGES (EXISTING ONLINE ACCOUNTS)

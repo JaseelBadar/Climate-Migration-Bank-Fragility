@@ -4513,6 +4513,148 @@ Next session:
   4. Section 3.3 gate: CONFIRMED UNBLOCKED (Script 38)
   Active writing constraints: 1-13.
 
+
+----------------------------------------------------------------------
+2026-03-23 (Mon) 21:30-23:07 IST -- Title Subtitle Revised.
+Local Files Updated. Academic Presence Priority 1 Complete.
+----------------------------------------------------------------------
+
+(A) Title Subtitle Revision -- "A Nighttime Lights Identification"
+
+Prior subtitle: "Evidence from Nighttime Lights"
+Replacement: "A Nighttime Lights Identification"
+
+Problem identified with prior subtitle:
+  "Evidence from Nighttime Lights" is now generic in the
+  satellite economics literature. Nighttime lights papers
+  using "Evidence from X" subtitle format have proliferated
+  (Henderson et al. 2012, World Bank series, proxy-measurement
+  studies). Phrase categorises the paper alongside data
+  exercises rather than causal identification papers.
+  More critically: lights are the instrument, not the subject.
+  "Evidence from" implies lights are the data source.
+  "Identification" states exactly what lights do in the design.
+
+Rationale for replacement:
+  "A Nighttime Lights Identification" signals IV strategy in
+  four words. "Identification" is the precise term used by
+  causal economists. Separates this paper from proxy-
+  measurement and descriptive satellite studies instantly.
+  Any QJE or AER editor reads it and thinks: IV design,
+  not data exercise.
+
+Title PERMANENTLY LOCKED (final, no further changes):
+  Flood Shocks and the Two-Phase Deposit Cycle:
+  A Nighttime Lights Identification
+
+Short title (bios, social media -- unchanged):
+  Flood Shocks and the Two-Phase Deposit Cycle
+
+(B) Title Propagation -- Local Files and Figure Scripts
+
+Round 1: Documentation files (4 files updated, committed).
+  04_Code/README_v2.6.md              -- title string
+  00_Admin/Hypotheses_Formal_v2.6.md  -- document header
+  00_Admin/Variables_Codebook_v2.6.md -- document header
+  00_Admin/Pre_Writing_Master_Plan.txt -- document header
+
+Round 2: Code files and regenerated output (4 files, committed).
+  04_Code/36b_R6b_Wild_Cluster_bootstrap.py -- title string
+  04_Code/38_zerochg_diagnostic.py          -- title string
+  04_Code/fig03_H4_heterogeneity.py         -- title string
+  05_Outputs/Logs/38_zerochg_diagnostic.txt -- regenerated
+
+Fig_01 and Fig_02 scripts confirmed clean -- no hardcoded
+title string present in either script. No changes required.
+
+No regression results affected. No data modified.
+Pipeline state unchanged from Mar 21.
+
+(C) Academic Presence -- Priority 1 Accounts Complete
+
+All five Priority 1 and existing accounts completed tonight.
+Order of completion:
+
+  SSRN (existing account -- updated):
+    Affiliation: Harvard University, Cambridge MA
+    Position: Student Researcher
+    Bio: career-framed, not paper-specific
+    ORCID connection: linked (see below)
+    Research networks subscribed:
+      ERN: Development Economics
+      FEN: Banking and Financial Institutions
+    Contact email: jaseelbadar123@gmail.com (permanent)
+    Note: Harvard email deliberately not used -- expires at
+    graduation. Gmail used on all platforms for permanence.
+
+  ORCID (new account -- created and filled):
+    Profile visibility: public (Everyone)
+    Keywords: development economics, climate finance,
+      panel IV, nighttime lights, satellite data,
+      flood risk, banking, instrumental variables,
+      household finance, natural disasters
+    Bio: career-framed, not paper-specific. Covers all
+      future research in climate, finance, and spatial
+      methods -- not locked to current paper.
+    Employment: Harvard University Extension School,
+      Student Researcher, start date: enrollment date
+    Connected to SSRN: authorized. Papers will auto-sync.
+    ORCID iD: recorded locally.
+
+  Google Scholar (new profile -- created):
+    Name: Jaseel Badar
+    Affiliation: Student Researcher,
+      Harvard University Extension School
+    Email for verification: jaseelbadar123@gmail.com
+    Areas of interest: Development Economics, Climate
+      Finance, Panel Econometrics, Instrumental Variables,
+      Satellite Data, Banking
+    Articles: none added (no published papers yet -- correct)
+    Profile set to public. Verification email sent.
+    Note: profile claimed before SSRN upload to prevent
+    Google auto-generating a duplicate with wrong details.
+
+  ResearchGate (existing account -- updated):
+    Affiliation: Harvard University Extension School
+    Department: Economics
+    Position: Student Researcher
+    Skills added: Panel Data, Instrumental Variables,
+      Development Economics, Climate Finance, Nighttime
+      Lights, Satellite Data, Flood Risk, Banking,
+      Econometrics
+    Bio: career-framed (same standard as ORCID)
+    Project added: paper title added as active project.
+      PDF upload deferred until SSRN is live.
+
+  RePEC / IDEAS (new account -- registered):
+    Name: Jaseel Badar
+    Affiliation: Harvard University Extension School
+    Email: jaseelbadar123@gmail.com
+    DOB entered for identity verification (not displayed)
+    SSRN profile link to be added after SSRN paper is live.
+    Auto-indexing will activate once SSRN link is registered.
+
+Priority 1 checklist -- final state:
+  [x] SSRN             -- updated and linked
+  [x] ORCID            -- created, filled, connected to SSRN
+  [x] Google Scholar   -- profile claimed, set public
+  [x] ResearchGate     -- updated, project added
+  [x] RePEC            -- registered
+
+Status: No code executed. No data modified. No pipeline changes.
+  Two commits made (documentation files, code files).
+  All regression results and figures unchanged from Mar 21.
+  Title permanently locked with revised subtitle.
+  Priority 1 academic presence: COMPLETE.
+
+Next session:
+  Priority 2 accounts (personal website, OSF, Twitter/X)
+  can be deferred. Begin Section 3 (Data) draft.
+  Order: 3.1 RBI deposits, 3.2 EM-DAT floods,
+  3.3 VIIRS nighttime lights, 3.4 panel construction.
+  Section 3.3 gate: CONFIRMED UNBLOCKED (Script 38).
+  Active writing constraints: 1-13.
+
 ======================================================================
-END OF LOG -- Last entry: 2026-03-22 23:49 IST
+END OF LOG -- Last entry: 2026-03-23 23:10 IST
 ======================================================================

@@ -1,4 +1,4 @@
-# Formal Hypotheses: Climate Shocks, Displacement, and Bank Liquidity Risk
+# Formal Hypotheses: Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 ### Evidence from Nighttime Lights in India, 2015–2024
 
 **Version:** 2.6 (March 21, 2026)  

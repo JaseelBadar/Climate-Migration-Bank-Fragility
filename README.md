@@ -1,4 +1,4 @@
-# Climate Shocks, Displacement, and Bank Liquidity Risk
+# Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 ### Evidence from Nighttime Lights in India, 2015–2024
 
 [![Status](https://img.shields.io/badge/status-writing%20phase-brightgreen)]()

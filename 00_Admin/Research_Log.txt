@@ -1,7 +1,6 @@
 ======================================================================
 RESEARCH LOG
-Climate Shocks, Displacement, and Bank Liquidity Risk:
-Evidence from Night-Lights in India, 2015-2024
+Flood Shocks and the Two-Phase Deposit Cycle: A Nighttime Lights Identification
 ======================================================================
 Author:     Jaseel Badar, Harvard University
 Repository: github.com/JaseelBadar/Climate-Migration-Bank-Fragility

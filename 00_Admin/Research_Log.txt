@@ -4655,6 +4655,143 @@ Next session:
   Section 3.3 gate: CONFIRMED UNBLOCKED (Script 38).
   Active writing constraints: 1-13.
 
+----------------------------------------------------------------------
+2026-03-26 (Thu) 23:00-23:58 IST -- Writing Protocols Locked.
+Formatting Standards Finalised. Master Anchor Document Created.
+----------------------------------------------------------------------
+
+(A) Writing Protocol Formalisation
+
+Full writing protocol document created and locked.
+File name: 00_MASTER_WRITING_PROTOCOL_AND_ANCHOR.txt
+Location: 00_Admin/
+
+Purpose: dual-function document.
+  (1) Human reference -- non-negotiable writing and formatting
+      standards for every draft session.
+  (2) AI anchor -- fed at the start of every future AI writing
+      session to prevent hallucination, number drift, and
+      constraint violation.
+
+Document is self-contained. Covers all decisions made across
+prior sessions. No separate formatting or protocol document
+is needed. This file supersedes all prior writing-standard
+notes.
+
+(B) Formatting Standards -- Final, Locked
+
+All MS Word formatting decisions confirmed and locked
+for the full duration of the paper.
+
+Font:
+  Body text:         Times New Roman, 12pt, black.
+  Footnotes:         Times New Roman, 10pt.
+  Table content:     Times New Roman, 10pt.
+  Table titles:      Times New Roman, 11pt, bold, above table.
+  Table notes:       Times New Roman, 9pt, italic, below table.
+  Figure captions:   Times New Roman, 11pt, bold, below figure.
+  References:        Times New Roman, 11pt, single-spaced,
+                     hanging indent 0.5".
+  Section H1:        Times New Roman, 12pt, bold, small caps.
+  Subsection H2:     Times New Roman, 12pt, bold.
+  Sub-subsection H3: Times New Roman, 12pt, bold italic.
+                     Used sparingly.
+
+Spacing:
+  Body paragraphs:   Double (2.0). 0pt before. 0pt after.
+  Abstract:          Single (1.0). Indented 0.5" both sides.
+  Footnotes:         Single (1.0).
+  Table content:     Single (1.0).
+  References:        Single (1.0). 6pt after each entry.
+
+Page setup:
+  Paper size:        US Letter, 8.5" x 11".
+  Margins:           1 inch all sides.
+  Single column.     Portrait orientation.
+
+(C) Table and Figure Standards -- Final, Locked
+
+Tables (AER standard):
+  Top border:        1pt solid black.
+  Below header row:  0.75pt solid black.
+  Bottom border:     1pt solid black.
+  Vertical lines:    None. Not one.
+  Cell shading:      None. White only.
+  Titles above.      Notes below beginning with "Notes:".
+
+Column logic (results tables):
+  Column 1: OLS (biased baseline, labeled).
+  Column 2: IV main result.
+  Column 3: First stage with F-statistic prominent.
+  Column 4: Reduced form.
+  Column 5+: Robustness specifications.
+
+Figures:
+  Format:            PNG, minimum 300 DPI.
+  Word wrapping:     In Line with Text only. No floating.
+  Max width:         6.5".
+  Captions below.    Notes below captions.
+  Color:             Readable in black-and-white print.
+
+(D) Reference Management -- Zotero Workflow Locked
+
+Citation style: American Economic Association.
+  Author-date format. Example: (Acemoglu and Johnson, 2001).
+
+Citation rule: every citation through Zotero Word plugin.
+  No manual typing of any citation under any circumstance.
+
+End-of-session rule: click Add/Edit Bibliography before
+  closing. Reference list auto-generates and auto-formats.
+
+Prohibition: "Unlink Citations" is not clicked until the
+  absolute final submission-ready copy. It is irreversible.
+
+(E) Academic Presence -- Status Confirmed
+
+All Priority 1 accounts confirmed complete as of 2026-03-23.
+  SSRN, ORCID, Google Scholar, ResearchGate, RePEC: done.
+  No uploads pending. No action required before draft complete.
+
+Paper label on all platforms: Working Paper.
+  No SSRN upload until full draft is polished and complete.
+
+(F) Title -- Confirmed Locked
+
+  Flood Shocks and the Two-Phase Deposit Cycle:
+  A Nighttime Lights Identification
+
+No further changes to title or subtitle. Propagated to all
+documentation and code files as of 2026-03-23. Regression
+results and figures unchanged.
+
+(G) Writing Order -- Confirmed, Active
+
+Section III (Data) is the first draft target.
+  Subsections in order:
+    3.1 RBI district-level deposits
+    3.2 EM-DAT flood data
+    3.3 VIIRS nighttime lights
+    3.4 Panel construction
+  Section 3.3 gate: CONFIRMED UNBLOCKED (Script 38).
+
+Writing order for full paper (non-negotiable):
+  III (Data) -> IV (Identification) -> V (Results) ->
+  VI (Robustness) -> I (Introduction) -> II (Literature) ->
+  VII (Discussion) -> VIII (Conclusion) -> Abstract.
+
+Active writing constraints: 1-13. All binding.
+
+Status: No code executed. No data modified. No pipeline changes.
+  Writing protocols locked and committed.
+  All regression results and figures unchanged from Mar 21.
+  Ready to begin Section 3 draft next session.
+
+Next session:
+  Begin Section 3.1 (RBI deposits).
+  Protocol anchor document loaded before first sentence.
+  All 13 constraints active from first word.
+
 ======================================================================
-END OF LOG -- Last entry: 2026-03-23 23:10 IST
+END OF LOG -- Last entry: 2026-03-26 23:55 IST
 ======================================================================

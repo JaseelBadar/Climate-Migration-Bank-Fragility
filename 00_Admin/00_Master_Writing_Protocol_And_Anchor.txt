@@ -1,0 +1,113 @@
+================================================================================
+MASTER WRITING PROTOCOL & ANTI-HALLUCINATION ANCHOR
+Project: Climate Shocks, Displacement, and Bank Liquidity Risk
+PI: Jaseel Badar, Harvard University
+Status: ALL PRE-WRITING COMPLETE. WRITING ACTIVE.
+Last Updated: March 26, 2026
+================================================================================
+
+THIS DOCUMENT IS NON-NEGOTIABLE.
+Feed this text to any AI session before writing to lock constraints and prevent hallucination.
+Every sentence generated must be defensible to the most hostile QJE/AER reviewer.
+Zero overclaiming. Zero hidden identification weakness. Zero unapproved numbers.
+
+--------------------------------------------------------------------------------
+1. THE MISSION, THE STANDARD, AND THE PERSONA
+--------------------------------------------------------------------------------
+GOAL: 500+ citations in 5 years. Target: AEJ:Applied (first round), QJE/AER/RFS (if R&R).
+NARRATIVE: The first satellite-based causal quantification of the climate-to-banking 
+transmission channel (shadow runs) in a developing economy.
+
+THE COMMANDMENTS OF WRITING:
+"I will not let you overclaim."
+"I will not let you hide weak identification behind words."
+"I will force precision where needed."
+"I will stop you if you try to polish instead of prove."
+"I will remind you when language must be softened due to data limits."
+
+--------------------------------------------------------------------------------
+2. FORMATTING DECISIONS (AER / QJE STANDARD)
+--------------------------------------------------------------------------------
+FONT: 
+- Times New Roman, 12pt, black for all body text. No alternatives. 
+- Footnotes drop to 10pt; table content to 10pt; table titles to 11pt bold.
+
+SPACING:
+- Double-spaced body text for the working paper. 
+- Abstract is single-spaced and indented 0.5" both sides. 
+- Footnotes and references are single-spaced.
+
+TABLES (The AER Standard):
+- ZERO vertical lines. ZERO shading. 
+- One 1pt horizontal line at top, one 0.75pt line below the header row, one 1pt line at bottom.
+- Table titles go ABOVE; notes go BELOW, 9pt italic, beginning with "Notes:".
+
+FIGURES AND MAPS:
+- All figures exported at minimum 300 DPI as PNG. NEVER screenshots.
+- Wrapping set to "In Line with Text" only.
+- Maps: include scale bar, north arrow, embedded legend, grayscale/viridis color ramp.
+
+ZOTERO WORKFLOW:
+- Style: "American Economic Association" (author-date format: Acemoglu and Johnson, 2001).
+- EVERY citation through the Zotero Word plugin. Never type a citation by hand.
+- NEVER click "Unlink Citations" until the absolute final submission copy.
+
+--------------------------------------------------------------------------------
+3. LOCKED RESULTS (THE ONLY NUMBERS THAT EXIST)
+--------------------------------------------------------------------------------
+All final numbers come from linearmodels PanelOLS/IV2SLS scripts (27b-30b).
+NEVER cite statsmodels results. NEVER mix estimators. NEVER round differently.
+
+H1 (Floods -> Lights):
+- Rule A: beta = -0.044468, SE = 0.007784, p < 0.001 (District FE = 631).
+- WILD BOOTSTRAP FAILURE: Fails state-level clustering under wild bootstrap (p = 0.158).
+
+H2 (Lights -> Deposits, IV Contemporaneous):
+- Rule A: beta = -0.008388, p = 0.805 (NULL). First-stage F = 34.673 (STRONG).
+- Rule B: p = 0.910 (NULL). First-stage F = 8.949 (WEAK - labeled "suggestive").
+
+H3 (Flood Timing -> Deposits, Distributed Lag):
+- Rule A t-2: beta = -0.007005, p < 0.001 (CONFIRMED).
+- PRE-PERIOD FINDING: Placebo t-1 is POSITIVE (beta = +0.004664, p = 0.011). Two-phase cycle.
+
+H4 (Heterogeneity):
+- H4a (Urban proxy): NULL (p = 0.532). 
+- H4b (High exposure proxy): Rule A baseline p = 0.020. Fails winsorization (p = 0.865).
+- H4c (Monsoon quarter): CONFIRMED (Rule A interaction +0.012495, p < 0.001). Fragile to Rule B.
+
+--------------------------------------------------------------------------------
+4. THE 13 MANDATORY WRITING CONSTRAINTS
+--------------------------------------------------------------------------------
+C1: H2 Null is EXPECTED. Effects are lagged. Never say "H2 fails" or "IV strategy fails."
+C2: H4c exact text: "Monsoon seasonality moderates the deposit response to moderate-intensity floods (Rule A: beta = +0.012, p < 0.001) but not to severe flood events (Rule B: p = 0.774). The heterogeneity result is fragile to flood intensity definition."
+C3: Rule B IV is labeled "suggestive" throughout. Report F=8.949. No causal claims.
+C4: H4a spurious benchmark: Must explicitly state the Feb 6 p<0.001 result was a spurious FE collapse error (624 vs 631 districts). Corrected is null.
+C5: Proxy Discipline: Always say "urban proxy" and "exposure proxy." Never claim census-based heterogeneity.
+C6: Tuensang disclosure: Flag within-year reversal (+3.21) as likely reporting artifact.
+C7: Demonetization Gap: Explicitly name the 2016Q3-2017Q1 RBI reporting blackout.
+C8: Nominal INR: Acknowledge deposits are nominal; quarter FE absorb national inflation.
+C9: SE Discipline: Use linearmodels exclusively.
+C10: Northeast: State explicitly that H3 t-2 survives NE exclusion.
+C11: Pre-Trend EXACT text: "Flood exposure at time t predicts higher deposit growth at t-1 (beta = +0.005, p = 0.011), a signal that survives the inclusion of district fixed effects (beta = +0.004, p = 0.019). This pre-period effect is positive and opposite in sign to the t-2 withdrawal effect (-0.007), indicating a two-phase household liquidity cycle -- anticipatory saving ahead of the predictable flood season followed by post-flood deposit withdrawal -- rather than a pre-existing downward trend in deposits."
+C12: H4b Winsorization EXACT text: "The high flood exposure interaction (H4b) is significant in the baseline specification (Rule A: beta = -0.007, p = 0.020) but does not survive winsorization of the top and bottom 1% of deposit growth observations (p = 0.865). The effect is sensitive to extreme observations and should be interpreted as suggestive evidence only."
+C13: H1 Wild Bootstrap EXACT text: "H1 is significant under district-level clustering (631 clusters, p < 0.001) but does not survive state-level clustering under conventional SE (34 clusters, p = 0.105) or wild cluster bootstrap (Rule A: p = 0.158, Rule B: p = 0.267). The coefficient is stable across all three specifications (beta = -0.044). Significance is therefore sensitive to the level of clustering assumed. The district-clustered result is the primary specification; state-level results are reported as a robustness bound."
+
+--------------------------------------------------------------------------------
+5. PAPER STRUCTURE & WRITING ORDER (STRICT)
+--------------------------------------------------------------------------------
+Structure:
+I. Introduction | II. Related Literature | III. Data | IV. Identification Strategy | V. Results | VI. Robustness | VII. Discussion and Mechanism | VIII. Conclusion.
+
+WRITING ORDER (Do not deviate):
+Section III (Data) -> Section IV (Identification) -> Section V (Results) -> Section VI (Robustness) -> Section I (Introduction) -> Section II (Literature) -> Section VII (Discussion) -> Section VIII (Conclusion) -> Abstract.
+
+--------------------------------------------------------------------------------
+6. WRITING QUALITY CHECKLIST
+--------------------------------------------------------------------------------
+- First sentence states the point (topic sentence).
+- Evidence follows immediately (cite or reference table).
+- No sentence >30 words. Break into two if longer.
+- No paragraph >6 sentences. Break into two if longer.
+- Active voice preferred ("I find").
+- Precision substitutions: "affects" (not impacts), "suggests" (not proves).
+================================================================================

@@ -4792,6 +4792,162 @@ Next session:
   Protocol anchor document loaded before first sentence.
   All 13 constraints active from first word.
 
+----------------------------------------------------------------------
+2026-04-03 (Fri) 21:24-23:53 IST -- Word Document Initialised.
+Paragraph Styles Built. Title Page Complete.
+----------------------------------------------------------------------
+
+(A) Word Document Created
+
+Draft file created and saved.
+File name: FloodShocks_v01_03Apr2026.docx
+Location: Draft/
+
+Version naming convention established:
+  FloodShocks_v[NN]_[DD][Mon][YYYY].docx
+  Incremented at the close of every writing session.
+
+(B) Page Setup -- Confirmed
+
+  Paper size:        US Letter, 8.5" x 11".
+  Margins:           1 inch all sides (2.54 cm).
+  Orientation:       Portrait.
+  Columns:           Single.
+  Widow/orphan:      Enabled globally.
+
+(C) Paragraph Styles -- Built and Locked
+
+Six styles created for immediate writing use.
+Six table/figure styles deferred until first table is built.
+
+Styles active now:
+  PAPER_Body
+    Font:            Times New Roman, 12pt.
+    Alignment:       Justified.
+    Spacing:         Double. 0pt before. 0pt after.
+    Indent:          First line 1.27 cm.
+    Based on:        (no style). Auto-update: off.
+
+  PAPER_H1
+    Font:            Times New Roman, 12pt, bold, small caps.
+    Alignment:       Left.
+    Spacing:         18pt before. 6pt after. Single.
+    Based on:        (no style). Auto-update: off.
+
+  PAPER_H2
+    Font:            Times New Roman, 12pt, bold.
+    Alignment:       Left.
+    Spacing:         12pt before. 6pt after. Single.
+    Based on:        (no style). Auto-update: off.
+
+  PAPER_Abstract
+    Font:            Times New Roman, 12pt.
+    Alignment:       Justified.
+    Spacing:         Single. 0pt before. 0pt after.
+    Indent:          Left 1.27 cm. Right 1.27 cm.
+    Based on:        (no style). Auto-update: off.
+
+  PAPER_Footnote
+    Font:            Times New Roman, 10pt.
+    Alignment:       Justified.
+    Spacing:         Single. 0pt before. 0pt after.
+    Indent:          Hanging 0.63 cm.
+    Based on:        (no style). Auto-update: off.
+
+  PAPER_References
+    Font:            Times New Roman, 11pt.
+    Alignment:       Justified.
+    Spacing:         Single. 0pt before. 6pt after.
+    Indent:          Hanging 1.27 cm.
+    Based on:        (no style). Auto-update: off.
+
+Styles deferred (created when first table and figure are built):
+  PAPER_TableTitle, PAPER_TableContent, PAPER_TableNotes,
+  PAPER_Caption, PAPER_SmallNotes, PAPER_TitleCaption.
+  Note: PAPER_TableNotes and PAPER_Notes consolidated into
+  PAPER_SmallNotes (identical settings; single style for both).
+  PAPER_TableTitle and PAPER_Caption consolidated into
+  PAPER_TitleCaption (identical settings; single style for both).
+
+(D) Header and Footer -- Set
+
+Header:
+  Left:              Flood Shocks and the Two-Phase Deposit Cycle
+  Right:             Badar
+  Font:              Times New Roman, 10pt, italic.
+  Bottom border:     0.5pt solid black rule.
+  First page:        Suppressed (Different First Page enabled).
+
+Footer:
+  Content:           Page number, centered, plain Arabic numeral.
+  Start:             Page 1 (body begins after title page).
+  First page:        Suppressed.
+
+(E) Title Page -- Built
+
+Architecture:
+  Five blank lines of top spacing.
+  Main title block, two horizontal rules, author block,
+  abstract placeholder, JEL codes, keywords, contact line.
+
+Title line:
+  Flood Shocks and the Two-Phase Deposit Cycle
+  16pt, bold, centered, Times New Roman.
+
+Subtitle line:
+  A Nighttime Lights Identification
+  13pt, italic, centered, Times New Roman.
+
+Rule 1:
+  1pt solid black horizontal rule, full text width.
+  Separates title block from author block.
+
+Author block:
+  Jaseel Badar -- 13pt, bold, centered.
+  Harvard University Extension School -- 11pt, italic, centered.
+  April 2026 -- 11pt, regular, centered.
+  Working Paper -- 11pt, regular, centered, dark red
+    (RGB: 192, 0, 0).
+
+Rule 2:
+  1pt solid black horizontal rule, full text width.
+  Separates author block from abstract block.
+
+Abstract:
+  Heading "Abstract" -- 11pt, bold, centered.
+  Placeholder body -- 10pt, single, indented 1.27 cm both sides.
+  To be replaced with final abstract after all sections drafted.
+
+JEL Classification:
+  G21, Q54, O16, R11.
+  10pt, regular, left-aligned.
+
+Keywords:
+  flood shocks, bank deposits, nighttime lights,
+  instrumental variables, liquidity risk, India, climate finance.
+  10pt, regular, left-aligned.
+
+Contact:
+  jaseelbadar123@gmail.com
+  9pt, italic, centered, dark grey (RGB: 89, 89, 89).
+
+(F) Section Break Inserted
+
+Next Page section break inserted after title page.
+Body text begins on page 2.
+Header and footer activate from page 2 onward.
+
+Status: No regression results modified. No data modified.
+  Pipeline unchanged from Mar 21. All 13 constraints active.
+  Document infrastructure complete. Writing is unblocked.
+
+Next session:
+  Insert Section III heading (PAPER_H1).
+  Insert III.A heading (PAPER_H2).
+  Begin Section 3.1 prose -- first sentence of the paper.
+  All content from Variables_Codebook_v2.6.md and
+  Pre_Writing_Master_Plan.txt to be open alongside draft.
+
 ======================================================================
-END OF LOG -- Last entry: 2026-03-26 23:55 IST
+END OF LOG -- Last entry: 2026-04-03 23:55 IST
 ======================================================================

@@ -4948,6 +4948,143 @@ Next session:
   All content from Variables_Codebook_v2.6.md and
   Pre_Writing_Master_Plan.txt to be open alongside draft.
 
+----------------------------------------------------------------------
+2026-04-05 (Sun) 20:29-23:58 IST -- Section Skeleton Built.
+Section III.A Drafted. Footnote Architecture Set.
+----------------------------------------------------------------------
+
+(A) Document State at Session Start
+
+  Confirmed state:   1 page. Cover page only.
+  Header/footer:     Live. Different First Page enabled.
+                     No header or footer on cover page.
+  Styles:            Six PAPER_ styles active from prior session.
+  Body text:         Zero sentences. Writing unblocked.
+
+(B) Section Break -- Inserted
+
+  Type:              Next Page section break.
+  Position:          After final line of cover page
+                     (correspondence line).
+  Result:            Page 2 created. Header and footer activate
+                     from page 2 onward. Cover page unaffected.
+
+(C) Section Skeleton -- Built
+
+  All eight section headings plus References inserted on pages 2-3.
+  Style applied to each heading confirmed:
+
+    I. INTRODUCTION                      PAPER_H1
+    II. RELATED LITERATURE               PAPER_H1
+    III. DATA                            PAPER_H1
+      III.A  RBI District-Level Deposits PAPER_H2
+      III.B  EM-DAT Flood Events         PAPER_H2
+      III.C  VIIRS Nighttime Lights      PAPER_H2
+      III.D  Panel Construction          PAPER_H2
+    IV. IDENTIFICATION STRATEGY          PAPER_H1
+    V. RESULTS                           PAPER_H1
+    VI. ROBUSTNESS                       PAPER_H1
+    VII. DISCUSSION AND MECHANISM        PAPER_H1
+    VIII. CONCLUSION                     PAPER_H1
+    REFERENCES                           PAPER_H1
+
+  Placeholder PAPER_Body lines inserted between all headings.
+  Document spans 3 pages. Structure confirmed clean in screenshot.
+
+(D) Zotero Citation Style -- Partial Setup
+
+  Prior setting:     Chicago Manual of Style 18th edition
+                     (author-date). Incorrect for this paper.
+  Target style:      American Economic Association (author-date).
+  Status:            NOT YET COMPLETE.
+  Blocker:           Style Repository search filter defaulted to
+                     Fields: science. AEA style is classified under
+                     social sciences and did not appear in results.
+  Resolution path:   Install directly from:
+                     https://www.zotero.org/styles/
+                     american-economic-association
+                     This bypasses the filter. Execute at start of
+                     next session before writing any citation.
+  Rule:              No citation is inserted in any section until
+                     AEA style is confirmed active in Document
+                     Preferences. [CITE: X] placeholders remain
+                     in text until then.
+
+(E) Section III.A Prose -- Drafted and Pasted
+
+  Section:           III.A  RBI District-Level Deposits
+  Style:             PAPER_Body throughout.
+  Paragraphs:        5.
+
+  Paragraph 1:       Data source named. BSR-2 identified by full
+                     name. Coverage stated: all scheduled commercial
+                     banks, all states and union territories,
+                     quarterly. Window: 2015Q1-2024Q4. Three
+                     workbooks extracted.
+
+  Paragraph 2:       Variable construction. deposits_it defined.
+                     deposit_change_qt defined as log-first-
+                     difference. Offset +1 justified at Crore scale.
+                     Nominal INR disclosed explicitly. Quarter FE
+                     absorb national price trends. Limitation
+                     acknowledged. Constraint 8 satisfied.
+
+  Paragraph 3:       Sample construction. RBI-to-GADM crosswalk
+                     named (Script 08). Raw crosswalk: 762 entries.
+                     Analysis sample: 631 districts, 37 quarters,
+                     23,347 district-quarter observations. Deposit
+                     coverage: 98.9%. Missing values: 268 district-
+                     quarters, 905 observations in first-differenced
+                     series. All figures match codebook exactly.
+
+  Paragraph 4:       Demonetization gap disclosed. 2016Q3, 2016Q4,
+                     2017Q1 absent. Reason stated: RBI suspended
+                     BSR-2 publication during demonetization episode
+                     (November 2016) and its immediate aftermath.
+                     Excluded at extraction stage, not analysis
+                     stage. Full-year figures for 2016 and 2017
+                     not reported. Constraint 7 satisfied.
+
+  Paragraph 5:       Descriptive summary. Mean quarterly deposit
+                     growth: 2.33 pp. SD: 7.43 pp. Distribution
+                     approximately symmetric at median. 2023 left-
+                     tail anomaly noted. Northeast concentration
+                     flagged. Footnote anchor inserted at end of
+                     paragraph.
+
+  Citations pending: [CITE: RBI BSR-2] in paragraph 1.
+                     [CITE: GADM] in paragraph 3.
+                     Both to be inserted via Zotero once AEA style
+                     is confirmed active.
+
+(F) Footnote 1 -- Inserted
+
+  Method:            Word built-in footnote (References tab ->
+                     Insert Footnote). Not plain text. Not manual.
+  Anchor:            Superscript 1 at end of paragraph 5,
+                     immediately after closing period.
+  Content:           Tuensang (Nagaland) within-year reversal.
+                     Log-point decline 1.453 in 2023Q1.
+                     Log-point gain 1.758 in 2023Q3.
+                     3.21 SD reversal flagged as likely reporting
+                     artifact. Winsorization cross-reference to
+                     Section VI. Constraint 6 satisfied.
+  Style:             PAPER_Footnote (Times New Roman, 10pt, single,
+                     hanging 0.63 cm).
+  Behaviour:         Anchored. Follows text automatically.
+                     Position does not shift with edits above.
+
+Status: No regression results modified. No data modified.
+  Pipeline unchanged from Mar 21. All 13 constraints active.
+  Section III.A complete pending two Zotero citation insertions.
+
+Next session:
+  Step 1: Install AEA citation style via direct URL before
+    writing one word.
+  Step 2: Insert [CITE: RBI BSR-2] and [CITE: GADM] placeholders
+    via Zotero once style is confirmed.
+  Step 3: Draft Section III.B EM-DAT Flood Events in full.
+
 ======================================================================
-END OF LOG -- Last entry: 2026-04-03 23:55 IST
+END OF LOG -- Last entry: 2026-04-05 23:55 IST
 ======================================================================
